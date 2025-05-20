@@ -15,34 +15,22 @@ const products = [
     ]
   },
   {
-    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+    id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+    image: 'images/products/epson-dx7-printhead.jpeg',
+    name: 'Epson (DX5) Printhead for Chinese Printers',
     rating: {
       stars: 4.5,
       count: 87
     },
-    priceCents: 1090,
+    priceCents: 109700,
     keywords: [
-      "socks",
-      "sports",
-      "apparel"
+      "Epson DX5",
+      "Printhead",
+      "Chinese Printers"
     ]
   },
-  {
-    id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    image: "images/products/intermediate-composite-basketball.jpg",
-    name: "Intermediate Size Basketball",
-    rating: {
-      stars: 4,
-      count: 127
-    },
-    priceCents: 2095,
-    keywords: [
-      "sports",
-      "basketballs"
-    ]
-  },
+
+
   {
     id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
