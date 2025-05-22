@@ -45,7 +45,7 @@ cart.forEach((cartItem) => {
               ${metchingProduct.name}
             </div>
             <div class="product-price">
-              $${formatCurrency(metchingProduct.priceCents)}
+              ${metchingProduct.getPrice()}
             </div>
             <div class="product-quantity">
               <span>

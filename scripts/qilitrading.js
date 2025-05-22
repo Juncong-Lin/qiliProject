@@ -16,8 +16,18 @@ products.forEach((product) => {
         ${product.name}
       </div>
 
+      <!-- 
+      <div class="product-rating-container">
+        <img class="product-rating-stars"
+          src="${product.getStartUrl()}">
+        <div class="product-rating-count link-primary">
+          ${product.rating.count}
+        </div>
+      </div>   
+      -->
+
       <div class="product-price">
-        $${formatCurrency(product.priceCents)}
+        ${product.getPrice()}
       </div>
 
       <div class="product-quantity-container">
