@@ -7,7 +7,8 @@
   background-color: #005BBB;
   color: white;
   padding-top: 20px;
-  z-index: 100;
+  z-index: 1;
+  overflow-y: auto;
 }
 
 .departments-heading {
@@ -22,8 +23,142 @@
   text-decoration: none;
   color: white;
   font-size: 14px;
+  position: relative;
+  transition: background-color 0.2s ease;
 }
 
 .department-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.department-group {
+  position: relative;
+}
+
+.submenu {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  left: 180px; /* Same as sidebar width */
+  top: 60px;
+  bottom: 0;
+  width: 320px; /* Increased width for longer text */
+  background-color: #003087;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  transition: visibility 0s 0.2s, opacity 0.2s ease;
+  padding: 10px 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  max-height: calc(100vh - 60px); /* Ensure it doesn't overflow viewport */
+}
+
+.department-subgroup {
+  position: relative;
+}
+
+.department-subgroup > .submenu {
+  position: fixed;
+  left: 500px; /* parent submenu width (320px) + sidebar width (180px) */
+  background-color: #002670;
+}
+
+/* Ensure nested submenus don't create multiple scrollbars */
+.department-subgroup > .submenu {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Custom scrollbar styling */
+.submenu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.submenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.submenu::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.submenu.active {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.submenu .department-link {
+  padding: 12px 25px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.submenu .department-link:last-child {
+  border-bottom: none;
+}
+
+.submenu .department-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-left: 30px;
+}
+
+.expandable {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.expandable::after {
+  content: "›";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.expandable.active {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.expandable.active::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+@media (max-width: 800px) {
+  .submenu {
+    position: static;
+    width: auto;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+    visibility: visible;
+    opacity: 1;
+    transition: none;
+  }
+
+  .submenu.active {
+    display: block;
+  }
+
+  .submenu .department-link {
+    padding-left: 40px;
+  }
+
+  .submenu .department-link:hover {
+    padding-left: 45px;
+  }
+}
+
+.department-subgroup:hover > .submenu,
+.department-subgroup > .submenu.active {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  z-index: 101;
 }
