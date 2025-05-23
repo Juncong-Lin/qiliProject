@@ -45,7 +45,7 @@ cart.forEach((cartItem) => {
               ${metchingProduct.name}
             </div>
             <div class="product-price">
-              ${metchingProduct.getPrice()}
+              $${formatCurrency(metchingProduct.priceCents)}
             </div>
             <div class="product-quantity">
               <span>
@@ -83,8 +83,13 @@ cart.forEach((cartItem) => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
 
-        const container = document.querySelector(`.js-cart-item-container-${productId}`);
-        container.remove();
+        // Update header count after deletion
+        const uniqueItems = cart.length;
+        const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.querySelector('.checkout-header-middle-section').innerHTML =
+          `Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})`;
+
+        renderOrderSummary();
         renderPaymentSummary();
       });
     });

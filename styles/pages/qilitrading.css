@@ -1,27 +1,19 @@
-nge the header color into blue and add the sidebar on the left..main {
+.main {
   margin-top: 60px;
-  margin-left: 180px; /* Add margin equal to sidebar width */
+  padding: 20px;
+  padding-left: 200px; /* Space for sidebar plus some padding */
 }
 
 .products-grid {
   display: grid;
-
-  /* - In CSS Grid, 1fr means a column will take up the
-       remaining space in the grid.
-     - If we write 1fr 1fr ... 1fr; 8 times, this will
-       divide the grid into 8 columns, each taking up an
-       equal amount of the space.
-     - repeat(8, 1fr); is a shortcut for repeating "1fr"
-       8 times (instead of typing out "1fr" 8 times).
-       repeat(...) is a special property that works with
-       display: grid; */
   grid-template-columns: repeat(8, 1fr);
+  gap: 0;
 }
 
 /* @media is used to create responsive design (making the
    website look good on any screen size). This @media
    means when the screen width is 2000px or less, we
-   will divide the grid into 7 columns instead of 8. */
+   will divide the grid into 4 columns instead of 5. */
 @media (max-width: 2000px) {
   .products-grid {
     grid-template-columns: repeat(7, 1fr);
@@ -29,7 +21,7 @@ nge the header color into blue and add the sidebar on the left..main {
 }
 
 /* This @media means when the screen width is 1600px or
-   less, we will divide the grid into 6 columns. */
+   less, we will divide the grid into 3 columns. */
 @media (max-width: 1600px) {
   .products-grid {
     grid-template-columns: repeat(6, 1fr);
@@ -38,23 +30,23 @@ nge the header color into blue and add the sidebar on the left..main {
 
 @media (max-width: 1300px) {
   .products-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 1000px) {
   .products-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 800px) {
-  .products-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 800px) {
+  .main {
+    padding-left: 20px; /* Remove sidebar space on mobile */
+  }
+  .departments-sidebar {
+    display: none;
+  }
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -62,7 +54,10 @@ nge the header color into blue and add the sidebar on the left..main {
 
 @media (max-width: 450px) {
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* Keep 2 columns even on small screens */
+  }
+  .product-container {
+    padding: 15px; /* Slightly reduce padding on very small screens */
   }
 }
 
