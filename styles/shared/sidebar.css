@@ -1,0 +1,29 @@
+.departments-sidebar {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  width: 180px;
+  background-color: #005BBB;
+  color: white;
+  padding-top: 20px;
+  z-index: 100;
+}
+
+.departments-heading {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 20px 12px 20px;
+}
+
+.department-link {
+  display: block;
+  padding: 8px 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+
+.department-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

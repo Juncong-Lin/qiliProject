@@ -1,5 +1,6 @@
-.main {
+nge the header color into blue and add the sidebar on the left..main {
   margin-top: 60px;
+  margin-left: 180px; /* Add margin equal to sidebar width */
 }
 
 .products-grid {

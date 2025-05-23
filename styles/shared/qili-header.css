@@ -1,0 +1,64 @@
+.qili-header {
+  background-color: #003087;
+  color: white;
+  padding: 15px;
+}
+
+.qili-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.qili-header-left img {
+  width: 180px;
+  margin-right: 15px;
+}
+
+.qili-header-right .search-container {
+  display: flex;
+  align-items: center;
+}
+
+.qili-header-right .search-input {
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.qili-header-right .search-button {
+  padding: 8px 15px;
+  background-color: #005BBB;
+  border: none;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.qili-nav {
+  background-color: #005BBB;
+  padding: 10px 0;
+}
+
+.qili-nav-content {
+  display: flex;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.qili-nav-item {
+  color: white;
+  text-decoration: none;
+  padding: 8px 15px;
+  font-size: 14px;
+}
+
+.qili-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}

@@ -2,7 +2,8 @@
   height: 60px;
   padding-left: 30px;
   padding-right: 30px;
-  background-color: white;
+  background-color: #003087;
+  color: white;
 
   display: flex;
   justify-content: center;
