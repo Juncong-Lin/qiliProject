@@ -75,7 +75,21 @@ document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
   button.addEventListener('click', () => {
     const productId = button.dataset.productId;
-    addToCart(productId);
+    // Get the selected quantity from the dropdown in the same product container
+    const productContainer = button.closest('.product-container');
+    const select = productContainer.querySelector('select');
+    const selectedQuantity = Number(select.value);
+    let matchingItem = cart.find(item => item.productId === productId);
+    if (matchingItem) {
+      matchingItem.quantity += selectedQuantity;
+    } else {
+      cart.push({
+        productId: productId,
+        quantity: selectedQuantity,
+        deliveryOptionId: '1'
+      });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartQuantity();
   });
 });

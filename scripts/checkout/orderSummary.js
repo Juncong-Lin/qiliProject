@@ -49,17 +49,16 @@ cart.forEach((cartItem) => {
             </div>
             <div class="product-quantity">
               <span>
-                Quantity: <span class="quantity-label">${
-                  cartItem.quantity
-                }</span>
+                Quantity: <span class="quantity-label js-quantity-label-${metchingProduct.id}">${cartItem.quantity}</span>
               </span>
-              <span class="update-quantity-link link-primary">
+              <span class="update-quantity-link link-primary js-update-link" data-product-id="${metchingProduct.id}">
                 Update
               </span>
-              <span class="delete-quantity-link link-primary 
+              <span class="delete-quantity-link link-primary \
               js-delete-link" data-product-id="${metchingProduct.id}">
                 Delete
               </span>
+              <span class="js-quantity-select-container-${metchingProduct.id}" style="display:none;"></span>
             </div>
           </div>
 
@@ -102,6 +101,44 @@ cart.forEach((cartItem) => {
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();
         renderPaymentSummary();
+      });
+    });
+
+  document.querySelectorAll('.js-update-link')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        const productId = link.dataset.productId;
+        const container = document.querySelector(`.js-quantity-select-container-${productId}`);
+        // Create select dropdown
+        let selectHTML = '<select class="js-quantity-select">';
+        for (let i = 1; i <= 10; i++) {
+          selectHTML += `<option value="${i}">${i}</option>`;
+        }
+        selectHTML += '</select>';
+        container.innerHTML = selectHTML;
+        container.style.display = '';
+        // Hide update link
+        link.style.display = 'none';
+        // Set current value
+        const select = container.querySelector('select');
+        select.value = document.querySelector(`.js-quantity-label-${productId}`).textContent;
+        select.focus();
+        select.addEventListener('change', () => {
+          const newQuantity = Number(select.value);
+          const cartItem = cart.find(item => item.productId === productId);
+          cartItem.quantity = newQuantity;
+          localStorage.setItem('cart', JSON.stringify(cart));
+          // Update UI
+          document.querySelector(`.js-quantity-label-${productId}`).textContent = newQuantity;
+          container.style.display = 'none';
+          link.style.display = '';
+          // Update header
+          const uniqueItems = cart.length;
+          const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+          document.querySelector('.checkout-header-middle-section').innerHTML =
+            `Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})`;
+          renderPaymentSummary();
+        });
       });
     });
 }
