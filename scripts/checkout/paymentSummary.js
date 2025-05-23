@@ -51,12 +51,27 @@ export function renderPaymentSummary() {
       <div class="payment-summary-money">$${formatCurrency(total)}</div>
     </div>
 
-    <button class="place-order-button button-primary">
+    <button class="place-order-button button-primary js-place-order">
       Place your order
     </button>
   `;
+
   document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
+
+  document.querySelector('.js-place-order')
+  .addEventListener('click', () => {
+    alert('Your order has been placed!');
+    cart.forEach((cartItem) => {
+      const product = getProduct(cartItem.productId);
+      removeFromCart(product.id);
+    });
+    renderPaymentSummary();
+    renderOrderSummary();
+  });
 }
+
+
+
 
 export function renderOrderSummary() {
   let paymentSummaryHTML = `
