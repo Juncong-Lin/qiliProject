@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const expandableLinks = document.querySelectorAll('.expandable');
-  let currentActiveGroups = new Set();
+  let currentActiveGroup = null; // Replacing currentActiveGroups with a single variable
   let mouseInSubmenu = false;
     // Helper function to close submenu with delay
   const closeSubmenuWithDelay = (group) => {
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (link) {
             link.classList.remove('active');
           }
-          currentActiveGroups.clear();
+          currentActiveGroup = null;
         }
       }, 100);
     }
