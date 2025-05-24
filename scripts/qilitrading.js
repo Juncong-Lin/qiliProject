@@ -16,16 +16,6 @@ products.forEach((product) => {
         ${product.name}
       </div>
 
-      <!-- 
-      <div class="product-rating-container">
-        <img class="product-rating-stars"
-          src="${product.getStartUrl()}">
-        <div class="product-rating-count link-primary">
-          ${product.rating.count}
-        </div>
-      </div>   
-      -->
-
       <div class="product-price">
         ${product.getPrice()}
       </div>
@@ -45,16 +35,9 @@ products.forEach((product) => {
         </select>
       </div>
 
-
-      <!-- ${product.extraInfoHTML()} -->
-
-
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
-        <img src="images/icons/checkmark.png">
-        Added
-      </div>
+      <div class="added-message">Added</div>
 
       <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
         Add to Cart
@@ -65,32 +48,35 @@ products.forEach((product) => {
 document.querySelector('.js-prodcts-grid').innerHTML = productsHTML;
 
 function updateCartQuantity() {
-  // Show number of unique items in the cart
-  document.querySelector('.js-cart-quantity').innerHTML = cart.length;
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
-
-updateCartQuantity();
 
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
   button.addEventListener('click', () => {
     const productId = button.dataset.productId;
-    // Get the selected quantity from the dropdown in the same product container
+    
+    // Get the quantity from the dropdown
     const productContainer = button.closest('.product-container');
-    const select = productContainer.querySelector('select');
-    const selectedQuantity = Number(select.value);
-    let matchingItem = cart.find(item => item.productId === productId);
-    if (matchingItem) {
-      matchingItem.quantity += selectedQuantity;
-    } else {
-      cart.push({
-        productId: productId,
-        quantity: selectedQuantity,
-        deliveryOptionId: '1'
-      });
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const quantitySelect = productContainer.querySelector('select');
+    const quantity = Number(quantitySelect.value);
+
+    // Call addToCart with the selected quantity
+    addToCart(productId, quantity);
     updateCartQuantity();
+
+    // Show the 'Added' message
+    const addedMessage = productContainer.querySelector('.added-message');
+    if (addedMessage) {
+      addedMessage.style.display = 'block';
+      setTimeout(() => {
+        addedMessage.style.display = 'none';
+      }, 2000);
+    }
   });
 });
 

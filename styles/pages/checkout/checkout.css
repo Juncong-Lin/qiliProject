@@ -220,3 +220,16 @@
 .place-order-button:hover {
   background-color: #005BBB;
 }
+
+.continue-shopping-button {
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 10px;
+  min-width: 140px;
+}
+
+.order-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+}

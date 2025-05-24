@@ -82,6 +82,13 @@ cart.forEach((cartItem) => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
 
+        // Check if cart is empty after removal
+        if (cart.length === 0) {
+          // Refresh the page to show empty cart message
+          window.location.reload();
+          return;
+        }
+
         // Update header count after deletion
         const uniqueItems = cart.length;
         const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
