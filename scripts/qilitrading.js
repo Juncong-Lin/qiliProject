@@ -6,14 +6,14 @@ import { formatCurrency } from './utils/money.js';
 let productsHTML = '';
 products.forEach((product) => {
   productsHTML += `
-    <div class="product-container">
-      <div class="product-image-container">
-        <img class="product-image"
-          src="${product.image}">
-      </div>
-
-      <div class="product-name limit-text-to-2-lines">
-        ${product.name}
+    <div class="product-container">      <div class="product-image-container">
+        <a href="detail.html?productId=${product.id}" class="product-image-link">
+          <img class="product-image" src="${product.image}">
+        </a>
+      </div>      <div class="product-name limit-text-to-2-lines">
+        <a href="detail.html?productId=${product.id}" class="product-link">
+          ${product.name}
+        </a>
       </div>
 
       <div class="product-price">

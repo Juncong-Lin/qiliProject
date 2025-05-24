@@ -17,6 +17,8 @@ class Product {
   rating;
   priceCents;
   keywords;
+  description;
+
   constructor(productDetails) {
     this.id = productDetails.id;
     this.image = productDetails.image;
@@ -24,6 +26,7 @@ class Product {
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
     this.keywords = productDetails.keywords;
+    this.description = productDetails.description || `${productDetails.name} - High quality product from QiliTrading.com. Contact us for more details.`;
   }
   getStartUrl() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`; 
