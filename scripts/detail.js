@@ -1,4 +1,5 @@
 import { products } from '../data/products.js';
+import { printheadProducts } from '../data/printhead-products.js';
 import { cart, addToCart } from '../data/cart.js';
 import { updateCartQuantity } from './utils/cart-quantity.js';
 
@@ -8,16 +9,40 @@ let productId;
 const urlParams = new URLSearchParams(window.location.search);
 productId = urlParams.get('productId');
 
-// Find the product in our data
-const product = products.find(product => product.id === productId);
+// Find the product in our data - check both regular products and printhead products
+let product = products.find(product => product.id === productId);
+
+// If not found in regular products, search in printhead products
+if (!product) {
+  for (const brand in printheadProducts) {
+    const brandProducts = printheadProducts[brand];
+    product = brandProducts.find(p => p.id === productId);
+    if (product) break;
+  }
+}
 
 if (product) {
   // Update the product details on the page
   document.querySelector('.js-product-image').src = product.image;
   document.querySelector('.js-product-name').textContent = product.name;
-  document.querySelector('.js-product-rating').src = product.rating.stars;
-  document.querySelector('.js-product-rating-count').textContent = `(${product.rating.count})`;
-  document.querySelector('.js-product-price').textContent = `$${product.price.toFixed(2)}`;
+  
+  // Handle rating display - printhead products have rating object, regular products have rating.stars path
+  if (product.rating && typeof product.rating === 'object') {
+    if (product.rating.stars) {
+      // For printhead products, show star rating differently
+      document.querySelector('.js-product-rating').src = `images/ratings/rating-${Math.round(product.rating.stars * 10)}.png`;
+      document.querySelector('.js-product-rating-count').textContent = `(${product.rating.count})`;
+    } else {
+      // For regular products
+      document.querySelector('.js-product-rating').src = product.rating.stars;
+      document.querySelector('.js-product-rating-count').textContent = `(${product.rating.count})`;
+    }
+  }
+  
+  // Handle price display - printhead products have price in cents, regular products have getPrice() method
+  const priceText = product.getPrice ? product.getPrice() : `$${(product.price / 100).toFixed(2)}`;
+  document.querySelector('.js-product-price').textContent = priceText;
+  
   document.querySelector('.js-product-description').textContent = product.description || 'No description available.';
   
   // Update the page title

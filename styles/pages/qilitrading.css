@@ -122,21 +122,27 @@
   text-decoration: underline;
 }
 
-.product-rating-container {
+.product-rating {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 5px 0;
 }
 
 .product-rating-stars {
-  width: 100px;
+  color: #FFA41C;
+  font-size: 16px;
   margin-right: 6px;
+  letter-spacing: 1px;
 }
 
 .product-rating-count {
-  color: rgb(1, 124, 182);
+  color: #007185;
   cursor: pointer;
-  margin-top: 3px;
+  font-size: 14px;
+}
+
+.product-rating-count:hover {
+  text-decoration: underline;
 }
 
 .product-price {
@@ -195,4 +201,199 @@
   font-weight: bold;
   text-align: center;
   margin: 5px 0;
+}
+
+.page-header {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #232F3E;
+  border-bottom: 3px solid #FF9900;
+  padding-bottom: 15px;
+  background: linear-gradient(135deg, #232F3E 0%, #37475A 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  animation: fadeInHeader 0.5s ease-out;
+}
+
+@keyframes fadeInHeader {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading animation styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #FF9900;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: #565959;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Smooth transitions for submenu */
+.submenu {
+  transition: all 0.3s ease-in-out;
+  transform-origin: top;
+}
+
+.submenu.active {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Product grid fade-in animation */
+.js-prodcts-grid {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.products-grid-loading {
+  opacity: 0.5;
+}
+
+/* Hover effects for department links */
+.department-link {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.department-link:hover {
+  background-color: #f0f0f0;
+  color: #FF9900;
+}
+
+/* Selected menu item styling */
+/* .department-link.selected-brand {
+  background-color: #FF9900;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.3);
+} */
+
+/* Breadcrumb navigation styling */
+.breadcrumb-nav {
+  padding: 15px 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #e7e7e7;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding-left: 15px;
+  animation: fadeInBreadcrumb 0.3s ease-out;
+}
+
+.breadcrumb-link {
+  color: #007185;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #FF9900;
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  margin: 0 8px;
+  color: #565959;
+}
+
+.breadcrumb-current {
+  color: #232F3E;
+  font-weight: bold;
+}
+
+@keyframes fadeInBreadcrumb {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced visual feedback for menu interactions */
+.department-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.department-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.department-link:hover::before {
+  left: 100%;
+}
+
+/* Improved mobile responsiveness */
+@media (max-width: 800px) {
+  .department-link.selected-brand {
+    margin: 2px 0;
+  }
+  
+  .page-header {
+    font-size: 24px;
+    margin: 15px 0;
+    padding-bottom: 10px;
+  }
+
+  .breadcrumb-nav {
+    font-size: 12px;
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .breadcrumb-separator {
+    margin: 0 4px;
+  }
 }

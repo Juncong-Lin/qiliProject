@@ -47,7 +47,11 @@
         </a>
       </div>
     </div>    <div class="departments-sidebar">
-      <div class="departments-heading">Shop All Departments</div>      <div class="departments-items">
+      <div class="departments-heading">Shop All Departments</div>
+      <div class="department-group">
+        <a class="department-link" href="javascript:void(0)" onclick="loadAllProducts()" style="font-weight: bold; color: #FF9900;">🏠 All Products</a>
+      </div>
+      <div class="departments-items">
         <div class="department-group">
           <a class="department-link expandable" href="javascript:void(0)">Inkjet Printers</a>
           <div class="submenu">
@@ -105,24 +109,25 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="department-group">          
+        </div>        <div class="department-group">          
           <a class="department-link expandable" href="javascript:void(0)">Print Heads</a>
           <div class="submenu">
-            <a class="department-link" href="#">Canon Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('canon')">Canon Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('epson')">Epson Printhead</a>
+            <!--
             <a class="department-link" href="#">Encad Printhead</a>
-            <a class="department-link" href="#">Epson Printhead</a>
             <a class="department-link" href="#">HP Printhead</a>
-            <a class="department-link" href="#">Konica Printhead</a>
-            <a class="department-link" href="#">Kyocera Printhead</a>
-            <a class="department-link" href="#">Mimaki Printhead</a>
-            <a class="department-link" href="#">Mutoh Printhead</a>
-            <a class="department-link" href="#">Ricoh Printhead</a>
-            <a class="department-link" href="#">Roland Printhead</a>
-            <a class="department-link" href="#">Seiko Printhead</a>
-            <a class="department-link" href="#">Spectra Printhead</a>
-            <a class="department-link" href="#">Toshiba Printhead</a>
-            <a class="department-link" href="#">Xaar Printhead</a>
+            -->
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('konica')">Konica Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('kyocera')">Kyocera Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('mimaki')">Mimaki Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('mutoh')">Mutoh Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('ricoh')">Ricoh Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('roland')">Roland Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('seiko')">Seiko Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('spectra')">Spectra Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('toshiba')">Toshiba Printhead</a>
+            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('xaar')">Xaar Printhead</a>
             <!--
             <a class="department-link" href="#">Audley Printheads</a>
             <a class="department-link" href="#">Skycolor Locor Printheads</a>
@@ -134,7 +139,7 @@
             <a class="department-link" href="#">Witcolor Printheads</a>
             <a class="department-link" href="#">GongZheng Printheads</a>
             -->
-          </div>        </div>
+          </div></div>
         <div class="department-group">
           <a class="department-link expandable" href="javascript:void(0)">Print Spare Parts</a>
           <div class="submenu">
