@@ -1,5 +1,6 @@
 import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';   
 import {products} from '../../data/products.js';
+import {printheadProducts} from '../../data/printhead-products.js';
 import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
@@ -10,12 +11,26 @@ let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
-  let metchingProduct;
+  let matchingProduct;
+  
+  // First search in regular products
   products.forEach((product) => {
     if (product.id === productId) {
-      metchingProduct = product;
+      matchingProduct = product;
     }
   });
+  
+  // If not found in regular products, search in printhead products
+  if (!matchingProduct) {
+    for (const brand in printheadProducts) {
+      const brandProducts = printheadProducts[brand];
+      const found = brandProducts.find(product => product.id === productId);
+      if (found) {
+        matchingProduct = found;
+        break;
+      }
+    }
+  }
 
   const deliveryOptionId = cartItem.deliveryOptionId;
   let deliveryOption;
@@ -27,38 +42,36 @@ cart.forEach((cartItem) => {
 
   const today = dayjs();
   const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-  const dateString = deliveryDate.format('dddd, MMMM D');
-
-    cartSummaryHTML += `
+  const dateString = deliveryDate.format('dddd, MMMM D');    cartSummaryHTML += `
       <div class="cart-item-container 
-      js-cart-item-container-${metchingProduct.id}">
+      js-cart-item-container-${matchingProduct.id}">
         <div class="delivery-date">
           Delivery date: ${dateString}
         </div>
 
         <div class="cart-item-details-grid">
           <img class="product-image"
-            src="${metchingProduct.image}">
+            src="${matchingProduct.image}">
 
           <div class="cart-item-details">
             <div class="product-name">
-              ${metchingProduct.name}
+              ${matchingProduct.name}
             </div>
             <div class="product-price">
-              $${formatCurrency(metchingProduct.priceCents)}
+              $${formatCurrency(matchingProduct.priceCents || matchingProduct.price)}
             </div>
             <div class="product-quantity">
               <span>
-                Quantity: <span class="quantity-label js-quantity-label-${metchingProduct.id}">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
               </span>
-              <span class="update-quantity-link link-primary js-update-link" data-product-id="${metchingProduct.id}">
+              <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
                 Update
               </span>
               <span class="delete-quantity-link link-primary \
-              js-delete-link" data-product-id="${metchingProduct.id}">
+              js-delete-link" data-product-id="${matchingProduct.id}">
                 Delete
               </span>
-              <span class="js-quantity-select-container-${metchingProduct.id}" style="display:none;"></span>
+              <span class="js-quantity-select-container-${matchingProduct.id}" style="display:none;"></span>
             </div>
           </div>
 
@@ -66,7 +79,7 @@ cart.forEach((cartItem) => {
             <div class="delivery-options-title">
               Choose a delivery option:
             </div>
-            ${deleveryOptionsHTML(metchingProduct,cartItem)}
+            ${deleveryOptionsHTML(matchingProduct,cartItem)}
           </div>
         </div>
       </div>
@@ -150,7 +163,7 @@ cart.forEach((cartItem) => {
     });
 }
 
-function deleveryOptionsHTML(metchingProduct, cartItem) {
+function deleveryOptionsHTML(matchingProduct, cartItem) {
   let html = '';
   deliveryOptions.forEach((deliveryOption) => {
     const today = dayjs();
@@ -165,12 +178,12 @@ function deleveryOptionsHTML(metchingProduct, cartItem) {
     html +=
     `
       <div class="delivery-option js-delivery-option"
-      data-product-id="${metchingProduct.id}"
+      data-product-id="${matchingProduct.id}"
       data-delivery-option-id="${deliveryOption.id}">
         <input type="radio"
           ${isChecked ? 'checked' : ''}
         class="delivery-option-input"
-          name="delivery-option-${metchingProduct.id}">
+          name="delivery-option-${matchingProduct.id}">
         <div>
           <div class="delivery-option-date">
             ${dateString}

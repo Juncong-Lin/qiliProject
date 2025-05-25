@@ -25,18 +25,20 @@ if (product) {
   // Update the product details on the page
   document.querySelector('.js-product-image').src = product.image;
   document.querySelector('.js-product-name').textContent = product.name;
+    // Handle rating display - hide rating elements for printhead products since ratings were removed
+  const ratingElement = document.querySelector('.js-product-rating');
+  const ratingCountElement = document.querySelector('.js-product-rating-count');
   
-  // Handle rating display - printhead products have rating object, regular products have rating.stars path
-  if (product.rating && typeof product.rating === 'object') {
-    if (product.rating.stars) {
-      // For printhead products, show star rating differently
-      document.querySelector('.js-product-rating').src = `images/ratings/rating-${Math.round(product.rating.stars * 10)}.png`;
-      document.querySelector('.js-product-rating-count').textContent = `(${product.rating.count})`;
-    } else {
-      // For regular products
-      document.querySelector('.js-product-rating').src = product.rating.stars;
-      document.querySelector('.js-product-rating-count').textContent = `(${product.rating.count})`;
-    }
+  if (product.rating && typeof product.rating === 'object' && product.rating.stars) {
+    // For regular products that still have ratings
+    ratingElement.src = `images/ratings/rating-${Math.round(product.rating.stars * 10)}.png`;
+    ratingElement.style.display = 'block';
+    ratingCountElement.textContent = `(${product.rating.count})`;
+    ratingCountElement.style.display = 'block';
+  } else {
+    // For printhead products or products without ratings, hide rating elements
+    if (ratingElement) ratingElement.style.display = 'none';
+    if (ratingCountElement) ratingCountElement.style.display = 'none';
   }
   
   // Handle price display - printhead products have price in cents, regular products have getPrice() method

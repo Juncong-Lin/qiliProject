@@ -6,7 +6,6 @@
   width: 180px;
   background-color: #005BBB;
   color: white;
-  padding-top: 20px;
   z-index: 1;
   overflow-y: auto;
 }
@@ -25,6 +24,10 @@
   font-size: 14px;
   position: relative;
   transition: background-color 0.2s ease;
+  min-height: 32px; /* Ensure consistent height: 8px top + 8px bottom + 16px content */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .department-link:hover {
@@ -91,11 +94,15 @@
 }
 
 .submenu .department-link {
-  padding: 12px 25px;
+  padding: 8px 25px; /* Match the main sidebar height */
   font-size: 13px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
   transition: all 0.2s ease;
+  min-height: 32px; /* Ensure consistent height: 8px top + 8px bottom + 16px content */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .submenu .department-link:last-child {
@@ -104,7 +111,20 @@
 
 .submenu .department-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  padding-left: 30px;
+  padding-left: 30px; /* Keep the slide effect */
+}
+
+/* Ensure consistent height for all submenu levels */
+.department-subgroup .submenu .department-link {
+  padding: 8px 25px; /* Same as second-level submenu */
+  min-height: 32px; /* Consistent height across all levels */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.department-subgroup .submenu .department-link:hover {
+  padding-left: 30px; /* Consistent hover effect */
 }
 
 .expandable {
@@ -145,9 +165,11 @@
   .submenu.active {
     display: block;
   }
-
   .submenu .department-link {
     padding-left: 40px;
+    min-height: 32px; /* Maintain consistent height on mobile */
+    display: flex;
+    align-items: center;
   }
 
   .submenu .department-link:hover {

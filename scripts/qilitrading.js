@@ -3,41 +3,6 @@ import {products} from '../data/products.js';
 import {printheadProducts} from '../data/printhead-products.js';
 import { formatCurrency } from './utils/money.js';
 
-
-// Function to generate star rating HTML
-function generateStarRating(rating) {
-  const fullStars = Math.floor(rating.stars);
-  const hasHalfStar = rating.stars % 1 !== 0;
-  let starsHTML = '';
-  
-  // Add full stars
-  for (let i = 0; i < fullStars; i++) {
-    starsHTML += '★';
-  }
-  
-  // Add half star if needed
-  if (hasHalfStar) {
-    starsHTML += '☆';
-  }
-  
-  // Add empty stars to make 5 total
-  const remainingStars = 5 - Math.ceil(rating.stars);
-  for (let i = 0; i < remainingStars; i++) {
-    starsHTML += '☆';
-  }
-  
-  return `
-    <div class="product-rating">
-      <div class="product-rating-stars">
-        ${starsHTML}
-      </div>
-      <div class="product-rating-count link-primary">
-        ${rating.count}
-      </div>
-    </div>
-  `;
-}
-
 // Function to render regular products
 function renderProducts(productList) {
   let productsHTML = '';
@@ -86,7 +51,7 @@ function renderProducts(productList) {
   return productsHTML;
 }
 
-// Function to render printhead products with ratings
+// Function to render printhead products without ratings
 function renderPrintheadProducts(productList) {
   let productsHTML = '';
   productList.forEach((product) => {
@@ -102,8 +67,6 @@ function renderPrintheadProducts(productList) {
             ${product.name}
           </a>
         </div>
-
-        ${generateStarRating(product.rating)}
 
         <div class="product-price">
           ${formatCurrency(product.price)}
