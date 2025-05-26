@@ -42,50 +42,113 @@
           <div class="cart-text">Cart</div>
         </a>
       </div>
-    </div>
+    </div>    <div class="main">
+      <!-- Breadcrumb navigation -->
+      <div class="breadcrumb-container js-breadcrumb-container">
+        <span class="breadcrumb-home">Home</span>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-category js-breadcrumb-category">Print Head&Parts</span>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-subcategory js-breadcrumb-subcategory">Inkjet Printheads</span>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-brand js-breadcrumb-brand">Epson Printheads</span>
+      </div>
 
-    <div class="main">
+      <!-- Product detail header -->
+      <div class="product-title-container">
+        <h1 class="product-title js-product-name"></h1>
+      </div>
+
       <div class="product-detail-grid">
         <div class="product-image-section">
-          <img class="product-image js-product-image">
+          <!-- Main product image -->
+          <div class="product-main-image-container">
+            <img class="product-image js-product-image">
+          </div>
+          <!-- Product image thumbnails with scroll arrows -->
+          <div class="product-thumbnails-wrapper">
+            <button class="thumbnail-arrow left js-thumbnail-arrow-left" aria-label="Scroll left">&#8592;</button>
+            <div class="product-thumbnails js-product-thumbnails">
+              <!-- Thumbnails will be inserted by JavaScript -->
+            </div>
+            <button class="thumbnail-arrow right js-thumbnail-arrow-right" aria-label="Scroll right">&#8594;</button>
+          </div>
         </div>
 
         <div class="product-detail-section">
-          <div class="product-name js-product-name"></div>
+          <!-- Price section -->
+          <div class="product-price-container">
+            <div class="product-price js-product-price"></div>
+            <div class="product-original-price js-product-original-price"></div>
+          </div>
           
+          <!-- Product rating -->
           <div class="product-rating-container">
             <img class="product-rating-stars js-product-rating">
             <div class="product-rating-count js-product-rating-count"></div>
           </div>
 
-          <div class="product-price js-product-price"></div>
+          <!-- Product tags/labels -->
+          <div class="product-tags js-product-tags">
+            <!-- Tags will be inserted by JavaScript -->
+          </div>
           
-          <div class="product-description js-product-description">
-          </div>
+          <!-- Quantity selector and Add to Cart -->
+          <div class="product-purchase-container">
+            <div class="product-quantity-container">
+              <select class="js-quantity-selector">
+                <option selected value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
 
-          <div class="product-quantity-container">
-            <select class="js-quantity-selector">
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
+            <div class="added-to-cart js-added-message">
+              <img src="images/icons/checkmark.png">
+              Added
+            </div>
 
-          <div class="added-to-cart js-added-message">
-            <img src="images/icons/checkmark.png">
-            Added
+            <button class="add-to-cart-button js-add-to-cart">
+              Add to Cart
+            </button>
           </div>
-
-          <button class="add-to-cart-button js-add-to-cart">
-            Add to Cart
-          </button>
+        </div>
+      </div>      <!-- Product details tabs -->
+      <div class="product-info-tabs">
+        <div class="tab-headers">
+          <div class="tab-header active" data-tab="product-details">Product Details</div>
+        </div>
+        
+        <div class="tab-content">
+          <div class="tab-panel active" id="product-details">
+            <div class="product-description js-product-description"></div>
+            <div class="product-details-content js-product-details-content"></div>
+            
+            <!-- Compatibility section directly below product details -->
+            <div class="product-compatibility-section" data-tab="compatibility" style="display: block;">
+              <h2>Compatibility</h2>
+              <div class="product-compatibility js-product-compatibility"></div>
+            </div>
+            
+            <!-- Specifications section directly below compatibility -->
+            <div class="product-specifications-section" data-tab="specifications" style="display: block;">
+              <h2>Specifications</h2>
+              <div class="product-specifications js-product-specifications"></div>
+            </div>
+            
+            <!-- Reviews section directly below specifications -->
+            <div class="product-reviews-section" data-tab="reviews" style="display: block;">
+              <h2>Reviews</h2>
+              <div class="product-reviews js-product-reviews"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
