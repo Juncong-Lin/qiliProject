@@ -19,41 +19,212 @@ export const printheadProducts = {
       image: 'images/products-detail/Inkjet Printheads/Canon Printhead/Canon PF-05 Printhead/image/Canon PF-05 Printhead.img_1.jpg',
       price: 219700
     }
-  ],
-  epson: [    {
-      id: 'epson-i3200-u1',
-      name: 'Epson I3200-U1',
-      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I3200-U1 UV Printhead (I3200-U1 HD) for UV a/image/Epson I3200-U1 UV Printhead (I3200-U1 HD) for UV a.img_1.jpg',
-      price: 129900
+  ],  epson: [
+    {
+      id: 'epson-7700-9700-9910-7910',
+      name: 'Epson 7700/9700/9910/7910 Printhead - F19101',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson 7700 _ 9700 _ 9910 _ 7910 Printhead - F19101/image/Epson 7700 _ 9700 _ 9910 _ 7910 Printhead - F19101.img_1.jpg',
+      price: 189900
     },
     {
-      id: 'epson-i1600-a1',
-      name: 'Epson I1600-A1',
+      id: 'epson-d700-d880',
+      name: 'Epson D700/D880 Printhead - FA170200030',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson D700 _ D880 Printhead - FA170200030/image/Epson D700 _ D880 Printhead - FA170200030.img_1.jpg',
+      price: 159900
+    },
+    {
+      id: 'epson-dx4-eco-solvent',
+      name: 'Epson DX4 Eco Solvent Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson DX4 Eco Solvent Printhead/image/Epson DX4 Eco Solvent Printhead.img_1.jpg',
+      price: 119900
+    },
+    {
+      id: 'epson-f1440-a1',
+      name: 'Epson F1440-A1 (DX5) Printhead for Chinese Printer',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/Epson F1440-A1 (DX5) Printhead for Chinese Printer.img_1.jpg',
+      price: 79900
+    },
+    {
+      id: 'epson-i1600-a1-water-based',
+      name: 'Epson I1600-A1 Water-based Printhead for DTF/Sub',
       image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I1600-A1 Water-based Printhead for DTF _ Sub/image/Epson I1600-A1 Water-based Printhead for DTF _ Sub.img_1.jpg',
       price: 98900
     },
     {
-      id: 'epson-f1440-a1',
-      name: 'Epson F1440-A1',
-      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/Epson F1440-A1 (DX5) Printhead for Chinese Printer.img_1.jpg',
-      price: 79900
-    },    {
-      id: 'epson-xp-600',
-      name: 'Epson XP-600',
-      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson XP-600 F1080-A1 DX11 Eco-Solvent, UV, and Wa/image/Epson XP-600 F1080-A1 DX11 Eco-Solvent, UV, and Wa.img_1.jpg',
+      id: 'epson-i1600-e1-eco-solvent',
+      name: 'Epson I1600-E1 Eco Solvent Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I1600-E1 Eco Solvent Printhead/image/Epson I1600-E1 Eco Solvent Printhead.img_1.jpg',
+      price: 109900
+    },
+    {
+      id: 'epson-i1600-u1-uv',
+      name: 'Epson I1600-U1 UV Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I1600-U1 UV Printhead/image/Epson I1600-U1 UV Printhead.img_1.jpg',
+      price: 114900
+    },
+    {
+      id: 'epson-i3200-8-a1hd-aqueous',
+      name: 'Epson I3200(8)-A1HD Aqueous Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I3200(8)-A1HD Aqueous Printhead/image/Epson I3200(8)-A1HD Aqueous Printhead.img_1.jpg',
+      price: 124900
+    },
+    {
+      id: 'epson-i3200-e1-eco-solvent',
+      name: 'Epson I3200-E1 Eco Solvent Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I3200-E1 Eco Solvent Printhead/image/Epson I3200-E1 Eco Solvent Printhead.img_1.jpg',
+      price: 134900
+    },
+    {
+      id: 'epson-i3200-u1-uv-hd',
+      name: 'Epson I3200-U1 UV Printhead (I3200-U1 HD) for UV a',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I3200-U1 UV Printhead (I3200-U1 HD) for UV a/image/Epson I3200-U1 UV Printhead (I3200-U1 HD) for UV a.img_1.jpg',
+      price: 129900
+    },
+    {
+      id: 'epson-i3200-u1-uv-dtf',
+      name: 'Epson I3200-U1 UV Printhead for UV DTF Printers',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I3200-U1 UV Printhead for UV DTF Printers/image/Epson I3200-U1 UV Printhead for UV DTF Printers.img_1.jpg',
+      price: 129900
+    },
+    {
+      id: 'epson-k100-k105-k200-k205-k305',
+      name: 'Epson K100/K105/K200/K205/K305 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson K100 _ K105 _ K200 _ K205 _ K305 Printhead -/image/Epson K100 _ K105 _ K200 _ K205 _ K305 Printhead -.img_1.jpg',
+      price: 149900
+    },
+    {
+      id: 'epson-l1300-me1100-me70-me650fn-c110',
+      name: 'Epson L1300/ME1100/ME70/ME650FN/C110 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson L1300 _ ME1100 _ ME70 _ ME650FN _ C110 Print/image/Epson L1300 _ ME1100 _ ME70 _ ME650FN _ C110 Print.img_1.jpg',
       price: 89900
-    },    {
-      id: 'epson-dx7-eco',
-      name: 'ECO Solvent DX7',
-      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson DX4 Eco Solvent Printhead/image/Epson DX4 Eco Solvent Printhead.img_1.jpg',
-      price: 119900
-    },    {
-      id: 'epson-stylus-1390',
-      name: 'Stylus Photo 1390',
+    },
+    {
+      id: 'epson-l1440-u2',
+      name: 'Epson L1440-U2 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson L1440-U2 Printhead/image/Epson L1440-U2 Printhead.img_1.jpg',
+      price: 94900
+    },
+    {
+      id: 'epson-l301-l360-l120',
+      name: 'Epson L301/L360/L120 Printhead - FA04010',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson L301 _ L360 _ L120 Printhead - FA04010/image/Epson L301 _ L360 _ L120 Printhead - FA04010.img_1.jpg',
+      price: 59900
+    },
+    {
+      id: 'epson-me510-me520-me535-me620f',
+      name: 'Epson ME-510/ME-520/ME-535/ME-620F Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson ME-510 _ ME-520 _ ME-535 _ ME-620F Printhead/image/Epson ME-510 _ ME-520 _ ME-535 _ ME-620F Printhead.img_1.jpg',
+      price: 74900
+    },
+    {
+      id: 'epson-me80w-t40-tx550-tx620',
+      name: 'Epson ME80W/T40/TX550/TX620 Printhead - F190',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson ME80W _ T40 _ TX550 _ TX620 Printhead - F190/image/Epson ME80W _ T40 _ TX550 _ TX620 Printhead - F190.img_1.jpg',
+      price: 69900
+    },
+    {
+      id: 'epson-p6080-p8080-7908-9908-9890',
+      name: 'Epson P6080/P8080/7908/9908/9890 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson P6080 _ P8080 _ 7908 _ 9908 _ 9890 Printhead/image/Epson P6080 _ P8080 _ 7908 _ 9908 _ 9890 Printhead.img_1.jpg',
+      price: 179900
+    },
+    {
+      id: 'epson-r280-r330-l850',
+      name: 'Epson R280/R330/L850 Printhead - F180000/F18',
       image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson R280 _ R330 _ L850 Printhead - F180000 _ F18/image/Epson R280 _ R330 _ L850 Printhead - F180000 _ F18.img_1.jpg',
       price: 69900
+    },
+    {
+      id: 'epson-s3200-a1-aqueous',
+      name: 'Epson S3200-A1 Aqueous Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson S3200-A1 Aqueous Printhead/image/Epson S3200-A1 Aqueous Printhead.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'epson-s3200-u3-uv',
+      name: 'Epson S3200-U3 UV Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson S3200-U3 UV Printhead/image/Epson S3200-U3 UV Printhead.img_1.jpg',
+      price: 149900
+    },
+    {
+      id: 'epson-sc-p10000-p10050-p10070-p20000-p20050-p200',
+      name: 'EPSON SC-P10000/P10050/P10070/P20000/P20050/P200',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/EPSON SC-P10000 P10050 P10070 _ P20000 P20050 P200/image/EPSON SC-P10000 P10050 P10070 _ P20000 P20050 P200.img_1.jpg',
+      price: 199900
+    },
+    {
+      id: 'epson-stylus-pro-11880-11880c',
+      name: 'Epson Stylus Pro 11880/11880C Printhead - F17900',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson Stylus Pro 11880 _ 11880C Printhead - F17900/image/Epson Stylus Pro 11880 _ 11880C Printhead - F17900.img_1.jpg',
+      price: 169900
+    },
+    {
+      id: 'epson-surecolor-f570',
+      name: 'Epson SureColor F570 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson SureColor F570 Printhead/image/Epson SureColor F570 Printhead.img_1.jpg',
+      price: 154900
+    },
+    {
+      id: 'epson-surecolor-f9470',
+      name: 'Epson SureColor F9470 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson SureColor F9470 Printhead/image/Epson SureColor F9470 Printhead.img_1.jpg',
+      price: 184900
+    },
+    {
+      id: 'epson-t3200-u3-uv',
+      name: 'Epson T3200-U3 UV Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson T3200-U3 UV Printhead/image/Epson T3200-U3 UV Printhead.img_1.jpg',
+      price: 159900
+    },
+    {
+      id: 'epson-wf-4720-first-locked',
+      name: 'Epson WF-4720 Printhead (First Locked)',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson WF-4720 Printhead (First Locked)/image/Epson WF-4720 Printhead (First Locked).img_1.jpg',
+      price: 79900
+    },
+    {
+      id: 'epson-wf-4720-second-locked',
+      name: 'Epson WF-4720 Printhead (Second Locked)',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson WF-4720 Printhead (Second Locked)/image/Epson WF-4720 Printhead (Second Locked).img_1.jpg',
+      price: 79900
+    },
+    {
+      id: 'epson-wf-7710-wf-7621',
+      name: 'Epson WF-7710/WF-7621 Printhead - FA13000',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson WF-7710 _ WF-7621 Printhead - FA13000/image/Epson WF-7710 _ WF-7621 Printhead - FA13000.img_1.jpg',
+      price: 84900
+    },
+    {
+      id: 'epson-wf-c20600c-aqueous',
+      name: 'Epson WF-C20600c Aqueous Printhead Assembly',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson WF-C20600c Aqueous Printhead Assembly/image/Epson WF-C20600c Aqueous Printhead Assembly.img_1.jpg',
+      price: 174900
+    },
+    {
+      id: 'epson-xp-201-l351-l353',
+      name: 'Epson XP-201/L351/L353 Printhead - FA04000/F',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson XP-201 _ L351 _ L353 Printhead - FA04000 _ F/image/Epson XP-201 _ L351 _ L353 Printhead - FA04000 _ F.img_1.jpg',
+      price: 64900
+    },
+    {
+      id: 'epson-xp-600-f1080-a1-dx11',
+      name: 'Epson XP-600 F1080-A1 DX11 Eco-Solvent, UV, and Wa',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson XP-600 F1080-A1 DX11 Eco-Solvent, UV, and Wa/image/Epson XP-600 F1080-A1 DX11 Eco-Solvent, UV, and Wa.img_1.jpg',
+      price: 89900
+    },
+    {
+      id: 'epson-xp-6000-xp-15000',
+      name: 'Epson XP-6000/XP-15000 Printhead - FA38020',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson XP-6000 _ XP-15000 Printhead - FA38020/image/Epson XP-6000 _ XP-15000 Printhead - FA38020.img_1.jpg',
+      price: 94900
+    },
+    {
+      id: 'us-stock-epson-i3200-u1-uv-dtf',
+      name: 'US stock Epson I3200-U1 UV Printhead for UV DTF Pr',
+      image: 'images/products-detail/Inkjet Printheads/Epson Printhead/US stock Epson I3200-U1 UV Printhead for UV DTF Pr/image/US stock Epson I3200-U1 UV Printhead for UV DTF Pr.img_1.jpg',
+      price: 139900
     }
-  ],  konica: [
+  ],konica: [
     {
       id: 'konica-1024i-lhe',
       name: 'KONICA 1024i LHE 30PL UV',

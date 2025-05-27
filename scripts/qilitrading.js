@@ -8,13 +8,12 @@ function renderProducts(productList) {
   let productsHTML = '';
   productList.forEach((product) => {
     productsHTML += `
-      <div class="product-container">
-        <div class="product-image-container">
+      <div class="product-container">        <div class="product-image-container">
           <a href="detail.html?productId=${product.id}" class="product-image-link">
             <img class="product-image" src="${product.image}">
           </a>
         </div>
-        <div class="product-name limit-text-to-2-lines">
+        <div class="product-name limit-text-to-3-lines">
           <a href="detail.html?productId=${product.id}" class="product-link">
             ${product.name}
           </a>
@@ -61,8 +60,7 @@ function renderPrintheadProducts(productList) {
           <a href="detail.html?productId=${product.id}" class="product-image-link">
             <img class="product-image" src="${product.image}">
           </a>
-        </div>
-        <div class="product-name limit-text-to-2-lines">
+        </div>        <div class="product-name limit-text-to-3-lines">
           <a href="detail.html?productId=${product.id}" class="product-link">
             ${product.name}
           </a>
