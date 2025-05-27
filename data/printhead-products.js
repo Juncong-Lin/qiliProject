@@ -226,10 +226,52 @@ export const printheadProducts = {
     }
   ],konica: [
     {
+      id: 'konica-1024-snb',
+      name: 'KONICA 1024 SNB Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/KONICA 1024 SNB Printhead/image/KONICA 1024 SNB Printhead.img_1.jpg',
+      price: 179900
+    },
+    {
       id: 'konica-1024i-lhe',
       name: 'KONICA 1024i LHE 30PL UV',
       image: 'images/products-detail/Inkjet Printheads/Konica Printhead/KONICA 1024i LHE 30PL UV Printhead/image/KONICA 1024i LHE 30PL UV Printhead.img_1.jpg',
       price: 189900
+    },
+    {
+      id: 'konica-1024i-mae-c',
+      name: 'KONICA 1024i MAE-C 13PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/KONICA 1024i MAE-C 13PL Printhead/image/KONICA 1024i MAE-C 13PL Printhead.img_1.jpg',
+      price: 174900
+    },
+    {
+      id: 'konica-3688h-6pl-uv',
+      name: 'Konica 3688H 6PL UV Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica 3688H 6PL UV Printhead/image/Konica 3688H 6PL UV Printhead.img_1.jpg',
+      price: 164900
+    },
+    {
+      id: 'konica-512i-lnb-30pl',
+      name: 'Konica 512i LNB-30PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica 512i LNB-30PL Printhead/image/Konica 512i LNB-30PL Printhead.img_1.jpg',
+      price: 154900
+    },
+    {
+      id: 'konica-hs2000-km1024i-she',
+      name: 'Konica HS2000 (KM1024i SHE) Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica HS2000 (KM1024i SHE) Printhead/image/Konica HS2000 (KM1024i SHE) Printhead.img_1.jpg',
+      price: 194900
+    },
+    {
+      id: 'konica-km-hs1000',
+      name: 'Konica KM HS1000 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM HS1000 Printhead/image/Konica KM HS1000 Printhead.img_1.jpg',
+      price: 184900
+    },
+    {
+      id: 'konica-km1024-lnb-42pl',
+      name: 'Konica KM1024 LNB 42PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM1024 LNB 42PL Printhead/image/Konica KM1024 LNB 42PL Printhead.img_1.jpg',
+      price: 172900
     },
     {
       id: 'konica-km1024-mhb',
@@ -238,12 +280,66 @@ export const printheadProducts = {
       price: 169900
     },
     {
+      id: 'konica-km1024-mnb-14pl',
+      name: 'Konica KM1024 MNB 14PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM1024 MNB 14PL Printhead/image/Konica KM1024 MNB 14PL Printhead.img_1.jpg',
+      price: 167900
+    },
+    {
+      id: 'konica-km1024-shb-6pl',
+      name: 'Konica KM1024 SHB 6PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM1024 SHB 6PL Printhead/image/Konica KM1024 SHB 6PL Printhead.img_1.jpg',
+      price: 159900
+    },
+    {
+      id: 'konica-km1024i-6988h',
+      name: 'Konica KM1024i 6988H Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM1024i 6988H Printhead/image/Konica KM1024i 6988H Printhead.img_1.jpg',
+      price: 176900
+    },
+    {
+      id: 'konica-km1024i-sae-c-6pl',
+      name: 'Konica KM1024i SAE-C 6PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM1024i SAE-C 6PL Printhead/image/Konica KM1024i SAE-C 6PL Printhead.img_1.jpg',
+      price: 162900
+    },
+    {
+      id: 'konica-km512-lh-42pl-uv',
+      name: 'Konica KM512 LH 42PL UV Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512 LH 42PL UV Printhead/image/Konica KM512 LH 42PL UV Printhead.img_1.jpg',
+      price: 152900
+    },
+    {
+      id: 'konica-km512-ln-42pl',
+      name: 'Konica KM512 LN 42PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512 LN 42PL Printhead/image/Konica KM512 LN 42PL Printhead.img_1.jpg',
+      price: 147900
+    },
+    {
+      id: 'konica-km512-lnx-35pl',
+      name: 'Konica KM512 LNX 35PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512 LNX 35PL Printhead/image/Konica KM512 LNX 35PL Printhead.img_1.jpg',
+      price: 144900
+    },
+    {
       id: 'konica-km512-mh',
       name: 'KM512 MH 14PL UV',
       image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512 MH 14PL UV Printhead/image/Konica KM512 MH 14PL UV Printhead.img_1.jpg',
       price: 149900
+    },
+    {
+      id: 'konica-km512-mn-14pl',
+      name: 'Konica KM512 MN 14PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512 MN 14PL Printhead/image/Konica KM512 MN 14PL Printhead.img_1.jpg',
+      price: 142900
+    },
+    {
+      id: 'konica-km512i-shb-6pl-uv',
+      name: 'Konica KM512i SHB 6PL UV Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512i SHB 6PL UV Printhead/image/Konica KM512i SHB 6PL UV Printhead.img_1.jpg',
+      price: 139900
     }
-  ],  kyocera: [
+  ],kyocera: [
     {
       id: 'kyocera-kj4a',
       name: 'KJ4A Printhead',
