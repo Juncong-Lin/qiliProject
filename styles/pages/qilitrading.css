@@ -348,46 +348,51 @@
 
 /* Breadcrumb navigation styling */
 .breadcrumb-nav {
-  padding: 15px 0;
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 15px;
   font-size: 14px;
-  border-bottom: 1px solid #e7e7e7;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  padding-left: 15px;
-  animation: fadeInBreadcrumb 0.3s ease-out;
 }
 
 .breadcrumb-link {
-  color: #007185;
+  color: #0066c0;
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 .breadcrumb-link:hover {
-  color: #FF9900;
   text-decoration: underline;
 }
 
 .breadcrumb-separator {
   margin: 0 8px;
-  color: #565959;
+  color: #555;
 }
 
 .breadcrumb-current {
-  color: #232F3E;
-  font-weight: bold;
+  color: #333;
+  font-weight: 500;
 }
 
-@keyframes fadeInBreadcrumb {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.coming-soon {
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.coming-soon h2 {
+  font-size: 24px;
+  color: #0066c0;
+  margin-bottom: 15px;
+}
+
+.coming-soon p {
+  font-size: 16px;
+  color: #555;
 }
 
 /* Enhanced visual feedback for menu interactions */

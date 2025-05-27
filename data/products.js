@@ -54,28 +54,26 @@ class ProductWithSize extends Product {
 
 export const products = [
   {
-    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    image: 'images/products/Epson-DX5-Printhead-for-Chinese-Printers-Epson-F186000-Universal-New-Version-6578.jpg',
-    name: 'Epson (DX5) Printhead for Chinese Printers',
-    priceCents: 109700,
-    keywords: [
-      "Epson DX5",
-      "Printhead",
-      "Chinese Printers"
-    ]
+    id: 'sample-product-1',
+    name: 'Sample Product 1',
+    image: 'images/products/no-image-available.png',
+    priceCents: 199900,
+    keywords: ['sample', 'product', 'qilitrading']
   },
-
   {
-    id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    image: 'images/products/epson-dx7-printhead.jpeg',
-    name: 'Epson (DX5) Printhead for Chinese Printers',
-    priceCents: 109700,
-    keywords: [
-      "Epson DX5",
-      "Printhead",
-      "Chinese Printers"
-    ]
+    id: 'sample-product-2',
+    name: 'Sample Product 2',
+    image: 'images/products/no-image-available.png',
+    priceCents: 299900,
+    keywords: ['sample', 'product', 'qilitrading']
   },
+  {
+    id: 'sample-product-3',
+    name: 'Sample Product 3',
+    image: 'images/products/no-image-available.png',
+    priceCents: 399900,
+    keywords: ['sample', 'product', 'qilitrading']
+  }
 ].map((productDetails) => {
   if (productDetails.type === 'clothing') {
     return new ProductWithSize(productDetails);

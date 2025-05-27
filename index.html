@@ -51,21 +51,20 @@
 
     <!-- Sub Header Navigation -->
     <div class="sub-header">
-      <div class="sub-header-content">
-        <nav class="sub-header-nav">
+      <div class="sub-header-content">        <nav class="sub-header-nav">
           <a class="sub-header-link all-products-link active" href="javascript:void(0)" onclick="loadAllProducts()">All Products</a>
-          <a class="sub-header-link" href="javascript:void(0)">Inkjet Printers</a>
-          <a class="sub-header-link" href="javascript:void(0)">Print Heads</a>
-          <a class="sub-header-link" href="javascript:void(0)">Print Spare Parts</a>
-          <a class="sub-header-link" href="javascript:void(0)">Upgrading Kit</a>
-          <a class="sub-header-link" href="javascript:void(0)">Material</a>
-          <a class="sub-header-link" href="javascript:void(0)">LED & LCD</a>
-          <a class="sub-header-link" href="javascript:void(0)">Laser</a>
-          <a class="sub-header-link" href="javascript:void(0)">Cutting</a>
-          <a class="sub-header-link" href="javascript:void(0)">Channel Letter</a>
-          <a class="sub-header-link" href="javascript:void(0)">CNC</a>
-          <a class="sub-header-link" href="javascript:void(0)">Displays</a>
-          <a class="sub-header-link" href="javascript:void(0)">Other</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadInkjetPrinters && window.loadInkjetPrinters()">Inkjet Printers</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadAllPrintheadProducts()">Print Heads</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadPrintSpareParts && window.loadPrintSpareParts()">Print Spare Parts</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Upgrading Kit')">Upgrading Kit</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Material')">Material</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('LED & LCD')">LED & LCD</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Laser')">Laser</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Cutting')">Cutting</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Channel Letter')">Channel Letter</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('CNC')">CNC</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Displays')">Displays</a>
+          <a class="sub-header-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Other')">Other</a>
         </nav>
       </div>
     </div>

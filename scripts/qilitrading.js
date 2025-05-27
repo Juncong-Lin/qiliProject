@@ -64,10 +64,8 @@ function renderPrintheadProducts(productList) {
           <a href="detail.html?productId=${product.id}" class="product-link">
             ${product.name}
           </a>
-        </div>
-
-        <div class="product-price">
-          ${formatCurrency(product.price)}
+        </div>        <div class="product-price">
+          $${formatCurrency(product.price)}
         </div>
 
         <div class="product-quantity-container">
@@ -119,17 +117,58 @@ window.loadPrintheadProducts = function(brand) {
       attachAddToCartListeners();
         // Update page title or add a header to show which brand is selected
       updatePageHeader(`${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads`);
-      
-      // Update breadcrumb navigation
-      updateBreadcrumb(brand);
-      
-      // Update breadcrumb navigation
-      updateBreadcrumb(brand);
+          // Update breadcrumb navigation
+    updateBreadcrumb(brand);
       
       // Scroll to top of products
       scrollToProducts();
     }, 200);
   }
+};
+
+// Function to load all printhead products from all brands
+window.loadAllPrintheadProducts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Print Heads') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all printhead products from all brands
+    let allPrintheadProducts = [];
+    for (const brand in printheadProducts) {
+      allPrintheadProducts = allPrintheadProducts.concat(printheadProducts[brand]);
+    }
+    
+    const productsHTML = renderPrintheadProducts(allPrintheadProducts);
+    document.querySelector('.js-prodcts-grid').innerHTML = productsHTML;
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+      // Update page title or add a header to show print heads category
+    updatePageHeader('Print Heads');
+      // Update breadcrumb navigation
+    updateBreadcrumb('printHeads');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
 };
 
 // Function to load all regular products (default view)
@@ -152,11 +191,7 @@ window.loadAllProducts = function() {
     attachAddToCartListeners();
       // Reset page header
     updatePageHeader('All Products');
-    
-    // Update breadcrumb navigation
-    updateBreadcrumb('all');
-    
-    // Update breadcrumb navigation
+      // Update breadcrumb navigation
     updateBreadcrumb('all');
     
     // Scroll to top of products
@@ -187,11 +222,14 @@ function showLoadingState() {
 
 // Function to scroll to products section
 function scrollToProducts() {
-  const productsGrid = document.querySelector('.js-prodcts-grid');
-  if (productsGrid) {
-    productsGrid.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
+  // Get the main container to scroll to
+  const mainElement = document.querySelector('.main');
+  
+  if (mainElement) {
+    // Scroll to the main section with a slight offset to show the header
+    window.scrollTo({
+      top: mainElement.offsetTop - 120, // Reduce the scroll distance with an offset
+      behavior: 'smooth'
     });
   }
 }
@@ -225,15 +263,23 @@ function updateBreadcrumb(brand) {
     const mainElement = document.querySelector('.main');
     mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
   }
-  
-  if (brand && brand !== 'all') {
-    breadcrumbElement.innerHTML = `
-      <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
-      <span class="breadcrumb-separator">></span>
-      <a href="javascript:void(0)" class="breadcrumb-link">Print Heads</a>
-      <span class="breadcrumb-separator">></span>
-      <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads</span>
-    `;
+    if (brand && brand !== 'all') {
+    // Special case for 'printHeads' which is the main category
+    if (brand === 'printHeads') {
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-current">Print Heads</span>
+      `;
+    } else {
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">></span>
+        <a href="javascript:void(0)" onclick="loadAllPrintheadProducts()" class="breadcrumb-link">Print Heads</a>
+        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads</span>
+      `;
+    }
   } else {
     breadcrumbElement.innerHTML = `
       <span class="breadcrumb-current">All Products</span>
@@ -339,4 +385,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Function to handle loading of specific category products
+window.loadSpecificCategory = function(categoryName) {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Highlight the corresponding nav item
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === categoryName) {
+      link.classList.add('active');
+    }
+  });
+  
+  // Convert category for use in hash navigation
+  const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
+  
+  // Update URL hash without triggering a navigation
+  if (history.pushState) {
+    history.pushState(null, null, `#${categorySlug}`);
+  } else {
+    location.hash = `#${categorySlug}`;
+  }
+  
+  // For now, just show placeholder content
+  setTimeout(() => {
+    const message = `<div class="coming-soon">
+      <h2>${categoryName} Products</h2>
+      <p>Products for this category will be available soon!</p>
+    </div>`;
+    document.querySelector('.js-prodcts-grid').innerHTML = message;
+    
+    // Update page header
+    updatePageHeader(categoryName);
+    
+    // Update breadcrumb
+    let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+    if (!breadcrumbElement) {
+      breadcrumbElement = document.createElement('div');
+      breadcrumbElement.className = 'breadcrumb-nav';
+      
+      const mainElement = document.querySelector('.main');
+      mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+    }
+    
+    breadcrumbElement.innerHTML = `
+      <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">></span>
+      <span class="breadcrumb-current">${categoryName}</span>
+    `;
+    
+    // Scroll to products
+    scrollToProducts();
+  }, 200);
+};
+
+// Function to load Inkjet Printers
+window.loadInkjetPrinters = function() {
+  window.loadSpecificCategory('Inkjet Printers');
+};
+
+// Function to load Print Spare Parts  
+window.loadPrintSpareParts = function() {
+  window.loadSpecificCategory('Print Spare Parts');
+};
 
