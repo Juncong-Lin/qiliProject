@@ -24,7 +24,7 @@
   font-size: 14px;
   position: relative;
   transition: background-color 0.2s ease;
-  min-height: 32px; /* Ensure consistent height: 8px top + 8px bottom + 16px content */
+  height: 36px; /* Fixed height for consistent alignment */
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
   z-index: 100; /* Adjusted: to be above sub-header (z-index: 99) */
   transition: visibility 0s 0.2s, opacity 0.2s ease;
-  padding: 10px 0;
+  padding: 0; /* Removed padding to align items vertically */
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
@@ -98,7 +98,7 @@
   font-size: 13px;
   white-space: nowrap;
   transition: all 0.2s ease;
-  min-height: 32px; /* Ensure consistent height: 8px top + 8px bottom + 16px content */
+  height: 36px; /* Fixed height to match main sidebar links */
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -116,7 +116,7 @@
 /* Ensure consistent height for all submenu levels */
 .department-subgroup .submenu .department-link {
   padding: 8px 25px; /* Same as second-level submenu */
-  min-height: 32px; /* Consistent height across all levels */
+  height: 36px; /* Fixed height to match all other links */
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -139,6 +139,7 @@
   font-size: 18px;
   font-weight: bold;
   transition: transform 0.2s ease;
+  line-height: 1;
 }
 
 .expandable.active {
@@ -163,36 +164,32 @@
 
   .submenu.active {
     display: block;
-  }
-  .submenu .department-link {
+  }  .submenu .department-link {
     padding: 8px 25px; /* Adjusted from 8px 40px */
-    min-height: 32px;
+    height: 36px;
     display: flex;
     align-items: center;
   }
 
   .department-link {
     padding: 8px 25px;
-    min-height: 32px;
+    height: 36px;
   }
 
   .submenu .department-link:hover {
     padding-left: 30px; /* Adjusted from 45px */
   }
-
   /* Mobile styling for All Products link */
   .department-link[href="javascript:void(0)"][onclick="loadAllProducts()"] {
-    padding-top: 12px;    
-    padding-bottom: 12px; 
-    min-height: 40px;     
+    padding: 8px 25px;
+    height: 36px;     
   }
 }
 
-/* Special styling for "All Products" link to match submenu heights */
+/* Special styling for "All Products" link to align with other items */
 .department-link[href="javascript:void(0)"][onclick="loadAllProducts()"] {
-  padding-top: 12px;    /* Increased padding from 8px */
-  padding-bottom: 12px; /* Increased padding from 8px */
-  min-height: 40px;     /* Increased min-height from 32px */
+  padding: 8px 25px;   /* Match other links */
+  height: 36px;        /* Match other links */
 }
 
 .department-subgroup:hover > .submenu,
