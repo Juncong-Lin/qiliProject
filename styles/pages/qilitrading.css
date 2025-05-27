@@ -1,5 +1,5 @@
 .main {
-  margin-top: 105px; /* 60px (main header) + 45px (sub-header) */
+  margin-top: 97px; /* 60px (main header) + 32px (sub-header) + 5px (gap) */
   padding: 20px;
   padding-left: 200px; /* 180px sidebar + 20px spacing */
   width: 100%;
@@ -363,6 +363,7 @@
 
 .breadcrumb-link:hover {
   text-decoration: underline;
+  color: #c45500;
 }
 
 .breadcrumb-separator {

@@ -29,17 +29,8 @@ if (!product) {
 }
 
 if (product) {
-  // Update breadcrumbs based on product type
-  if (productType === 'printhead') {
-    document.querySelector('.js-breadcrumb-category').textContent = 'Print Heads';
-    document.querySelector('.js-breadcrumb-subcategory').textContent = 'Inkjet Printheads';
-    document.querySelector('.js-breadcrumb-brand').textContent = `${productBrand.charAt(0).toUpperCase() + productBrand.slice(1)} Printheads`;
-  } else {
-    // For regular products, we can customize breadcrumbs based on product category if available
-    document.querySelector('.js-breadcrumb-category').textContent = product.category || 'Products';
-    document.querySelector('.js-breadcrumb-subcategory').textContent = product.subcategory || '';
-    document.querySelector('.js-breadcrumb-brand').textContent = product.brand || '';
-  }
+  // Unified breadcrumb rendering
+  updateBreadcrumbDetail(product, productType, productBrand);
 
   // Update the product details on the page
   document.querySelector('.js-product-image').src = product.image;
@@ -483,3 +474,44 @@ document.querySelector('.js-add-to-cart')
       addedMessage.style.opacity = '0';
     }, 2000);
   });
+
+function updateBreadcrumbDetail(product, productType, productBrand) {
+  let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+  if (!breadcrumbElement) {
+    // Create breadcrumb if it doesn't exist
+    breadcrumbElement = document.createElement('div');
+    breadcrumbElement.className = 'breadcrumb-nav';
+    const mainElement = document.querySelector('.main');
+    mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+  }
+  if (productType === 'printhead') {
+    if (!productBrand || productBrand === 'all' || productBrand === 'printHeads') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Print Heads</span>
+      `;
+    } else {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#printheads" class="breadcrumb-link">Print Heads</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${productBrand.charAt(0).toUpperCase() + productBrand.slice(1)} Printheads</span>
+      `;
+    }
+  } else {
+    // For regular products, show category, subcategory, brand if available
+    let html = `<a href="index.html" class="breadcrumb-link">Home</a>`;
+    if (product.category) {
+      html += `<span class="breadcrumb-separator">&gt;</span><a href="index.html#${product.category.toLowerCase().replace(/\s+/g, '-')}", class="breadcrumb-link">${product.category}</a>`;
+    }
+    if (product.subcategory) {
+      html += `<span class="breadcrumb-separator">&gt;</span><a href="index.html#${product.subcategory.toLowerCase().replace(/\s+/g, '-')}", class="breadcrumb-link">${product.subcategory}</a>`;
+    }
+    if (product.brand) {
+      html += `<span class="breadcrumb-separator">&gt;</span><span class="breadcrumb-current">${product.brand}</span>`;
+    }
+    breadcrumbElement.innerHTML = html;
+  }
+}

@@ -268,21 +268,21 @@ function updateBreadcrumb(brand) {
     if (brand === 'printHeads') {
       breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Print Heads</span>
       `;
     } else {
       breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="loadAllPrintheadProducts()" class="breadcrumb-link">Print Heads</a>
-        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads</span>
       `;
     }
   } else {
     breadcrumbElement.innerHTML = `
-      <span class="breadcrumb-current">All Products</span>
+      <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
     `;
   }
 }
@@ -432,10 +432,9 @@ window.loadSpecificCategory = function(categoryName) {
       const mainElement = document.querySelector('.main');
       mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
     }
-    
-    breadcrumbElement.innerHTML = `
+      breadcrumbElement.innerHTML = `
       <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
-      <span class="breadcrumb-separator">></span>
+      <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${categoryName}</span>
     `;
     
