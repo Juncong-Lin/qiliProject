@@ -354,16 +354,94 @@ export const printheadProducts = {
     }
   ],mimaki: [
     {
-      id: 'mimaki-jv3-dx4',
-      name: 'JV3 DX4 Solvent',
+      id: 'gen5-maintenance-head-u-assy',
+      name: 'GEN5 Maintenance Head U Assy (Mimaki UCJV300)',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/GEN5 Maintenance Head U Assy is suitable for Mimak/image/GEN5 Maintenance Head U Assy is suitable for Mimak.img_1.jpg',
+      price: 129900
+    },
+    {
+      id: 'mimaki-jfx200-2513',
+      name: 'Mimaki JFX200-2513 Printhead - M022625',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki JFX200-2513 Printhead - M022625/image/Mimaki JFX200-2513 Printhead - M022625.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'mimaki-jv300-cjv300',
+      name: 'Mimaki JV300-130 / CJV300-150 Printhead - M015372',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki JV300-130 _ CJV300-150 Printhead - M015372/image/Mimaki JV300-130 _ CJV300-150 Printhead - M015372.img_1.jpg',
+      price: 134900
+    },
+    {
+      id: 'mimaki-jv34-ts34',
+      name: 'MIMAKI JV34 / TS34 Printhead - M010792',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/MIMAKI JV34 _ TS34 Printhead - M010792/image/MIMAKI JV34 _ TS34 Printhead - M010792.img_1.jpg',
+      price: 129900
+    },
+    {
+      id: 'mimaki-jv3-tx2-dx4',
+      name: 'Mimaki JV3_TX2 Eco Solvent Printhead (DX4)-M004372',
       image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki JV3_TX2 Eco Solvent Printhead (DX4)-M004372/image/Mimaki JV3_TX2 Eco Solvent Printhead (DX4)-M004372.img_1.jpg',
       price: 119900
     },
     {
-      id: 'mimaki-jv33-dx5',
-      name: 'JV33 DX5',
+      id: 'mimaki-mp-m027970-uv',
+      name: 'Mimaki Printhead MP-M027970 Maintenance Head UV Assy',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki Printhead MP-M027970 Maintenance Head UV As/image/Mimaki Printhead MP-M027970 Maintenance Head UV As.img_1.jpg',
+      price: 129900
+    },
+    {
+      id: 'mimaki-swj-320-gen5',
+      name: 'Mimaki SWJ-320 Printhead GEN5 Assy - M022650',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki SWJ-320 Printhead GEN5 Assy - M022650/image/Mimaki SWJ-320 Printhead GEN5 Assy - M022650.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'mimaki-ts500-1800-gen5',
+      name: 'Mimaki TS500-1800 Gen5 Printhead Assy - M022653',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki TS500-1800 Gen5 Printhead Assy - M022653/image/Mimaki TS500-1800 Gen5 Printhead Assy - M022653.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'mimaki-tx300-ts300',
+      name: 'Mimaki TX300 / TS300 Printhead - M015885',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki TX300 _ TS300 Printhead - M015885/image/Mimaki TX300 _ TS300 Printhead - M015885.img_1.jpg',
+      price: 129900
+    },
+    {
+      id: 'mimaki-ujf3042mk2-ujv160',
+      name: 'Mimaki UJF-3042MkII / UJV-160 Printhead - M018821',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki UJF-3042MkII _ UJV-160 Printhead - M018821/image/Mimaki UJF-3042MkII _ UJV-160 Printhead - M018821.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'mimaki-ujf3042uv-3042fx',
+      name: 'MIMAKI UJF-3042 UV / 3042 FX MP-M010010',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/MIMAKI UJF-3042 UV _ 3042 FX MP-M010010/image/MIMAKI UJF-3042 UV _ 3042 FX MP-M010010.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'mimaki-ujf-7151-plus',
+      name: 'Mimaki UJF-7151 Plus Printhead - M025074',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Mimaki UJF-7151 Plus Printhead - M025074/image/Mimaki UJF-7151 Plus Printhead - M025074.img_1.jpg',
+      price: 139900
+    },
+    {
+      id: 'mimaki-jfx500-2131-gen5',
+      name: 'Original Mimaki JFX500-2131 GEN5 UV Printhead - M0',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Original Mimaki JFX500-2131 GEN5 UV Printhead - M0/image/Original Mimaki JFX500-2131 GEN5 UV Printhead - M0.img_1.jpg',
+      price: 149900
+    },
+    {
+      id: 'mimaki-jv33-no-mem',
+      name: 'Original Mimaki JV33 Printhead (Without Memory Card)',
       image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Original Mimaki JV33 Printhead (Without Memory Car/image/Original Mimaki JV33 Printhead (Without Memory Car.img_1.jpg',
       price: 134900
+    },
+    {
+      id: 'mimaki-jv33-jv5-mem',
+      name: 'Original Mimaki JV33 / JV5 Printhead with Memory Board',
+      image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Original Mimaki JV33 _ JV5 Printhead with Memory B/image/Original Mimaki JV33 _ JV5 Printhead with Memory B.img_1.jpg',
+      price: 139900
     }
   ],
   mutoh: [
@@ -384,6 +462,18 @@ export const printheadProducts = {
       name: 'Mutoh VJ-1324 _ VJ-1624 _ VJ-1624W _ VJ-1924W Prin',
       image: 'images/products-detail/Inkjet Printheads/Mutoh Printhead/Mutoh VJ-1324 _ VJ-1624 _ VJ-1624W _ VJ-1924W Prin/image/Mutoh VJ-1324 _ VJ-1624 _ VJ-1624W _ VJ-1924W Prin.img_1.jpg',
       price: 82900
+    },
+    {
+      id: 'mutoh-vj-1618',
+      name: 'Mutoh VJ-1618 Printhead - DG-41914',
+      image: 'images/products-detail/Inkjet Printheads/Mutoh Printhead/Mutoh VJ-1618 Printhead - DG-41914/image/Mutoh VJ-1618 Printhead - DG-41914.img_1.jpg',
+      price: 0 // TODO: Add actual price if available
+    },
+    {
+      id: 'mutoh-drafstation-rj-900c',
+      name: 'Original Mutoh Drafstation RJ-900C / RJ-901C DX5 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Mutoh Printhead/Original Mutoh Drafstation RJ-900C _ RJ-901C DX5 P/image/Original Mutoh Drafstation RJ-900C _ RJ-901C DX5 P.img_1.jpg',
+      price: 0 // TODO: Add actual price if available
     }
   ],
   ricoh: [
@@ -400,22 +490,59 @@ export const printheadProducts = {
       price: 87900
     },
     {
-      id: 'ricoh-gen5-7pl-water',
+      id: 'ricoh-gen5-7pl-water-50',
       name: 'Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 (50',
       image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 (50/image/Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 (50.img_1.jpg',
       price: 99900
-    },    {
+    },
+    {
+      id: 'ricoh-gen5-7pl-water-tw',
+      name: 'Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 ',
+      image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 (Tw/image/Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 (Tw.img_1.jpg',
+      price: 99900
+    },
+    {
       id: 'ricoh-gen5-7pl-35pl-uv',
-      name: 'Ricoh Gen5 _ 7PL-35PL UV Printhead MH5420 (248mm,',
+      name: 'Ricoh Gen5 _ 7PL-35PL UV Printhead, 50cm Long w_ t',
       image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh Gen5 _ 7PL-35PL UV Printhead, 50cm Long w_ t/image/Ricoh Gen5 _ 7PL-35PL UV Printhead, 50cm Long w_ t.img_1.jpg',
       price: 114900
+    },
+    {
+      id: 'ricoh-gh2220',
+      name: 'Ricoh GH2220 Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh GH2220 Printhead/image/Ricoh GH2220 Printhead.img_1.jpg',
+      price: 89900
+    },
+    {
+      id: 'ricoh-mh5320',
+      name: 'Ricoh MH5320 Printhead, (Two Colors, 5PL) - J376-0',
+      image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh MH5320 Printhead, (Two Colors, 5PL) - J376-0/image/Ricoh MH5320 Printhead, (Two Colors, 5PL) - J376-0.img_1.jpg',
+      price: 109900
+    },
+    {
+      id: 'ricoh-th5241-gen5i',
+      name: 'Ricoh TH5241 (Gen5i) Printhead, (Four colors, 3PL)',
+      image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh TH5241 (Gen5i) Printhead, (Four colors, 3PL)/image/Ricoh TH5241 (Gen5i) Printhead, (Four colors, 3PL).img_1.jpg',
+      price: 119900
+    },
+    {
+      id: 'ricoh-th6310f',
+      name: 'Ricoh TH6310F Printhead, (1 color, 5PL) - J388-00',
+      image: 'images/products-detail/Inkjet Printheads/Ricoh Printhead/Ricoh TH6310F Printhead, (1 color, 5PL) - J388-00/image/Ricoh TH6310F Printhead, (1 color, 5PL) - J388-00.img_1.jpg',
+      price: 124900
     }
   ],
   roland: [
     {
       id: 'roland-bn-20',
-      name: 'Roland BN-20 _ XR-640 _ XF-640 Printhead (DX7) - 6',
+      name: 'Roland BN-20 _ XR-640 _ XF-640 Printhead (DX7) - 6701409010',
       image: 'images/products-detail/Inkjet Printheads/Roland Printhead/Roland BN-20 _ XR-640 _ XF-640 Printhead (DX7) - 6/image/Roland BN-20 _ XR-640 _ XF-640 Printhead (DX7) - 6.img_1.jpg',
+      price: 67900
+    },
+    {
+      id: 'roland-fh-740',
+      name: 'Roland FH-740 Printhead - 6701409010',
+      image: 'images/products-detail/Inkjet Printheads/Roland Printhead/Roland FH-740 Printhead - 6701409010/image/Roland FH-740 Printhead - 6701409010.img_1.jpg',
       price: 67900
     },
     {
@@ -429,6 +556,24 @@ export const printheadProducts = {
       name: 'Roland SJ-540 _ VP-300 (DX4) Eco Solvent Printhead',
       image: 'images/products-detail/Inkjet Printheads/Roland Printhead/Roland SJ-540 _ VP-300 (DX4) Eco Solvent Printhead/image/Roland SJ-540 _ VP-300 (DX4) Eco Solvent Printhead.img_1.jpg',
       price: 54900
+    },
+    {
+      id: 'roland-sv-lef2-300-dx4',
+      name: 'Roland SV LEF2-300 DX4 Inkjet Printhead -  6000005180',
+      image: 'images/products-detail/Inkjet Printheads/Roland Printhead/Roland SV LEF2-300 DX4 Inkjet Printhead -  6000005/image/Roland SV LEF2-300 DX4 Inkjet Printhead -  6000005.img_1.jpg',
+      price: 67900
+    },
+    {
+      id: 'roland-vg-540',
+      name: 'Roland VG-540 _ VG-640 Printhead - 6000005975',
+      image: 'images/products-detail/Inkjet Printheads/Roland Printhead/Roland VG-540 _ VG-640 Printhead - 6000005975/image/Roland VG-540 _ VG-640 Printhead - 6000005975.img_1.jpg',
+      price: 67900
+    },
+    {
+      id: 'roland-vs-series-dx6',
+      name: 'Roland VS Series DX6 Printhead for Roland VS, RA and RE',
+      image: 'images/products-detail/Inkjet Printheads/Roland Printhead/Roland VS Series DX6 Printhead for Roland VS, RA a/image/Roland VS Series DX6 Printhead for Roland VS, RA a.img_1.jpg',
+      price: 67900
     }
   ],
   seiko: [
@@ -481,40 +626,106 @@ export const printheadProducts = {
       name: 'StarFire SG1024 _ MA 25PL Printhead',
       image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/StarFire SG1024 _ MA 25PL Printhead/image/StarFire SG1024 _ MA 25PL Printhead.img_1.jpg',
       price: 134900
-    }
+    },
+    {
+      id: 'emerald-sapphire-qe-256-80',
+      name: 'Emerald Sapphire QE-256 _ 80 AAA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Emerald Sapphire QE-256 _ 80 AAA Printhead/image/Emerald Sapphire QE-256 _ 80 AAA Printhead.img_1.jpg',
+      price: 119900
+    },
+    {
+      id: 'spectra-galaxy-ja-256-50',
+      name: 'Spectra Galaxy JA 256 _ 50 AAA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra Galaxy JA 256 _ 50 AAA Printhead/image/Spectra Galaxy JA 256 _ 50 AAA Printhead.img_1.jpg',
+      price: 119900
+    },
+    {
+      id: 'spectra-nova-ja-256-80',
+      name: 'Spectra Nova JA 256_80 AAA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra Nova JA 256_80 AAA Printhead/image/Spectra Nova JA 256_80 AAA Printhead.img_1.jpg',
+      price: 119900
+    },
+    {
+      id: 'spectra-polaris-pq-512-35',
+      name: 'Spectra Polaris PQ-512_35 AAA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra Polaris PQ-512_35 AAA Printhead/image/Spectra Polaris PQ-512_35 AAA Printhead.img_1.jpg',
+      price: 104900
+    },
+    {
+      id: 'spectra-s-class-se-128-aa',
+      name: 'Spectra S-Class SE-128 AA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra S-Class SE-128 AA Printhead/image/Spectra S-Class SE-128 AA Printhead.img_1.jpg',
+      price: 89900
+    },
+    {
+      id: 'spectra-s-class-sl-128-aa',
+      name: 'Spectra S-Class SL-128 AA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra S-Class SL-128 AA Printhead/image/Spectra S-Class SL-128 AA Printhead.img_1.jpg',
+      price: 89900
+    },
+    {
+      id: 'spectra-s-class-sm-128-aa',
+      name: 'Spectra S-Class SM-128 AA Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra S-Class SM-128 AA Printhead/image/Spectra S-Class SM-128 AA Printhead.img_1.jpg',
+      price: 89900
+    },
+    {
+      id: 'spectra-sapphire-qs-256-30pl',
+      name: 'Spectra Sapphire QS-256 _ 30PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/Spectra Sapphire QS-256 _ 30PL Printhead/image/Spectra Sapphire QS-256 _ 30PL Printhead.img_1.jpg',
+      price: 89900
+    },
+    {
+      id: 'starfire-sg1024-ma-2c',
+      name: 'StarFire SG1024 _ MA-2C 25PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/StarFire SG1024 _ MA-2C 25PL Printhead/image/StarFire SG1024 _ MA-2C 25PL Printhead.img_1.jpg',
+      price: 134900
+    },
+    {
+      id: 'starfire-sg1024-sa-10pl',
+      name: 'StarFire SG1024 _ SA 10PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/StarFire SG1024 _ SA 10PL Printhead/image/StarFire SG1024 _ SA 10PL Printhead.img_1.jpg',
+      price: 134900
+    },
+    {
+      id: 'starfire-sg1024-sa-2c-10pl',
+      name: 'StarFire SG1024 _ SA-2C 10PL Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Spectra Printhead/StarFire SG1024 _ SA-2C 10PL Printhead/image/StarFire SG1024 _ SA-2C 10PL Printhead.img_1.jpg',
+      price: 134900
+    },
   ],
   toshiba: [
     {
       id: 'toshiba-ce4m-uv',
       name: 'TOSHIBA CE4M UV Printhead',
       image: 'images/products-detail/Inkjet Printheads/Toshiba Printhead/TOSHIBA CE4M UV Printhead/image/TOSHIBA CE4M UV Printhead.img_1.jpg',
-      price: 109900
+      price: 0
     }
   ],
   xaar: [
     {
-      id: 'xaar-128-40w',
+      id: 'xaar-128-40w-light-grey',
       name: 'Original New Xaar 128_40W Printhead (Light Grey)',
       image: 'images/products-detail/Inkjet Printheads/Xaar Printhead/Original New Xaar 128_40W Printhead (Light Grey)/image/Original New Xaar 128_40W Printhead (Light Grey).img_1.jpg',
-      price: 124900
+      price: 0
     },
     {
       id: 'xaar-1003-gs6u',
       name: 'XAAR 1003-GS6U Printhead',
       image: 'images/products-detail/Inkjet Printheads/Xaar Printhead/XAAR 1003-GS6U Printhead/image/XAAR 1003-GS6U Printhead.img_1.jpg',
-      price: 139900
+      price: 0
     },
     {
-      id: 'xaar-128-80l',
+      id: 'xaar-128-80l-blue',
       name: 'Xaar 128_80L Printhead (Blue)',
       image: 'images/products-detail/Inkjet Printheads/Xaar Printhead/Xaar 128_80L Printhead (Blue)/image/Xaar 128_80L Printhead (Blue).img_1.jpg',
-      price: 114900
+      price: 0
     },
     {
-      id: 'xaar-128-80w',
+      id: 'xaar-128-80w-purple',
       name: 'Xaar 128_80W Printhead (Purple)',
       image: 'images/products-detail/Inkjet Printheads/Xaar Printhead/Xaar 128_80W Printhead (Purple)/image/Xaar 128_80W Printhead (Purple).img_1.jpg',
-      price: 119900
+      price: 0
     }
   ]
 };

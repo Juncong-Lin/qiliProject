@@ -1,4 +1,4 @@
-# Roland SV LEF2-300 DX4 Inkjet Printhead -  6000005
+# Roland SV LEF2-300 DX4 Inkjet Printhead -  6000005180
 
 Roland SV LEF2-300 DX4Inkjet Printhead-  6000005180
 Printer Compatibility:Roland LEF-20, LEF-200, LEF2-200, LEF2-300, LEF-300

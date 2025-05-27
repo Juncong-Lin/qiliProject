@@ -1,4 +1,4 @@
-# Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 (Tw
+# Ricoh Gen5 _ 7PL Water-based Printhead, MH5421 
 
 Ricoh Gen5 / 7PL Water-basedPrinthead, MH5421 (Two Color, Short Cable: 248mm) - J36002
 Remarks:Original

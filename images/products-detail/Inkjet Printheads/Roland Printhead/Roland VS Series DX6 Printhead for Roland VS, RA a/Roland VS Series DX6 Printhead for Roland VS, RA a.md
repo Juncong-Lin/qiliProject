@@ -1,4 +1,4 @@
-# Roland VS Series DX6 Printhead for Roland VS, RA a
+# Roland VS Series DX6 Printhead for Roland VS, RA and RE eco-solvent printers.
 
 Roland VS Seriesdx6 printheadfor Roland VS, RA and RE eco-solvent printers - 6701409010
 The Roland VS Series DX6Printheadis suitable for Roland VS, RA and RE eco-solvent printers.

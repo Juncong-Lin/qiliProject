@@ -1,4 +1,4 @@
-# Roland BN-20 _ XR-640 _ XF-640 Printhead (DX7) - 6
+# Roland BN-20 _ XR-640 _ XF-640 Printhead (DX7) - 6701409010
 
 Roland BN-20 / XR-640 / XF-640Printhead(DX7) - 6701409010
 To be used with:Roland BN-20 / FH-740 / RA-640 / RE-640 / RF-640 / VS-300 / VS-300i / VS-420 / VS-540 / VS-540i / VS-640 / VS-640i/ XF-640 / XR-640
