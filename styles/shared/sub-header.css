@@ -1,0 +1,184 @@
+.sub-header {
+  background-color: #0066c0; /* Match Amazon's secondary blue */
+  color: white;
+  padding: 0;
+  position: fixed;
+  top: 60px; /* Position below main header */
+  left: 0;
+  right: 0;
+  height: 32px; /* Slightly reduced height */
+  z-index: 99;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sub-header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%; /* Full width */
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.sub-header-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.sub-header-nav {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 0;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 15px;
+}
+
+.sub-header-link {
+  color: white;
+  text-decoration: none;
+  padding: 0 15px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  height: 100%;
+  line-height: 32px;
+  display: inline-block;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sub-header-link:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sub-header-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.sub-header-link.active {
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  position: relative;
+}
+
+/* Special styling for "All Products" */
+.sub-header-link:first-child {
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sub-header-link:first-child.active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Shared All Products link styling */
+.all-products-link {
+  position: relative;
+  z-index: 2;
+}
+
+/* Sidebar placeholder for All Products link */
+.all-products-sidebar-placeholder {
+  height: 32px; /* Same as sub-header height */
+  position: relative;
+}
+
+/* Clone the sub-header All Products link visually into the sidebar */
+@media (min-width: 700px) {
+  .all-products-link {
+    position: fixed;
+    top: 92px; /* 60px header + 32px sub-header */
+    left: 0;
+    width: 180px;
+    height: 32px;
+    background: #005BBB;
+    color: #FF9900 !important;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 25px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    text-align: left;
+    font-size: 15px;
+    transition: none;
+    pointer-events: auto;
+  }
+  .sub-header .all-products-link {
+    width: auto;
+    height: 100%;
+    background: none;
+    color: white !important;
+    font-weight: 600;
+    padding-left: 15px;
+    padding-right: 15px;
+    justify-content: center;
+    position: static;
+    display: inline-block;
+    text-align: center;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 700px) {
+  .all-products-link {
+    position: static !important;
+    width: auto !important;
+    height: 100% !important;
+    background: none !important;
+    color: white !important;
+    font-weight: 600;
+    padding-left: 15px;
+    padding-right: 15px;
+    justify-content: center;
+    display: inline-block;
+    text-align: center;
+    font-size: 13px;
+  }
+  .all-products-sidebar-placeholder {
+    display: none;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .sub-header-link {
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sub-header-link {
+    font-size: 11px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sub-header-link {
+    font-size: 10px;
+    padding: 0 8px;
+  }
+}
+
+/* Adjust main content to account for sub-header */
+.main {
+  margin-top: 92px !important; /* 60px (main header) + 32px (sub-header) */
+}
+
+/* Special handling for checkout page */
+.checkout-header ~ .main {
+  margin-top: 92px !important;
+}

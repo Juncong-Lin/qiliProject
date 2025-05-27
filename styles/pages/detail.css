@@ -1,6 +1,6 @@
 .main {
   max-width: 1200px;
-  margin: 85px auto 100px;
+  margin: 135px auto 100px; /* 60px (main header) + 50px (sub-header) + 25px extra */
   padding: 0 20px;
 }
 

@@ -1,6 +1,6 @@
 .departments-sidebar {
   position: fixed;
-  top: 60px;
+  top: 92px; /* 60px (main header) + 32px (sub-header) */
   bottom: 0;
   left: 0;
   width: 180px;
@@ -43,18 +43,18 @@
   opacity: 0;
   position: fixed;
   left: 180px; /* Same as sidebar width */
-  top: 60px;
+  top: 92px; /* Adjusted: 60px (main header) + 32px (sub-header) */
   bottom: 0;
   width: 320px; /* Increased width for longer text */
   background-color: #003087;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 99;
+  z-index: 100; /* Adjusted: to be above sub-header (z-index: 99) */
   transition: visibility 0s 0.2s, opacity 0.2s ease;
   padding: 10px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  max-height: calc(100vh - 60px); /* Ensure it doesn't overflow viewport */
+  max-height: calc(100vh - 92px); /* Adjusted: Ensure it doesn\'t overflow viewport */
 }
 
 .department-subgroup {
@@ -96,7 +96,6 @@
 .submenu .department-link {
   padding: 8px 25px; /* Match the main sidebar height */
   font-size: 13px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
   transition: all 0.2s ease;
   min-height: 32px; /* Ensure consistent height: 8px top + 8px bottom + 16px content */
@@ -166,7 +165,7 @@
     display: block;
   }
   .submenu .department-link {
-    padding: 8px 40px;
+    padding: 8px 25px; /* Adjusted from 8px 40px */
     min-height: 32px;
     display: flex;
     align-items: center;
@@ -178,7 +177,7 @@
   }
 
   .submenu .department-link:hover {
-    padding-left: 45px;
+    padding-left: 30px; /* Adjusted from 45px */
   }
 
   /* Mobile styling for All Products link */

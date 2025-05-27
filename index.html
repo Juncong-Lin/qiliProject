@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">    <!-- Here are the CSS files for this page. -->    <link rel="stylesheet" href="styles/shared/general.css">
     <link rel="stylesheet" href="styles/shared/amazon-header.css">
+    <link rel="stylesheet" href="styles/shared/sub-header.css">
     <link rel="stylesheet" href="styles/shared/sidebar.css">
     <link rel="stylesheet" href="styles/pages/qilitrading.css">
   </head>
@@ -46,10 +47,29 @@
           <div class="cart-text">Cart</div>
         </a>
       </div>
-    </div>    <div class="departments-sidebar">
-      <div class="department-group">
-        <a class="department-link" href="javascript:void(0)" onclick="loadAllProducts()" style="font-weight: bold; color: #FF9900;">🏠 All Products</a>
+    </div>
+
+    <!-- Sub Header Navigation -->
+    <div class="sub-header">
+      <div class="sub-header-content">
+        <nav class="sub-header-nav">
+          <a class="sub-header-link all-products-link active" href="javascript:void(0)" onclick="loadAllProducts()">All Products</a>
+          <a class="sub-header-link" href="javascript:void(0)">Inkjet Printers</a>
+          <a class="sub-header-link" href="javascript:void(0)">Print Heads</a>
+          <a class="sub-header-link" href="javascript:void(0)">Print Spare Parts</a>
+          <a class="sub-header-link" href="javascript:void(0)">Upgrading Kit</a>
+          <a class="sub-header-link" href="javascript:void(0)">Material</a>
+          <a class="sub-header-link" href="javascript:void(0)">LED & LCD</a>
+          <a class="sub-header-link" href="javascript:void(0)">Laser</a>
+          <a class="sub-header-link" href="javascript:void(0)">Cutting</a>
+          <a class="sub-header-link" href="javascript:void(0)">Channel Letter</a>
+          <a class="sub-header-link" href="javascript:void(0)">CNC</a>
+          <a class="sub-header-link" href="javascript:void(0)">Displays</a>
+          <a class="sub-header-link" href="javascript:void(0)">Other</a>
+        </nav>
       </div>
+    </div>
+    <div class="departments-sidebar">
       <div class="departments-items">
         <div class="department-group">
           <a class="department-link expandable" href="javascript:void(0)">Inkjet Printers</a>
@@ -200,4 +220,5 @@
   </body>
     <script type="module" src="scripts/qilitrading.js"></script>
   <script src="scripts/sidebar.js"></script>
+  <script src="scripts/sub-header-nav.js"></script>
 </html>

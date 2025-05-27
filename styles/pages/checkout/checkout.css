@@ -3,7 +3,7 @@
   padding-left: 30px;
   padding-right: 30px;
 
-  margin-top: 140px;
+  margin-top: 170px; /* 60px (checkout header) + 50px (sub-header) + 60px extra */
   margin-bottom: 100px;
 
   /* margin-left: auto;
