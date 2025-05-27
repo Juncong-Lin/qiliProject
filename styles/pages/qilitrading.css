@@ -50,10 +50,10 @@
   }
 }
 
-/* Portrait orientation - prevent containers from becoming too huge */
+/* Portrait orientation - ensure containers have adequate width */
 @media (orientation: portrait) {
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
   }
 }
 
@@ -66,10 +66,10 @@
     display: none;
   }
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Fully responsive mobile grid */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Wider for mobile grid */
   }  .product-container {
-    height: 400px; /* Increased for 3-line names on tablet */
-    min-height: 400px;
+    height: 430px; /* Increased to ensure add to cart button fits */
+    min-height: 430px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -77,11 +77,11 @@
 
 @media (max-width: 450px) {
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Very responsive for very small screens */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Wider minimum width for small screens */
   }  .product-container {
     padding: 15px; /* Slightly reduce padding on very small screens */
-    height: 370px; /* Increased for 3-line names on mobile */
-    min-height: 370px;
+    height: 400px; /* Increased for full visibility of add to cart button */
+    min-height: 400px;
     width: 100%;
     box-sizing: border-box;
   }.product-name {
@@ -100,8 +100,8 @@
   display: flex;
   flex-direction: column;
     /* Ensure uniform container heights and consistent sizing */
-  min-height: 420px; /* Increased slightly to accommodate 3-line names */
-  height: 420px; /* Increased slightly to accommodate 3-line names */
+  min-height: 450px; /* Increased to ensure add to cart button is fully visible */
+  height: 450px; /* Increased to ensure add to cart button is fully visible */
   width: 100%; /* Ensure consistent width */
   box-sizing: border-box; /* Include padding and border in size calculations */
 }
@@ -192,6 +192,7 @@
 
 .product-spacer {
   flex: 1;
+  min-height: 10px; /* Ensure a minimum height for the spacer */
 }
 
 .added-to-cart {

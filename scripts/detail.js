@@ -31,7 +31,7 @@ if (!product) {
 if (product) {
   // Update breadcrumbs based on product type
   if (productType === 'printhead') {
-    document.querySelector('.js-breadcrumb-category').textContent = 'Print Head&Parts';
+    document.querySelector('.js-breadcrumb-category').textContent = 'Print Heads';
     document.querySelector('.js-breadcrumb-subcategory').textContent = 'Inkjet Printheads';
     document.querySelector('.js-breadcrumb-brand').textContent = `${productBrand.charAt(0).toUpperCase() + productBrand.slice(1)} Printheads`;
   } else {
