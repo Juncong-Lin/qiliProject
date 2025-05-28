@@ -1,7 +1,7 @@
 .main {
   margin-top: 97px; /* 60px (main header) + 32px (sub-header) + 5px (gap) */
   padding: 20px;
-  padding-left: 200px; /* 180px sidebar + 20px spacing */
+  padding-left: 170px; /* 150px sidebar + 20px spacing */
   width: 100%;
   box-sizing: border-box;
   overflow-x: hidden; /* Prevent horizontal scroll */

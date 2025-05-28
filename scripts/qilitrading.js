@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // Map sidebar category names to sub-header link names if needed
       const categoryMap = {
-        'All Products': 'All Products',
+        'See All Departments': 'See All Departments',
         'Inkjet Printers': 'Inkjet Printers',
         'Print Heads': 'Print Heads',
         'Print Spare Parts': 'Print Spare Parts',

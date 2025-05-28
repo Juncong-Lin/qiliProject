@@ -27,8 +27,7 @@ class SubHeaderNavigation {
     clickedLink.classList.add('active');
 
     // Handle different category actions
-    switch(category) {
-      case 'All Products':
+    switch(category) {      case 'See All Departments':
         if (typeof loadAllProducts === 'function') {
           loadAllProducts();
         } else {
@@ -307,7 +306,7 @@ class SubHeaderNavigation {
         break;
         
       default:
-        this.setActiveCategory('All Products');
+        this.setActiveCategory('See All Departments');
         if (typeof window.loadAllProducts === 'function') {
           window.loadAllProducts();
         }
