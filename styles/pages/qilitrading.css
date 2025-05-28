@@ -104,6 +104,7 @@
   height: 450px; /* Increased to ensure add to cart button is fully visible */
   width: 100%; /* Ensure consistent width */
   box-sizing: border-box; /* Include padding and border in size calculations */
+  position: relative;
 }
 
 .product-image-container {
@@ -199,14 +200,15 @@
   color: rgb(6, 125, 98);
   font-size: 16px;
 
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
+  /* Move to left and above the button */
+  display: inline-block;
+  position: static;
+  width: auto;
+  margin: 0 0 0 12px;
+  text-align: left;
+  vertical-align: middle;
   opacity: 0;
+  z-index: auto;
 }
 
 .added-to-cart img {
@@ -234,8 +236,9 @@
 
 .product-quantity-section {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 10px;
   height: 35px;
 }
@@ -429,6 +432,16 @@
 
 .department-link:hover::before {
   left: 100%;
+}
+
+/* Highlight the active sub-header link */
+.sub-header-link.active, .sub-header-link.selected {
+  background-color: #fff;
+  color: #003087;
+  border-bottom: 3px solid #FF9900;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  z-index: 2;
 }
 
 /* Improved mobile responsiveness */

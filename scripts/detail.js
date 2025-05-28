@@ -97,12 +97,14 @@ if (product) {
     // For regular products, set up default content
     setupRegularProductContent(product);
   }
-
   // Set up the product image gallery
   setupImageGallery(product);
   
   // Set up product information tabs
   setupProductTabs();
+  
+  // Initialize cart quantity display on page load
+  updateCartQuantity();
   
 } else {
   // Handle case when product is not found

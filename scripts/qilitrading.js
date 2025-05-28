@@ -348,6 +348,8 @@ function attachAddToCartListeners() {
 // Load default products on page load
 document.addEventListener('DOMContentLoaded', () => {
   loadAllProducts();
+  // Initialize cart quantity display on page load
+  updateCartQuantity();
 });
 
 function updateCartQuantity() {
@@ -416,32 +418,86 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// --- Highlight sub-header link when sidebar is clicked (handles nested/child links) ---
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.department-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      // Find the main sidebar category for this link
+      let sidebarCategory = link.textContent.trim();
+      // If this is a child link, try to get the parent expandable's text
+      const expandableParent = link.closest('.department-group, .department-subgroup');
+      let mainCategory = sidebarCategory;
+      if (expandableParent) {
+        const parentExpandable = expandableParent.querySelector('.expandable');
+        if (parentExpandable && parentExpandable !== link) {
+          mainCategory = parentExpandable.textContent.trim();
+        }
+      }
+      // Map sidebar category names to sub-header link names if needed
+      const categoryMap = {
+        'All Products': 'All Products',
+        'Inkjet Printers': 'Inkjet Printers',
+        'Print Heads': 'Print Heads',
+        'Print Spare Parts': 'Print Spare Parts',
+        'Upgrading Kit': 'Upgrading Kit',
+        'Material': 'Material',
+        'LED & LCD': 'LED & LCD',
+        'Laser': 'Laser',
+        'Cutting': 'Cutting',
+        'Channel Letter': 'Channel Letter',
+        'CNC': 'CNC',
+        'Displays': 'Displays',
+        'Other': 'Other',
+      };
+      // Use mainCategory if it matches a sub-header, else fallback to sidebarCategory
+      const matchCategory = categoryMap[mainCategory] || categoryMap[sidebarCategory];
+      document.querySelectorAll('.sub-header-link').forEach(subLink => {
+        subLink.classList.remove('active');
+        if (matchCategory && subLink.textContent.trim() === matchCategory) {
+          subLink.classList.add('active');
+        }
+      });
+    });
+  });
+});
+
 // Function to handle loading of specific category products
 window.loadSpecificCategory = function(categoryName) {
   // Hide the submenu after selection
   hideActiveSubmenus();
-  
+
   // Add loading animation
   showLoadingState();
-  
-  // Highlight the corresponding nav item
+
+  // --- Highlight the corresponding nav item (including special sidebar categories) ---
+  const subHeaderMap = {
+    'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
+    'Solvent Inket Printers': 'Inkjet Printers',
+    'UV Inkjet Printers Roll-To-Rollo': 'Inkjet Printers',
+    'UV Flatbed Printers': 'Inkjet Printers',
+    'Sublimation Printers': 'Inkjet Printers',
+    'Double Side Printers': 'Inkjet Printers',
+    // fallback: categoryName itself
+  };
   document.querySelectorAll('.sub-header-link').forEach(link => {
     link.classList.remove('active');
-    if (link.textContent.trim() === categoryName) {
+    if (
+      link.textContent.trim() === (subHeaderMap[categoryName] || categoryName)
+    ) {
       link.classList.add('active');
     }
   });
-  
+
   // Convert category for use in hash navigation
   const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
-  
+
   // Update URL hash without triggering a navigation
   if (history.pushState) {
     history.pushState(null, null, `#${categorySlug}`);
   } else {
     location.hash = `#${categorySlug}`;
   }
-  
+
   // For now, just show placeholder content
   setTimeout(() => {
     const message = `<div class="coming-soon">
@@ -449,25 +505,25 @@ window.loadSpecificCategory = function(categoryName) {
       <p>Products for this category will be available soon!</p>
     </div>`;
     document.querySelector('.js-prodcts-grid').innerHTML = message;
-    
+
     // Update page header
     updatePageHeader(categoryName);
-    
+
     // Update breadcrumb
     let breadcrumbElement = document.querySelector('.breadcrumb-nav');
     if (!breadcrumbElement) {
       breadcrumbElement = document.createElement('div');
       breadcrumbElement.className = 'breadcrumb-nav';
-      
+
       const mainElement = document.querySelector('.main');
       mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
     }
-      breadcrumbElement.innerHTML = `
+    breadcrumbElement.innerHTML = `
       <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${categoryName}</span>
     `;
-    
+
     // Scroll to products
     scrollToProducts();
   }, 200);
