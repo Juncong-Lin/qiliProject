@@ -173,6 +173,51 @@ class SubHeaderNavigation {
   handleHashNavigation(hash) {
     console.log('Handling hash navigation for:', hash);
     
+    // Check if this is a brand-specific printhead hash (e.g., 'printheads-epson')
+    if (hash.startsWith('printheads-')) {
+      const brand = hash.replace('printheads-', '');
+      console.log('Loading brand-specific printheads for:', brand);
+      
+      this.setActiveCategory('Print Heads');
+      this.expandPrintHeadsMenu();
+      
+      // Load brand-specific printhead products only if we're on the index page
+      if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+        if (typeof window.loadPrintheadProducts === 'function') {
+          console.log('Loading printhead products for brand:', brand);
+          
+          // Prevent automatic scrolling when loading through hash navigation
+          const originalScrollToProducts = window.scrollToProducts;
+          if (originalScrollToProducts) {
+            // Temporarily disable the scroll function
+            window.scrollToProducts = function() {
+              // Do a gentler scroll or no scroll at all
+              window.scrollTo({
+                top: 0,
+                behavior: 'auto'
+              });
+            };
+            
+            // Load brand-specific products
+            setTimeout(() => {
+              window.loadPrintheadProducts(brand);
+              
+              // Restore original function after a delay
+              setTimeout(() => {
+                window.scrollToProducts = originalScrollToProducts;
+              }, 500);
+            }, 100);
+          } else {
+            // If scrollToProducts isn't defined, just load products normally
+            setTimeout(() => window.loadPrintheadProducts(brand), 100);
+          }
+        } else {
+          console.warn('loadPrintheadProducts function not available');
+        }
+      }
+      return; // Exit early since we handled the brand-specific case
+    }
+    
     // First set the active category in the sub-header
     switch(hash) {      case 'printheads':
         this.setActiveCategory('Print Heads');

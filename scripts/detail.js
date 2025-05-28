@@ -490,14 +490,12 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <a href="index.html" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Print Heads</span>
-      `;
-    } else {
-      breadcrumbElement.innerHTML = `
+      `;    } else {      breadcrumbElement.innerHTML = `
         <a href="index.html" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="index.html#printheads" class="breadcrumb-link">Print Heads</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${productBrand.charAt(0).toUpperCase() + productBrand.slice(1)} Printheads</span>
+        <a href="index.html#printheads-${productBrand}" class="breadcrumb-link">${productBrand.charAt(0).toUpperCase() + productBrand.slice(1)} Printheads</a>
       `;
     }
   } else {

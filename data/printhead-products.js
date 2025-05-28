@@ -338,13 +338,18 @@ export const printheadProducts = {
       name: 'Konica KM512i SHB 6PL UV Printhead',
       image: 'images/products-detail/Inkjet Printheads/Konica Printhead/Konica KM512i SHB 6PL UV Printhead/image/Konica KM512i SHB 6PL UV Printhead.img_1.jpg',
       price: 139900
-    }
-  ],kyocera: [
+    }  ],kyocera: [
     {
       id: 'kyocera-kj4a',
       name: 'KJ4A Printhead',
       image: 'images/products-detail/Inkjet Printheads/Kyocera Printhead/Kyocera KJ4A-0300 300dpi Inkjet Printhead for UV I/image/Kyocera KJ4A-0300 300dpi Inkjet Printhead for UV I.img_1.jpg',
       price: 139900
+    },
+    {
+      id: 'kyocera-kj4a-aa06atz',
+      name: 'KJ4A-AA06ATZ 600dpi Printhead',
+      image: 'images/products-detail/Inkjet Printheads/Kyocera Printhead/Kyocera KJ4A-AA06ATZ 600dpi Inkjet Printhead for U/image/Kyocera KJ4A-AA06ATZ 600dpi Inkjet Printhead for U.img_1.jpg',
+      price: 169900
     },
     {
       id: 'kyocera-kj4b-uv',

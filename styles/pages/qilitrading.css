@@ -232,12 +232,25 @@
   background-color: #005BBB;
 }
 
+.product-quantity-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  height: 35px;
+}
+
+.product-quantity-container {
+  margin-bottom: 0;
+}
+
 .added-message {
   display: none;
   color: green;
   font-weight: bold;
-  text-align: center;
-  margin: 5px 0;
+  padding: 3px 8px;
+  margin-left: 10px;
+  animation: fadeIn 0.5s;
 }
 
 .page-header {
