@@ -301,12 +301,14 @@ class SubHeaderNavigation {
     }
     
     // First set the active category in the sub-header
-    switch(hash) {      case 'printheads':
+    switch(hash) {
+      case 'print-heads':
+      case 'printheads':
         this.setActiveCategory('Print Heads');
         
         // Expand the print heads menu in the sidebar
         this.expandPrintHeadsMenu();
-          // Load all printhead products only if we're on the index page
+        // Load all printhead products only if we're on the index page
         if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
           if (typeof window.loadAllPrintheadProducts === 'function') {
             console.log('Loading all printhead products');

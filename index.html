@@ -239,10 +239,15 @@
     <div class="departments-sidebar">
       <div class="departments-items">
         <div class="department-group">
-          <a class="department-link expandable" href="javascript:void(0)">Inkjet Printers</a>
+          <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Inkjet Printers')">Inkjet Printers</a>
           <div class="submenu">
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('DTF Printer')">DTF Printer</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('UV DTF Printer')">UV DTF Printer</a>
+            <div class="department-subgroup">
+              <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Direct to Fabric & Film')" data-subheader="Inkjet Printers">Direct to Fabric & Film</a>
+              <div class="submenu">
+                <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('DTF Printer')">DTF Printer</a>
+                <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('UV DTF Printer')">UV DTF Printer</a>
+              </div>
+            </div>
             <div class="department-subgroup">
               <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" data-subheader="Inkjet Printers">Eco-Solvent Inkjet Printers</a>
               <div class="submenu">
@@ -287,7 +292,7 @@
           </div>
         </div>
         <div class="department-group">          
-          <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadAllPrintheadProducts && window.loadAllPrintheadProducts()">Print Heads</a>          <div class="submenu">
+          <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadAllPrintheadProducts && window.loadAllPrintheadProducts(); window.location.hash = 'print-heads'">Print Heads</a>          <div class="submenu">
             <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('canon'); window.location.hash = 'printheads-canon'">Canon Printhead</a>
             <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('epson'); window.location.hash = 'printheads-epson'">Epson Printhead</a>
             <!--
