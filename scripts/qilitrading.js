@@ -465,7 +465,6 @@ document.addEventListener('DOMContentLoaded', () => {
 window.loadSpecificCategory = function(categoryName) {
   // Hide the submenu after selection
   hideActiveSubmenus();
-
   // Add loading animation
   showLoadingState();
 
@@ -473,8 +472,7 @@ window.loadSpecificCategory = function(categoryName) {
   const subHeaderMap = {
     'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
     'Solvent Inket Printers': 'Inkjet Printers',
-    'UV Inkjet Printers Roll-To-Rollo': 'Inkjet Printers',
-    'UV Flatbed Printers': 'Inkjet Printers',
+    'UV Inkjet Printers': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
     // fallback: categoryName itself
