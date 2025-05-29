@@ -20,12 +20,99 @@ class SubHeaderNavigation {
       // Mouse leave - hide submenu with delay
       link.addEventListener('mouseleave', (event) => {
         this.hideSubmenuWithDelay();
-      });
-      
-      // Click event for mobile/touch devices
+      });      // Click event for both submenu toggle and navigation
       link.addEventListener('click', (event) => {
-        event.preventDefault();
-        this.toggleSubmenu(event.target);
+        const submenuId = link.getAttribute('data-submenu');
+        const linkText = link.textContent.trim();
+        
+        // Check if we're on the index page by looking for product grid or if load functions exist
+        const isIndexPage = window.loadSpecificCategory && window.loadAllPrintheadProducts;
+        
+        // Handle navigation based on the category
+        if (isIndexPage) {
+          // We're on index page - use existing category loading functions
+          if (linkText === 'Inkjet Printers' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Inkjet Printers');
+            this.setActiveCategory('Inkjet Printers');
+          } else if (linkText === 'Print Heads' && window.loadAllPrintheadProducts) {
+            window.loadAllPrintheadProducts();
+            this.setActiveCategory('Print Heads');
+          } else if (linkText === 'Print Spare Parts' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Print Spare Parts');
+            this.setActiveCategory('Print Spare Parts');
+          } else if (linkText === 'Upgrading Kit' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Upgrading Kit');
+            this.setActiveCategory('Upgrading Kit');
+          } else if (linkText === 'Material' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Material');
+            this.setActiveCategory('Material');
+          } else if (linkText === 'LED & LCD' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('LED & LCD');
+            this.setActiveCategory('LED & LCD');
+          } else if (linkText === 'Laser' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Laser');
+            this.setActiveCategory('Laser');
+          } else if (linkText === 'Cutting' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Cutting');
+            this.setActiveCategory('Cutting');
+          } else if (linkText === 'Channel Letter' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Channel Letter');
+            this.setActiveCategory('Channel Letter');
+          } else if (linkText === 'CNC' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('CNC');
+            this.setActiveCategory('CNC');
+          } else if (linkText === 'Displays' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Displays');
+            this.setActiveCategory('Displays');
+          } else if (linkText === 'Other' && window.loadSpecificCategory) {
+            window.loadSpecificCategory('Other');
+            this.setActiveCategory('Other');
+          }
+        } else {
+          // We're on a different page - navigate to index page with hash
+          event.preventDefault();
+          let hash = '';
+          
+          if (linkText === 'Inkjet Printers') {
+            hash = '#inkjet-printers';
+          } else if (linkText === 'Print Heads') {
+            hash = '#print-heads';
+          } else if (linkText === 'Print Spare Parts') {
+            hash = '#print-spare-parts';
+          } else if (linkText === 'Upgrading Kit') {
+            hash = '#upgrading-kit';
+          } else if (linkText === 'Material') {
+            hash = '#material';
+          } else if (linkText === 'LED & LCD') {
+            hash = '#led-lcd';
+          } else if (linkText === 'Laser') {
+            hash = '#laser';
+          } else if (linkText === 'Cutting') {
+            hash = '#cutting';
+          } else if (linkText === 'Channel Letter') {
+            hash = '#channel-letter';
+          } else if (linkText === 'CNC') {
+            hash = '#cnc';
+          } else if (linkText === 'Displays') {
+            hash = '#displays';
+          } else if (linkText === 'Other') {
+            hash = '#other';
+          }
+          
+          // Navigate to index page with the appropriate hash
+          if (hash) {
+            window.location.href = 'index.html' + hash;
+            return;
+          }
+        }
+        
+        // For mobile: toggle submenu display
+        if (submenuId) {
+          this.toggleSubmenu(event.target);
+        }
+        
+        // Don't prevent default to allow any additional onclick handlers
+        return true;
       });
     });
     
@@ -46,16 +133,23 @@ class SubHeaderNavigation {
         this.hideAllSubmenus();
       }
     });
-    
-    // Handle "See All Departments" link separately
+      // Handle "See All Departments" link separately
     const allProductsLink = document.querySelector('.all-products-link');
     if (allProductsLink) {
       allProductsLink.addEventListener('click', (event) => {
         event.preventDefault();
         this.hideAllSubmenus();
-        this.setActiveCategory('See All Departments');
-        if (typeof loadAllProducts === 'function') {
-          loadAllProducts();
+        
+        // Check if we're on the index page
+        const isIndexPage = window.loadAllProducts && typeof window.loadAllProducts === 'function';
+        
+        if (isIndexPage) {
+          // We're on index page - use existing function
+          this.setActiveCategory('See All Departments');
+          window.loadAllProducts();
+        } else {
+          // We're on a different page - navigate to index page
+          window.location.href = 'index.html';
         }
       });
     }
