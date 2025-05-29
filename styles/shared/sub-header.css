@@ -219,3 +219,118 @@
   color: #555;
   font-size: 16px;
 }
+
+/* Sub-header dropdown submenu styles */
+.sub-header-submenu {
+  position: fixed;
+  top: 92px; /* Below sub-header (60px header + 32px sub-header) */
+  left: 0;
+  width: 100%;
+  background-color: #003087;
+  color: white;
+  z-index: 98;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sub-header-submenu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sub-header-submenu-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.sub-header-submenu-column {
+  padding: 0 15px;
+}
+
+.sub-header-submenu-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #FF9900;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sub-header-submenu-item {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 8px 0;
+  font-size: 13px;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.sub-header-submenu-item:hover {
+  color: #FF9900;
+}
+
+.sub-header-submenu-subgroup {
+  margin-bottom: 15px;
+}
+
+.sub-header-submenu-subgroup-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #CCE7FF;
+  margin-bottom: 8px;
+  padding: 3px 0;
+}
+
+.sub-header-submenu-subitem {
+  display: block;
+  color: #E0E0E0;
+  text-decoration: none;
+  padding: 5px 0 5px 15px;
+  font-size: 12px;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.sub-header-submenu-subitem:hover {
+  color: #FF9900;
+}
+
+/* Responsive design for submenus */
+@media (max-width: 1200px) {
+  .sub-header-submenu-content {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    padding: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sub-header-submenu-content {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    padding: 12px;
+  }
+  
+  .sub-header-submenu-item {
+    font-size: 12px;
+  }
+  
+  .sub-header-submenu-subitem {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sub-header-submenu-content {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+}

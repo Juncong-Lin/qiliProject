@@ -1,165 +1,121 @@
 // Sub-header navigation functionality
 class SubHeaderNavigation {
   constructor() {
+    this.activeSubmenu = null;
+    this.submenuTimeout = null;
     this.initializeEventListeners();
   }
 
   initializeEventListeners() {
-    // Add click event listeners to all sub-header links
-    const subHeaderLinks = document.querySelectorAll('.sub-header-link');
+    // Add event listeners to all sub-header links with submenus
+    const subHeaderLinks = document.querySelectorAll('.sub-header-link[data-submenu]');
+    const submenus = document.querySelectorAll('.sub-header-submenu');
+    
     subHeaderLinks.forEach(link => {
+      // Mouse enter - show submenu
+      link.addEventListener('mouseenter', (event) => {
+        this.showSubmenu(event.target);
+      });
+      
+      // Mouse leave - hide submenu with delay
+      link.addEventListener('mouseleave', (event) => {
+        this.hideSubmenuWithDelay();
+      });
+      
+      // Click event for mobile/touch devices
       link.addEventListener('click', (event) => {
-        this.handleNavigation(event);
+        event.preventDefault();
+        this.toggleSubmenu(event.target);
       });
     });
-  }
-  handleNavigation(event) {
-    event.preventDefault();
-    const clickedLink = event.target;
-    const category = clickedLink.textContent.trim();
-
-    // Remove active class from all links
-    document.querySelectorAll('.sub-header-link').forEach(link => {
-      link.classList.remove('active');
+    
+    // Add event listeners to submenus themselves
+    submenus.forEach(submenu => {
+      submenu.addEventListener('mouseenter', () => {
+        this.clearSubmenuTimeout();
+      });
+      
+      submenu.addEventListener('mouseleave', () => {
+        this.hideSubmenuWithDelay();
+      });
     });
-
-    // Add active class to clicked link
-    clickedLink.classList.add('active');
-
-    // Handle different category actions
-    switch(category) {      case 'See All Departments':
+    
+    // Hide submenu when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.sub-header') && !event.target.closest('.sub-header-submenu')) {
+        this.hideAllSubmenus();
+      }
+    });
+    
+    // Handle "See All Departments" link separately
+    const allProductsLink = document.querySelector('.all-products-link');
+    if (allProductsLink) {
+      allProductsLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.hideAllSubmenus();
+        this.setActiveCategory('See All Departments');
         if (typeof loadAllProducts === 'function') {
           loadAllProducts();
-        } else {
-          // Fallback to navigate to index page
-          window.location.href = 'index.html';
         }
-        break;
-      case 'Print Heads':
-        this.handlePrintHeadsNavigation();
-        break;
-      case 'Inkjet Printers':
-        this.handleInkjetPrintersNavigation();
-        break;
-      case 'Print Spare Parts':
-        this.handlePrintSparePartsNavigation();
-        break;
-      case 'Upgrading Kit':
-        this.handleCategoryNavigation('Upgrading Kit');
-        break;
-      case 'Material':
-        this.handleCategoryNavigation('Material');
-        break;
-      case 'LED & LCD':
-        this.handleCategoryNavigation('LED & LCD');
-        break;
-      case 'Laser':
-        this.handleCategoryNavigation('Laser');
-        break;
-      case 'Cutting':
-        this.handleCategoryNavigation('Cutting');
-        break;
-      case 'Channel Letter':
-        this.handleCategoryNavigation('Channel Letter');
-        break;
-      case 'CNC':
-        this.handleCategoryNavigation('CNC');
-        break;
-      case 'Displays':
-        this.handleCategoryNavigation('Displays');
-        break;
-      case 'Other':
-        this.handleCategoryNavigation('Other');
-        break;
-      default:
-        console.log(`Navigating to ${category} category`);
-        break;
+      });
     }
-  }  handlePrintHeadsNavigation() {
-    // Navigate to index page if not already there, then show all printhead products
-    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
-      // We're on the main page, show all printhead products
-      this.expandPrintHeadsMenu();
+  }
+
+  showSubmenu(link) {
+    this.clearSubmenuTimeout();
+    const submenuId = link.getAttribute('data-submenu');
+    
+    if (submenuId) {
+      // Hide all other submenus
+      this.hideAllSubmenus();
       
-      // Show all printhead products combined
-      if (typeof window.loadAllPrintheadProducts === 'function') {
-        // Reset scroll position before loading products to prevent jumping
-        window.scrollTo(0, 0);
-        
-        // Load products with a small delay
-        setTimeout(() => {
-          window.loadAllPrintheadProducts();
-          
-          // Update URL hash without causing page reload
-          if (history.pushState) {
-            history.pushState(null, null, '#printheads');
-          } else {
-            location.hash = '#printheads';
-          }
-        }, 50);
+      // Show the target submenu
+      const submenu = document.getElementById(`submenu-${submenuId}`);
+      if (submenu) {
+        submenu.classList.add('active');
+        this.activeSubmenu = submenu;
       }
-    } else {
-      // Navigate to index page with print heads focus
-      // Add a parameter to indicate this is a direct navigation to prevent auto-scrolling
-      window.location.href = 'index.html#printheads?noscroll=true';
+      
+      // Update active state
+      this.setActiveCategory(link.textContent.trim());
     }
   }
 
-  handleInkjetPrintersNavigation() {
-    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
-      // We're on the main page, show expanded Inkjet Printers menu
-      this.expandInkjetPrintersMenu();
-    } else {
-      // Navigate to index page with inkjet printers focus
-      window.location.href = 'index.html#inkjet-printers';
+  hideSubmenuWithDelay() {
+    this.submenuTimeout = setTimeout(() => {
+      this.hideAllSubmenus();
+    }, 300); // 300ms delay
+  }
+
+  clearSubmenuTimeout() {
+    if (this.submenuTimeout) {
+      clearTimeout(this.submenuTimeout);
+      this.submenuTimeout = null;
     }
   }
 
-  handlePrintSparePartsNavigation() {
-    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
-      // We're on the main page, show expanded Print Spare Parts menu
-      this.expandPrintSparePartsMenu();
-    } else {
-      // Navigate to index page with print spare parts focus
-      window.location.href = 'index.html#print-spare-parts';
+  toggleSubmenu(link) {
+    const submenuId = link.getAttribute('data-submenu');
+    
+    if (submenuId) {
+      const submenu = document.getElementById(`submenu-${submenuId}`);
+      
+      if (submenu && submenu.classList.contains('active')) {
+        this.hideAllSubmenus();
+      } else {
+        this.showSubmenu(link);
+      }
     }
+  }
+  hideAllSubmenus() {
+    this.clearSubmenuTimeout();
+    const activeSubmenus = document.querySelectorAll('.sub-header-submenu.active');
+    activeSubmenus.forEach(submenu => {
+      submenu.classList.remove('active');
+    });
+    this.activeSubmenu = null;
   }
 
-  handleCategoryNavigation(category) {
-    // For other categories, navigate to index page or show relevant content
-    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
-      console.log(`Showing ${category} category`);
-      // You can add specific filtering logic here when implemented
-    } else {
-      // Navigate to index page
-      window.location.href = 'index.html';
-    }
-  }
-
-  expandPrintHeadsMenu() {
-    // Find and expand the Print Heads menu in sidebar
-    const printHeadsLink = document.querySelector('a[href="javascript:void(0)"][onclick*="expandable"]:not([onclick*="loadAllProducts"])');
-    if (printHeadsLink && printHeadsLink.textContent.includes('Print Heads')) {
-      printHeadsLink.click();
-    }
-  }
-
-  expandInkjetPrintersMenu() {
-    // Find and expand the Inkjet Printers menu in sidebar
-    const inkjetLink = document.querySelector('a.expandable[href="javascript:void(0)"]:not([onclick])');
-    if (inkjetLink && inkjetLink.textContent.includes('Inkjet Printers')) {
-      inkjetLink.click();
-    }
-  }
-
-  expandPrintSparePartsMenu() {
-    // Find and expand the Print Spare Parts menu in sidebar
-    const sparePartsLink = Array.from(document.querySelectorAll('a.expandable[href="javascript:void(0)"]'))
-      .find(link => link.textContent.includes('Print Spare Parts'));
-    if (sparePartsLink) {
-      sparePartsLink.click();
-    }
-  }
   // Method to set active link based on current page/category
   setActiveCategory(category) {
     document.querySelectorAll('.sub-header-link').forEach(link => {
@@ -168,7 +124,7 @@ class SubHeaderNavigation {
         link.classList.add('active');
       }
     });
-  }  // Handle URL hash navigation
+  }// Handle URL hash navigation
   handleHashNavigation(hash) {
     console.log('Handling hash navigation for:', hash);
     
