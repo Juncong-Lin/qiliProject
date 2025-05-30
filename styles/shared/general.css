@@ -4,12 +4,43 @@ body {
   /* The <body> element has a default margin of 8px
      on all sides. This removes the default margins. */
   margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fix for orientation changes */
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+@media screen and (orientation: portrait) {
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
 }
 
 /* <p> elements have a default margin on the top
    and bottom. This removes the default margins. */
 p {
   margin: 0;
+}
+
+/* General styles for all pages */
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scroll from footer */
 }
 
 /* Global button styles */
@@ -47,6 +78,10 @@ input, select {
 .button-primary:active {
   background-color: #003087;
   box-shadow: none;
+}
+
+.main {
+  flex: 1;
 }
 
 /* Secondary button style - a variation of the primary theme */
@@ -113,7 +148,6 @@ select {
   box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
 }
 
-select:focus,
-input:focus {
-  outline: 2px solid rgb(255, 153, 0);
+input, select {
+  font-family: Roboto, Arial;
 }

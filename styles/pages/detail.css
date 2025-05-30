@@ -2,6 +2,17 @@
   max-width: 1200px;
   margin: 135px auto 100px; /* 60px (main header) + 50px (sub-header) + 25px extra */
   padding: 0 20px;
+  /* Ensure main content doesn't assume sidebar space since detail page has no sidebar */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Override any sidebar interference - ensure detail page layout is not affected by sidebar CSS */
+body.no-sidebar .main {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* Breadcrumb navigation styling */
@@ -53,6 +64,11 @@
 }
 
 @media (max-width: 900px) {
+  .main {
+    margin-top: 120px; /* Adjusted for mobile */
+    padding: 0 15px;
+  }
+  
   .product-detail-grid {
     grid-template-columns: 1fr;
   }
@@ -80,6 +96,11 @@
 }
 
 @media (max-width: 600px) {
+  .main {
+    margin-top: 110px; /* Further adjusted for very small screens */
+    padding: 0 10px;
+  }
+  
   .product-price {
     font-size: 24px;
   }

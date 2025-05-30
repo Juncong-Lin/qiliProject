@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Qilitrading.com</title>
-
-    <!-- This code is needed for responsive design to work.
+    <title>Qilitrading.com</title>    <!-- This code is needed for responsive design to work.
       (Responsive design = make the website look good on
       smaller screen sizes like a phone or a tablet). -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
 
     <!-- Load a font called Roboto from Google Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,10 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">    <!-- Here are the CSS files for this page. -->    <link rel="stylesheet" href="styles/shared/general.css">
     <link rel="stylesheet" href="styles/shared/amazon-header.css">
     <link rel="stylesheet" href="styles/shared/sub-header.css">
-    <link rel="stylesheet" href="styles/shared/sidebar.css">
-    <link rel="stylesheet" href="styles/pages/qilitrading.css">
+    <link rel="stylesheet" href="styles/shared/sidebar.css">    <link rel="stylesheet" href="styles/pages/qilitrading.css">
+    <link rel="stylesheet" href="styles/shared/footer.css">
   </head>
-  <body>
+  <body class="has-sidebar">
     <div class="amazon-header">
       <div class="amazon-header-left-section">
         <a href="index.html" class="header-link">
@@ -105,11 +103,20 @@
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Sublimation Printers - With XP600 Printhead')">With XP600 Printhead</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Sublimation Printers - With I1600 Printhead')">With I1600 Printhead</a>
           </div>
+          <div class="sub-header-submenu-column">
+            <div class="sub-header-submenu-title">Double Side Printers</div>
+            <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Double Side Printers - Direct Printing')">Direct Printing</a>
+          </div>
         </div>
       </div>
-        <div class="sub-header-submenu" id="submenu-print-heads">
+      
+      <div class="sub-header-submenu" id="submenu-print-heads">
         <div class="sub-header-submenu-content">
-          <div class="sub-header-submenu-column">            <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="loadPrintheadProducts('canon'); window.location.hash = 'printheads-canon'">Canon Printhead</a>
+        <div class="sub-header-submenu-column">
+        <div class="sub-header-submenu-title">Print Heads</div>
+        <div class="sub-header-submenu-content"> 
+          <div class="sub-header-submenu-column">
+            <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="loadPrintheadProducts('canon'); window.location.hash = 'printheads-canon'">Canon Printhead</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="loadPrintheadProducts('epson'); window.location.hash = 'printheads-epson'">Epson Printhead</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="loadPrintheadProducts('konica'); window.location.hash = 'printheads-konica'">Konica Printhead</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="loadPrintheadProducts('ricoh'); window.location.hash = 'printheads-ricoh'">Ricoh Printhead</a>
@@ -127,31 +134,35 @@
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="loadPrintheadProducts('xaar'); window.location.hash = 'printheads-xaar'">Xaar Printhead</a>
           </div>
         </div>
+        </div>
+        </div>
       </div>
       
       <div class="sub-header-submenu" id="submenu-print-spare-parts">
-        <div class="sub-header-submenu-content">
+      <div class="sub-header-submenu-content">
+        <div class="sub-header-submenu-column">
+        <div class="sub-header-submenu-title">Printer Parts</div>
+        <div class="sub-header-submenu-content">      
           <div class="sub-header-submenu-column">
-            <div class="sub-header-submenu-title">Popular Printer Brands</div>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Epson Printer Spare Parts')">Epson Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Roland Printer Spare Parts')">Roland Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Mutoh Printer Spare Parts')">Mutoh Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Mimaki Printer Spare Parts')">Mimaki Printer Parts</a>
           </div>
           <div class="sub-header-submenu-column">
-            <div class="sub-header-submenu-title">Office Printer Brands</div>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Canon Printer Spare Parts')">Canon Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('HP Printer Spare Parts')">HP Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Brother Printer Spare Parts')">Brother Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Ricoh Printer Spare Parts')">Ricoh Printer Parts</a>
           </div>
           <div class="sub-header-submenu-column">
-            <div class="sub-header-submenu-title">Industrial Printer Brands</div>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Flora Printer Spare Parts')">Flora Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Galaxy Printer Spare Parts')">Galaxy Printer Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Infiniti / Challenger Printer Spare Parts')">Infiniti/Challenger Parts</a>
             <a class="sub-header-submenu-item" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Wit-color Printer Spare Parts')">Wit-color Printer Parts</a>
           </div>
+        </div>
+        </div>
         </div>
       </div>
       
@@ -307,17 +318,6 @@
             <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('seiko'); window.location.hash = 'printheads-seiko'">Seiko Printhead</a>
             <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('spectra'); window.location.hash = 'printheads-spectra'">Spectra Printhead</a>            <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('toshiba'); window.location.hash = 'printheads-toshiba'">Toshiba Printhead</a>
             <a class="department-link" href="javascript:void(0)" onclick="loadPrintheadProducts('xaar'); window.location.hash = 'printheads-xaar'">Xaar Printhead</a>
-            <!--
-            <a class="department-link" href="#">Audley Printheads</a>
-            <a class="department-link" href="#">Skycolor Locor Printheads</a>
-            <a class="department-link" href="#">Flora Printheads</a>
-            <a class="department-link" href="#">Allwin Printheads</a>
-            <a class="department-link" href="#">Pheaton Printheads</a>
-            <a class="department-link" href="#">Infiniti Challenger Printheads</a>
-            <a class="department-link" href="#">Galaxy Sidtriton Printheads</a>
-            <a class="department-link" href="#">Witcolor Printheads</a>
-            <a class="department-link" href="#">GongZheng Printheads</a>
-            -->
           </div></div>
         <div class="department-group">
           <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadPrintSpareParts && window.loadPrintSpareParts()">Print Spare Parts</a>
@@ -328,31 +328,36 @@
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Mimaki Printer Spare Parts')">Mimaki Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Canon Printer Spare Parts')">Canon Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('HP Printer Spare Parts')">HP Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Brother Printer Spare Parts')">Brother Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Brother Printer Spare Parts')">Brother Printer Spare Parts</a>            
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Pall Printer Spare Parts')">Pall Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Locor Printer Spare Parts')">Locor Printer Spare Parts</a>
+            
+            <!-- TEMPORARILY HIDDEN PRINTER BRANDS - KEPT FOR FUTURE REUSE -->
+            <!-- 
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Allwin Printer Spare Parts')">Allwin Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Flora Printer Spare Parts')">Flora Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Galaxy Printer Spare Parts')">Galaxy Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Gongzheng / GZ Printer Spare Parts')">Gongzheng / GZ Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Infiniti / Challenger Printer Spare Parts')">Infiniti / Challenger Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Locor Printer Spare Parts')">Locor Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Phaeton Printer Spare Parts')">Phaeton Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Skycolor Printer Spare Parts')">Skycolor Printer Spare Parts</a>
+            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Wit-color Printer Spare Parts')">Wit-color Printer Spare Parts</a>
+            -->
+            
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Atexco Printer Spare Parts')">Atexco Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Crystaljet Printer Spare Parts')">Crystaljet Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('DGI Printer Spare Parts')">DGI Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Encad Printer Spare Parts')">Encad Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Flora Printer Spare Parts')">Flora Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Fortune-Lit Printer Spare Parts')">Fortune-Lit Printer Spare Parts</a>            
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Galaxy Printer Spare Parts')">Galaxy Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Gongzheng / GZ Printer Spare Parts')">Gongzheng / GZ Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Human Printer Spare Parts')">Human Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Icontek Printer Spare Parts')">Icontek Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Infiniti / Challenger Printer Spare Parts')">Infiniti / Challenger Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('JHF Printer Spare Parts')">JHF Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Liyu Printer Spare Parts')">Liyu Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Myjet Printer Spare Parts')">Myjet Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Phaeton Printer Spare Parts')">Phaeton Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Ricoh Printer Spare Parts')">Ricoh Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Seiko Printer Spare Parts')">Seiko Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Skycolor Printer Spare Parts')">Skycolor Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Teckwin Printer Spare Parts')">Teckwin Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Videojet Printer Spare Parts')">Videojet Printer Spare Parts</a>
-            <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Wit-color Printer Spare Parts')">Wit-color Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('XENONS Printer Spare Parts')">XENONS Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Xuli Printer Spare Parts')">Xuli Printer Spare Parts</a>
             <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Yongli Printer Spare Parts')">Yongli Printer Spare Parts</a>
@@ -375,7 +380,45 @@
     <div class="main">
       <div class="products-grid js-prodcts-grid">
       </div>
-    </div>
+    </div>    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>ABOUT US</h3>
+          <p>We are Shenzhen Qili Trading Firm from China, operating a professional trading company dedicated to providing efficient and convenient procurement and supply chain management services for global clients. And we wholesales various type of mobile phone cases.“Qilitrading.com” is our official website.Our products are popular in domestic and international markets. With the principle of small profits and quick sales, we have won the trust of our customers. We distribute a complete range of protective cases at attractive prices. For any phone brand, model, or style cases you need to purchase in bulk, please contact us on WhatsApp: +8613631292010.</p>
+        </div>
+        <div class="footer-section">
+          <h3>QUICK LINKS</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Catalog</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Contact us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>CONTACT US</h3>
+          <div class="contact-info">
+            <p>Address: Huaqiangbei , Futian District, Shenzhen, Guangdong Province, China</p>
+            <p>Manager: Juncong Lin</p>
+            <p>Email: Juncong86@gmail.com</p>
+            <p>Whatsapp: +86 136 3129 2010</p>
+          </div>
+        </div>
+        <div class="footer-section get-in-touch">
+          <h3>GET IN TOUCH</h3>
+          <div class="social-icons">
+            <a href="#" aria-label="WhatsApp"><img src="images/icons/whatsapp.svg" alt="WhatsApp" width="12" height="12"></a>
+            <a href="mailto:Juncong86@gmail.com" aria-label="Email"><img src="images/icons/email.svg" alt="Email" width="12" height="12"></a>
+            <a href="#" aria-label="Facebook"><img src="images/icons/facebook.svg" alt="Facebook" width="12" height="12"></a>
+            <a href="#" aria-label="close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.3934" y="6.80762" width="16" height="2" rx="1" transform="rotate(45 5.3934 6.80762)" fill="#FFFFFF"/><rect x="6.80762" y="18.6066" width="16" height="2" rx="1" transform="rotate(-45 6.80762 18.6066)" fill="#FFFFFF"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 qilitrading.com - Shenzhen Qili Trading Firm - All rights reserved</p>
+      </div>
+    </footer>
 
   </body>
     <script type="module" src="scripts/qilitrading.js"></script>

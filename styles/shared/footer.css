@@ -1,0 +1,284 @@
+/* Footer styles */
+.footer {
+  background-color: #232F3E;
+  color: white;
+  padding: 10px 0 5px;
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Higher z-index to ensure it covers the sidebar */
+  /* Additional styles to ensure footer covers sidebar */
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+  clear: both;
+  /* Make sure the footer extends over the sidebar */
+  position: relative;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Make about us section text shorter */
+.footer-section p {
+  text-overflow: ellipsis;
+  font-size: 13px;
+  line-height: 1.2;
+  margin-bottom: 3px;
+  margin-top: 0;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 150px;
+  margin-bottom: 4px;
+  padding: 0 8px;
+}
+
+.footer h3 {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Remove default margin */
+}
+
+.footer-links li {
+  margin-bottom: 2px;
+}
+
+.footer-links a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 0;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.contact-info {
+  line-height: 1.2;
+  font-size: 13px;
+}
+
+.contact-info p {
+  margin-bottom: 2px;
+  margin-top: 0;
+}
+
+.social-icons {
+  display: flex;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.social-icons a {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.social-icons img {
+  width: 10px; /* Adjusted to fit new icon size */
+  height: 10px; /* Adjusted to fit new icon size */
+  filter: brightness(1.2);
+}
+
+.social-icons a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 4px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-section {
+    flex: 0 0 50%;
+    padding: 0 5px;
+  }
+  
+  .get-in-touch {
+    flex: 0 0 100%;
+  }
+  
+  .footer {
+    padding: 8px 0 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-section {
+    flex: 0 0 100%;
+    margin-bottom: 3px;
+    padding: 0 8px;
+  }
+  
+  .footer {
+    padding: 8px 0 3px;
+  }
+  
+  .footer-container {
+    padding: 0 8px;
+  }
+  
+  .footer h3 {
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+  
+  .footer-section p, .contact-info, .footer-links a {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+}
+
+/* Fix for orientation changes */
+@media screen and (orientation: portrait) {
+  .footer {
+    left: 0;
+    padding: 10px 0;
+  }
+  
+  .footer-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 10px; /* Remove left padding since sidebar isn't visible in portrait */
+  }
+  
+  .footer-section {
+    flex: 0 0 50%;
+    margin-bottom: 5px;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer {
+    width: 100%;
+    position: relative;
+    left: 0;
+  }
+  
+  body.has-sidebar .departments-sidebar {
+    z-index: 1;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .footer {
+    padding: 5px 0;
+  }
+  
+  .footer-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 166px; /* Keep sidebar padding in landscape mode */
+  }
+  
+  .footer-section {
+    flex: 0 0 200px;
+    min-width: 200px;
+  }
+  
+  .footer h3 {
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+  
+  .contact-info, .footer-links a {
+    font-size: 13px;
+  }
+  
+  .footer-section p {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  
+  .footer-bottom {
+    padding-top: 3px;
+    margin-top: 3px;
+  }
+}
+
+@media screen and (orientation: portrait), screen and (orientation: landscape) {
+  .footer {
+    left: 0;
+    padding: 10px 0;
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  .footer-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-section {
+    flex: 0 0 25%;
+    min-width: 180px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+  }
+  .footer-section p {
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-section {
+    flex: 0 0 50%;
+    min-width: 150px;
+  }
+  .get-in-touch {
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-section {
+    flex: 0 0 100%;
+    min-width: 120px;
+    margin-bottom: 3px;
+    padding: 0 8px;
+  }
+  .footer {
+    padding: 8px 0 3px;
+  }
+  .footer-container {
+    padding: 0 8px;
+    max-width: 100vw;
+  }
+}

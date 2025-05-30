@@ -1,4 +1,4 @@
-.departments-sidebar {
+body.has-sidebar .departments-sidebar {
   position: fixed;
   top: 92px; /* 60px (main header) + 32px (sub-header) */
   bottom: 0;
@@ -7,6 +7,8 @@
   color: white;
   z-index: 1;
   overflow-y: auto;
+  /* Ensure sidebar doesn't appear above footer */
+  z-index: 1;
 }
 
 .departments-heading {
@@ -150,7 +152,7 @@
 }
 
 @media (max-width: 800px) {
-  .submenu {
+  body.has-sidebar .submenu {
     position: static;
     width: auto;
     box-shadow: none;
@@ -160,39 +162,41 @@
     opacity: 1;
     transition: none;
   }
-
-  .submenu.active {
+  body.has-sidebar .submenu.active {
     display: block;
-  }  .submenu .department-link {
+  }
+  
+  body.has-sidebar .submenu .department-link {
     padding: 8px 25px; /* Adjusted from 8px 40px */
     height: 36px;
     display: flex;
     align-items: center;
   }
 
-  .department-link {
+  body.has-sidebar .department-link {
     padding: 8px 25px;
     height: 36px;
   }
 
-  .submenu .department-link:hover {
+  body.has-sidebar .submenu .department-link:hover {
     padding-left: 30px; /* Adjusted from 45px */
   }
+  
   /* Mobile styling for All Products link */
-  .department-link[href="javascript:void(0)"][onclick="loadAllProducts()"] {
+  body.has-sidebar .department-link[href="javascript:void(0)"][onclick="loadAllProducts()"] {
     padding: 8px 25px;
     height: 36px;     
   }
 }
 
 /* Special styling for "All Products" link to align with other items */
-.department-link[href="javascript:void(0)"][onclick="loadAllProducts()"] {
+body.has-sidebar .department-link[href="javascript:void(0)"][onclick="loadAllProducts()"] {
   padding: 8px 25px;   /* Match other links */
   height: 36px;        /* Match other links */
 }
 
-.department-subgroup:hover > .submenu,
-.department-subgroup > .submenu.active {
+body.has-sidebar .department-subgroup:hover > .submenu,
+body.has-sidebar .department-subgroup > .submenu.active {
   display: block;
   visibility: visible;
   opacity: 1;

@@ -1,4 +1,4 @@
-.main {
+body.has-sidebar .main {
   margin-top: 97px; /* 60px (main header) + 32px (sub-header) + 5px (gap) */
   padding: 20px 20px 20px 190px; /* Add left padding to offset sidebar width (166px + 24px gap) */
   width: 100%; /* Remove max-width for true fluid layout */
@@ -6,6 +6,19 @@
   margin-right: 0;
   box-sizing: border-box;
   overflow-x: hidden; /* Prevent horizontal scroll */
+  margin-bottom: 100px; /* Consistent margin between main content and footer */
+}
+
+/* Default main content styling for pages without sidebar */
+.main {
+  margin-top: 97px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  margin-bottom: 100px;
 }
 
 .products-grid {
@@ -16,6 +29,21 @@
   justify-items: stretch; /* Ensure all items have same width */
   width: 100%;
   min-width: 0; /* Allow grid items to shrink */
+}
+
+/* Fix for screen rotation */
+@media screen and (orientation: portrait) {
+  .main {
+    padding: 20px;
+    margin-top: 130px; /* Adjusted for collapsed sidebar */
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .main {
+    margin-top: 80px;
+    padding: 15px 15px 15px 180px;
+  }
 }
 
 /* For very large screens, we can allow smaller minimum width */
@@ -30,6 +58,13 @@
   .products-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
+}
+
+.footer {
+  position: relative;
+  z-index: 10;
+  left: 0;
+  width: 100%;
 }
 
 @media (max-width: 899px) {
@@ -59,17 +94,19 @@
 }
 
 @media (max-width: 800px) {
-  .main {
+  body.has-sidebar .main {
     padding-left: 20px;
     padding-right: 20px;
     width: 100%;
   }
-  .departments-sidebar {
+  
+  body.has-sidebar .departments-sidebar {
     display: none;
   }
+  
   .products-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Wider for mobile grid */
-  }  .product-container {
+  }.product-container {
     height: 430px; /* Increased to ensure add to cart button fits */
     min-height: 430px;
     width: 100%;
