@@ -3,7 +3,7 @@ body.has-sidebar .departments-sidebar {
   top: 92px; /* 60px (main header) + 32px (sub-header) */
   bottom: 0;
   left: 0;  width: 166px;
-  background-color: #005BBB;
+  background-color: #1A252F;
   color: white;
   z-index: 1;
   overflow-y: auto;
@@ -46,8 +46,7 @@ body.has-sidebar .departments-sidebar {
   left: 166px; /* Same as sidebar width */
   top: 92px; /* Adjusted: 60px (main header) + 32px (sub-header) */
   bottom: 0;
-  width: 260px; /* Increased width for longer text */
-  background-color: #003087;
+  width: 260px; /* Increased width for longer text */  background-color: #232F3E;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
   z-index: 100; /* Adjusted: to be above sub-header (z-index: 99) */
   transition: visibility 0s 0.2s, opacity 0.2s ease;
@@ -65,7 +64,7 @@ body.has-sidebar .departments-sidebar {
 .department-subgroup > .submenu {
   position: fixed;
   left: 426px; /* parent submenu width (320px) + sidebar width (150px) */
-  background-color: #002670;
+  background-color: #37475A;
 }
 
 /* Ensure nested submenus don't create multiple scrollbars */

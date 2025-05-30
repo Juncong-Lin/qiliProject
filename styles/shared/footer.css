@@ -102,8 +102,8 @@
 }
 
 .social-icons img {
-  width: 10px; /* Adjusted to fit new icon size */
-  height: 10px; /* Adjusted to fit new icon size */
+  width: 20px; /* Adjusted to fit new icon size */
+  height: 20px; /* Adjusted to fit new icon size */
   filter: brightness(1.2);
 }
 

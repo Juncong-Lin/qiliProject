@@ -260,7 +260,7 @@ body.has-sidebar .main {
   width: 100%;
   padding: 8px;
   border-radius: 50px;
-  background-color: #003087;
+  background-color: #232F3E;
   color: #fff;
   border: none;
   font-weight: 700;
@@ -270,7 +270,7 @@ body.has-sidebar .main {
 
 .add-to-cart-button:hover,
 .continue-shopping-button:hover {
-  background-color: #005BBB;
+  background-color: #1A252F;
 }
 
 .product-quantity-section {
@@ -412,7 +412,7 @@ body.has-sidebar .main {
 }
 
 .breadcrumb-link {
-  color: #0066c0;
+  color: #37475A;
   text-decoration: none;
 }
 
@@ -443,7 +443,7 @@ body.has-sidebar .main {
 
 .coming-soon h2 {
   font-size: 24px;
-  color: #0066c0;
+  color: #232F3E;
   margin-bottom: 15px;
 }
 
@@ -476,7 +476,7 @@ body.has-sidebar .main {
 /* Highlight the active sub-header link */
 .sub-header-link.active, .sub-header-link.selected {
   background-color: #fff;
-  color: #003087;
+  color: #232F3E;
   border-bottom: 3px solid #FF9900;
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);

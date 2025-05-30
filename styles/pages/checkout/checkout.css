@@ -209,7 +209,7 @@
   margin-top: 11px;
   margin-bottom: 15px;
 
-  background-color: #003087;
+  background-color: #232F3E;
   color: #fff;
   border: none;
   font-weight: 700;
@@ -218,7 +218,7 @@
 }
 
 .place-order-button:hover {
-  background-color: #005BBB;
+  background-color: #1A252F;
 }
 
 .continue-shopping-button {

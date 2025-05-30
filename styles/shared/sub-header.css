@@ -1,5 +1,5 @@
 .sub-header {
-  background-color: #0066c0; /* Match Amazon's secondary blue */
+  background-color: #1A252F; /* Match Amazon's secondary blue */
   color: white;
   padding: 0;
   position: fixed;
@@ -65,7 +65,7 @@
 }
 
 .sub-header-link.active {
-  background-color: #004c8c; /* Darker blue when active */
+  background-color: #2C3A49; /* Darker blue when active */
   font-weight: bold;
   border-bottom: 3px solid #ffa724; /* Amazon orange border */
   box-sizing: border-box;
@@ -73,7 +73,7 @@
 
 /* Make the active state more visible on hover */
 .sub-header-link.active:hover {
-  background-color: #004c8c; /* Keep the darker blue on hover */
+  background-color: #2C3A49; /* Keep the darker blue on hover */
 }
 
 /* Special styling for "All Products" */
@@ -99,14 +99,13 @@
 }
 
 /* Clone the sub-header All Products link visually into the sidebar */
-@media (min-width: 700px) {
-  .all-products-link {
+@media (min-width: 700px) {  .all-products-link {
     position: fixed;
     top: 92px; /* 60px header + 32px sub-header */
     left: 0;
     width: 180px;
     height: 32px;
-    background: #005BBB;
+    background: #1A252F;
     color: #FF9900 !important;
     font-weight: bold;
     display: flex;
@@ -202,9 +201,9 @@
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid rgba(0, 102, 192, 0.2);
+  border: 4px solid rgba(35, 47, 62, 0.2);
   border-radius: 50%;
-  border-top-color: #0066c0;
+  border-top-color: #232F3E;
   animation: spin 1s ease-in-out infinite;
   margin-bottom: 15px;
 }
@@ -226,7 +225,7 @@
   top: 92px; /* Below sub-header (60px header + 32px sub-header) */
   left: 0;
   width: 100%;
-  background-color: #003087;
+  background-color: #232F3E;
   color: white;
   z-index: 98;
   opacity: 0;

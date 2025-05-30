@@ -1,5 +1,5 @@
 .qili-header {
-  background-color: #003087;
+  background-color: #232F3E;
   color: white;
   padding: 15px;
 }
@@ -31,7 +31,7 @@
 
 .qili-header-right .search-button {
   padding: 8px 15px;
-  background-color: #005BBB;
+  background-color: #1A252F;
   border: none;
   color: white;
   border-radius: 0 4px 4px 0;
@@ -39,7 +39,7 @@
 }
 
 .qili-nav {
-  background-color: #005BBB;
+  background-color: #1A252F;
   padding: 10px 0;
 }
 

@@ -1,5 +1,5 @@
 .amazon-header {
-  background-color: #003087;
+  background-color: #232F3E;
   color: white;
   padding: 0 15px;
   display: flex;
@@ -92,7 +92,7 @@
 
 .search-button {
   min-width: 45px;
-  height: 40px;  background-color: #003087;
+  height: 40px;  background-color: #1A252F;
   border: none;
   border-radius: 0 4px 4px 0;
   display: flex;
@@ -103,7 +103,7 @@
 }
 
 .search-button:hover {
-  background-color: #005BBB;
+  background-color: #2C3A49;
 }
 
 .search-icon {
