@@ -347,10 +347,84 @@ function attachAddToCartListeners() {
 
 // Load default products on page load
 document.addEventListener('DOMContentLoaded', () => {
-  loadAllProducts();
-  // Initialize cart quantity display on page load
+  // Initialize cart quantity display on page load immediately
   updateCartQuantity();
+  
+  // Small delay to ensure sub-header navigation is initialized
+  setTimeout(() => {
+    // Check if there's a hash in the URL that should load specific content
+    const hash = window.location.hash.substring(1);
+    
+    if (hash) {
+      // If there's a hash, let the sub-header navigation handle it instead of loading all products
+      console.log('Hash detected on page load:', hash);
+      
+      // Check if sub-header navigation is available and can handle the hash
+      if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
+        // Sub-header nav will handle the hash, don't load all products
+        console.log('Sub-header navigation will handle hash:', hash);
+        return;
+      } else {
+        // Fallback: wait a bit more for sub-header to initialize
+        setTimeout(() => {
+          if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
+            console.log('Sub-header navigation ready, handling hash:', hash);
+            return;
+          } else {
+            // If still no sub-header nav, try to handle hash ourselves or load all products
+            console.log('No sub-header navigation available, loading products based on hash');
+            handleHashFallback(hash);
+          }
+        }, 200);
+        return;
+      }
+    } else {
+      // Only load all products if there's no hash
+      loadAllProducts();
+    }
+  }, 100);
 });
+
+// Fallback function to handle hash navigation when sub-header nav is not available
+function handleHashFallback(hash) {
+  if (hash === 'print-heads' || hash === 'printheads') {
+    if (window.loadAllPrintheadProducts) {
+      window.loadAllPrintheadProducts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash.startsWith('printheads-')) {
+    const brand = hash.replace('printheads-', '');
+    if (window.loadPrintheadProducts) {
+      window.loadPrintheadProducts(brand);
+    } else {
+      loadAllProducts();
+    }
+  } else if (window.loadSpecificCategory) {
+    // Try to handle other category hashes
+    const categoryMap = {
+      'inkjet-printers': 'Inkjet Printers',
+      'print-spare-parts': 'Print Spare Parts',
+      'upgrading-kit': 'Upgrading Kit',
+      'material': 'Material',
+      'led-lcd': 'LED & LCD',
+      'laser': 'Laser',
+      'cutting': 'Cutting',
+      'channel-letter': 'Channel Letter',
+      'cnc': 'CNC',
+      'displays': 'Displays',
+      'other': 'Other'
+    };
+    
+    if (categoryMap[hash]) {
+      window.loadSpecificCategory(categoryMap[hash]);
+    } else {
+      loadAllProducts();
+    }
+  } else {
+    loadAllProducts();
+  }
+}
 
 function updateCartQuantity() {
   let cartQuantity = 0;

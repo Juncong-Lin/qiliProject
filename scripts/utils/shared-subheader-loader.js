@@ -44,8 +44,22 @@ window.handleNavigationClick = function(hash) {
     }
   } else {
     // We're on a different page - navigate to index with hash
-    const baseUrl = window.location.pathname.split('/').slice(0, -1).join('/');
-    const indexUrl = baseUrl === '' ? 'index.html' : baseUrl + '/index.html';
+    // Use window.location to get the current origin and path correctly
+    const origin = window.location.origin;
+    const currentPath = window.location.pathname;
+    
+    // Construct the correct index.html URL
+    let indexUrl;
+    if (currentPath === '/' || currentPath === '') {
+      indexUrl = origin + '/index.html';
+    } else {
+      // Get the directory of the current path
+      const pathParts = currentPath.split('/');
+      pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
+      indexUrl = origin + pathParts.join('/');
+    }
+    
+    // Navigate to index page with hash
     window.location.href = indexUrl + (hash || '');
   }
 };
@@ -60,8 +74,23 @@ window.handleCategoryClick = function(categoryName) {
   } else {
     // We're on a different page - navigate to index and handle the category loading
     const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '');
-    const baseUrl = window.location.pathname.split('/').slice(0, -1).join('/');
-    const indexUrl = baseUrl === '' ? 'index.html' : baseUrl + '/index.html';
+    
+    // Use window.location to get the current origin and path correctly
+    const origin = window.location.origin;
+    const currentPath = window.location.pathname;
+    
+    // Construct the correct index.html URL
+    let indexUrl;
+    if (currentPath === '/' || currentPath === '') {
+      indexUrl = origin + '/index.html';
+    } else {
+      // Get the directory of the current path
+      const pathParts = currentPath.split('/');
+      pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
+      indexUrl = origin + pathParts.join('/');
+    }
+    
+    // Navigate to index page with category hash
     window.location.href = indexUrl + '#category-' + categorySlug;
   }
 };
@@ -76,8 +105,22 @@ window.handlePrintheadClick = function(brand) {
     window.location.hash = 'printheads-' + brand;
   } else {
     // We're on a different page - navigate to index with printhead hash
-    const baseUrl = window.location.pathname.split('/').slice(0, -1).join('/');
-    const indexUrl = baseUrl === '' ? 'index.html' : baseUrl + '/index.html';
+    // Use window.location to get the current origin and path correctly
+    const origin = window.location.origin;
+    const currentPath = window.location.pathname;
+    
+    // Construct the correct index.html URL
+    let indexUrl;
+    if (currentPath === '/' || currentPath === '') {
+      indexUrl = origin + '/index.html';
+    } else {
+      // Get the directory of the current path
+      const pathParts = currentPath.split('/');
+      pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
+      indexUrl = origin + pathParts.join('/');
+    }
+    
+    // Navigate to index page with printhead hash
     window.location.href = indexUrl + '#printheads-' + brand;
   }
 };
