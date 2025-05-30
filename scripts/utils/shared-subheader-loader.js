@@ -28,11 +28,8 @@ async function loadSharedSubheader() {
 }
 
 // Global navigation handler functions for the shared subheader
-window.handleNavigationClick = function(hash) {
-  // Check if we're on the index page
-  const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '';
-  
-  if (isIndexPage) {
+window.handleNavigationClick = function(hash) {  // Check if we're on the index page
+  if (UrlUtils.isIndexPage()) {
     // We're on index page - update hash and let existing navigation handle it
     if (hash) {
       window.location.hash = hash;
@@ -41,87 +38,33 @@ window.handleNavigationClick = function(hash) {
       if (window.loadAllProducts && typeof window.loadAllProducts === 'function') {
         window.loadAllProducts();
       }
-    }
-  } else {
+    }  } else {
     // We're on a different page - navigate to index with hash
-    // Use window.location to get the current origin and path correctly
-    const origin = window.location.origin;
-    const currentPath = window.location.pathname;
-    
-    // Construct the correct index.html URL
-    let indexUrl;
-    if (currentPath === '/' || currentPath === '') {
-      indexUrl = origin + '/index.html';
-    } else {
-      // Get the directory of the current path
-      const pathParts = currentPath.split('/');
-      pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
-      indexUrl = origin + pathParts.join('/');
-    }
-    
-    // Navigate to index page with hash
-    window.location.href = indexUrl + (hash || '');
+    UrlUtils.navigateToIndex(hash || '');
   }
 };
 
 window.handleCategoryClick = function(categoryName) {
   // Check if we're on the index page
-  const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '';
-  
-  if (isIndexPage && window.loadSpecificCategory && typeof window.loadSpecificCategory === 'function') {
+  if (UrlUtils.isIndexPage() && window.loadSpecificCategory && typeof window.loadSpecificCategory === 'function') {
     // We're on index page - use existing function
-    window.loadSpecificCategory(categoryName);
-  } else {
+    window.loadSpecificCategory(categoryName);  } else {
     // We're on a different page - navigate to index and handle the category loading
     const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '');
     
-    // Use window.location to get the current origin and path correctly
-    const origin = window.location.origin;
-    const currentPath = window.location.pathname;
-    
-    // Construct the correct index.html URL
-    let indexUrl;
-    if (currentPath === '/' || currentPath === '') {
-      indexUrl = origin + '/index.html';
-    } else {
-      // Get the directory of the current path
-      const pathParts = currentPath.split('/');
-      pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
-      indexUrl = origin + pathParts.join('/');
-    }
-    
     // Navigate to index page with category hash
-    window.location.href = indexUrl + '#category-' + categorySlug;
+    UrlUtils.navigateToIndex('#category-' + categorySlug);
   }
 };
 
 window.handlePrintheadClick = function(brand) {
   // Check if we're on the index page
-  const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '';
-  
-  if (isIndexPage && window.loadPrintheadProducts && typeof window.loadPrintheadProducts === 'function') {
+  if (UrlUtils.isIndexPage() && window.loadPrintheadProducts && typeof window.loadPrintheadProducts === 'function') {
     // We're on index page - use existing function
     window.loadPrintheadProducts(brand);
-    window.location.hash = 'printheads-' + brand;
-  } else {
+    window.location.hash = 'printheads-' + brand;  } else {
     // We're on a different page - navigate to index with printhead hash
-    // Use window.location to get the current origin and path correctly
-    const origin = window.location.origin;
-    const currentPath = window.location.pathname;
-    
-    // Construct the correct index.html URL
-    let indexUrl;
-    if (currentPath === '/' || currentPath === '') {
-      indexUrl = origin + '/index.html';
-    } else {
-      // Get the directory of the current path
-      const pathParts = currentPath.split('/');
-      pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
-      indexUrl = origin + pathParts.join('/');
-    }
-    
-    // Navigate to index page with printhead hash
-    window.location.href = indexUrl + '#printheads-' + brand;
+    UrlUtils.navigateToIndex('#printheads-' + brand);
   }
 };
 

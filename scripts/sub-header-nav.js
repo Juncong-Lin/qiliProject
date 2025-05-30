@@ -130,25 +130,9 @@ class SubHeaderNavigation {
             hash = '#displays';
           } else if (linkText === 'Other') {
             hash = '#other';
-          }
-            // Navigate to index page with the appropriate hash
+          }          // Navigate to index page with the appropriate hash
           if (hash) {
-            // Use window.location to get the current origin and path correctly
-            const origin = window.location.origin;
-            const currentPath = window.location.pathname;
-            
-            // Construct the correct index.html URL
-            let indexUrl;
-            if (currentPath === '/' || currentPath === '') {
-              indexUrl = origin + '/index.html';
-            } else {
-              // Get the directory of the current path
-              const pathParts = currentPath.split('/');
-              pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
-              indexUrl = origin + pathParts.join('/');
-            }
-            
-            window.location.href = indexUrl + hash;
+            UrlUtils.navigateToIndex(hash);
             return;
           }
         }
@@ -192,25 +176,9 @@ class SubHeaderNavigation {
           if (isIndexPage) {
           // We're on index page - use existing function
           this.setActiveCategory('See All Departments');
-          window.loadAllProducts();
-        } else {
+          window.loadAllProducts();        } else {
           // We're on a different page - navigate to index page
-          // Use window.location to get the current origin and path correctly
-          const origin = window.location.origin;
-          const currentPath = window.location.pathname;
-          
-          // Construct the correct index.html URL
-          let indexUrl;
-          if (currentPath === '/' || currentPath === '') {
-            indexUrl = origin + '/index.html';
-          } else {
-            // Get the directory of the current path
-            const pathParts = currentPath.split('/');
-            pathParts[pathParts.length - 1] = 'index.html'; // Replace filename with index.html
-            indexUrl = origin + pathParts.join('/');
-          }
-          
-          window.location.href = indexUrl;
+          UrlUtils.navigateToIndex();
         }
       });
     }
@@ -314,6 +282,59 @@ class SubHeaderNavigation {
       if (submenu && submenu.classList.contains('submenu')) {
         sparePartsLink.classList.add('expanded');
         submenu.style.display = 'block';
+      }
+    }
+  }
+
+  // Handle hash navigation - called from external scripts
+  handleHashNavigation(hash) {
+    if (!hash) return;
+    
+    // Handle printhead-specific hashes
+    if (hash === 'print-heads' || hash === 'printheads') {
+      if (window.loadAllPrintheadProducts) {
+        window.loadAllPrintheadProducts();
+        this.setActiveCategory('Print Heads');
+        this.expandPrintHeadsMenu();
+      }
+      return;
+    }
+    
+    if (hash.startsWith('printheads-')) {
+      const brand = hash.replace('printheads-', '');
+      if (window.loadPrintheadProducts) {
+        window.loadPrintheadProducts(brand);
+        this.setActiveCategory('Print Heads');
+        this.expandPrintHeadsMenu();
+      }
+      return;
+    }
+    
+    // Handle other category hashes
+    const categoryMap = {
+      'inkjet-printers': 'Inkjet Printers',
+      'print-spare-parts': 'Print Spare Parts',
+      'upgrading-kit': 'Upgrading Kit',
+      'material': 'Material',
+      'led-lcd': 'LED & LCD',
+      'laser': 'Laser',
+      'cutting': 'Cutting',
+      'channel-letter': 'Channel Letter',
+      'cnc': 'CNC',
+      'displays': 'Displays',
+      'other': 'Other'
+    };
+    
+    const categoryName = categoryMap[hash];
+    if (categoryName && window.loadSpecificCategory) {
+      window.loadSpecificCategory(categoryName);
+      this.setActiveCategory(categoryName);
+      
+      // Expand appropriate sidebar menu
+      if (categoryName === 'Inkjet Printers') {
+        this.expandInkjetPrintersMenu();
+      } else if (categoryName === 'Print Spare Parts') {
+        this.expandPrintSparePartsMenu();
       }
     }
   }
