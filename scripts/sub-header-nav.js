@@ -408,39 +408,46 @@ function shouldAvoidScroll() {
 
 // Initialize sub-header navigation when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  window.subHeaderNav = new SubHeaderNavigation();
+  // Check if we're using shared subheader (placeholder exists)
+  const hasSharedSubheader = document.getElementById('shared-subheader-placeholder');
+  
+  // Only auto-initialize if NOT using shared subheader
+  if (!hasSharedSubheader) {
+    window.subHeaderNav = new SubHeaderNavigation();
+    
     // Handle URL hash navigation on initial page load
-  let hash = window.location.hash.substring(1);
-  
-  // Check if the hash contains parameters to prevent scrolling
-  const shouldSkipScroll = window.location.search.includes('noscroll=true') || 
-                          hash.includes('noscroll=true');
-  
-  // Clean up the hash by removing any parameters
-  if (hash.includes('?')) {
-    hash = hash.split('?')[0];
-  }
-  
-  if (hash) {
-    // If we should skip scrolling, temporarily disable the scroll function
-    if (shouldSkipScroll && window.scrollToProducts) {
-      const originalScrollToProducts = window.scrollToProducts;
-      window.scrollToProducts = function() { /* do nothing */ };
-      
-      // Process the hash navigation
-      window.subHeaderNav.handleHashNavigation(hash);
-      
-      // Restore the original function after a delay
-      setTimeout(() => {
-        window.scrollToProducts = originalScrollToProducts;
-      }, 1000);
-    } else {
-      // Normal hash navigation
-      window.subHeaderNav.handleHashNavigation(hash);
+    let hash = window.location.hash.substring(1);
+    
+    // Check if the hash contains parameters to prevent scrolling
+    const shouldSkipScroll = window.location.search.includes('noscroll=true') || 
+                            hash.includes('noscroll=true');
+    
+    // Clean up the hash by removing any parameters
+    if (hash.includes('?')) {
+      hash = hash.split('?')[0];
+    }
+    
+    if (hash) {
+      // If we should skip scrolling, temporarily disable the scroll function
+      if (shouldSkipScroll && window.scrollToProducts) {
+        const originalScrollToProducts = window.scrollToProducts;
+        window.scrollToProducts = function() { /* do nothing */ };
+        
+        // Process the hash navigation
+        window.subHeaderNav.handleHashNavigation(hash);
+        
+        // Restore the original function after a delay
+        setTimeout(() => {
+          window.scrollToProducts = originalScrollToProducts;
+        }, 1000);
+      } else {
+        // Normal hash navigation
+        window.subHeaderNav.handleHashNavigation(hash);
+      }
     }
   }
   
-  // Also listen for hash changes while on the page
+  // Always listen for hash changes while on the page
   window.addEventListener('hashchange', function() {
     let newHash = window.location.hash.substring(1);
     
@@ -449,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
       newHash = newHash.split('?')[0];
     }
     
-    if (newHash) {
+    if (newHash && window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
       window.subHeaderNav.handleHashNavigation(newHash);
     }
   });
