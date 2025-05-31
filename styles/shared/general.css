@@ -26,12 +26,12 @@ html {
   
   /* Force proper fitting on small mobile screens */
   * {
+@media screen and (orientation: portrait) {
+  *, *::before, *::after {
     max-width: 100%;
     box-sizing: border-box;
   }
 }
-
-@media screen and (orientation: landscape) {
   html, body {
     width: 100%;
     overflow-x: hidden;
