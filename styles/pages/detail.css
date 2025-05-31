@@ -1,18 +1,17 @@
 .main {
   max-width: 1200px;
-  margin: 135px auto 100px; /* 60px (main header) + 50px (sub-header) + 25px extra */
-  padding: 0 20px;
-  /* Ensure main content doesn't assume sidebar space since detail page has no sidebar */
-  margin-left: auto;
-  margin-right: auto;
+  margin: 97px auto 100px; /* Match the index page spacing */
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 /* Override any sidebar interference - ensure detail page layout is not affected by sidebar CSS */
 body.no-sidebar .main {
   margin-left: auto;
   margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Breadcrumb navigation styling */
@@ -61,16 +60,19 @@ body.no-sidebar .main {
   grid-template-columns: 1fr 1fr;
   column-gap: 60px;
   margin-top: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
   .main {
-    margin-top: 120px; /* Adjusted for mobile */
+    margin-top: 130px; /* Match index page spacing */
     padding: 0 15px;
   }
   
   .product-detail-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .product-title {
@@ -93,6 +95,15 @@ body.no-sidebar .main {
     overflow-x: auto;
     white-space: nowrap;
   }
+  
+  .thumbnail-item {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .product-image-section {
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -112,6 +123,27 @@ body.no-sidebar .main {
   .tab-header {
     flex-basis: 100%;
   }
+  
+  /* Make thumbnails smaller on very small screens */
+  .thumbnail-item {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Fix for screen rotation - match index page behavior */
+@media screen and (orientation: portrait) {
+  body.no-sidebar .main {
+    padding: 20px;
+    margin-top: 130px;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  body.no-sidebar .main {
+    margin-top: 80px;
+    padding: 15px;
+  }
 }
 
 .product-image-section {
@@ -123,13 +155,25 @@ body.no-sidebar .main {
   margin-bottom: 20px;
   border: 1px solid #e0e0e0;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-image {
   max-width: 100%;
+  width: auto;
+  height: auto;
   max-height: 500px;
   display: block;
   margin: 0 auto;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .product-image {
+    max-height: 350px;
+  }
 }
 
 /* Product thumbnails */
@@ -137,7 +181,8 @@ body.no-sidebar .main {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 584px; /* 5 items * (80px W + 10px P + 2px B = 92px) = 460px. 4 gaps * 10px = 40px. Thumbnails total = 500px. Arrows (2 * (32px W + 10px M)) = 84px. Wrapper total = 500 + 84 = 584px */
+  width: 100%;
+  max-width: 584px; /* 5 items * (80px W + 10px P + 2px B = 92px) = 460px. 4 gaps * 10px = 40px. Thumbnails total = 500px. Arrows (2 * (32px W + 10px M)) = 84px. Wrapper total = 500 + 84 = 584px */
   margin: 0 auto 10px auto;
 }
 
@@ -154,6 +199,7 @@ body.no-sidebar .main {
   justify-content: center;
   margin: 0 5px;
   transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
 }
 .thumbnail-arrow:hover {
   background: #f0f0f0;
@@ -162,10 +208,17 @@ body.no-sidebar .main {
 
 .product-thumbnails {
   display: flex;
-  overflow-x: hidden;
+  overflow-x: auto;
   gap: 10px;
-  width: 500px; /* 5 items * (80px W + 10px P + 2px B = 92px) = 460px. 4 gaps * 10px = 40px. Total = 500px */
+  width: 100%;
+  max-width: 500px; /* 5 items * (80px W + 10px P + 2px B = 92px) = 460px. 4 gaps * 10px = 40px. Total = 500px */
   transition: scroll-left 0.3s;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+.product-thumbnails::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .thumbnail-item {
@@ -189,6 +242,8 @@ body.no-sidebar .main {
 
 .product-detail-section {
   margin-bottom: 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .product-name {
@@ -316,12 +371,15 @@ body.no-sidebar .main {
   margin-top: 50px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tab-headers {
   display: flex;
   border-bottom: 1px solid #e0e0e0;
   background-color: #f9f9f9;
+  flex-wrap: wrap;
 }
 
 .tab-header {
@@ -343,6 +401,8 @@ body.no-sidebar .main {
 
 .tab-content {
   padding: 25px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tab-panel {
@@ -353,6 +413,16 @@ body.no-sidebar .main {
   display: block;
 }
 
+@media (max-width: 600px) {
+  .product-info-tabs {
+    margin-top: 30px;
+  }
+  
+  .tab-content {
+    padding: 15px;
+  }
+}
+
 /* Style the compatibility, specifications, and reviews sections within product details */
 .product-compatibility-section,
 .product-specifications-section,
@@ -360,6 +430,8 @@ body.no-sidebar .main {
   margin-top: 40px;
   padding-top: 30px;
   border-top: 2px solid #e0e0e0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .product-compatibility-section h2,
@@ -371,12 +443,32 @@ body.no-sidebar .main {
   font-weight: 600;
 }
 
+@media (max-width: 600px) {
+  .product-compatibility-section,
+  .product-specifications-section,
+  .product-reviews-section {
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+  
+  .product-compatibility-section h2,
+  .product-specifications-section h2,
+  .product-reviews-section h2 {
+    font-size: 20px;
+    margin: 0 0 15px 0;
+  }
+}
+
 /* Product details content */
 .product-details-content,
 .product-compatibility,
 .product-specifications,
 .product-reviews {
   line-height: 1.6;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .product-details-content h2,
@@ -429,4 +521,19 @@ body.no-sidebar .main {
 
 .product-table tr:hover {
   background-color: #f1f1f1;
+}
+
+@media (max-width: 600px) {
+  .product-table th,
+  .product-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  /* For mobile, make tables responsive */
+  .product-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
