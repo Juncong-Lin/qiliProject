@@ -30,6 +30,14 @@ body.has-sidebar .main {
   min-width: 0; /* Allow grid items to shrink */
 }
 
+/* When products grid contains only coming-soon message, center it */
+.products-grid.showing-coming-soon {
+  display: block;
+  position: relative;
+  min-height: 400px;
+  width: 100%;
+}
+
 /* Fix for screen rotation */
 @media screen and (orientation: portrait) {
   .main {
@@ -432,12 +440,17 @@ body.has-sidebar .main {
 
 .coming-soon {
   width: 100%;
+  max-width: 600px;
   padding: 40px;
   text-align: center;
   background-color: #f8f8f8;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
+  margin: 40px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .coming-soon h2 {
@@ -449,6 +462,28 @@ body.has-sidebar .main {
 .coming-soon p {
   font-size: 16px;
   color: #555;
+}
+
+/* Responsive design for coming-soon message */
+@media (max-width: 768px) {
+  .coming-soon {
+    max-width: 90%;
+    padding: 30px 20px;
+    margin: 15px auto;
+  }
+  
+  .coming-soon h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .coming-soon p {
+    font-size: 14px;
+  }
+  
+  .products-grid.showing-coming-soon {
+    padding: 10px;
+  }
 }
 
 /* Enhanced visual feedback for menu interactions */

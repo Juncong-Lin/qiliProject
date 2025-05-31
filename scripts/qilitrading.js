@@ -104,14 +104,15 @@ window.loadPrintheadProducts = function(brand) {
     
     // Highlight selected menu item
     highlightSelectedMenuItem(brand);
-    
-    // Add loading animation
+      // Add loading animation
     showLoadingState();
     
     // Small delay for smooth transition
     setTimeout(() => {
       const productsHTML = renderPrintheadProducts(brandProducts);
-      document.querySelector('.js-prodcts-grid').innerHTML = productsHTML;
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
@@ -149,9 +150,10 @@ window.loadAllPrintheadProducts = function() {
     for (const brand in printheadProducts) {
       allPrintheadProducts = allPrintheadProducts.concat(printheadProducts[brand]);
     }
-    
-    const productsHTML = renderPrintheadProducts(allPrintheadProducts);
-    document.querySelector('.js-prodcts-grid').innerHTML = productsHTML;
+      const productsHTML = renderPrintheadProducts(allPrintheadProducts);
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
@@ -181,11 +183,12 @@ window.loadAllProducts = function() {
   
   // Add loading animation
   showLoadingState();
-  
-  // Small delay for smooth transition
+    // Small delay for smooth transition
   setTimeout(() => {
     const productsHTML = renderProducts(products);
-    document.querySelector('.js-prodcts-grid').innerHTML = productsHTML;
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
     
     // Re-attach event listeners
     attachAddToCartListeners();
@@ -218,6 +221,7 @@ function showLoadingState() {
       <p>Loading products...</p>
     </div>
   `;
+  productsGrid.classList.remove('showing-coming-soon');
 }
 
 // Function to scroll to products section
@@ -569,14 +573,15 @@ window.loadSpecificCategory = function(categoryName) {
   } else {
     location.hash = `#${categorySlug}`;
   }
-
   // For now, just show placeholder content
   setTimeout(() => {
     const message = `<div class="coming-soon">
       <h2>${categoryName} Products</h2>
       <p>Products for this category will be available soon!</p>
     </div>`;
-    document.querySelector('.js-prodcts-grid').innerHTML = message;
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = message;
+    productsGrid.classList.add('showing-coming-soon');
 
     // Update page header
     updatePageHeader(categoryName);
