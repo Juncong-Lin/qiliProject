@@ -23,6 +23,12 @@ html {
     width: 100%;
     overflow-x: hidden;
   }
+  
+  /* Force proper fitting on small mobile screens */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 @media screen and (orientation: landscape) {

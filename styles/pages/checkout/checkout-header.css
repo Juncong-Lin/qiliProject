@@ -89,6 +89,16 @@
 @media (max-width: 575px) {
   .checkout-header-middle-section {
     margin-right: 5px;
+    font-size: 16px;
+  }
+  
+  .checkout-header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .return-to-home-link {
+    font-size: 16px;
   }
 }
 
