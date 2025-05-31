@@ -446,7 +446,6 @@ body.has-sidebar .main {
   background-color: #f8f8f8;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin: 40px auto;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -469,7 +468,6 @@ body.has-sidebar .main {
   .coming-soon {
     max-width: 90%;
     padding: 30px 20px;
-    margin: 15px auto;
   }
   
   .coming-soon h2 {
@@ -479,10 +477,6 @@ body.has-sidebar .main {
   
   .coming-soon p {
     font-size: 14px;
-  }
-  
-  .products-grid.showing-coming-soon {
-    padding: 10px;
   }
 }
 
