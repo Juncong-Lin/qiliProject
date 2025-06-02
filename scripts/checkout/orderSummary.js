@@ -7,7 +7,14 @@ import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js'
 import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary() {
-let cartSummaryHTML = '';
+// Get unique items and total quantity for the heading
+const uniqueItems = cart.length;
+const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+// Start with the page title that shows checkout information
+let cartSummaryHTML = `
+  <div class="page-title">Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})</div>
+`;
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
@@ -100,14 +107,7 @@ cart.forEach((cartItem) => {
           // Refresh the page to show empty cart message
           window.location.reload();
           return;
-        }
-
-        // Update header count after deletion
-        const uniqueItems = cart.length;
-        const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-        document.querySelector('.checkout-header-middle-section').innerHTML =
-          `Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})`;
-
+        }        // Update by re-rendering the order summary
         renderOrderSummary();
         renderPaymentSummary();
       });
@@ -151,12 +151,8 @@ cart.forEach((cartItem) => {
           // Update UI
           document.querySelector(`.js-quantity-label-${productId}`).textContent = newQuantity;
           container.style.display = 'none';
-          link.style.display = '';
-          // Update header
-          const uniqueItems = cart.length;
-          const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-          document.querySelector('.checkout-header-middle-section').innerHTML =
-            `Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})`;
+          link.style.display = '';          // Update summary only
+          renderOrderSummary();
           renderPaymentSummary();
         });
       });

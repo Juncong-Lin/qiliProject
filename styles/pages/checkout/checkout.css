@@ -17,7 +17,9 @@
 .page-title {
   font-weight: 700;
   font-size: 22px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .checkout-grid {
@@ -92,6 +94,8 @@
 
 .payment-summary {
   padding-bottom: 5px;
+  /* Move payment summary down to align with first product container */
+  margin-top: 47px; /* Accounts for page title height + margin */
 }
 
 @media (max-width: 1000px) {
@@ -102,6 +106,7 @@
       the HTML. grid-row overrides this default ordering). */
     grid-row: 1;
     margin-bottom: 12px;
+    margin-top: 0; /* Reset margin-top for mobile since layout changes to single column */
   }
 }
 
