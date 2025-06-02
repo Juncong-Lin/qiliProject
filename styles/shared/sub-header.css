@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   height: 32px; /* Slightly reduced height */
-  z-index: 99;
+  z-index: 1000; /* Ensure it's above main content but below submenu */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
@@ -227,7 +227,7 @@
   width: 100%;
   background-color: #232F3E;
   color: white;
-  z-index: 98;
+  z-index: 1001; /* Higher z-index to appear above all content */
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);

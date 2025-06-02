@@ -152,7 +152,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1100px;
+  max-width: 800px; /* Match product container width */
   background-color: white;
   z-index: 100;
   padding: 15px 30px;
@@ -168,6 +168,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+  max-width: 800px; /* Added max-width to constrain product container */
 
   /* Use align-items: start; to prevent the elements
      in the grid from stretching vertically. */
@@ -233,7 +234,8 @@
     padding-right: 15px;
     border-top: 1px solid #eee !important;
   }
-    .checkout-grid {
+  
+  .checkout-grid {
     max-width: 450px;
     width: 100%;
     margin-left: auto;
@@ -339,7 +341,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1100px;
+  max-width: 800px; /* Match product container width */
   background-color: white;
   z-index: 99;
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
@@ -360,6 +362,9 @@
     max-width: 500px;
     width: 100%;
     top: 138px; /* Positioned below page title with no gap */
+  }
+  .page-title {
+    max-width: 500px; /* Match checkout grid width */
   }
 }
 
