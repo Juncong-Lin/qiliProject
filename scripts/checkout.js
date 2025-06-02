@@ -29,30 +29,33 @@ document.addEventListener('DOMContentLoaded', function() {
   const totalQuantity = cart ? cart.reduce((sum, item) => sum + item.quantity, 0) : 0;
 
   // Unique items and total quantity calculated
-
   // Handle empty cart state
   if (uniqueItems === 0) {
     // Cart is empty, showing empty cart message
     // Hide checkout elements
     document.querySelector('.checkout-grid').style.display = 'none';
+    document.querySelector('.js-payment-summary').style.display = 'none';
     // Show empty cart message
     document.querySelector('.js-empty-cart').style.display = 'block';
     const pageTitleElement = document.querySelector('.page-title');
     if (pageTitleElement) {
-      pageTitleElement.style.display = 'none';    }  } else {  
+      pageTitleElement.style.display = 'none';
+    }
+  } else {
     // Cart has items, rendering checkout
     // Show normal checkout view
     document.querySelector('.checkout-grid').style.display = 'grid';
+    document.querySelector('.js-payment-summary').style.display = 'block';
     document.querySelector('.js-empty-cart').style.display = 'none';
     
     const checkoutHeaderMiddle = document.querySelector('.checkout-header-middle-section');
     if (checkoutHeaderMiddle) {
       checkoutHeaderMiddle.innerHTML = '';
     }
-      // Add page title above everything
+    
+    // Add page title above everything
     const mainElement = document.querySelector('.main');
     const emptyCartMessage = document.querySelector('.js-empty-cart');
-    const paymentSummary = document.querySelector('.js-payment-summary');
     
     // Create page title element
     const pageTitleElement = document.createElement('div');

@@ -128,7 +128,7 @@
   padding-left: 30px;
   padding-right: 30px;
 
-  margin-top: 170px; /* 60px (checkout header) + 50px (sub-header) + 60px extra */
+  margin-top: 92px; /* 60px (checkout header) + 32px (sub-header) */
   margin-bottom: 100px;
 
   /* margin-left: auto;
@@ -142,10 +142,23 @@
 .page-title {
   font-weight: 700;
   font-size: 22px;
-  margin-bottom: 20px; /* Increased bottom margin for better spacing */
-  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-top: 0;
   text-align: center;
+  
+  /* Make sticky relative to viewport */
+  position: fixed;
+  top: 92px; /* Below header (60px) and subheader (32px) */
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 1100px;
+  background-color: white;
+  z-index: 100;
+  padding: 15px 30px;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
 .checkout-grid {
@@ -159,6 +172,9 @@
   /* Use align-items: start; to prevent the elements
      in the grid from stretching vertically. */
   align-items: start;
+    /* Add top margin to account for fixed elements */
+  margin-top: 338px; /* Increased: Space for fixed title (~52px) and payment summary (~200px) + buffer (~68px) */
+  padding-top: 20px; /* Additional padding for first item */
 }
 
 @media (max-width: 1000px) {
@@ -166,11 +182,23 @@
     max-width: 500px;
     padding-left: 20px;
     padding-right: 20px;
-    margin-top: 150px; /* Adjusted for mobile */
-  }
-
-  .checkout-grid {
+    margin-top: 92px; /* Keep same as desktop */
+  }  .checkout-grid {
     grid-template-columns: 1fr;
+    margin-top: 290px; /* Increased: Adjusted for tablet sized payment summary */
+    padding-top: 15px;
+  }
+    .page-title {
+    font-size: 20px;
+    top: 92px; /* Header (60px) + subheader (32px) */
+    padding: 12px 20px;
+    max-width: 500px;
+  }
+    .payment-summary {
+    top: 138px; /* Below page title with no gap */
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 500px;
   }
 }
 
@@ -179,23 +207,39 @@
   .main {
     padding-left: 15px;
     padding-right: 15px;
-    margin-top: 130px;
+    margin-top: 92px; /* Keep same as desktop */
     width: 100%;
     box-sizing: border-box;
   }
-
+  
   .page-title {
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 0px !important; /* Remove margin bottom */
+    top: 92px; /* Header (60px) + subheader (32px) */
+    padding: 8px 15px !important; /* Reduce padding */
+    max-width: 450px;
+    border-bottom: none !important; /* Remove border for mobile */
+    min-height: 26px !important; /* Explicit minimum height */
   }
   
-  .payment-summary,
-  .checkout-grid {
+  .payment-summary {
+    top: 118px !important; /* Calculated: 92px + 26px = 118px */
     max-width: 450px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top: 1px solid #eee !important;
+  }
+    .checkout-grid {
+    max-width: 450px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 280px; /* Increased: 118px (payment-summary top) + ~162px (payment-summary height) = ~280px */
+    padding-top: 15px;
   }
 }
 
@@ -203,20 +247,36 @@
   .main {
     padding-left: 10px;
     padding-right: 10px;
-    margin-top: 120px;
+    margin-top: 92px; /* Keep same as desktop */
   }
   
-  .payment-summary,
-  .checkout-grid {
+  .page-title {
+    font-size: 16px;
+    margin-bottom: 0px !important; /* Remove margin bottom */
+    top: 92px; /* Header (60px) + subheader (32px) */
+    padding: 6px 10px !important; /* Reduce padding further */
+    max-width: calc(100% - 20px);
+    border-bottom: none !important; /* Remove border for mobile */
+    min-height: 22px !important; /* Explicit minimum height */
+  }
+  
+  .payment-summary {
+    top: 100px !important; /* Calculated: 92px + 22px = 114px */
+    max-width: calc(100% - 20px);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: 1px solid #eee !important;
+  }
+    .checkout-grid {
     max-width: 100%;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-  }
-  
-  .page-title {
-    font-size: 18px;
-    margin-bottom: 12px;
+    margin-top: 310px; /* Increased: 114px (payment-summary top) + ~156px (payment-summary height) = ~270px */
+    padding-top: 10px;
   }
 }
 
@@ -229,6 +289,29 @@
 
 .cart-item-container {
   margin-bottom: 12px;
+}
+
+/* Empty cart message styling */
+.empty-cart-message,
+.js-empty-cart {
+  text-align: center;
+  padding: 40px;
+  min-height: 400px;
+}
+
+/* When empty cart is shown as block, make it flex for centering */
+.empty-cart-message[style*="display: block"],
+.js-empty-cart[style*="display: block"] {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure hidden state works - this is the key fix */
+.empty-cart-message[style*="display: none"],
+.js-empty-cart[style*="display: none"] {
+  display: none !important;
 }
 
 @media (max-width: 480px) {
@@ -248,11 +331,20 @@
   /* Position the payment summary below the title but above the products */
   margin-top: 0;
   margin-bottom: 20px;
-  width: 100%; /* Take full width of its container */
-  max-width: 1100px; /* Match the maximum width of main container */
-  margin-left: auto;
-  margin-right: auto;
   box-sizing: border-box; /* Include padding and border in the width calculation */
+  
+  /* Make sticky relative to viewport */
+  position: fixed;
+  top: 144px; /* Directly below the page title with no gap */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1100px;
+  background-color: white;
+  z-index: 99;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 @media (max-width: 1000px) {
@@ -261,13 +353,13 @@
     margin-left: auto;
     margin-right: auto;
   }
-  
   .payment-summary {
     /* Match the width of the checkout grid */
     margin-bottom: 20px;
     margin-top: 0;
     max-width: 500px;
     width: 100%;
+    top: 138px; /* Positioned below page title with no gap */
   }
 }
 
@@ -642,5 +734,43 @@ body.no-sidebar .main {
   .main {
     margin-top: 110px;
     margin-bottom: 60px;
+  }
+}
+
+/* ============================================ */
+/* MOBILE-SPECIFIC OVERRIDE SECTION */
+/* Force mobile gap elimination with highest specificity */
+/* ============================================ */
+
+/* Extra specific mobile selectors to force gap elimination */
+@media (max-width: 767px) and (min-width: 481px) {
+  body .main .page-title {
+    top: 92px !important;
+    padding: 8px 15px !important;
+    margin-bottom: 0px !important;
+    border-bottom: none !important;
+    height: auto !important;
+    min-height: 26px !important; /* Explicit minimum height */
+  }
+  
+  body .main .payment-summary {
+    top: 118px !important; /* Calculated: 92px + 26px = 118px */
+    border-top: 1px solid #eee !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body .main .page-title {
+    top: 92px !important;
+    padding: 6px 10px !important;
+    margin-bottom: 0px !important;
+    border-bottom: none !important;
+    height: auto !important;
+    min-height: 22px !important; /* Explicit minimum height */
+  }
+  
+  body .main .payment-summary {
+    top: 114px !important; /* Calculated: 92px + 22px = 114px */
+    border-top: 1px solid #eee !important;
   }
 }
