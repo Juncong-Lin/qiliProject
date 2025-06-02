@@ -303,42 +303,41 @@ function attachAddToCartListeners() {
 
 // Load default products on page load
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize cart quantity display on page load immediately
-  updateCartQuantity();
+  // Only run on the main index page, not on checkout or other pages
+  const isIndexPage = document.querySelector('.products-grid') || document.querySelector('#products-grid');
   
-  // Small delay to ensure sub-header navigation is initialized
-  setTimeout(() => {
-    // Check if there's a hash in the URL that should load specific content
-    const hash = window.location.hash.substring(1);
+  if (isIndexPage) {
+    // Initialize cart quantity display on page load immediately
+    updateCartQuantity();
     
-    if (hash) {
-      // If there's a hash, let the sub-header navigation handle it instead of loading all products
-      console.log('Hash detected on page load:', hash);
-      
-      // Check if sub-header navigation is available and can handle the hash
-      if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
-        // Sub-header nav will handle the hash, don't load all products
-        console.log('Sub-header navigation will handle hash:', hash);
-        return;
+    // Small delay to ensure sub-header navigation is initialized
+    setTimeout(() => {
+      // Check if there's a hash in the URL that should load specific content
+      const hash = window.location.hash.substring(1);    
+      if (hash) {
+        // If there's a hash, let the sub-header navigation handle it instead of loading all products
+        // Check if sub-header navigation is available and can handle the hash
+        if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
+          // Sub-header nav will handle the hash, don't load all products
+          return;
+        } else {
+          // Fallback: wait a bit more for sub-header to initialize
+          setTimeout(() => {
+            if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
+              return;
+            } else {
+              // If still no sub-header nav, try to handle hash ourselves or load all products
+              handleHashFallback(hash);
+            }
+          }, 200);
+          return;
+        }
       } else {
-        // Fallback: wait a bit more for sub-header to initialize
-        setTimeout(() => {
-          if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
-            console.log('Sub-header navigation ready, handling hash:', hash);
-            return;
-          } else {
-            // If still no sub-header nav, try to handle hash ourselves or load all products
-            console.log('No sub-header navigation available, loading products based on hash');
-            handleHashFallback(hash);
-          }
-        }, 200);
-        return;
+        // Only load all products if there's no hash
+        loadAllProducts();
       }
-    } else {
-      // Only load all products if there's no hash
-      loadAllProducts();
-    }
-  }, 100);
+    }, 100);
+  }
 });
 
 // Fallback function to handle hash navigation when sub-header nav is not available
@@ -387,7 +386,11 @@ function updateCartQuantity() {
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  
+  const cartQuantityElement = document.querySelector('.js-cart-quantity');
+  if (cartQuantityElement) {
+    cartQuantityElement.innerHTML = cartQuantity;
+  }
 }
 
 // Function to find any product by ID (regular or printhead)
