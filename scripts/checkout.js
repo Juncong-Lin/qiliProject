@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.js-empty-cart').style.display = 'block';
     const pageTitleElement = document.querySelector('.page-title');
     if (pageTitleElement) {
-      pageTitleElement.style.display = 'none';    }
-  } else {  
+      pageTitleElement.style.display = 'none';    }  } else {  
     // Cart has items, rendering checkout
     // Show normal checkout view
     document.querySelector('.checkout-grid').style.display = 'grid';
@@ -39,9 +38,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if (checkoutHeaderMiddle) {
       checkoutHeaderMiddle.innerHTML = '';
     }
+      // Add page title above everything
+    const mainElement = document.querySelector('.main');
+    const emptyCartMessage = document.querySelector('.js-empty-cart');
+    const paymentSummary = document.querySelector('.js-payment-summary');
     
-    renderOrderSummary();
-    renderPaymentSummary();
+    // Create page title element
+    const pageTitleElement = document.createElement('div');
+    pageTitleElement.className = 'page-title';
+    pageTitleElement.innerHTML = `Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})`;
+    
+    // Insert page title after the empty cart message (which is hidden)
+    mainElement.insertBefore(pageTitleElement, emptyCartMessage.nextSibling);
+    
+    renderPaymentSummary(); // Render payment summary first
+    renderOrderSummary(); // Then render order summary
   }
 });
 

@@ -1,3 +1,128 @@
+/* Combined Checkout Styles */
+
+/* ============================================ */
+/* CHECKOUT HEADER STYLES */
+/* ============================================ */
+
+.checkout-header {
+  height: 60px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #232F3E;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  align-items: center;
+}
+
+.checkout-header-left-section {
+  width: 150px;
+}
+
+.amazon-logo {
+  width: 100px;
+  margin-top: 12px;
+}
+
+.amazon-mobile-logo {
+  display: none;
+}
+
+/* @media is used to create responsive design (making the
+   website look good on any screen size). This @media
+   means when the screen width is 575px or less, different
+   styles (inside the {...}) will be applied. */
+@media (max-width: 575px) {
+  .checkout-header-left-section {
+    width: auto;
+  }
+
+  .amazon-logo {
+    display: none;
+  }
+
+  .amazon-mobile-logo {
+    display: inline-block;
+    height: 35px;
+    margin-top: 5px;
+  }
+}
+
+.checkout-header-middle-section {
+  flex: 1;
+  flex-shrink: 0;
+  text-align: center;
+
+  font-size: 25px;
+  font-weight: 500;
+
+  display: flex;
+  justify-content: center;
+}
+
+.return-to-home-link {
+  color: rgb(0, 113, 133);
+  font-size: 23px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .checkout-header-middle-section {
+    font-size: 20px;
+    margin-right: 60px;
+  }
+
+  .return-to-home-link {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .checkout-header-middle-section {
+    margin-right: 5px;
+    font-size: 16px;
+  }
+  
+  .checkout-header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .return-to-home-link {
+    font-size: 16px;
+  }
+}
+
+.checkout-header-right-section {
+  text-align: right;
+  width: 150px;
+}
+
+@media (max-width: 1000px) {
+  .checkout-header-right-section {
+    width: auto;
+  }
+}
+
+/* ============================================ */
+/* MAIN CHECKOUT STYLES */
+/* ============================================ */
+
 .main {
   max-width: 1100px;
   padding-left: 30px;
@@ -17,17 +142,19 @@
 .page-title {
   font-weight: 700;
   font-size: 22px;
-  margin-bottom: 10px;
+  margin-bottom: 20px; /* Increased bottom margin for better spacing */
   margin-top: 10px;
   text-align: center;
+  width: 100%;
 }
 
 .checkout-grid {
   display: grid;
-  /* Here, 1fr means the first column will take
-     up the remaining space in the grid. */
-  grid-template-columns: 1fr 350px;
-  column-gap: 12px;
+  /* Changed to single column since we moved payment summary out */
+  grid-template-columns: 1fr;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 
   /* Use align-items: start; to prevent the elements
      in the grid from stretching vertically. */
@@ -53,11 +180,22 @@
     padding-left: 15px;
     padding-right: 15px;
     margin-top: 130px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .page-title {
     font-size: 20px;
     text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .payment-summary,
+  .checkout-grid {
+    max-width: 450px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -66,6 +204,19 @@
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 120px;
+  }
+  
+  .payment-summary,
+  .checkout-grid {
+    max-width: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .page-title {
+    font-size: 18px;
+    margin-bottom: 12px;
   }
 }
 
@@ -94,19 +245,29 @@
 
 .payment-summary {
   padding-bottom: 5px;
-  /* Move payment summary down to align with first product container */
-  margin-top: 47px; /* Accounts for page title height + margin */
+  /* Position the payment summary below the title but above the products */
+  margin-top: 0;
+  margin-bottom: 20px;
+  width: 100%; /* Take full width of its container */
+  max-width: 1100px; /* Match the maximum width of main container */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box; /* Include padding and border in the width calculation */
 }
 
 @media (max-width: 1000px) {
+  .checkout-grid {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
   .payment-summary {
-    /* grid-row: 1 means this element will be placed into row
-      1 in the grid. (Normally, the row that an element is
-      placed in is determined by the order of the elements in
-      the HTML. grid-row overrides this default ordering). */
-    grid-row: 1;
-    margin-bottom: 12px;
-    margin-top: 0; /* Reset margin-top for mobile since layout changes to single column */
+    /* Match the width of the checkout grid */
+    margin-bottom: 20px;
+    margin-top: 0;
+    max-width: 500px;
+    width: 100%;
   }
 }
 
@@ -172,6 +333,43 @@
   }
 }
 
+/* Small mobile devices */
+@media (max-width: 380px) {
+  .checkout-header-middle-section {
+    font-size: 14px;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .return-to-home-link {
+    font-size: 14px;
+  }
+  
+  .cart-item-details-grid {
+    grid-template-columns: 60px 1fr;
+    column-gap: 8px;
+  }
+  
+  .product-image {
+    max-height: 60px;
+  }
+  
+  .product-name {
+    font-size: 13px;
+  }
+  
+  .product-price {
+    font-size: 13px;
+  }
+  
+  .delivery-option-date,
+  .delivery-option-price {
+    font-size: 12px;
+  }
+}
+
 .product-image {
   max-width: 100%;
   max-height: 120px;
@@ -182,6 +380,28 @@
      without needing a container. */
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Mobile optimization for product info */
+@media (max-width: 767px) {
+  /* Help with overflow issues */
+  .cart-item-container {
+    overflow-x: hidden;
+    word-break: break-word;
+  }
+  
+  /* Mobile optimization for product info */
+  .product-quantity, 
+  .product-price {
+    margin-bottom: 8px;
+  }
+  
+  /* Force proper sizing for product image */
+  .product-image {
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+  }
 }
 
 .product-name {
@@ -242,6 +462,37 @@
   cursor: pointer;
 }
 
+.delivery-option-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Better touch targets */
+@media (max-width: 767px) {
+  .delivery-option {
+    padding: 6px 0;
+  }
+  
+  .delivery-option-input {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .delivery-option-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* Footer mobile optimization */
+  .footer {
+    padding-bottom: 20px;
+  }
+}
+
 @media (max-width: 480px) {
   .delivery-option {
     grid-template-columns: 20px 1fr;
@@ -259,7 +510,6 @@
 .delivery-option-date {
   color: rgb(0, 118, 0);
   font-weight: 500;
-  margin-bottom: 3px;
 }
 
 .delivery-option-price {
@@ -381,13 +631,12 @@ body.no-sidebar .main {
     padding-left: 10px;
     padding-right: 10px;
   }
-  
-  /* Specifically for small screens - ensure content fits */
-  .checkout-header-middle-section {
-    max-width: 80%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 14px;
+}
+
+/* Handle the viewport height better */
+@media screen and (max-height: 700px) {
+  .main {
+    margin-top: 110px;
+    margin-bottom: 60px;
   }
 }

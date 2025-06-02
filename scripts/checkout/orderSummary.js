@@ -12,10 +12,8 @@ export function renderOrderSummary() {
 const uniqueItems = cart.length;
 const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-// Start with the page title that shows checkout information
-let cartSummaryHTML = `
-  <div class="page-title">Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})</div>
-`;
+// Start with empty HTML - the page title is now rendered separately in checkout.js
+let cartSummaryHTML = ``;
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
@@ -185,9 +183,7 @@ function deleveryOptionsHTML(matchingProduct, cartItem) {
       ? 'FREE'
       : `$${formatCurrency(deliveryOption.priceCents)} - Shipping`;
 
-    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
-
-    html +=
+    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;    html +=
     `
       <div class="delivery-option js-delivery-option"
       data-product-id="${matchingProduct.id}"
@@ -196,13 +192,9 @@ function deleveryOptionsHTML(matchingProduct, cartItem) {
           ${isChecked ? 'checked' : ''}
         class="delivery-option-input"
           name="delivery-option-${matchingProduct.id}">
-        <div>
-          <div class="delivery-option-date">
-            ${dateString}
-          </div>
-          <div class="delivery-option-price">
-            ${priceString}
-          </div>
+        <div class="delivery-option-info">
+          <span class="delivery-option-date">${dateString}</span>
+          <span class="delivery-option-price">${priceString}</span>
         </div>
       </div>
     `;
