@@ -1,20 +1,8 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
 if (!cart) {
-  cart = [{
-    productId: 'sample-product-1',
-    quantity: 1,
-    deliveryOptionId: '1'
-  },{
-    productId: 'sample-product-2',
-    quantity: 1,
-    deliveryOptionId: '2'
-  },{
-    productId: 'sample-product-3',
-    quantity: 1,
-    deliveryOptionId: '1'
-  }];
-  // Save the default cart to localStorage
+  cart = [];
+  // Save the empty cart to localStorage
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 

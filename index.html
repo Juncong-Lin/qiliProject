@@ -149,10 +149,138 @@
         <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Other')">Other</a>
       </div>
     </div>
-    
-    <div class="main">
-      <div class="products-grid js-prodcts-grid">
-      </div>    </div>
+      <div class="main">
+      <!-- Main Content Sections for Home Page -->
+      <div class="home-sections">
+        <!-- Inkjet Printers Section -->
+        <section id="inkjet-printers" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Inkjet Printers')">
+            Inkjet Printers
+          </h2>
+          <div class="category-description">
+            <p>Professional inkjet printers for all your printing needs including DTF, UV, eco-solvent, and sublimation printing technologies.</p>
+          </div>
+        </section>
+
+        <!-- Print Heads Section -->
+        <section id="print-heads" class="category-section">
+          <h2 class="category-title" onclick="window.loadAllPrintheadProducts && window.loadAllPrintheadProducts()">
+            Print Heads
+          </h2>
+          <div class="category-description">
+            <p>High-quality printheads from leading manufacturers including Canon, Epson, Konica, Ricoh, and more.</p>
+          </div>
+          <!-- Print Heads Products Grid -->
+          <div class="category-products-grid" id="printhead-products-grid">
+            <!-- Print heads products will be loaded here -->
+          </div>
+        </section>
+
+        <!-- Print Spare Parts Section -->
+        <section id="print-spare-parts" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')">
+            Print Spare Parts
+          </h2>
+          <div class="category-description">
+            <p>Genuine spare parts for various printer brands including Epson, Roland, Mutoh, Mimaki, Canon, and many more.</p>
+          </div>
+        </section>
+
+        <!-- Upgrading Kit Section -->
+        <section id="upgrading-kit" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Upgrading Kit')">
+            Upgrading Kit
+          </h2>
+          <div class="category-description">
+            <p>Upgrade kits to enhance your printer's performance and capabilities.</p>
+          </div>
+        </section>
+
+        <!-- Material Section -->
+        <section id="material" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Material')">
+            Material
+          </h2>
+          <div class="category-description">
+            <p>Quality printing materials and substrates for various printing applications.</p>
+          </div>
+        </section>
+
+        <!-- LED & LCD Section -->
+        <section id="led-lcd" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('LED & LCD')">
+            LED & LCD
+          </h2>
+          <div class="category-description">
+            <p>LED and LCD display solutions for signage and commercial applications.</p>
+          </div>
+        </section>
+
+        <!-- Laser Section -->
+        <section id="laser" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Laser')">
+            Laser
+          </h2>
+          <div class="category-description">
+            <p>Laser cutting and engraving equipment for precision manufacturing.</p>
+          </div>
+        </section>
+
+        <!-- Cutting Section -->
+        <section id="cutting" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Cutting')">
+            Cutting
+          </h2>
+          <div class="category-description">
+            <p>Professional cutting equipment and tools for various materials.</p>
+          </div>
+        </section>
+
+        <!-- Channel Letter Section -->
+        <section id="channel-letter" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Channel Letter')">
+            Channel Letter
+          </h2>
+          <div class="category-description">
+            <p>Channel letter fabrication equipment and supplies for signage professionals.</p>
+          </div>
+        </section>
+
+        <!-- CNC Section -->
+        <section id="cnc" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('CNC')">
+            CNC
+          </h2>
+          <div class="category-description">
+            <p>CNC machines and accessories for precision manufacturing and prototyping.</p>
+          </div>
+        </section>
+
+        <!-- Displays Section -->
+        <section id="displays" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Displays')">
+            Displays
+          </h2>
+          <div class="category-description">
+            <p>Professional display solutions for commercial and industrial applications.</p>
+          </div>
+        </section>
+
+        <!-- Other Section -->
+        <section id="other" class="category-section">
+          <h2 class="category-title" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Other')">
+            Other
+          </h2>
+          <div class="category-description">
+            <p>Additional equipment and accessories for your printing and manufacturing needs.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Products Grid (hidden by default on home page) -->
+      <div class="products-grid js-prodcts-grid" style="display: none;">
+      </div>
+    </div>
     
     <!-- Shared Footer - Loaded dynamically from shared component -->
     <div id="shared-footer-placeholder"></div>
