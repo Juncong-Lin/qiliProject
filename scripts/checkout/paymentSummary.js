@@ -9,7 +9,6 @@ import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js'
 export function renderPaymentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
-
   cart.forEach((cartItem) => {
     let product;
     
@@ -28,12 +27,18 @@ export function renderPaymentSummary() {
       }
     }
     
+    // Skip if product not found to avoid errors
+    if (!product) {
+      console.warn(`Product with ID ${cartItem.productId} not found`);
+      return;
+    }
+    
     // Handle different price formats: priceCents (regular) vs price (printhead)
     const pricePerItem = product.priceCents || product.price;
     productPriceCents += pricePerItem * cartItem.quantity;
 
-    const deliveryOptions = getDeliveryOption(cartItem.deliveryOptionId);
-    shippingPriceCents += deliveryOptions.priceCents;
+    const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
+    shippingPriceCents += deliveryOption.priceCents;
   });
 
   const totalBeforeTax = productPriceCents + shippingPriceCents;
@@ -99,6 +104,13 @@ export function renderOrderSummary() {
         }
       }
     }
+    
+    // Skip if product not found to avoid errors
+    if (!matchingProduct) {
+      console.warn(`Product with ID ${cartItem.productId} not found`);
+      return;
+    }
+    
     paymentSummaryHTML += `
       <div class="order-summary-item js-cart-item-container-${cartItem.productId}">
         <div class="order-summary-product-image-container">
