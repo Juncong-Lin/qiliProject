@@ -6,6 +6,7 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { updateCartQuantity } from '../utils/cart-quantity.js';
+import { updatePageTitle } from '../checkout.js';
 
 export function renderOrderSummary() {
 // Get unique items and total quantity for the heading
@@ -103,8 +104,7 @@ cart.forEach((cartItem) => {
   });
 
   document.querySelector('.js-order-summary')
-    .innerHTML = cartSummaryHTML;
-  document.querySelectorAll('.js-delete-link')
+    .innerHTML = cartSummaryHTML;  document.querySelectorAll('.js-delete-link')
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
@@ -118,7 +118,12 @@ cart.forEach((cartItem) => {
           // Refresh the page to show empty cart message
           window.location.reload();
           return;
-        }        // Update by re-rendering the order summary
+        }        
+        
+        // Update page title with new cart statistics
+        updatePageTitle();
+        
+        // Update by re-rendering the order summary
         renderOrderSummary();
         renderPaymentSummary();
       });
@@ -161,6 +166,9 @@ cart.forEach((cartItem) => {
           
           // Update cart quantity in header immediately
           updateCartQuantity();
+          
+          // Update page title with new cart statistics
+          updatePageTitle();
           
           // Update UI
           document.querySelector(`.js-quantity-label-${productId}`).textContent = newQuantity;

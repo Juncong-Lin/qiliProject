@@ -3,6 +3,17 @@ import {renderPaymentSummary} from './checkout/paymentSummary.js';
 import { cart } from '../data/cart.js';
 import { updateCartQuantity } from './utils/cart-quantity.js';
 
+// Function to update the page title with current cart statistics
+export function updatePageTitle() {
+  const uniqueItems = cart ? cart.length : 0;
+  const totalQuantity = cart ? cart.reduce((sum, item) => sum + item.quantity, 0) : 0;
+  
+  const pageTitleElement = document.querySelector('.page-title');
+  if (pageTitleElement) {
+    pageTitleElement.innerHTML = `Checkout (Items: ${uniqueItems}, Total quantity: ${totalQuantity})`;
+  }
+}
+
 // Checkout.js loaded
 // Cart data available from import
 

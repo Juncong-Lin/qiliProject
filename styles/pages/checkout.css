@@ -234,7 +234,7 @@
 @media (max-width: 480px) {
   .cart-item-container,
   .payment-summary {
-    padding: 12px;
+    padding: 10px;
     border-radius: 8px;
   }
   
@@ -436,12 +436,13 @@
 
 @media (max-width: 480px) {
   .delivery-options {
-    margin-top: 10px;
+    margin-top: 6px;
   }
   
   .delivery-options-title {
     font-size: 15px;
     text-align: center;
+    margin-bottom: 6px;
   }
 }
 
@@ -472,7 +473,8 @@
 /* Better touch targets */
 @media (max-width: 767px) {
   .delivery-option {
-    padding: 6px 0;
+    padding: 4px 0;
+    margin-bottom: 8px;
   }
   
   .delivery-option-input {
@@ -496,14 +498,16 @@
 @media (max-width: 480px) {
   .delivery-option {
     grid-template-columns: 20px 1fr;
+    padding: 1px 0;
+    margin-bottom: 2px;
   }
   
   .delivery-option-date {
-    font-size: 14px;
+    font-size: 13px;
   }
   
   .delivery-option-price {
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 
