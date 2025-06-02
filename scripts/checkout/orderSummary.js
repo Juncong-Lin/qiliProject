@@ -5,6 +5,7 @@ import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { updateCartQuantity } from '../utils/cart-quantity.js';
 
 export function renderOrderSummary() {
 // Get unique items and total quantity for the heading
@@ -39,6 +40,11 @@ cart.forEach((cartItem) => {
     }
   }
 
+  if (!matchingProduct) {
+    console.error('Product not found for ID:', productId);
+    return; // Skip this item if product not found
+  }
+
   const deliveryOptionId = cartItem.deliveryOptionId;
   let deliveryOption;
   deliveryOptions.forEach((option) => {
@@ -46,6 +52,11 @@ cart.forEach((cartItem) => {
       deliveryOption = option;
       }
   });
+
+  if (!deliveryOption) {
+    console.error('Delivery option not found for ID:', deliveryOptionId);
+    deliveryOption = deliveryOptions[0]; // Use first delivery option as fallback
+  }
 
   const today = dayjs();
   const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
@@ -95,12 +106,14 @@ cart.forEach((cartItem) => {
 
   document.querySelector('.js-order-summary')
     .innerHTML = cartSummaryHTML;
-
   document.querySelectorAll('.js-delete-link')
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
+
+        // Update cart quantity in header immediately
+        updateCartQuantity();
 
         // Check if cart is empty after removal
         if (cart.length === 0) {
@@ -142,12 +155,15 @@ cart.forEach((cartItem) => {
         // Set current value
         const select = container.querySelector('select');
         select.value = document.querySelector(`.js-quantity-label-${productId}`).textContent;
-        select.focus();
-        select.addEventListener('change', () => {
+        select.focus();        select.addEventListener('change', () => {
           const newQuantity = Number(select.value);
           const cartItem = cart.find(item => item.productId === productId);
           cartItem.quantity = newQuantity;
           localStorage.setItem('cart', JSON.stringify(cart));
+          
+          // Update cart quantity in header immediately
+          updateCartQuantity();
+          
           // Update UI
           document.querySelector(`.js-quantity-label-${productId}`).textContent = newQuantity;
           container.style.display = 'none';

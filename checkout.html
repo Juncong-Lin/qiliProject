@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>  <head>    <title>Checkout</title>    <!-- This code is needed for responsive design to work.
+<!DOCTYPE html><head>    <title>Checkout</title>    <!-- This code is needed for responsive design to work.
       (Responsive design = make the website look good on
       smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -12,27 +11,12 @@
     <!-- Here are the CSS files for this page. -->    <link rel="stylesheet" href="styles/shared/general.css">
     <link rel="stylesheet" href="styles/shared/amazon-header.css">
     <link rel="stylesheet" href="styles/shared/sub-header.css">
-    <link rel="stylesheet" href="styles/pages/checkout/checkout-header.css">
     <link rel="stylesheet" href="styles/pages/checkout/checkout.css">
     <link rel="stylesheet" href="styles/pages/mobile-checkout.css">
     <link rel="stylesheet" href="styles/shared/footer.css">
-  </head>
-  <body class="no-sidebar">
-    <div class="checkout-header">
-      <div class="header-content">
-        <div class="checkout-header-left-section">
-          <a href="index.html">
-            <img class="amazon-logo" src="images/amazon-logo.png">
-            <img class="amazon-mobile-logo" src="images/amazon-mobile-logo.png">
-          </a>
-        </div>
-
-        <div class="checkout-header-middle-section">
-          Checkout <a class="return-to-home-link"
-            href="index.html"></a>
-        </div>
-      </div>
-    </div>
+  </head>  <body class="no-sidebar">
+    <!-- Checkout Header - Loaded dynamically from shared component -->
+    <div id="shared-header-placeholder"></div>
     
     <!-- Sub Header Navigation - Loaded dynamically from shared component -->
     <div id="shared-subheader-placeholder"></div>
@@ -51,9 +35,9 @@
     
     <!-- Shared Footer - Loaded dynamically from shared component -->
     <div id="shared-footer-placeholder"></div>
-    
-    <script type="module" src="scripts/checkout.js"></script>
+      <script type="module" src="scripts/checkout.js"></script>
     <script src="scripts/utils/url-utils.js"></script>
+    <script src="scripts/utils/shared-header-loader.js"></script>
     <script src="scripts/sub-header-nav.js"></script>
     <script src="scripts/utils/shared-subheader-loader.js"></script>
     <script src="scripts/utils/shared-footer-loader.js"></script>
