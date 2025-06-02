@@ -19,7 +19,7 @@ export const printheadProducts = {
       image: 'images/products-detail/Inkjet Printheads/Canon Printhead/Canon PF-05 Printhead/image/Canon PF-05 Printhead.img_1.jpg',
       price: 219700
     }
-  ],  epson: [
+  ], epson: [
     {
       id: 'epson-7700-9700-9910-7910',
       name: 'Epson 7700/9700/9910/7910 Printhead - F19101',
@@ -42,7 +42,7 @@ export const printheadProducts = {
       id: 'epson-f1440-a1',
       name: 'Epson F1440-A1 (DX5) Printhead for Chinese Printer',
       image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/Epson F1440-A1 (DX5) Printhead for Chinese Printer.img_1.jpg',
-      price: 79900
+      price: 115000 //2025-06-01,Print head&Parts 87Result of No.1
     },
     {
       id: 'epson-i1600-a1-water-based',
@@ -66,7 +66,7 @@ export const printheadProducts = {
       id: 'epson-i3200-8-a1hd-aqueous',
       name: 'Epson I3200(8)-A1HD Aqueous Printhead',
       image: 'images/products-detail/Inkjet Printheads/Epson Printhead/Epson I3200(8)-A1HD Aqueous Printhead/image/Epson I3200(8)-A1HD Aqueous Printhead.img_1.jpg',
-      price: 124900
+      price: 88000-110000 //2025-06-01,Print head&Parts 87Result of No.4
     },
     {
       id: 'epson-i3200-e1-eco-solvent',
@@ -219,8 +219,8 @@ export const printheadProducts = {
       price: 94900
     },
     {
-      id: 'us-stock-epson-i3200-u1-uv-dtf',
-      name: 'US stock Epson I3200-U1 UV Printhead for UV DTF Pr',
+      id: 'epson-i3200-u1-uv-dtf',
+      name: 'Epson I3200-U1 UV Printhead for UV DTF Pr',
       image: 'images/products-detail/Inkjet Printheads/Epson Printhead/US stock Epson I3200-U1 UV Printhead for UV DTF Pr/image/US stock Epson I3200-U1 UV Printhead for UV DTF Pr.img_1.jpg',
       price: 139900
     }
@@ -446,7 +446,7 @@ export const printheadProducts = {
       id: 'mimaki-jv33-jv5-mem',
       name: 'Original Mimaki JV33 / JV5 Printhead with Memory Board',
       image: 'images/products-detail/Inkjet Printheads/Mimaki Printhead/Original Mimaki JV33 _ JV5 Printhead with Memory B/image/Original Mimaki JV33 _ JV5 Printhead with Memory B.img_1.jpg',
-      price: 139900
+      price: 162000  //2025-06-01,Print head&Parts 87Result of No.3
     }
   ],
   mutoh: [
@@ -466,7 +466,7 @@ export const printheadProducts = {
       id: 'mutoh-vj-1324',
       name: 'Mutoh VJ-1324 _ VJ-1624 _ VJ-1624W _ VJ-1924W Prin',
       image: 'images/products-detail/Inkjet Printheads/Mutoh Printhead/Mutoh VJ-1324 _ VJ-1624 _ VJ-1624W _ VJ-1924W Prin/image/Mutoh VJ-1324 _ VJ-1624 _ VJ-1624W _ VJ-1924W Prin.img_1.jpg',
-      price: 82900
+      price: 165000  //2025-06-01,Print head&Parts 87Result of No.2
     },
     {
       id: 'mutoh-vj-1618',

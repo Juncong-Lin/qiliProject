@@ -3,12 +3,13 @@ import {products} from '../data/products.js';
 import {printheadProducts} from '../data/printhead-products.js';
 import { formatCurrency } from './utils/money.js';
 
-// Function to render regular products
-function renderProducts(productList) {
+// Unified product rendering function with optional type parameter
+function renderProducts(productList, type = 'regular') {
   let productsHTML = '';
   productList.forEach((product) => {
     productsHTML += `
-      <div class="product-container">        <div class="product-image-container">
+      <div class="product-container">        
+        <div class="product-image-container">
           <a href="detail.html?productId=${product.id}" class="product-image-link">
             <img class="product-image" src="${product.image}">
           </a>
@@ -17,10 +18,11 @@ function renderProducts(productList) {
           <a href="detail.html?productId=${product.id}" class="product-link">
             ${product.name}
           </a>
-        </div>        <div class="product-price">
-          ${product.getPrice ? product.getPrice() : formatCurrency(product.price)}
+        </div>        
+        <div class="product-price">
+          ${type === 'printhead' ? '$' + formatCurrency(product.price) : 
+            (product.getPrice ? product.getPrice() : formatCurrency(product.price))}
         </div>
-
         <div class="product-quantity-section">
           <div class="product-quantity-container">
             <select>
@@ -38,55 +40,7 @@ function renderProducts(productList) {
           </div>
           <div class="added-message">Added</div>
         </div>
-
         <div class="product-spacer"></div>
-
-        <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
-          Add to Cart
-        </button>
-      </div>`;
-  });
-  return productsHTML;
-}
-
-// Function to render printhead products without ratings
-function renderPrintheadProducts(productList) {
-  let productsHTML = '';
-  productList.forEach((product) => {
-    productsHTML += `
-      <div class="product-container">
-        <div class="product-image-container">
-          <a href="detail.html?productId=${product.id}" class="product-image-link">
-            <img class="product-image" src="${product.image}">
-          </a>
-        </div>        <div class="product-name limit-text-to-3-lines">
-          <a href="detail.html?productId=${product.id}" class="product-link">
-            ${product.name}
-          </a>
-        </div>        <div class="product-price">
-          $${formatCurrency(product.price)}
-        </div>
-
-        <div class="product-quantity-section">
-          <div class="product-quantity-container">
-            <select>
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-          <div class="added-message">Added</div>
-        </div>
-
-        <div class="product-spacer"></div>
-
         <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
           Add to Cart
         </button>
@@ -108,8 +62,7 @@ window.loadPrintheadProducts = function(brand) {
     showLoadingState();
     
     // Small delay for smooth transition
-    setTimeout(() => {
-      const productsHTML = renderPrintheadProducts(brandProducts);
+    setTimeout(() => {      const productsHTML = renderProducts(brandProducts, 'printhead');
       const productsGrid = document.querySelector('.js-prodcts-grid');
       productsGrid.innerHTML = productsHTML;
       productsGrid.classList.remove('showing-coming-soon');
@@ -149,8 +102,7 @@ window.loadAllPrintheadProducts = function() {
     let allPrintheadProducts = [];
     for (const brand in printheadProducts) {
       allPrintheadProducts = allPrintheadProducts.concat(printheadProducts[brand]);
-    }
-      const productsHTML = renderPrintheadProducts(allPrintheadProducts);
+    }      const productsHTML = renderProducts(allPrintheadProducts, 'printhead');
     const productsGrid = document.querySelector('.js-prodcts-grid');
     productsGrid.innerHTML = productsHTML;
     productsGrid.classList.remove('showing-coming-soon');
