@@ -44,13 +44,12 @@
 
 /* Note: Global image sizing is now in general.css */
 
-/* Ensure that product descriptions with long text wrap properly - use shared utility */
+/* Ensure that product descriptions with long text wrap properly */
 .product-description,
 .product-details-content,
 .product-compatibility,
 .product-specifications,
 .product-reviews {
-  /* Use shared text overflow utility from general.css */
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
@@ -72,8 +71,8 @@
     padding: 16px;
     font-size: 18px;
   }
-    .js-quantity-selector {
-    /* Use shared responsive quantity selector from general.css */
+  
+  .js-quantity-selector {
     padding: 14px;
     font-size: 16px;
     height: 48px;

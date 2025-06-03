@@ -1,10 +1,14 @@
 .main {
-  /* Use shared main container styles */
   max-width: 850px;
   margin-top: 140px; /* 60px (main header) + 50px (sub-header) + 30px extra */
   margin-bottom: 100px;
   padding-left: 30px;
   padding-right: 30px;
+
+  /* margin-left: auto;
+     margin-right auto;
+     Is a trick for centering an element horizontally
+     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
@@ -76,4 +80,10 @@
   width: 50%;
 }
 
-/* Note: no-sidebar styles moved to general.css */
+/* Override any sidebar interference - ensure no-sidebar pages are not affected by sidebar CSS */
+body.no-sidebar .main {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
