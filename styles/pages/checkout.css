@@ -754,3 +754,23 @@
     border-top: 1px solid #eee !important;
   }
 }
+
+/* --- Product hover effect for checkout page (match qilitrading product grid) --- */
+.cart-item-details-grid a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s;
+}
+.cart-item-details-grid a:hover .product-image,
+.cart-item-details-grid a:focus .product-image {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+.cart-item-details-grid a:hover,
+.cart-item-details-grid a:focus {
+  color: rgb(1, 124, 182);
+  text-decoration: underline;
+}
+.cart-item-details-grid .product-image {
+  transition: transform 0.2s;
+}

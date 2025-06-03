@@ -67,12 +67,14 @@ cart.forEach((cartItem) => {
         </div>
 
         <div class="cart-item-details-grid">
-          <img class="product-image"
-            src="${matchingProduct.image}">
+          <a href="detail.html?id=${matchingProduct.id}">
+            <img class="product-image"
+              src="${matchingProduct.image}">
+          </a>
 
           <div class="cart-item-details">
             <div class="product-name">
-              ${matchingProduct.name}
+              <a href="detail.html?id=${matchingProduct.id}">${matchingProduct.name}</a>
             </div>
             <div class="product-price">
               $${formatCurrency(matchingProduct.priceCents || matchingProduct.price)}

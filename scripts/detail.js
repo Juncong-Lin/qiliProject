@@ -10,7 +10,7 @@ let productBrand = '';
 
 // Get the product ID from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
-productId = urlParams.get('productId');
+productId = urlParams.get('id') || urlParams.get('productId');
 
 // Find the product in our data - check both regular products and printhead products
 let product = products.find(product => product.id === productId);
