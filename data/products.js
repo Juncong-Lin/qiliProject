@@ -1,4 +1,23 @@
 import { formatCurrency } from '../scripts/utils/money.js';  
+import { printheadProducts } from './printhead-products.js';
+
+// Helper to flatten and convert printhead products to main product format
+function getAllPrintheadProducts() {
+  const all = [];
+  Object.entries(printheadProducts).forEach(([brand, arr]) => {
+    arr.forEach(prod => {
+      all.push({
+        id: prod.id,
+        image: prod.image,
+        name: prod.name,
+        priceCents: prod.price, // products.js expects priceCents
+        keywords: [brand, 'printhead'],
+        description: prod.name + ' - High quality printhead from QiliTrading.com. Contact us for more details.'
+      });
+    });
+  });
+  return all;
+}
 
 export function getProduct(productId) {
   let matchingProduct;
@@ -52,9 +71,6 @@ class ProductWithSize extends Product {
 }
 
 
-export const products = [].map((productDetails) => {
-  if (productDetails.type === 'clothing') {
-    return new ProductWithSize(productDetails);
-  } 
+export const products = getAllPrintheadProducts().map(productDetails => {
   return new Product(productDetails);
-})
+});

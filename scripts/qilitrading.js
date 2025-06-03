@@ -571,3 +571,97 @@ window.loadPrintSpareParts = function() {
   window.loadSpecificCategory('Print Spare Parts');
 };
 
+// Category Navigation Handler (for the new category navigation above yellow line)
+window.handleCategoryNavClick = function(categoryName) {
+  // Update active state for category navigation
+  document.querySelectorAll('.category-nav-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === categoryName) {
+      link.classList.add('active');
+    }
+  });
+
+  // Synchronize with sub-header navigation if it exists
+  if (window.subHeaderNav && window.subHeaderNav.setActiveCategory) {
+    window.subHeaderNav.setActiveCategory(categoryName);
+  }
+
+  // Handle different category types
+  if (categoryName === 'Print Heads') {
+    if (window.loadAllPrintheadProducts) {
+      window.loadAllPrintheadProducts();
+    }
+  } else if (categoryName === 'Inkjet Printers') {
+    if (window.loadSpecificCategory) {
+      window.loadSpecificCategory('Inkjet Printers');
+    }
+  } else {
+    // For other categories, load them using the specific category function
+    if (window.loadSpecificCategory) {
+      window.loadSpecificCategory(categoryName);
+    }
+  }
+};
+
+// Hover functionality for category navigation
+let categoryHoverTimeout = null;
+
+window.handleCategoryNavHover = function(categoryName) {
+  // Clear any existing timeout
+  if (categoryHoverTimeout) {
+    clearTimeout(categoryHoverTimeout);
+  }
+  
+  // Set a delay before loading the category to prevent rapid switching
+  categoryHoverTimeout = setTimeout(() => {
+    // Update active state for category navigation
+    document.querySelectorAll('.category-nav-link').forEach(link => {
+      link.classList.remove('active');
+      if (link.textContent.trim() === categoryName) {
+        link.classList.add('active');
+      }
+    });
+    
+    // Synchronize with sub-header navigation if it exists
+    if (window.subHeaderNav && window.subHeaderNav.setActiveCategory) {
+      window.subHeaderNav.setActiveCategory(categoryName);
+    }
+
+    // Handle different category types
+    if (categoryName === 'Print Heads') {
+      if (window.loadAllPrintheadProducts) {
+        window.loadAllPrintheadProducts();
+      }
+    } else if (categoryName === 'Inkjet Printers') {
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory('Inkjet Printers');
+      }
+    } else {
+      // For other categories, load them using the specific category function
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory(categoryName);
+      }
+    }
+  }, 200); // 200ms delay to prevent rapid switching
+};
+
+// Initialize hover event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  const categoryLinks = document.querySelectorAll('.category-nav-link');
+  
+  categoryLinks.forEach(link => {
+    link.addEventListener('mouseenter', function() {
+      const categoryName = this.textContent.trim();
+      window.handleCategoryNavHover(categoryName);
+    });
+    
+    link.addEventListener('mouseleave', function() {
+      // Clear timeout if mouse leaves before delay completes
+      if (categoryHoverTimeout) {
+        clearTimeout(categoryHoverTimeout);
+        categoryHoverTimeout = null;
+      }
+    });
+  });
+});
+
