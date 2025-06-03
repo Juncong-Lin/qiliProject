@@ -53,7 +53,27 @@ class ProductWithSize extends Product {
 
 
 export const products = [
-  // Real products will be added here
+  {
+    id: 'sample-product-1',
+    name: 'Sample Product 1',
+    image: 'images/products/no-image-available.png',
+    priceCents: 199900,
+    keywords: ['sample', 'product', 'qilitrading']
+  },
+  {
+    id: 'sample-product-2',
+    name: 'Sample Product 2',
+    image: 'images/products/no-image-available.png',
+    priceCents: 299900,
+    keywords: ['sample', 'product', 'qilitrading']
+  },
+  {
+    id: 'sample-product-3',
+    name: 'Sample Product 3',
+    image: 'images/products/no-image-available.png',
+    priceCents: 399900,
+    keywords: ['sample', 'product', 'qilitrading']
+  }
 ].map((productDetails) => {
   if (productDetails.type === 'clothing') {
     return new ProductWithSize(productDetails);

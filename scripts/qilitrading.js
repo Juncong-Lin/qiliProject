@@ -315,10 +315,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // Check if there's a hash in the URL that should load specific content
       const hash = window.location.hash.substring(1);    
       if (hash) {
-        // If there's a hash, let the sub-header navigation handle it instead of loading home page
+        // If there's a hash, let the sub-header navigation handle it instead of loading all products
         // Check if sub-header navigation is available and can handle the hash
         if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
-          // Sub-header nav will handle the hash, don't load home page
+          // Sub-header nav will handle the hash, don't load all products
           return;
         } else {
           // Fallback: wait a bit more for sub-header to initialize
@@ -326,15 +326,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {
               return;
             } else {
-              // If still no sub-header nav, try to handle hash ourselves or load home page
+              // If still no sub-header nav, try to handle hash ourselves or load all products
               handleHashFallback(hash);
             }
           }, 200);
           return;
         }
       } else {
-        // Load home page by default if there's no hash
-        loadHomePage();
+        // Only load all products if there's no hash
+        loadAllProducts();
       }
     }, 100);
   }
@@ -549,8 +549,9 @@ window.loadSpecificCategory = function(categoryName) {
 
       const mainElement = document.querySelector('.main');
       mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
-    }    breadcrumbElement.innerHTML = `
-      <a href="javascript:void(0)" onclick="loadHomePage()" class="breadcrumb-link">Home</a>
+    }
+    breadcrumbElement.innerHTML = `
+      <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${categoryName}</span>
     `;
@@ -568,100 +569,5 @@ window.loadInkjetPrinters = function() {
 // Function to load Print Spare Parts  
 window.loadPrintSpareParts = function() {
   window.loadSpecificCategory('Print Spare Parts');
-};
-
-// Function to load home page with all categories
-window.loadHomePage = function() {
-  // Hide the regular products grid and show home sections
-  const productsGrid = document.querySelector('.js-prodcts-grid');
-  const homeSections = document.querySelector('.home-sections');
-  
-  if (productsGrid) {
-    productsGrid.style.display = 'none';
-  }
-  
-  if (homeSections) {
-    homeSections.style.display = 'block';
-    
-    // Load printhead products into the print heads section
-    loadPrintheadProductsForHome();
-  }
-  
-  // Hide the submenu after selection
-  hideActiveSubmenus();
-  
-  // Update page header (remove it for home page)
-  const headerElement = document.querySelector('.page-header');
-  if (headerElement) {
-    headerElement.style.display = 'none';
-  }
-  
-  // Remove breadcrumb for home page
-  const breadcrumbElement = document.querySelector('.breadcrumb-nav');
-  if (breadcrumbElement) {
-    breadcrumbElement.style.display = 'none';
-  }
-};
-
-// Function to load printhead products for home page
-function loadPrintheadProductsForHome() {
-  // Combine all printhead products from all brands (limit to first 8 for home page)
-  let allPrintheadProducts = [];
-  for (const brand in printheadProducts) {
-    allPrintheadProducts = allPrintheadProducts.concat(printheadProducts[brand]);
-  }
-  
-  // Limit to 8 products for home page display
-  const limitedProducts = allPrintheadProducts.slice(0, 8);
-  
-  const productsHTML = renderProducts(limitedProducts, 'printhead');
-  const printheadGrid = document.querySelector('#printhead-products-grid');
-  
-  if (printheadGrid) {
-    printheadGrid.innerHTML = productsHTML;
-    
-    // Re-attach event listeners for the new add to cart buttons
-    attachAddToCartListeners();
-  }
-}
-
-// Function to show category products page
-function showCategoryProductsPage() {
-  // Hide home sections and show products grid
-  const productsGrid = document.querySelector('.js-prodcts-grid');
-  const homeSections = document.querySelector('.home-sections');
-  
-  if (homeSections) {
-    homeSections.style.display = 'none';
-  }
-  
-  if (productsGrid) {
-    productsGrid.style.display = 'grid';
-  }
-}
-
-// Override existing functions to handle home page vs category page
-const originalLoadAllPrintheadProducts = window.loadAllPrintheadProducts;
-window.loadAllPrintheadProducts = function() {
-  showCategoryProductsPage();
-  originalLoadAllPrintheadProducts();
-};
-
-const originalLoadPrintheadProducts = window.loadPrintheadProducts;
-window.loadPrintheadProducts = function(brand) {
-  showCategoryProductsPage();
-  originalLoadPrintheadProducts(brand);
-};
-
-const originalLoadSpecificCategory = window.loadSpecificCategory;
-window.loadSpecificCategory = function(categoryName) {
-  showCategoryProductsPage();
-  originalLoadSpecificCategory(categoryName);
-};
-
-const originalLoadAllProducts = window.loadAllProducts;
-window.loadAllProducts = function() {
-  showCategoryProductsPage();
-  originalLoadAllProducts();
 };
 
