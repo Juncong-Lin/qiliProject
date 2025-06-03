@@ -44,9 +44,32 @@ p {
   margin: 0;
 }
 
+/* Consolidated no-sidebar styles - used across multiple page types */
+body.no-sidebar .main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+@media (max-width: 480px) {
+  body.no-sidebar .main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 /* General styles for all pages */
 html, body {
   overflow-x: hidden; /* Prevent horizontal scroll from footer */
+}
+
+/* Global image sizing constraint */
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Global button styles */

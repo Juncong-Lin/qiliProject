@@ -33,29 +33,11 @@
   width: 150px;
 }
 
+/* Note: .qili-logo and .qili-mobile-logo styles are already defined in qili-header.css */
 
-
-.qili-mobile-logo {
-  display: none;
-}
-
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 575px or less, different
-   styles (inside the {...}) will be applied. */
 @media (max-width: 575px) {
   .checkout-header-left-section {
     width: auto;
-  }
-
-  .qili-logo {
-    display: none;
-  }
-
-  .qili-mobile-logo {
-    display: inline-block;
-    height: 35px;
-    margin-top: 5px;
   }
 }
 
@@ -290,7 +272,7 @@
   margin-bottom: 12px;
 }
 
-/* Empty cart message styling */
+/* Empty cart message styling - simplified and optimized */
 .empty-cart-message,
 .js-empty-cart {
   text-align: center;
@@ -298,19 +280,17 @@
   min-height: 400px;
 }
 
-/* When empty cart is shown as block, make it flex for centering */
-.empty-cart-message[style*="display: block"],
-.js-empty-cart[style*="display: block"] {
+.empty-cart-description {
+  margin: 20px 0;
+}
+
+/* When empty cart is shown, make it flex for centering */
+.empty-cart-message:not([style*="display: none"]),
+.js-empty-cart:not([style*="display: none"]) {
   display: flex !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-/* Ensure hidden state works - this is the key fix */
-.empty-cart-message[style*="display: none"],
-.js-empty-cart[style*="display: none"] {
-  display: none !important;
 }
 
 @media (max-width: 480px) {
@@ -727,21 +707,7 @@
   margin-top: 15px;
 }
 
-/* Override any sidebar interference - ensure no-sidebar pages are not affected by sidebar CSS */
-body.no-sidebar .main {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-/* Adjustments for mobile viewport */
-@media (max-width: 480px) {
-  body.no-sidebar .main {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
+/* Note: The base no-sidebar style is now in general.css */
 
 /* Handle the viewport height better */
 @media screen and (max-height: 700px) {

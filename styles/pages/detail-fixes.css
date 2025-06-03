@@ -42,11 +42,7 @@
   }
 }
 
-/* Ensure images are never too big */
-img {
-  max-width: 100%;
-  height: auto;
-}
+/* Note: Global image sizing is now in general.css */
 
 /* Ensure that product descriptions with long text wrap properly */
 .product-description,

@@ -6,13 +6,7 @@
   width: 100%;
 }
 
-/* Override any sidebar interference - ensure detail page layout is not affected by sidebar CSS */
-body.no-sidebar .main {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  box-sizing: border-box;
-}
+/* Note: The base no-sidebar style is now in general.css */
 
 /* Breadcrumb navigation styling */
 .breadcrumb-nav {
