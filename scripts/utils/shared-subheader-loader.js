@@ -14,7 +14,7 @@ async function loadSharedSubheader() {
       initializeSubHeaderAfterLoad();
     } else {
       // Fallback: Insert after main header if placeholder not found
-      const headerElement = document.querySelector('.amazon-header, .checkout-header');
+      const headerElement = document.querySelector('.qili-header, .checkout-header');
       if (headerElement) {
         headerElement.insertAdjacentHTML('afterend', subheaderHTML);
         

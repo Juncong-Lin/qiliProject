@@ -1,5 +1,5 @@
 .sub-header {
-  background-color: #1A252F; /* Match Amazon's secondary blue */
+  background-color: #1A252F; /* Match Qili's secondary blue */
   color: white;
   padding: 0;
   position: fixed;
@@ -67,7 +67,7 @@
 .sub-header-link.active {
   background-color: #2C3A49; /* Darker blue when active */
   font-weight: bold;
-  border-bottom: 3px solid #ffa724; /* Amazon orange border */
+  border-bottom: 3px solid #ffa724; /* Qili orange border */
   box-sizing: border-box;
 }
 

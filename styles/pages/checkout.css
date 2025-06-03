@@ -33,12 +33,9 @@
   width: 150px;
 }
 
-.amazon-logo {
-  width: 100px;
-  margin-top: 12px;
-}
 
-.amazon-mobile-logo {
+
+.qili-mobile-logo {
   display: none;
 }
 
@@ -51,11 +48,11 @@
     width: auto;
   }
 
-  .amazon-logo {
+  .qili-logo {
     display: none;
   }
 
-  .amazon-mobile-logo {
+  .qili-mobile-logo {
     display: inline-block;
     height: 35px;
     margin-top: 5px;
