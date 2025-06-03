@@ -1,4 +1,5 @@
 .main {
+  /* Use shared wide main container styles */
   max-width: 1200px;
   margin: 97px auto 100px; /* Match the index page spacing */
   padding: 20px;
@@ -8,34 +9,7 @@
 
 /* Note: The base no-sidebar style is now in general.css */
 
-/* Breadcrumb navigation styling */
-.breadcrumb-nav {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-
-.breadcrumb-link {
-  color: #37475A;
-  text-decoration: none;
-}
-
-.breadcrumb-link:hover {
-  text-decoration: underline;
-  color: #c45500;
-}
-
-.breadcrumb-separator {
-  margin: 0 8px;
-  color: #555;
-}
-
-.breadcrumb-current {
-  color: #333;
-  font-weight: 500;
-}
+/* Note: Breadcrumb navigation styles moved to general.css */
 
 /* Product title */
 .product-title-container {
@@ -50,6 +24,7 @@
 }
 
 .product-detail-grid {
+  /* Use shared 2-column grid layout */
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 60px;
@@ -322,6 +297,7 @@
 }
 
 .js-quantity-selector {
+  /* Use shared quantity selector styles from general.css */
   padding: 12px;
   width: 120px;
   border-radius: 4px;
@@ -488,46 +464,4 @@
   margin-bottom: 20px;
 }
 
-/* Product specs table */
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.product-table th {
-  background-color: #f5f5f5;
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 2px solid #ddd;
-  font-weight: 600;
-}
-
-.product-table td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.product-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.product-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-@media (max-width: 600px) {
-  .product-table th,
-  .product-table td {
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-  
-  /* For mobile, make tables responsive */
-  .product-table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}
+/* Note: product table styles moved to general.css */

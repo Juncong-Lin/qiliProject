@@ -103,17 +103,12 @@
 /* ============================================ */
 
 .main {
+  /* Use shared checkout main container styles */
   max-width: 1100px;
   padding-left: 30px;
   padding-right: 30px;
-
   margin-top: 92px; /* 60px (checkout header) + 32px (sub-header) */
   margin-bottom: 100px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
@@ -456,13 +451,9 @@
 }
 
 .product-image {
+  /* Use shared global image sizing from general.css */
   max-width: 100%;
   max-height: 120px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
