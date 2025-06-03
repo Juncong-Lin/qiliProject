@@ -149,49 +149,18 @@
         <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Other')">Other</a>
       </div>
     </div>
-      <div class="main">
-      <!-- Category Navigation - Above the yellow line -->      <div class="category-navigation">
-        <div class="category-nav-container">
-          <a class="category-nav-link" href="javascript:void(0)" data-category="inkjet-printers">Inkjet Printers</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="print-heads">Print Heads</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="print-spare-parts">Print Spare Parts</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="upgrading-kit">Upgrading Kit</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="material">Material</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="led-lcd">LED & LCD</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="laser">Laser</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="cutting">Cutting</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="channel-letter">Channel Letter</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="cnc">CNC</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="displays">Displays</a>
-          <a class="category-nav-link" href="javascript:void(0)" data-category="other">Other</a>
-        </div>
-      </div>
-      
+    
+    <div class="main">
       <div class="products-grid js-prodcts-grid">
-      </div>
-    </div>
+      </div>    </div>
     
     <!-- Shared Footer - Loaded dynamically from shared component -->
     <div id="shared-footer-placeholder"></div>
-    <script type="module" src="scripts/qilitrading.js"></script>
+  </body>    <script type="module" src="scripts/qilitrading.js"></script>
     <script src="scripts/utils/url-utils.js"></script>
     <script src="scripts/utils/shared-header-loader.js"></script>
     <script src="scripts/utils/shared-subheader-loader.js"></script>
     <script src="scripts/utils/shared-footer-loader.js"></script>
     <script src="scripts/sidebar.js"></script>
     <script src="scripts/sub-header-nav.js"></script>
-    <script>
-      // Ensure all regular products are shown by default if no hash/category is selected
-      document.addEventListener('DOMContentLoaded', function() {
-        // Wait for sub-header and sidebar to initialize
-        setTimeout(function() {
-          var hash = window.location.hash;
-          if (!hash || hash === '#') {
-            if (window.loadAllProducts) {
-              window.loadAllProducts();
-            }
-          }
-        }, 200);
-      });
-    </script>
 </html>

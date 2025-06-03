@@ -163,7 +163,25 @@ class SubHeaderNavigation {
       if (!event.target.closest('.sub-header') && !event.target.closest('.sub-header-submenu')) {
         this.hideAllSubmenus();
       }
-    });    // "See All Departments" link was removed - navigation now starts directly with categories
+    });
+      // Handle "See All Departments" link separately
+    const allProductsLink = document.querySelector('.all-products-link');
+    if (allProductsLink) {
+      allProductsLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.hideAllSubmenus();
+        
+        // Check if we're on the index page
+        const isIndexPage = window.loadAllProducts && typeof window.loadAllProducts === 'function';
+          if (isIndexPage) {
+          // We're on index page - use existing function
+          this.setActiveCategory('See All Departments');
+          window.loadAllProducts();        } else {
+          // We're on a different page - navigate to index page
+          UrlUtils.navigateToIndex();
+        }
+      });
+    }
   }
 
   showSubmenu(link) {
@@ -224,24 +242,6 @@ class SubHeaderNavigation {
   // Method to set active link based on current page/category
   setActiveCategory(category) {
     document.querySelectorAll('.sub-header-link').forEach(link => {
-      link.classList.remove('active');
-      if (link.textContent.trim() === category) {
-        link.classList.add('active');
-      }
-    });
-    
-    // Synchronize with category navigation in yellow line
-    this.syncCategoryNavigation(category);
-  }
-  
-  // Method to synchronize the category navigation in yellow line
-  syncCategoryNavigation(category) {
-    // Only proceed if we're on a page with the category navigation
-    const categoryLinks = document.querySelectorAll('.category-nav-link');
-    if (categoryLinks.length === 0) return;
-    
-    // Update active state for category navigation
-    categoryLinks.forEach(link => {
       link.classList.remove('active');
       if (link.textContent.trim() === category) {
         link.classList.add('active');
