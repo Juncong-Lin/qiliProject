@@ -1,8 +1,8 @@
-import { products } from '../data/products.js';
-import { printheadProducts } from '../data/printhead-products.js';
-import { cart, addToCart } from '../data/cart.js';
-import { updateCartQuantity } from './utils/cart-quantity.js';
-import { parseMarkdown } from './utils/markdown-parser.js';
+import { products } from '../../data/products.js';
+import { printheadProducts } from '../../data/printhead-products.js';
+import { cart, addToCart } from '../../data/cart.js';
+import { updateCartQuantity } from '../shared/cart-quantity.js';
+import { parseMarkdown } from '../shared/markdown-parser.js';
 
 let productId;
 let productType = 'regular'; // Can be 'regular' or 'printhead'

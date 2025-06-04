@@ -1,7 +1,7 @@
-import {cart, addToCart} from '../data/cart.js'; 
-import {products} from '../data/products.js';
-import {printheadProducts} from '../data/printhead-products.js';
-import { formatCurrency } from './utils/money.js';
+import {cart, addToCart} from '../../data/cart.js'; 
+import {products} from '../../data/products.js';
+import {printheadProducts} from '../../data/printhead-products.js';
+import { formatCurrency } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
 function renderProducts(productList, type = 'regular') {

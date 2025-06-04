@@ -1,12 +1,12 @@
 import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';   
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
-import {formatCurrency} from '../utils/money.js';
+import {formatCurrency} from '../shared/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
-import { updateCartQuantity } from '../utils/cart-quantity.js';
-import { updatePageTitle } from '../checkout.js';
+import { updateCartQuantity } from '../shared/cart-quantity.js';
+import { updatePageTitle } from './checkout.js';
 
 export function renderOrderSummary() {
 // Get unique items and total quantity for the heading

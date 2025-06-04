@@ -1,7 +1,7 @@
-import {renderOrderSummary} from './checkout/orderSummary.js';
-import {renderPaymentSummary} from './checkout/paymentSummary.js';
-import { cart } from '../data/cart.js';
-import { updateCartQuantity } from './utils/cart-quantity.js';
+import {renderOrderSummary} from './orderSummary.js';
+import {renderPaymentSummary} from './paymentSummary.js';
+import { cart } from '../../data/cart.js';
+import { updateCartQuantity } from '../shared/cart-quantity.js';
 
 // Function to update the page title with current cart statistics
 export function updatePageTitle() {

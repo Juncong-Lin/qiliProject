@@ -1,6 +1,6 @@
 import {cart} from '../../data/cart.js';
-import {formatCurrency} from '../utils/money.js';
-import {getProduct,products} from '../../data/products.js'; 
+import {formatCurrency} from '../shared/money.js';
+import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {removeFromCart, updateDeliveryOption} from '../../data/cart.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
