@@ -2,14 +2,14 @@ import {cart} from '../../data/cart.js';
 import {formatCurrency} from '../shared/money.js';
 import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
+import {printerProducts} from '../../data/printer-products.js';
 import {removeFromCart, updateDeliveryOption} from '../../data/cart.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 
 
 export function renderPaymentSummary() {
   let productPriceCents = 0;
-  let shippingPriceCents = 0;
-  cart.forEach((cartItem) => {
+  let shippingPriceCents = 0;  cart.forEach((cartItem) => {
     let product;
     
     // First search in regular products
@@ -20,6 +20,18 @@ export function renderPaymentSummary() {
       for (const brand in printheadProducts) {
         const brandProducts = printheadProducts[brand];
         const found = brandProducts.find(p => p.id === cartItem.productId);
+        if (found) {
+          product = found;
+          break;
+        }
+      }
+    }
+    
+    // If not found in printhead products, search in printer products
+    if (!product) {
+      for (const category in printerProducts) {
+        const categoryProducts = printerProducts[category];
+        const found = categoryProducts.find(p => p.id === cartItem.productId);
         if (found) {
           product = found;
           break;
@@ -98,6 +110,18 @@ export function renderOrderSummary() {
       for (const brand in printheadProducts) {
         const brandProducts = printheadProducts[brand];
         const found = brandProducts.find(product => product.id === cartItem.productId);
+        if (found) {
+          matchingProduct = found;
+          break;
+        }
+      }
+    }
+    
+    // If not found in printhead products, search in printer products
+    if (!matchingProduct) {
+      for (const category in printerProducts) {
+        const categoryProducts = printerProducts[category];
+        const found = categoryProducts.find(product => product.id === cartItem.productId);
         if (found) {
           matchingProduct = found;
           break;

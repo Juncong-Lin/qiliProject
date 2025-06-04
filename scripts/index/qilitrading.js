@@ -1,6 +1,7 @@
 import {cart, addToCart} from '../../data/cart.js'; 
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
+import {printerProducts, getXP600Printers} from '../../data/printer-products.js';
 import { formatCurrency } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
@@ -18,9 +19,8 @@ function renderProducts(productList, type = 'regular') {
           <a href="detail.html?productId=${product.id}" class="product-link">
             ${product.name}
           </a>
-        </div>        
-        <div class="product-price">
-          ${type === 'printhead' ? '$' + formatCurrency(product.price) : 
+        </div>          <div class="product-price">
+          ${type === 'printhead' || type === 'printer' ? '$' + formatCurrency(product.price) : 
             (product.getPrice ? product.getPrice() : formatCurrency(product.price))}
         </div>
         <div class="product-quantity-section">
@@ -157,6 +157,88 @@ window.loadAllProducts = function() {
     updatePageHeader('All Products');
       // Update breadcrumb navigation
     updateBreadcrumb('all');
+    
+    // Scroll to top of products
+    scrollToProducts();
+  }, 200);
+};
+
+// Function to load XP600 printer products
+window.loadXP600Printers = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item
+  highlightSelectedMenuItem('xp600-printers');
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const xp600Printers = getXP600Printers();
+    const productsHTML = renderProducts(xp600Printers, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    updatePageHeader('XP600 Inkjet Printers');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('xp600-printers');
+    
+    // Scroll to top of products
+    scrollToProducts();
+  }, 200);
+};
+
+// Function to load all printer products
+window.loadAllPrinters = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all printer products from all categories
+    let allPrinters = [];
+    for (const category in printerProducts) {
+      allPrinters = allPrinters.concat(printerProducts[category]);
+    }
+    
+    const productsHTML = renderProducts(allPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    updatePageHeader('Inkjet Printers');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('inkjet-printers');
     
     // Scroll to top of products
     scrollToProducts();
@@ -378,10 +460,10 @@ function handleHashFallback(hash) {
     } else {
       loadAllProducts();
     }
-  } else if (window.loadSpecificCategory) {
-    // Try to handle other category hashes
+  } else if (window.loadSpecificCategory) {    // Try to handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
+      'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
       'material': 'Material',
@@ -555,33 +637,68 @@ window.loadSpecificCategory = function(categoryName) {
   } else {
     location.hash = `#${categorySlug}`;
   }
-  // For now, just show placeholder content
+
+  // Small delay for smooth transition
   setTimeout(() => {
-    const message = `<div class="coming-soon">
-      <h2>${categoryName} Products</h2>
-      <p>Products for this category will be available soon!</p>
-    </div>`;
-    const productsGrid = document.querySelector('.js-prodcts-grid');
-    productsGrid.innerHTML = message;
-    productsGrid.classList.add('showing-coming-soon');
+    // Special handling for XP600 printer category
+    if (categoryName === 'Eco-Solvent Inkjet Printers - With XP600 Printhead') {
+      // Load XP600 printers instead of showing placeholder
+      const xp600Printers = getXP600Printers();
+      const productsHTML = renderProducts(xp600Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('XP600 Eco-Solvent Inkjet Printers');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
 
-    // Update page header
-    updatePageHeader(categoryName);
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">XP600 Eco-Solvent Printers</span>
+      `;
+    } else {
+      // For other categories, show placeholder content
+      const message = `<div class="coming-soon">
+        <h2>${categoryName} Products</h2>
+        <p>Products for this category will be available soon!</p>
+      </div>`;
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = message;
+      productsGrid.classList.add('showing-coming-soon');
 
-    // Update breadcrumb
-    let breadcrumbElement = document.querySelector('.breadcrumb-nav');
-    if (!breadcrumbElement) {
-      breadcrumbElement = document.createElement('div');
-      breadcrumbElement.className = 'breadcrumb-nav';
+      // Update page header
+      updatePageHeader(categoryName);
 
-      const mainElement = document.querySelector('.main');
-      mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${categoryName}</span>
+      `;
     }
-    breadcrumbElement.innerHTML = `
-      <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
-      <span class="breadcrumb-separator">&gt;</span>
-      <span class="breadcrumb-current">${categoryName}</span>
-    `;
 
     // Scroll to products
     scrollToProducts();

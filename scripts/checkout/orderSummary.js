@@ -1,6 +1,7 @@
 import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';   
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
+import {printerProducts} from '../../data/printer-products.js';
 import {formatCurrency} from '../shared/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
@@ -26,12 +27,23 @@ cart.forEach((cartItem) => {
       matchingProduct = product;
     }
   });
-  
-  // If not found in regular products, search in printhead products
+    // If not found in regular products, search in printhead products
   if (!matchingProduct) {
     for (const brand in printheadProducts) {
       const brandProducts = printheadProducts[brand];
       const found = brandProducts.find(product => product.id === productId);
+      if (found) {
+        matchingProduct = found;
+        break;
+      }
+    }
+  }
+
+  // If not found in printhead products, search in printer products
+  if (!matchingProduct) {
+    for (const category in printerProducts) {
+      const categoryProducts = printerProducts[category];
+      const found = categoryProducts.find(product => product.id === productId);
       if (found) {
         matchingProduct = found;
         break;

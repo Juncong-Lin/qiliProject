@@ -309,10 +309,10 @@ class SubHeaderNavigation {
       }
       return;
     }
-    
-    // Handle other category hashes
+      // Handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
+      'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
       'material': 'Material',

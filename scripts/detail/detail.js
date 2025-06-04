@@ -1,18 +1,19 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
+import { printerProducts } from '../../data/printer-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
 
 let productId;
-let productType = 'regular'; // Can be 'regular' or 'printhead'
+let productType = 'regular'; // Can be 'regular', 'printhead', or 'printer'
 let productBrand = '';
 
 // Get the product ID from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 productId = urlParams.get('id') || urlParams.get('productId');
 
-// Find the product in our data - check both regular products and printhead products
+// Find the product in our data - check regular products, printhead products, and printer products
 let product = products.find(product => product.id === productId);
 
 // If not found in regular products, search in printhead products
@@ -23,6 +24,19 @@ if (!product) {
     if (product) {
       productType = 'printhead';
       productBrand = brand;
+      break;
+    }
+  }
+}
+
+// If not found in printhead products, search in printer products
+if (!product) {
+  for (const category in printerProducts) {
+    const categoryProducts = printerProducts[category];
+    product = categoryProducts.find(p => p.id === productId);
+    if (product) {
+      productType = 'printer';
+      productBrand = category;
       break;
     }
   }
@@ -87,12 +101,14 @@ if (product) {
   
   // Set basic product description
   document.querySelector('.js-product-description').textContent = product.description || 'No description available.';
-  
-  // Update the page title
+    // Update the page title
   document.title = `${product.name} - Qilitrading.com`;
     // For printhead products, try to load additional product information
   if (productType === 'printhead') {
     loadPrintheadDetails(product);
+  } else if (productType === 'printer') {
+    // For printer products, set up printer-specific content
+    setupPrinterProductContent(product);
   } else {
     // For regular products, set up default content
     setupRegularProductContent(product);
@@ -521,6 +537,107 @@ function setupRegularProductContent(product) {
   `;
 }
 
+/**
+ * Set up content for printer products
+ */
+function setupPrinterProductContent(product) {
+  // Set product description with detailed information
+  document.querySelector('.js-product-description').innerHTML = product.description || 'High-quality inkjet printer designed for professional printing applications.';
+  
+  // Set detailed product content
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>Product Overview</h3>
+    <p>This professional inkjet printer offers ${product.specifications?.width || 'wide format'} printing capabilities with high-quality output suitable for various applications including signage, banners, and promotional materials.</p>
+    
+    ${product.specifications?.heads ? `<h4>Print Technology</h4>
+    <ul>
+      <li>Print Heads: ${product.specifications.heads}</li>
+      <li>Print Technology: ${product.specifications.printTechnology || 'Eco-solvent inkjet'}</li>
+      <li>Print Speed: ${product.specifications.printSpeed || 'High-speed printing'}</li>
+    </ul>` : ''}
+    
+    ${product.specifications?.applications ? `<h4>Applications</h4>
+    <ul>
+      ${product.specifications.applications.map(app => `<li>${app}</li>`).join('')}
+    </ul>` : ''}
+    
+    <h4>Key Features</h4>
+    <ul>
+      <li>Professional grade printing quality</li>
+      <li>Reliable and durable construction</li>
+      <li>Cost-effective printing solution</li>
+      <li>Easy maintenance and operation</li>
+    </ul>
+  `;
+  
+  // Set compatibility content
+  document.querySelector('.js-product-compatibility').innerHTML = `
+    <h3>Compatible Media</h3>
+    <p>This printer is compatible with a wide range of media types including:</p>
+    <ul>
+      <li>Vinyl materials</li>
+      <li>Banner materials</li>
+      <li>Canvas</li>
+      <li>Photo paper</li>
+      <li>Adhesive materials</li>
+    </ul>
+    
+    ${product.specifications?.inkTypes ? `<h4>Ink Compatibility</h4>
+    <ul>
+      ${product.specifications.inkTypes.map(ink => `<li>${ink}</li>`).join('')}
+    </ul>` : ''}
+  `;
+  
+  // Set specifications content with detailed specs
+  let specsHTML = '<table class="product-table"><tbody>';
+  
+  // Add basic specifications
+  if (product.model) {
+    specsHTML += `<tr><td><strong>Model</strong></td><td>${product.model}</td></tr>`;
+  }
+  if (product.specifications?.width) {
+    specsHTML += `<tr><td><strong>Print Width</strong></td><td>${product.specifications.width}</td></tr>`;
+  }
+  if (product.specifications?.heads) {
+    specsHTML += `<tr><td><strong>Print Heads</strong></td><td>${product.specifications.heads}</td></tr>`;
+  }
+  if (product.specifications?.printSpeed) {
+    specsHTML += `<tr><td><strong>Print Speed</strong></td><td>${product.specifications.printSpeed}</td></tr>`;
+  }
+  if (product.specifications?.resolution) {
+    specsHTML += `<tr><td><strong>Resolution</strong></td><td>${product.specifications.resolution}</td></tr>`;
+  }
+  if (product.specifications?.dimensions) {
+    specsHTML += `<tr><td><strong>Dimensions</strong></td><td>${product.specifications.dimensions}</td></tr>`;
+  }
+  if (product.specifications?.weight) {
+    specsHTML += `<tr><td><strong>Weight</strong></td><td>${product.specifications.weight}</td></tr>`;
+  }
+  if (product.specifications?.powerConsumption) {
+    specsHTML += `<tr><td><strong>Power Consumption</strong></td><td>${product.specifications.powerConsumption}</td></tr>`;
+  }
+  if (product.specifications?.operatingEnvironment) {
+    specsHTML += `<tr><td><strong>Operating Environment</strong></td><td>${product.specifications.operatingEnvironment}</td></tr>`;
+  }
+  
+  // Add price range
+  if (product.priceRange) {
+    specsHTML += `<tr><td><strong>Price Range</strong></td><td>${product.priceRange}</td></tr>`;
+  }
+  
+  specsHTML += '</tbody></table>';
+  document.querySelector('.js-product-specifications').innerHTML = specsHTML;
+  
+  // Set reviews content for printers
+  document.querySelector('.js-product-reviews').innerHTML = `
+    <p>Customer reviews for this printer will be displayed here. Currently showing placeholder content.</p>
+    <div style="padding: 20px; background-color: #f9f9f9; border-radius: 4px; margin-top: 15px;">
+      <p><strong>Professional Printer Reviews Coming Soon</strong></p>
+      <p>We're working on implementing a comprehensive review system for our industrial printers. Check back soon to see what other customers think about this printer's performance, reliability, and print quality!</p>
+    </div>
+  `;
+}
+
 // Add to cart functionality
 document.querySelector('.js-add-to-cart')
   .addEventListener('click', () => {
@@ -655,6 +772,26 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <a href="index.html#printheads" class="breadcrumb-link">Print Heads</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="index.html#printheads-${productBrand}" class="breadcrumb-link">${productBrand.charAt(0).toUpperCase() + productBrand.slice(1)} Printheads</a>
+      `;
+    }  } else if (productType === 'printer') {
+    // For printer products, show proper breadcrumb navigation
+    if (productBrand === 'eco-solvent-xp600') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="loadXP600Printers()" class="breadcrumb-link">XP600 Eco-Solvent Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
       `;
     }
   } else {
