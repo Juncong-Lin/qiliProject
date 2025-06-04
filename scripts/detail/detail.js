@@ -189,51 +189,59 @@ function setupImageGallery(product) {
         }
           // Only show arrows if we have more thumbnails than maxVisible
         const leftArrow = document.querySelector('.js-thumbnail-arrow-left');
-        const rightArrow = document.querySelector('.js-thumbnail-arrow-right');
-        
-        // Check if we're on mobile (let mobile-detail.js handle mobile scrolling)
+        const rightArrow = document.querySelector('.js-thumbnail-arrow-right');          // Check if we're on mobile (integrated mobile functionality)
         const isMobile = window.innerWidth <= 768;
-        
-        if (thumbnails.length <= maxVisible) {
-          // Hide arrows if we don't need them
-          leftArrow.style.display = 'none';
-          rightArrow.style.display = 'none';
-          // Show all thumbnails when we have 5 or fewer
-          thumbnails.forEach(thumb => thumb.style.display = '');
-        } else if (isMobile) {
-          // On mobile, show arrows but let mobile-detail.js handle the scrolling
+          if (isMobile) {
+          // On mobile, show arrows and setup touch scrolling
           leftArrow.style.display = 'flex';
           rightArrow.style.display = 'flex';
           // Show all thumbnails on mobile (scroll-based approach)
           thumbnails.forEach(thumb => thumb.style.display = '');
-        } else {          // Show arrows and setup scrolling (desktop only - visibility-based approach)
+          
+          // Setup mobile-specific touch scrolling and arrow functionality
+          setupMobileArrowScrolling(leftArrow, rightArrow, thumbnailsContainer);
+        } else {
+          // Show arrows and setup scrolling (desktop - visibility-based approach)
           leftArrow.style.display = 'flex';
           rightArrow.style.display = 'flex';
           
-          updateVisibleThumbnails();
-          
-          function updateArrows() {
-            leftArrow.disabled = startIndex === 0;
-            rightArrow.disabled = startIndex + maxVisible >= thumbnails.length;
-          }
-          updateArrows();
-          
-          leftArrow.addEventListener('click', () => {
-            if (startIndex > 0) {
-              startIndex--;
-              updateVisibleThumbnails();
-              updateArrows();
+          // If we have 5 or fewer thumbnails, show all and disable arrow functionality
+          if (thumbnails.length <= maxVisible) {
+            // Show all thumbnails when we have 5 or fewer
+            thumbnails.forEach(thumb => thumb.style.display = '');
+            // Disable arrows since no scrolling is needed
+            leftArrow.disabled = true;
+            rightArrow.disabled = true;
+          } else {
+            // Enable arrows and setup scrolling for more than 5 thumbnails
+            leftArrow.disabled = false;
+            rightArrow.disabled = false;
+            
+            updateVisibleThumbnails();
+            
+            function updateArrows() {
+              leftArrow.disabled = startIndex === 0;
+              rightArrow.disabled = startIndex + maxVisible >= thumbnails.length;
             }
-          });
-          
-          rightArrow.addEventListener('click', () => {
-            if (startIndex + maxVisible < thumbnails.length) {
-              startIndex++;
-              updateVisibleThumbnails();
-              updateArrows();
-            }
-          });
-        }        // Thumbnail click event
+            updateArrows();
+            
+            leftArrow.addEventListener('click', () => {
+              if (startIndex > 0) {
+                startIndex--;
+                updateVisibleThumbnails();
+                updateArrows();
+              }
+            });
+            
+            rightArrow.addEventListener('click', () => {
+              if (startIndex + maxVisible < thumbnails.length) {
+                startIndex++;
+                updateVisibleThumbnails();
+                updateArrows();
+              }
+            });          }
+        }
+          // Thumbnail click event
         thumbnails.forEach(thumbnail => {
           thumbnail.addEventListener('click', () => {
             document.querySelector('.js-product-image').src = thumbnail.dataset.image;
@@ -241,29 +249,52 @@ function setupImageGallery(product) {
             thumbnail.classList.add('active');
           });
         });
-          // Handle window resize to switch between mobile and desktop scrolling modes
+
+        // Mobile touch scrolling for thumbnails
+        setupMobileTouchScrolling(thumbnailsContainer);
+        
+        // Mobile-friendly image sizing
+        setupMobileImageSizing();
+        
+        // Handle window resize to switch between mobile and desktop scrolling modes
         function handleResize() {
           const isMobileNow = window.innerWidth <= 768;
           const leftArrowResize = document.querySelector('.js-thumbnail-arrow-left');
           const rightArrowResize = document.querySelector('.js-thumbnail-arrow-right');
           
-          if (thumbnails.length <= maxVisible) {
-            // Always hide arrows if we don't need them
-            leftArrowResize.style.display = 'none';
-            rightArrowResize.style.display = 'none';
+          // Always show arrows regardless of thumbnail count
+          leftArrowResize.style.display = 'flex';
+          rightArrowResize.style.display = 'flex';
+            if (isMobileNow) {
+            // Switch to mobile mode: show all thumbnails, enable mobile scrolling
             thumbnails.forEach(thumb => thumb.style.display = '');
-          } else if (isMobileNow) {
-            // Switch to mobile mode: show all thumbnails, let mobile-detail.js handle scrolling
-            leftArrowResize.style.display = 'flex';
-            rightArrowResize.style.display = 'flex';
-            thumbnails.forEach(thumb => thumb.style.display = '');
-          } else {
+            setupMobileArrowScrolling(leftArrowResize, rightArrowResize, thumbnailsContainer);          } else {
             // Switch to desktop mode: use visibility-based scrolling
-            leftArrowResize.style.display = 'flex';
-            rightArrowResize.style.display = 'flex';
-            startIndex = 0; // Reset to beginning
-            updateVisibleThumbnails();
-            updateArrows();
+            // Clean up mobile scroll handlers
+            if (leftArrowResize._mobileHandler) {
+              leftArrowResize.removeEventListener('click', leftArrowResize._mobileHandler, true);
+            }
+            if (rightArrowResize._mobileHandler) {
+              rightArrowResize.removeEventListener('click', rightArrowResize._mobileHandler, true);
+            }
+            
+            // Restore normal overflow for desktop visibility-based scrolling
+            thumbnailsContainer.style.overflow = 'hidden';
+            thumbnailsContainer.style.scrollBehavior = 'auto';
+            
+            if (thumbnails.length <= maxVisible) {
+              // Show all thumbnails and disable arrows when we have 5 or fewer
+              thumbnails.forEach(thumb => thumb.style.display = '');
+              leftArrowResize.disabled = true;
+              rightArrowResize.disabled = true;
+            } else {
+              // Enable arrows and reset to beginning for more than 5 thumbnails
+              leftArrowResize.disabled = false;
+              rightArrowResize.disabled = false;
+              startIndex = 0; // Reset to beginning
+              updateVisibleThumbnails();
+              updateArrows();
+            }
           }
         }
         
@@ -508,8 +539,100 @@ document.querySelector('.js-add-to-cart')
     // Hide the message after 2 seconds
     setTimeout(() => {
       addedMessage.style.opacity = '0';
-    }, 2000);
-  });
+    }, 2000);  });
+
+/**
+ * Setup mobile touch scrolling for thumbnail gallery
+ */
+function setupMobileTouchScrolling(thumbnailsContainer) {
+  if (!thumbnailsContainer) return;
+  
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  thumbnailsContainer.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  
+  thumbnailsContainer.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const touchDiff = touchStartX - touchEndX;
+    // Scroll the container by the swipe distance
+    thumbnailsContainer.scrollLeft += touchDiff;
+  }
+}
+
+/**
+ * Setup mobile-friendly image sizing
+ */
+function setupMobileImageSizing() {
+  function adjustImageHeight() {
+    const imageContainer = document.querySelector('.product-main-image-container');
+    const image = document.querySelector('.product-image');
+    
+    if (imageContainer && image) {
+      // For mobile phones in portrait mode
+      if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
+        const maxHeight = window.innerHeight * 0.45; // 45% of screen height
+        image.style.maxHeight = `${maxHeight}px`;
+      } else if (window.innerWidth < 900) {
+        // For tablets or phones in landscape
+        const maxHeight = window.innerHeight * 0.65; // 65% of screen height
+        image.style.maxHeight = `${maxHeight}px`;
+      } else {
+        // For desktop
+        image.style.maxHeight = '500px';
+      }
+    }
+  }
+  
+  // Call once on load and on resize
+  adjustImageHeight();
+  window.addEventListener('resize', adjustImageHeight);
+  window.addEventListener('orientationchange', adjustImageHeight);
+}
+
+/**
+ * Setup mobile arrow scrolling for thumbnail navigation
+ */
+function setupMobileArrowScrolling(leftArrow, rightArrow, thumbnailsContainer) {
+  if (!leftArrow || !rightArrow || !thumbnailsContainer) return;
+  
+  const scrollAmount = 90; // Approximate width of thumbnail + margin
+  
+  // Remove existing mobile handlers to avoid duplicates
+  leftArrow.removeEventListener('click', leftArrow._mobileHandler, true);
+  rightArrow.removeEventListener('click', rightArrow._mobileHandler, true);
+  
+  // Create new mobile handlers
+  leftArrow._mobileHandler = function(e) {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      e.stopPropagation();
+      thumbnailsContainer.scrollLeft -= scrollAmount;
+    }
+  };
+  
+  rightArrow._mobileHandler = function(e) {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      e.stopPropagation();
+      thumbnailsContainer.scrollLeft += scrollAmount;
+    }
+  };
+  
+  // Add mobile handlers with high priority (capture phase)
+  leftArrow.addEventListener('click', leftArrow._mobileHandler, true);
+  rightArrow.addEventListener('click', rightArrow._mobileHandler, true);
+  
+  // Setup mobile scroll behavior
+  thumbnailsContainer.style.overflow = 'hidden auto';
+  thumbnailsContainer.style.scrollBehavior = 'smooth';
+}
 
 function updateBreadcrumbDetail(product, productType, productBrand) {
   let breadcrumbElement = document.querySelector('.breadcrumb-nav');

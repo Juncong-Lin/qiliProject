@@ -291,6 +291,21 @@
   transform: scale(1.1);
 }
 
+/* Disabled state for thumbnail arrows */
+.thumbnail-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.5);
+  color: #999;
+  pointer-events: none;
+}
+
+.thumbnail-arrow:disabled:hover {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: none;
+}
+
 .thumbnail-arrow span {
   line-height: 1;
   transform: translateY(-1px);
