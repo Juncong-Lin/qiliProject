@@ -136,6 +136,8 @@ if (product) {
  */
 function setupImageGallery(product) {
   let mainImagePath = product.image;
+  const thumbnailsContainer = document.querySelector('.js-product-thumbnails');
+  
   if (productType === 'printhead') {
     try {
       const imageParts = mainImagePath.split('/');
@@ -147,7 +149,6 @@ function setupImageGallery(product) {
       }
       
       // Check which images actually exist before creating thumbnails
-      const thumbnailsContainer = document.querySelector('.js-product-thumbnails');
       let validImages = [];
       let loadPromises = [];
       
@@ -189,140 +190,258 @@ function setupImageGallery(product) {
           document.querySelector('.js-product-image').src = validImages[0].path;
         }          thumbnailsContainer.innerHTML = thumbnailsHTML;
         
-        // Now setup scrolling logic with the actual thumbnails
-        let startIndex = 0;
-        const maxVisible = 5;
-        const thumbnails = Array.from(document.querySelectorAll('.thumbnail-item'));
-        
-        function updateVisibleThumbnails() {
-          thumbnails.forEach((thumb, idx) => {
-            if (idx >= startIndex && idx < startIndex + maxVisible) {
-              thumb.style.display = '';
-            } else {
-              thumb.style.display = 'none';
-            }
-          });
-        }
-          // Only show arrows if we have more thumbnails than maxVisible
-        const leftArrow = document.querySelector('.js-thumbnail-arrow-left');
-        const rightArrow = document.querySelector('.js-thumbnail-arrow-right');          // Check if we're on mobile (integrated mobile functionality)
-        const isMobile = window.innerWidth <= 768;
-          if (isMobile) {
-          // On mobile, show arrows and setup touch scrolling
-          leftArrow.style.display = 'flex';
-          rightArrow.style.display = 'flex';
-          // Show all thumbnails on mobile (scroll-based approach)
-          thumbnails.forEach(thumb => thumb.style.display = '');
-          
-          // Setup mobile-specific touch scrolling and arrow functionality
-          setupMobileArrowScrolling(leftArrow, rightArrow, thumbnailsContainer);
-        } else {
-          // Show arrows and setup scrolling (desktop - visibility-based approach)
-          leftArrow.style.display = 'flex';
-          rightArrow.style.display = 'flex';
-          
-          // If we have 5 or fewer thumbnails, show all and disable arrow functionality
-          if (thumbnails.length <= maxVisible) {
-            // Show all thumbnails when we have 5 or fewer
-            thumbnails.forEach(thumb => thumb.style.display = '');
-            // Disable arrows since no scrolling is needed
-            leftArrow.disabled = true;
-            rightArrow.disabled = true;
-          } else {
-            // Enable arrows and setup scrolling for more than 5 thumbnails
-            leftArrow.disabled = false;
-            rightArrow.disabled = false;
-            
-            updateVisibleThumbnails();
-            
-            function updateArrows() {
-              leftArrow.disabled = startIndex === 0;
-              rightArrow.disabled = startIndex + maxVisible >= thumbnails.length;
-            }
-            updateArrows();
-            
-            leftArrow.addEventListener('click', () => {
-              if (startIndex > 0) {
-                startIndex--;
-                updateVisibleThumbnails();
-                updateArrows();
-              }
-            });
-            
-            rightArrow.addEventListener('click', () => {
-              if (startIndex + maxVisible < thumbnails.length) {
-                startIndex++;
-                updateVisibleThumbnails();
-                updateArrows();
-              }
-            });          }
-        }
-          // Thumbnail click event
-        thumbnails.forEach(thumbnail => {
-          thumbnail.addEventListener('click', () => {
-            document.querySelector('.js-product-image').src = thumbnail.dataset.image;
-            thumbnails.forEach(t => t.classList.remove('active'));
-            thumbnail.classList.add('active');
-          });
-        });
-
-        // Mobile touch scrolling for thumbnails
-        setupMobileTouchScrolling(thumbnailsContainer);
-        
-        // Mobile-friendly image sizing
-        setupMobileImageSizing();
-        
-        // Handle window resize to switch between mobile and desktop scrolling modes
-        function handleResize() {
-          const isMobileNow = window.innerWidth <= 768;
-          const leftArrowResize = document.querySelector('.js-thumbnail-arrow-left');
-          const rightArrowResize = document.querySelector('.js-thumbnail-arrow-right');
-          
-          // Always show arrows regardless of thumbnail count
-          leftArrowResize.style.display = 'flex';
-          rightArrowResize.style.display = 'flex';
-            if (isMobileNow) {
-            // Switch to mobile mode: show all thumbnails, enable mobile scrolling
-            thumbnails.forEach(thumb => thumb.style.display = '');
-            setupMobileArrowScrolling(leftArrowResize, rightArrowResize, thumbnailsContainer);          } else {
-            // Switch to desktop mode: use visibility-based scrolling
-            // Clean up mobile scroll handlers
-            if (leftArrowResize._mobileHandler) {
-              leftArrowResize.removeEventListener('click', leftArrowResize._mobileHandler, true);
-            }
-            if (rightArrowResize._mobileHandler) {
-              rightArrowResize.removeEventListener('click', rightArrowResize._mobileHandler, true);
-            }
-            
-            // Restore normal overflow for desktop visibility-based scrolling
-            thumbnailsContainer.style.overflow = 'hidden';
-            thumbnailsContainer.style.scrollBehavior = 'auto';
-            
-            if (thumbnails.length <= maxVisible) {
-              // Show all thumbnails and disable arrows when we have 5 or fewer
-              thumbnails.forEach(thumb => thumb.style.display = '');
-              leftArrowResize.disabled = true;
-              rightArrowResize.disabled = true;
-            } else {
-              // Enable arrows and reset to beginning for more than 5 thumbnails
-              leftArrowResize.disabled = false;
-              rightArrowResize.disabled = false;
-              startIndex = 0; // Reset to beginning
-              updateVisibleThumbnails();
-              updateArrows();
-            }
-          }
-        }
-        
-        // Listen for resize events
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('orientationchange', handleResize);
+        // Setup thumbnail gallery functionality
+        setupThumbnailGalleryLogic();
         
       });
     } catch (error) {
-      console.error('Error setting up image gallery:', error);
+      console.error('Error setting up printhead image gallery:', error);
+    }
+  } else if (productType === 'printer' && product.additionalImages && product.additionalImages.length > 0) {
+    // Handle printer products with additional images
+    try {
+      // Start with main product image
+      const allImages = [
+        { path: product.image, label: 'Main Product Image' }
+      ];
+      
+      // Add additional images with descriptive labels
+      product.additionalImages.forEach((imagePath, index) => {
+        let label = 'Additional Image';
+        if (imagePath.includes('ink-supply-system')) {
+          label = 'Ink Supply System';
+        } else if (imagePath.includes('maintenance-station')) {
+          label = 'Maintenance Station';
+        } else if (imagePath.includes('media-pinch-roller')) {
+          label = 'Media Pinch Roller';
+        }
+        allImages.push({ path: imagePath, label: label });
+      });
+      
+      // Check which images actually exist
+      let validImages = [];
+      let loadPromises = [];
+      
+      allImages.forEach((imageObj, index) => {
+        const promise = new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve({ ...imageObj, index, exists: true });
+          img.onerror = () => resolve({ ...imageObj, index, exists: false });
+          img.src = imageObj.path;
+        });
+        loadPromises.push(promise);
+      });
+      
+      // Wait for all image checks to complete
+      Promise.all(loadPromises).then((results) => {
+        // Filter only existing images
+        validImages = results.filter(img => img.exists);
+        
+        let thumbnailsHTML = '';
+        if (validImages.length === 0) {
+          // Fallback to main product image only
+          thumbnailsHTML = `
+            <div class="thumbnail-item active" data-image="${product.image}" data-index="0">
+              <img src="${product.image}" alt="${product.name} thumbnail" class="thumbnail-img">
+            </div>
+          `;
+        } else {
+          // Create thumbnails for existing images
+          validImages.forEach((img, i) => {
+            thumbnailsHTML += `
+              <div class="thumbnail-item ${i === 0 ? 'active' : ''}" data-image="${img.path}" data-index="${i}" title="${img.label}">
+                <img src="${img.path}" alt="${img.label}" class="thumbnail-img">
+              </div>
+            `;
+          });
+          
+          // Set main image to first valid image
+          document.querySelector('.js-product-image').src = validImages[0].path;
+        }
+        
+        thumbnailsContainer.innerHTML = thumbnailsHTML;
+        
+        // Setup thumbnail gallery functionality
+        setupThumbnailGalleryLogic();
+        
+      });
+    } catch (error) {
+      console.error('Error setting up printer image gallery:', error);
+      // Fallback to main image only
+      setupSingleImageGallery(product);
+    }
+  } else {
+    // For products with only main image (regular products or printers without additional images)
+    setupSingleImageGallery(product);
+  }
+}
+
+/**
+ * Setup gallery for products with only a main image
+ */
+function setupSingleImageGallery(product) {
+  const thumbnailsContainer = document.querySelector('.js-product-thumbnails');
+  thumbnailsContainer.innerHTML = `
+    <div class="thumbnail-item active" data-image="${product.image}" data-index="0">
+      <img src="${product.image}" alt="${product.name} thumbnail" class="thumbnail-img">
+    </div>
+  `;
+  
+  // Hide arrows for single image
+  const leftArrow = document.querySelector('.js-thumbnail-arrow-left');
+  const rightArrow = document.querySelector('.js-thumbnail-arrow-right');
+  if (leftArrow) leftArrow.style.display = 'none';
+  if (rightArrow) rightArrow.style.display = 'none';
+  
+  // Setup basic thumbnail click functionality
+  const thumbnail = document.querySelector('.thumbnail-item');
+  if (thumbnail) {
+    thumbnail.addEventListener('click', () => {
+      document.querySelector('.js-product-image').src = thumbnail.dataset.image;
+    });
+  }
+}
+
+/**
+ * Setup thumbnail gallery navigation logic (shared between printhead and printer galleries)
+ */
+function setupThumbnailGalleryLogic() {
+  // Now setup scrolling logic with the actual thumbnails
+  let startIndex = 0;
+  const maxVisible = 5;
+  const thumbnails = Array.from(document.querySelectorAll('.thumbnail-item'));
+  
+  function updateVisibleThumbnails() {
+    thumbnails.forEach((thumb, idx) => {
+      if (idx >= startIndex && idx < startIndex + maxVisible) {
+        thumb.style.display = '';
+      } else {
+        thumb.style.display = 'none';
+      }
+    });
+  }
+  
+  // Only show arrows if we have more thumbnails than maxVisible
+  const leftArrow = document.querySelector('.js-thumbnail-arrow-left');
+  const rightArrow = document.querySelector('.js-thumbnail-arrow-right');
+  
+  // Check if we're on mobile (integrated mobile functionality)
+  const isMobile = window.innerWidth <= 768;
+  
+  if (isMobile) {
+    // On mobile, show arrows and setup touch scrolling
+    leftArrow.style.display = 'flex';
+    rightArrow.style.display = 'flex';
+    // Show all thumbnails on mobile (scroll-based approach)
+    thumbnails.forEach(thumb => thumb.style.display = '');
+    
+    // Setup mobile-specific touch scrolling and arrow functionality
+    setupMobileArrowScrolling(leftArrow, rightArrow, document.querySelector('.js-product-thumbnails'));
+  } else {
+    // Show arrows and setup scrolling (desktop - visibility-based approach)
+    leftArrow.style.display = 'flex';
+    rightArrow.style.display = 'flex';
+    
+    // If we have 5 or fewer thumbnails, show all and disable arrow functionality
+    if (thumbnails.length <= maxVisible) {
+      // Show all thumbnails when we have 5 or fewer
+      thumbnails.forEach(thumb => thumb.style.display = '');
+      // Disable arrows since no scrolling is needed
+      leftArrow.disabled = true;
+      rightArrow.disabled = true;
+    } else {
+      // Enable arrows and setup scrolling for more than 5 thumbnails
+      leftArrow.disabled = false;
+      rightArrow.disabled = false;
+      
+      updateVisibleThumbnails();
+      
+      function updateArrows() {
+        leftArrow.disabled = startIndex === 0;
+        rightArrow.disabled = startIndex + maxVisible >= thumbnails.length;
+      }
+      updateArrows();
+      
+      leftArrow.addEventListener('click', () => {
+        if (startIndex > 0) {
+          startIndex--;
+          updateVisibleThumbnails();
+          updateArrows();
+        }
+      });
+      
+      rightArrow.addEventListener('click', () => {
+        if (startIndex + maxVisible < thumbnails.length) {
+          startIndex++;
+          updateVisibleThumbnails();
+          updateArrows();
+        }
+      });
     }
   }
+  
+  // Thumbnail click event
+  thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+      document.querySelector('.js-product-image').src = thumbnail.dataset.image;
+      thumbnails.forEach(t => t.classList.remove('active'));
+      thumbnail.classList.add('active');
+    });
+  });
+
+  // Mobile touch scrolling for thumbnails
+  setupMobileTouchScrolling(document.querySelector('.js-product-thumbnails'));
+  
+  // Mobile-friendly image sizing
+  setupMobileImageSizing();
+  
+  // Handle window resize to switch between mobile and desktop scrolling modes
+  function handleResize() {
+    const isMobileNow = window.innerWidth <= 768;
+    const leftArrowResize = document.querySelector('.js-thumbnail-arrow-left');
+    const rightArrowResize = document.querySelector('.js-thumbnail-arrow-right');
+    
+    // Always show arrows regardless of thumbnail count
+    leftArrowResize.style.display = 'flex';
+    rightArrowResize.style.display = 'flex';
+    
+    if (isMobileNow) {
+      // Switch to mobile mode: show all thumbnails, enable mobile scrolling
+      thumbnails.forEach(thumb => thumb.style.display = '');
+      setupMobileArrowScrolling(leftArrowResize, rightArrowResize, document.querySelector('.js-product-thumbnails'));
+    } else {
+      // Switch to desktop mode: use visibility-based scrolling
+      // Clean up mobile scroll handlers
+      if (leftArrowResize._mobileHandler) {
+        leftArrowResize.removeEventListener('click', leftArrowResize._mobileHandler, true);
+      }
+      if (rightArrowResize._mobileHandler) {
+        rightArrowResize.removeEventListener('click', rightArrowResize._mobileHandler, true);
+      }
+      
+      // Restore normal overflow for desktop visibility-based scrolling
+      document.querySelector('.js-product-thumbnails').style.overflow = 'hidden';
+      document.querySelector('.js-product-thumbnails').style.scrollBehavior = 'auto';
+      
+      if (thumbnails.length <= maxVisible) {
+        // Show all thumbnails and disable arrows when we have 5 or fewer
+        thumbnails.forEach(thumb => thumb.style.display = '');
+        leftArrowResize.disabled = true;
+        rightArrowResize.disabled = true;
+      } else {
+        // Enable arrows and reset to beginning for more than 5 thumbnails
+        leftArrowResize.disabled = false;
+        rightArrowResize.disabled = false;
+        startIndex = 0; // Reset to beginning
+        updateVisibleThumbnails();
+        updateArrows();
+      }
+    }
+  }
+  
+  // Listen for resize events
+  window.addEventListener('resize', handleResize);
+  window.addEventListener('orientationchange', handleResize);
 }
 
 /**
@@ -544,24 +663,43 @@ function setupPrinterProductContent(product) {
   // Set product description with detailed information
   document.querySelector('.js-product-description').innerHTML = product.description || 'High-quality inkjet printer designed for professional printing applications.';
   
-  // Set detailed product content
+  // Set detailed product content with comprehensive information
+  const specs = product.specifications || {};
   document.querySelector('.js-product-details-content').innerHTML = `
     <h3>Product Overview</h3>
-    <p>This professional inkjet printer offers ${product.specifications?.width || 'wide format'} printing capabilities with high-quality output suitable for various applications including signage, banners, and promotional materials.</p>
+    <p>This professional inkjet printer offers ${specs.printWidth || 'wide format'} printing capabilities with high-quality output suitable for various applications including signage, banners, and promotional materials.</p>
     
-    ${product.specifications?.heads ? `<h4>Print Technology</h4>
+    <h4>Print Technology</h4>
     <ul>
-      <li>Print Heads: ${product.specifications.heads}</li>
-      <li>Print Technology: ${product.specifications.printTechnology || 'Eco-solvent inkjet'}</li>
-      <li>Print Speed: ${product.specifications.printSpeed || 'High-speed printing'}</li>
+      <li>Print Head: ${specs.printHead || 'High-quality printhead'}</li>
+      <li>Number of Print Heads: ${specs.numberOfPrintHeads || 'Multiple heads'}</li>
+      <li>Printing System: ${specs.printingSystem || 'Advanced printing system'}</li>
+      <li>Resolution: ${specs.resolution || 'High resolution'}</li>
+      <li>Print Speed: ${specs.printingSpeed || 'High-speed printing'}</li>
+    </ul>
+    
+    <h4>Ink System</h4>
+    <ul>
+      <li>Ink Type: ${specs.ink || 'Professional grade ink'}</li>
+      <li>Color: ${specs.color || 'CMYK'}</li>
+      <li>Ink Capacity: ${specs.inkCapacity || 'Large capacity'}</li>
+      <li>Ink Drying System: ${specs.inkDryingSystem || 'Advanced drying system'}</li>
+    </ul>
+    
+    <h4>Media Handling</h4>
+    <ul>
+      <li>Maximum Media Width: ${specs.maximumMediaWidth || 'Wide format'}</li>
+      <li>Compatible Media: ${specs.printingMedia || 'Various media types'}</li>
+      <li>Maximum Media Weight: ${specs.maximumMediaWeight || 'Heavy duty'}</li>
+      <li>Media Supply System: ${specs.mediaSupplySystem || 'Automatic feeding'}</li>
+    </ul>
+    
+    ${product.additionalFeatures ? `<h4>Additional Features</h4>
+    <ul>
+      ${product.additionalFeatures.map(feature => `<li>${feature}</li>`).join('')}
     </ul>` : ''}
     
-    ${product.specifications?.applications ? `<h4>Applications</h4>
-    <ul>
-      ${product.specifications.applications.map(app => `<li>${app}</li>`).join('')}
-    </ul>` : ''}
-    
-    <h4>Key Features</h4>
+    <h4>Key Benefits</h4>
     <ul>
       <li>Professional grade printing quality</li>
       <li>Reliable and durable construction</li>
@@ -570,57 +708,134 @@ function setupPrinterProductContent(product) {
     </ul>
   `;
   
-  // Set compatibility content
+  // Set compatibility content with detailed information
   document.querySelector('.js-product-compatibility').innerHTML = `
-    <h3>Compatible Media</h3>
-    <p>This printer is compatible with a wide range of media types including:</p>
-    <ul>
-      <li>Vinyl materials</li>
-      <li>Banner materials</li>
-      <li>Canvas</li>
-      <li>Photo paper</li>
-      <li>Adhesive materials</li>
-    </ul>
+    <h3>Compatible Media Types</h3>
+    <p>This printer supports: ${specs.printingMedia || 'Various professional media types'}</p>
     
-    ${product.specifications?.inkTypes ? `<h4>Ink Compatibility</h4>
+    <h3>Software Compatibility</h3>
+    <p>RIP Software: ${specs.ripSoftware || 'Professional RIP software'}</p>
+    <p>Supported Formats: ${specs.photoFormat || 'Standard image formats'}</p>
+    
+    <h3>Connection Options</h3>
+    <p>Connection Port: ${specs.connectionPort || 'Multiple connectivity options'}</p>
+    
+    <h3>Operating Requirements</h3>
     <ul>
-      ${product.specifications.inkTypes.map(ink => `<li>${ink}</li>`).join('')}
-    </ul>` : ''}
+      <li>Working Temperature: ${specs.workingTemperature || 'Standard office temperature'}</li>
+      <li>Working Humidity: ${specs.workingHumidity || 'Standard humidity range'}</li>
+      <li>Power Requirements: ${specs.powerDemand || 'Standard power requirements'}</li>
+    </ul>
   `;
   
-  // Set specifications content with detailed specs
+  // Set comprehensive specifications content
   let specsHTML = '<table class="product-table"><tbody>';
   
-  // Add basic specifications
+  // Basic Information
   if (product.model) {
     specsHTML += `<tr><td><strong>Model</strong></td><td>${product.model}</td></tr>`;
   }
-  if (product.specifications?.width) {
-    specsHTML += `<tr><td><strong>Print Width</strong></td><td>${product.specifications.width}</td></tr>`;
+  if (specs.printWidth) {
+    specsHTML += `<tr><td><strong>Print Width</strong></td><td>${specs.printWidth}</td></tr>`;
   }
-  if (product.specifications?.heads) {
-    specsHTML += `<tr><td><strong>Print Heads</strong></td><td>${product.specifications.heads}</td></tr>`;
-  }
-  if (product.specifications?.printSpeed) {
-    specsHTML += `<tr><td><strong>Print Speed</strong></td><td>${product.specifications.printSpeed}</td></tr>`;
-  }
-  if (product.specifications?.resolution) {
-    specsHTML += `<tr><td><strong>Resolution</strong></td><td>${product.specifications.resolution}</td></tr>`;
-  }
-  if (product.specifications?.dimensions) {
-    specsHTML += `<tr><td><strong>Dimensions</strong></td><td>${product.specifications.dimensions}</td></tr>`;
-  }
-  if (product.specifications?.weight) {
-    specsHTML += `<tr><td><strong>Weight</strong></td><td>${product.specifications.weight}</td></tr>`;
-  }
-  if (product.specifications?.powerConsumption) {
-    specsHTML += `<tr><td><strong>Power Consumption</strong></td><td>${product.specifications.powerConsumption}</td></tr>`;
-  }
-  if (product.specifications?.operatingEnvironment) {
-    specsHTML += `<tr><td><strong>Operating Environment</strong></td><td>${product.specifications.operatingEnvironment}</td></tr>`;
+  if (specs.maximumMediaWidth) {
+    specsHTML += `<tr><td><strong>Maximum Media Width</strong></td><td>${specs.maximumMediaWidth}</td></tr>`;
   }
   
-  // Add price range
+  // Print Technology
+  if (specs.printHead) {
+    specsHTML += `<tr><td><strong>Print Head</strong></td><td>${specs.printHead}</td></tr>`;
+  }
+  if (specs.numberOfPrintHeads) {
+    specsHTML += `<tr><td><strong>Number of Print Heads</strong></td><td>${specs.numberOfPrintHeads}</td></tr>`;
+  }
+  if (specs.resolution) {
+    specsHTML += `<tr><td><strong>Resolution</strong></td><td>${specs.resolution}</td></tr>`;
+  }
+  if (specs.printingSpeed) {
+    specsHTML += `<tr><td><strong>Printing Speed</strong></td><td>${specs.printingSpeed}</td></tr>`;
+  }
+  if (specs.printingSystem) {
+    specsHTML += `<tr><td><strong>Printing System</strong></td><td>${specs.printingSystem}</td></tr>`;
+  }
+  
+  // Ink and Media
+  if (specs.ink) {
+    specsHTML += `<tr><td><strong>Ink Type</strong></td><td>${specs.ink}</td></tr>`;
+  }
+  if (specs.color) {
+    specsHTML += `<tr><td><strong>Color</strong></td><td>${specs.color}</td></tr>`;
+  }
+  if (specs.inkCapacity) {
+    specsHTML += `<tr><td><strong>Ink Capacity</strong></td><td>${specs.inkCapacity}</td></tr>`;
+  }
+  if (specs.printingMedia) {
+    specsHTML += `<tr><td><strong>Compatible Media</strong></td><td>${specs.printingMedia}</td></tr>`;
+  }
+  if (specs.maximumMediaWeight) {
+    specsHTML += `<tr><td><strong>Maximum Media Weight</strong></td><td>${specs.maximumMediaWeight}</td></tr>`;
+  }
+  
+  // Technical Specifications
+  if (specs.connectionPort) {
+    specsHTML += `<tr><td><strong>Connection Port</strong></td><td>${specs.connectionPort}</td></tr>`;
+  }
+  if (specs.printHeadToMediaDistance) {
+    specsHTML += `<tr><td><strong>Print Head Distance</strong></td><td>${specs.printHeadToMediaDistance}</td></tr>`;
+  }
+  if (specs.printingLocationSystem) {
+    specsHTML += `<tr><td><strong>Location System</strong></td><td>${specs.printingLocationSystem}</td></tr>`;
+  }
+  if (specs.inkDryingSystem) {
+    specsHTML += `<tr><td><strong>Ink Drying System</strong></td><td>${specs.inkDryingSystem}</td></tr>`;
+  }
+  if (specs.motorAndDriverSystem) {
+    specsHTML += `<tr><td><strong>Motor & Driver System</strong></td><td>${specs.motorAndDriverSystem}</td></tr>`;
+  }
+  if (specs.inkStation) {
+    specsHTML += `<tr><td><strong>Ink Station</strong></td><td>${specs.inkStation}</td></tr>`;
+  }
+  if (specs.heatingSystem) {
+    specsHTML += `<tr><td><strong>Heating System</strong></td><td>${specs.heatingSystem}</td></tr>`;
+  }
+  if (specs.mediaSupplySystem) {
+    specsHTML += `<tr><td><strong>Media Supply System</strong></td><td>${specs.mediaSupplySystem}</td></tr>`;
+  }
+  
+  // Software and Formats
+  if (specs.ripSoftware) {
+    specsHTML += `<tr><td><strong>RIP Software</strong></td><td>${specs.ripSoftware}</td></tr>`;
+  }
+  if (specs.photoFormat) {
+    specsHTML += `<tr><td><strong>Supported Formats</strong></td><td>${specs.photoFormat}</td></tr>`;
+  }
+  
+  // Physical Specifications
+  if (specs.machineSize) {
+    specsHTML += `<tr><td><strong>Machine Size</strong></td><td>${specs.machineSize}</td></tr>`;
+  }
+  if (specs.netWeight) {
+    specsHTML += `<tr><td><strong>Net Weight</strong></td><td>${specs.netWeight}</td></tr>`;
+  }
+  if (specs.packingSize) {
+    specsHTML += `<tr><td><strong>Packing Size</strong></td><td>${specs.packingSize}</td></tr>`;
+  }
+  if (specs.grossWeight) {
+    specsHTML += `<tr><td><strong>Gross Weight</strong></td><td>${specs.grossWeight}</td></tr>`;
+  }
+  
+  // Operating Environment
+  if (specs.powerDemand) {
+    specsHTML += `<tr><td><strong>Power Requirements</strong></td><td>${specs.powerDemand}</td></tr>`;
+  }
+  if (specs.workingTemperature) {
+    specsHTML += `<tr><td><strong>Working Temperature</strong></td><td>${specs.workingTemperature}</td></tr>`;
+  }
+  if (specs.workingHumidity) {
+    specsHTML += `<tr><td><strong>Working Humidity</strong></td><td>${specs.workingHumidity}</td></tr>`;
+  }
+  
+  // Price Information
   if (product.priceRange) {
     specsHTML += `<tr><td><strong>Price Range</strong></td><td>${product.priceRange}</td></tr>`;
   }
