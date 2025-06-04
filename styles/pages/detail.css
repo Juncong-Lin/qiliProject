@@ -123,6 +123,63 @@
     width: 50px;
     height: 50px;
   }
+  
+  /* Touch-friendly button improvements */
+  .add-to-cart-button {
+    padding: 16px;
+    font-size: 18px;
+  }
+  
+  .js-quantity-selector {
+    padding: 14px;
+    font-size: 16px;
+    height: 48px;
+  }
+    .thumbnail-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+    /* Product image mobile adjustments */
+  .product-image {
+    max-height: 350px;
+  }
+  
+  /* Product info tabs mobile adjustments */
+  .product-info-tabs {
+    margin-top: 30px;
+  }
+    .tab-content {
+    padding: 15px;
+  }
+  
+  /* Product sections mobile adjustments */
+  .product-compatibility-section,
+  .product-specifications-section,
+  .product-reviews-section {
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+  
+  .product-compatibility-section h2,
+  .product-specifications-section h2,  .product-reviews-section h2 {
+    font-size: 20px;
+    margin: 0 0 15px 0;
+  }
+  
+  /* Product table mobile adjustments */
+  .product-table th,
+  .product-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  /* For mobile, make tables responsive */
+  .product-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Fix for screen rotation - match index page behavior */
@@ -133,10 +190,51 @@
   }
 }
 
+@media (orientation: portrait) and (max-width: 600px) {
+  .product-detail-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-image-section {
+    order: 1;
+  }
+  
+  .product-detail-section {
+    order: 2;
+  }
+  
+  .product-main-image-container {
+    max-height: 50vh;
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-image {
+    max-height: 45vh;
+  }
+  
+  .product-info-tabs {
+    order: 3;
+  }
+}
+
 @media screen and (orientation: landscape) and (max-height: 500px) {
   body.no-sidebar .main {
     margin-top: 80px;
     padding: 15px;
+  }
+}
+
+@media (orientation: landscape) {
+  .product-main-image-container {
+    max-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-image {
+    max-height: 65vh;
   }
 }
 
@@ -164,12 +262,6 @@
   object-fit: contain;
 }
 
-@media (max-width: 600px) {
-  .product-image {
-    max-height: 350px;
-  }
-}
-
 /* Product thumbnails */
 .product-thumbnails-wrapper {
   display: flex;
@@ -181,23 +273,36 @@
 }
 
 .thumbnail-arrow {
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 20px;
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 5px;
-  transition: background 0.2s, border-color 0.2s;
+  transition: all 0.3s ease;
   flex-shrink: 0;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 .thumbnail-arrow:hover {
-  background: #f0f0f0;
-  border-color: #232F3E;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: scale(1.1);
+}
+
+/* Thumbnail arrow positioning fixes */
+.thumbnail-arrow.left {
+  margin-right: 5px;
+}
+
+.thumbnail-arrow.right {
+  margin-left: 5px;
 }
 
 .product-thumbnails {
@@ -310,6 +415,10 @@
   margin-bottom: 25px;
   line-height: 1.6;
   color: #333;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 /* Purchase section */
@@ -407,16 +516,6 @@
   display: block;
 }
 
-@media (max-width: 600px) {
-  .product-info-tabs {
-    margin-top: 30px;
-  }
-  
-  .tab-content {
-    padding: 15px;
-  }
-}
-
 /* Style the compatibility, specifications, and reviews sections within product details */
 .product-compatibility-section,
 .product-specifications-section,
@@ -437,22 +536,6 @@
   font-weight: 600;
 }
 
-@media (max-width: 600px) {
-  .product-compatibility-section,
-  .product-specifications-section,
-  .product-reviews-section {
-    margin-top: 30px;
-    padding-top: 20px;
-  }
-  
-  .product-compatibility-section h2,
-  .product-specifications-section h2,
-  .product-reviews-section h2 {
-    font-size: 20px;
-    margin: 0 0 15px 0;
-  }
-}
-
 /* Product details content */
 .product-details-content,
 .product-compatibility,
@@ -463,6 +546,8 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .product-details-content h2,
@@ -515,19 +600,4 @@
 
 .product-table tr:hover {
   background-color: #f1f1f1;
-}
-
-@media (max-width: 600px) {
-  .product-table th,
-  .product-table td {
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-  
-  /* For mobile, make tables responsive */
-  .product-table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
 }
