@@ -56,6 +56,9 @@ window.loadPrintheadProducts = function(brand) {
     // Hide the submenu after selection
     hideActiveSubmenus();
     
+    // Hide hero banner for specific category views
+    hideHeroBanner();
+    
     // Highlight selected menu item
     highlightSelectedMenuItem(brand);
       // Add loading animation
@@ -84,6 +87,9 @@ window.loadPrintheadProducts = function(brand) {
 window.loadAllPrintheadProducts = function() {
   // Hide the submenu after selection
   hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
   
   // Highlight selected menu item in the navigation
   document.querySelectorAll('.sub-header-link').forEach(link => {
@@ -132,6 +138,9 @@ window.loadAllProducts = function() {
   
   // Highlight selected menu item
   highlightSelectedMenuItem('all');
+  
+  // Show hero banner for main homepage view
+  showHeroBanner();
   
   // Add loading animation
   showLoadingState();
@@ -340,6 +349,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Initialize hero banner visibility on page load
+document.addEventListener('DOMContentLoaded', () => {
+  // Show hero banner by default on index page when no hash is present
+  setTimeout(() => {
+    const hash = window.location.hash;
+    const isIndexPage = document.querySelector('.products-grid') || document.querySelector('#products-grid');
+    
+    if (isIndexPage && !hash) {
+      // Show hero banner for default homepage view
+      showHeroBanner();
+    }
+  }, 150);
+});
+
 // Fallback function to handle hash navigation when sub-header nav is not available
 function handleHashFallback(hash) {
   if (hash === 'print-heads' || hash === 'printheads') {
@@ -498,6 +521,10 @@ document.addEventListener('DOMContentLoaded', () => {
 window.loadSpecificCategory = function(categoryName) {
   // Hide the submenu after selection
   hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
   // Add loading animation
   showLoadingState();
 
@@ -569,5 +596,124 @@ window.loadInkjetPrinters = function() {
 // Function to load Print Spare Parts  
 window.loadPrintSpareParts = function() {
   window.loadSpecificCategory('Print Spare Parts');
+};
+
+// Function to show the hero banner
+function showHeroBanner() {
+  const heroBanner = document.querySelector('.hero-banner');
+  if (heroBanner) {
+    heroBanner.style.display = 'block';
+    // Add a small delay to trigger the animation
+    setTimeout(() => {
+      heroBanner.classList.add('show');
+      // Initialize carousel after hero banner is shown
+      setTimeout(() => {
+        if (!window.heroCarousel) {
+          window.heroCarousel = new HeroCarousel();
+        }
+      }, 100);
+    }, 10);
+  }
+}
+
+// Function to hide the hero banner
+function hideHeroBanner() {
+  const heroBanner = document.querySelector('.hero-banner');
+  if (heroBanner) {
+    heroBanner.classList.remove('show');
+    // Hide the element after the animation completes
+    setTimeout(() => {
+      heroBanner.style.display = 'none';
+    }, 300);
+  }
+}
+
+// Hero Carousel Functionality
+class HeroCarousel {
+  constructor() {
+    this.currentSlide = 0;
+    this.slides = document.querySelectorAll('.hero-slide');
+    this.indicators = document.querySelectorAll('.hero-indicator');
+    this.autoplayInterval = null;
+    this.autoplayDelay = 8000; // 8 seconds
+    
+    console.log(`Hero Carousel initialized with ${this.slides.length} slides`);
+    this.init();
+  }
+  
+  init() {
+    if (this.slides.length === 0) {
+      console.log('No slides found for carousel');
+      return;
+    }
+    
+    // Start autoplay
+    this.startAutoplay();
+    console.log('Carousel autoplay started');
+    
+    // Pause autoplay on hover
+    const heroCarousel = document.querySelector('.hero-carousel');
+    if (heroCarousel) {
+      heroCarousel.addEventListener('mouseenter', () => this.stopAutoplay());
+      heroCarousel.addEventListener('mouseleave', () => this.startAutoplay());
+    }
+  }
+  
+  goToSlide(index) {
+    if (index < 0 || index >= this.slides.length) return;
+    
+    // Remove active class from current slide and indicator
+    this.slides[this.currentSlide].classList.remove('active');
+    this.indicators[this.currentSlide].classList.remove('active');
+    
+    // Add active class to new slide and indicator
+    this.currentSlide = index;
+    this.slides[this.currentSlide].classList.add('active');
+    this.indicators[this.currentSlide].classList.add('active');
+    
+    // Reset autoplay
+    this.stopAutoplay();
+    this.startAutoplay();
+  }
+  
+  next() {
+    const nextIndex = (this.currentSlide + 1) % this.slides.length;
+    this.goToSlide(nextIndex);
+  }
+  
+  prev() {
+    const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.goToSlide(prevIndex);
+  }
+  
+  startAutoplay() {
+    this.stopAutoplay();
+    this.autoplayInterval = setInterval(() => {
+      this.next();
+    }, this.autoplayDelay);
+  }
+  
+  stopAutoplay() {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    }
+  }
+}
+
+// Initialize carousel when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize carousel if hero banner is already visible
+  const heroBanner = document.querySelector('.hero-banner');
+  if (heroBanner && heroBanner.style.display !== 'none') {
+    window.heroCarousel = new HeroCarousel();
+  }
+});
+
+// Global function to ensure carousel is initialized when needed
+window.initializeHeroCarousel = function() {
+  if (!window.heroCarousel && document.querySelector('.hero-slide')) {
+    window.heroCarousel = new HeroCarousel();
+  }
 };
 
