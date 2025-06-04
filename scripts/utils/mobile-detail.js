@@ -51,20 +51,72 @@ document.addEventListener('DOMContentLoaded', function() {
   adjustImageHeight();
   window.addEventListener('resize', adjustImageHeight);
   window.addEventListener('orientationchange', adjustImageHeight);
-  
-  // Make thumbnails automatically scroll when clicking on arrows
+    // Make thumbnails automatically scroll when clicking on arrows (mobile only)
   const leftArrow = document.querySelector('.js-thumbnail-arrow-left');
   const rightArrow = document.querySelector('.js-thumbnail-arrow-right');
   
   if (leftArrow && rightArrow && thumbnailsContainer) {
     const scrollAmount = 90; // Approximate width of thumbnail + margin
     
-    leftArrow.addEventListener('click', function() {
-      thumbnailsContainer.scrollLeft -= scrollAmount;
-    });
+    // Function to check if we should use mobile scrolling
+    function shouldUseMobileScrolling() {
+      return window.innerWidth <= 768; // Mobile and tablet breakpoint
+    }
     
-    rightArrow.addEventListener('click', function() {
-      thumbnailsContainer.scrollLeft += scrollAmount;
-    });
+    // Store original click handlers to restore them later
+    let originalLeftHandler = null;
+    let originalRightHandler = null;
+    
+    function setupMobileScrolling() {
+      if (shouldUseMobileScrolling()) {
+        // Remove any existing mobile handlers first
+        if (originalLeftHandler) {
+          leftArrow.removeEventListener('click', originalLeftHandler);
+        }
+        if (originalRightHandler) {
+          rightArrow.removeEventListener('click', originalRightHandler);
+        }
+        
+        // Create new mobile handlers
+        originalLeftHandler = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          thumbnailsContainer.scrollLeft -= scrollAmount;
+        };
+        
+        originalRightHandler = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          thumbnailsContainer.scrollLeft += scrollAmount;
+        };
+        
+        // Add mobile handlers with high priority (capture phase)
+        leftArrow.addEventListener('click', originalLeftHandler, true);
+        rightArrow.addEventListener('click', originalRightHandler, true);
+        
+        // Also disable the visibility-based scrolling by hiding overflow
+        thumbnailsContainer.style.overflow = 'hidden auto';
+        thumbnailsContainer.style.scrollBehavior = 'smooth';
+      } else {
+        // Remove mobile handlers on desktop
+        if (originalLeftHandler) {
+          leftArrow.removeEventListener('click', originalLeftHandler, true);
+        }
+        if (originalRightHandler) {
+          rightArrow.removeEventListener('click', originalRightHandler, true);
+        }
+        
+        // Restore normal overflow for desktop visibility-based scrolling
+        thumbnailsContainer.style.overflow = 'hidden';
+        thumbnailsContainer.style.scrollBehavior = 'auto';
+      }
+    }
+    
+    // Setup mobile scrolling on load
+    setupMobileScrolling();
+    
+    // Re-setup on window resize
+    window.addEventListener('resize', setupMobileScrolling);
+    window.addEventListener('orientationchange', setupMobileScrolling);
   }
 });
