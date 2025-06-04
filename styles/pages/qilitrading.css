@@ -871,12 +871,30 @@ body.has-sidebar .main {
   }
   
   .hero-indicators {
-    bottom: 15px;
+    bottom: 10px;
+    gap: 4px;
+    transform: translateX(-50%) scale(1) !important;
   }
   
   .hero-indicator {
-    width: 10px;
-    height: 10px;
+    width: 4px !important;
+    height: 4px !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    background: transparent !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .hero-indicator.active {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.95) !important;
+    transform: none !important;
+  }
+  
+  .hero-indicator:hover {
+    transform: none !important;
   }
 }
 
