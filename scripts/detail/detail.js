@@ -494,9 +494,6 @@ async function loadPrintheadDetails(product) {
       document.querySelector('.product-specifications-section').style.display = 'none';
     }
     
-    // For printhead products, hide reviews section since they don't have review content
-    document.querySelector('.product-reviews-section').style.display = 'none';
-    
   } catch (error) {
     console.error('Error loading printhead details:', error);
   }
@@ -645,15 +642,6 @@ function setupRegularProductContent(product) {
   
   specsHTML += '</tbody></table>';
   document.querySelector('.js-product-specifications').innerHTML = specsHTML;
-  
-  // Set reviews content
-  document.querySelector('.js-product-reviews').innerHTML = `
-    <p>Customer reviews for this product will be displayed here. Currently showing placeholder content.</p>
-    <div style="padding: 20px; background-color: #f9f9f9; border-radius: 4px; margin-top: 15px;">
-      <p><strong>Review System Coming Soon</strong></p>
-      <p>We're working on implementing a comprehensive review system. Check back soon to see what other customers think about this product!</p>
-    </div>
-  `;
 }
 
 /**
@@ -842,15 +830,6 @@ function setupPrinterProductContent(product) {
   
   specsHTML += '</tbody></table>';
   document.querySelector('.js-product-specifications').innerHTML = specsHTML;
-  
-  // Set reviews content for printers
-  document.querySelector('.js-product-reviews').innerHTML = `
-    <p>Customer reviews for this printer will be displayed here. Currently showing placeholder content.</p>
-    <div style="padding: 20px; background-color: #f9f9f9; border-radius: 4px; margin-top: 15px;">
-      <p><strong>Professional Printer Reviews Coming Soon</strong></p>
-      <p>We're working on implementing a comprehensive review system for our industrial printers. Check back soon to see what other customers think about this printer's performance, reliability, and print quality!</p>
-    </div>
-  `;
 }
 
 // Add to cart functionality
