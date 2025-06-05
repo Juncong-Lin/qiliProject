@@ -1,6 +1,6 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
-import { printerProducts, getI1600Printers } from '../../data/printer-products.js';
+import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
@@ -106,9 +106,9 @@ if (product) {
   if (productType === 'printhead') {
     loadPrintheadDetails(product);
   } else if (productType === 'printer') {
-    // Check if this is an I1600 printer that needs special .docx handling
-    if (isI1600Printer(product, productBrand)) {
-      loadI1600PrinterDetails(product);
+    // Check if this is a printer that needs special .docx handling (I1600 or I3200)
+    if (isDocxPrinter(product, productBrand)) {
+      loadPrinterDetailsFromDocx(product);
     } else {
       // For other printer products, set up printer-specific content
       setupPrinterProductContent(product);
@@ -844,9 +844,23 @@ function isI1600Printer(product, productBrand) {
 }
 
 /**
- * Load detailed information for I1600 printer products from .docx files
+ * Check if a product is an I3200 printer that needs special .docx handling
  */
-async function loadI1600PrinterDetails(product) {
+function isI3200Printer(product, productBrand) {
+  return productType === 'printer' && productBrand === 'eco-solvent-i3200';
+}
+
+/**
+ * Check if a product is any printer that uses .docx files (I1600 or I3200)
+ */
+function isDocxPrinter(product, productBrand) {
+  return isI1600Printer(product, productBrand) || isI3200Printer(product, productBrand);
+}
+
+/**
+ * Load detailed information for printer products from .docx files (I1600, I3200, etc.)
+ */
+async function loadPrinterDetailsFromDocx(product) {
   try {
     // Check if mammoth is available
     if (typeof mammoth === 'undefined') {
@@ -883,9 +897,8 @@ async function loadI1600PrinterDetails(product) {
     // Parse the DOCX content using mammoth.js
     const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
     const docxContent = result.value;
-    
-    // Parse the content into sections
-    const contentSections = separateI1600PrinterContent(docxContent);
+      // Parse the content into sections
+    const contentSections = separatePrinterDocxContent(docxContent);
     
     // Update product description with the short description
     if (contentSections.shortDescription) {
@@ -916,9 +929,9 @@ async function loadI1600PrinterDetails(product) {
 }
 
 /**
- * Separate the Word document content into different sections for I1600 printers
+ * Separate the Word document content into different sections for printer products
  */
-function separateI1600PrinterContent(docxContent) {
+function separatePrinterDocxContent(docxContent) {
   // Define the sections we want to extract
   const sections = {
     shortDescription: '',

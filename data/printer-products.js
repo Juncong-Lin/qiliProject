@@ -266,10 +266,147 @@ export const printerProducts = {
         netWeight: '230 KGS',
         packingSize: 'L2,920mm X W600mm X H420mm',
         grossWeight: '270 KGS'
-      },
-      additionalFeatures: [
+      },      additionalFeatures: [
         'Advanced ink supply system',
         'High-precision Print head Maintenance Station',
+        'Professional Media Pinch Roller system'
+      ]
+    }
+  ],
+  
+  'eco-solvent-i3200': [
+    {
+      id: 'AM1601i32',
+      name: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)',
+      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
+      price: 450000, // $4500-5500 range (higher than I1600 due to advanced I3200 printhead)
+      priceRange: '$4500 - $5500',
+      description: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead - Premium eco-solvent inkjet printer with cutting-edge Epson i3200 printhead technology for superior performance.',
+      model: 'AM1601i32',
+      specifications: {
+        printWidth: '1.6 meters',
+        maximumMediaWidth: '1.6 meter',
+        printHead: 'Epson i3200 print head',
+        numberOfPrintHeads: '1 piece',
+        resolution: '720 x 1440 dpi',
+        printingSpeed: '4Pass Mode 25 square meters per Hour',
+        printingMedia: 'PP Paper, Photo Paper, Vinyl, Transfer Paper, Blue back paper etc.',
+        color: 'CMYK',
+        ink: 'Eco-Solvent ink, Sublimation Ink (or other water based ink)',
+        inkCapacity: '1 Liter per Color',
+        connectionPort: 'USB/NET',
+        printHeadToMediaDistance: '2mm to 3 mm',
+        printingLocationSystem: 'Advanced Raster and Servo system',
+        inkDryingSystem: 'Enhanced Fan and heater system',
+        motorAndDriverSystem: 'High-precision motor and driver for Carriage and Step',
+        printingSystem: 'Premium control system',
+        inkStation: 'Aluminum high precision Print head Maintenance Station',
+        ripSoftware: 'Maintop, RIIN, Photoprint',
+        photoFormat: 'JPG, TIFF, BMP, PDF',
+        heatingSystem: 'Advanced Automatic Temperature Control system',
+        mediaSupplySystem: 'Professional Automatic Media roll-up system',
+        maximumMediaWeight: '90kgs',
+        powerDemand: '50/60HZ 220V AC',
+        workingTemperature: '20-25 CELSIUS',
+        workingHumidity: '40-70%',
+        machineSize: 'L2,720mm X W750mm X H1300mm',
+        netWeight: '240 KGS',
+        packingSize: 'L2,640mm X W600mm X H440mm',
+        grossWeight: '280 KGS'
+      },
+      additionalFeatures: [
+        'Premium ink supply system',
+        'Ultra-precision Print head Maintenance Station',
+        'Professional Media Pinch Roller system'
+      ]
+    },
+    {
+      id: 'AM1802i32',
+      name: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)',
+      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).jpg',
+      price: 780000, // $7800-9800 range (premium dual-head configuration)
+      priceRange: '$7800 - $9800',
+      description: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead - Professional dual-head eco-solvent printer with superior Epson i3200 printhead technology for high-volume production.',
+      model: 'AM1802i32',
+      specifications: {
+        printWidth: '1.8 meters',
+        maximumMediaWidth: '1.8 meter',
+        printHead: 'Epson i3200 print head',
+        numberOfPrintHeads: '2 pieces',
+        resolution: '720 x 1440 dpi',
+        printingSpeed: '4Pass Mode 45 square meters per Hour',
+        printingMedia: 'PP Paper, Photo Paper, Vinyl, Transfer Paper, Blue back paper etc.',
+        color: 'CMYK',
+        ink: 'Eco-Solvent ink, Sublimation Ink (or other water based ink)',
+        inkCapacity: '1 Liter per Color',
+        connectionPort: 'USB/NET',
+        printHeadToMediaDistance: '2mm to 3 mm',
+        printingLocationSystem: 'Advanced Raster and Servo system',
+        inkDryingSystem: 'Enhanced Fan and heater system',
+        motorAndDriverSystem: 'High-precision motor and driver for Carriage and Step',
+        printingSystem: 'Premium dual-head control system',
+        inkStation: 'Aluminum high precision Print head Maintenance Station',
+        ripSoftware: 'Maintop, RIIN, Photoprint',
+        photoFormat: 'JPG, TIFF, BMP, PDF',
+        heatingSystem: 'Advanced Automatic Temperature Control system',
+        mediaSupplySystem: 'Professional Automatic Media roll-up system',
+        maximumMediaWeight: '95kgs',
+        powerDemand: '50/60HZ 220V AC',
+        workingTemperature: '20-25 CELSIUS',
+        workingHumidity: '40-70%',
+        machineSize: 'L2,920mm X W750mm X H1320mm',
+        netWeight: '280 KGS',
+        packingSize: 'L2,840mm X W600mm X H460mm',
+        grossWeight: '320 KGS'
+      },
+      additionalFeatures: [
+        'Dual premium ink supply system',
+        'Ultra-precision Print head Maintenance Station',
+        'Professional Media Pinch Roller system'
+      ]
+    },
+    {
+      id: 'AM1901i32',
+      name: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)',
+      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
+      price: 520000, // $5200-6200 range (wide format single head)
+      priceRange: '$5200 - $6200',
+      description: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead - Wide-format eco-solvent printer with advanced Epson i3200 printhead technology for large-scale professional printing.',
+      model: 'AM1901i32',
+      specifications: {
+        printWidth: '1.9 meters',
+        maximumMediaWidth: '1.9 meter',
+        printHead: 'Epson i3200 print head',
+        numberOfPrintHeads: '1 piece',
+        resolution: '720 x 1440 dpi',
+        printingSpeed: '4Pass Mode 28 square meters per Hour',
+        printingMedia: 'PP Paper, Photo Paper, Vinyl, Transfer Paper, Blue back paper etc.',
+        color: 'CMYK',
+        ink: 'Eco-Solvent ink, Sublimation Ink (or other water based ink)',
+        inkCapacity: '1 Liter per Color',
+        connectionPort: 'USB/NET',
+        printHeadToMediaDistance: '2mm to 3 mm',
+        printingLocationSystem: 'Advanced Raster and Servo system',
+        inkDryingSystem: 'Enhanced Fan and heater system',
+        motorAndDriverSystem: 'High-precision motor and driver for Carriage and Step',
+        printingSystem: 'Premium wide-format control system',
+        inkStation: 'Aluminum high precision Print head Maintenance Station',
+        ripSoftware: 'Maintop, RIIN, Photoprint',
+        photoFormat: 'JPG, TIFF, BMP, PDF',
+        heatingSystem: 'Advanced Automatic Temperature Control system',
+        mediaSupplySystem: 'Professional Automatic Media roll-up system',
+        maximumMediaWeight: '100kgs',
+        powerDemand: '50/60HZ 220V AC',
+        workingTemperature: '20-25 CELSIUS',
+        workingHumidity: '40-70%',
+        machineSize: 'L3,020mm X W750mm X H1320mm',
+        netWeight: '260 KGS',
+        packingSize: 'L2,940mm X W600mm X H460mm',
+        grossWeight: '300 KGS'
+      },
+      additionalFeatures: [
+        'Wide-format premium ink supply system',
+        'Ultra-precision Print head Maintenance Station',
         'Professional Media Pinch Roller system'
       ]
     }
@@ -284,6 +421,11 @@ export function getXP600Printers() {
 // Helper function to get all I1600 printers
 export function getI1600Printers() {
   return printerProducts['eco-solvent-i1600'];
+}
+
+// Helper function to get all I3200 printers
+export function getI3200Printers() {
+  return printerProducts['eco-solvent-i3200'];
 }
 
 // Helper function to get printer by ID

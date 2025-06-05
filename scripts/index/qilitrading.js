@@ -1,7 +1,7 @@
 import {cart, addToCart} from '../../data/cart.js'; 
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
-import {printerProducts, getXP600Printers, getI1600Printers} from '../../data/printer-products.js';
+import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
 import { formatCurrency } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
@@ -226,9 +226,44 @@ window.loadI1600Printers = function() {
     
     // Update page title
     updatePageHeader('I1600 Inkjet Printers');
+      // Update breadcrumb navigation
+    updateBreadcrumb('i1600-printers');
+    
+    // Scroll to top of products
+    scrollToProducts();
+  }, 200);
+};
+
+// Function to load I3200 printer products
+window.loadI3200Printers = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item
+  highlightSelectedMenuItem('i3200-printers');
+  
+  // Show "Coming Soon" message briefly for smooth transition
+  showComingSoonMessage();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const i3200Printers = getI3200Printers();
+    const productsHTML = renderProducts(i3200Printers, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    updatePageHeader('I3200 Inkjet Printers');
     
     // Update breadcrumb navigation
-    updateBreadcrumb('i1600-printers');
+    updateBreadcrumb('i3200-printers');
     
     // Scroll to top of products
     scrollToProducts();
@@ -454,7 +489,11 @@ function handleHashFallback(hash) {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',
       'eco-solvent-xp600-printers': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
+      'eco-solvent-i1600-printers': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
+      'eco-solvent-i3200-printers': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
       'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
+      'eco-solvent-inkjet-printers---with-i1600-printhead': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
+      'eco-solvent-inkjet-printers---with-i3200-printhead': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
       'material': 'Material',
@@ -687,7 +726,7 @@ window.loadSpecificCategory = function(categoryName) {
       }      breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
@@ -718,17 +757,48 @@ window.loadSpecificCategory = function(categoryName) {
       }      breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">With I1600 Printhead</span>
+      `;
+    } else if (categoryName === 'Eco-Solvent Inkjet Printers - With I3200 Printhead') {
+      // Load I3200 printers instead of showing placeholder
+      const i3200Printers = getI3200Printers();
+      const productsHTML = renderProducts(i3200Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('I3200 Eco-Solvent Inkjet Printers');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+        breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">With I1600 Printhead</span>
-      `;
-    } else if (categoryName === 'Eco-Solvent Inkjet Printers') {
-      // Load all eco-solvent printers (XP600 and I1600)
+        <span class="breadcrumb-current">With I3200 Printhead</span>
+      `;} else if (categoryName === 'Eco-Solvent Inkjet Printers') {
+      // Load all eco-solvent printers (XP600, I1600, and I3200)
       const xp600Printers = getXP600Printers();
       const i1600Printers = getI1600Printers();
-      const allEcoSolventPrinters = [...xp600Printers, ...i1600Printers];
+      const i3200Printers = getI3200Printers();
+      const allEcoSolventPrinters = [...xp600Printers, ...i1600Printers, ...i3200Printers];
       const productsHTML = renderProducts(allEcoSolventPrinters, 'printer');
       const productsGrid = document.querySelector('.js-prodcts-grid');
       productsGrid.innerHTML = productsHTML;
@@ -748,11 +818,10 @@ window.loadSpecificCategory = function(categoryName) {
 
         const mainElement = document.querySelector('.main');
         mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
-      }
-      breadcrumbElement.innerHTML = `
+      }      breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
       `;
