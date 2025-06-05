@@ -49,10 +49,9 @@ cart.forEach((cartItem) => {
         break;
       }
     }
-  }
-
-  if (!matchingProduct) {
-    console.error('Product not found for ID:', productId);
+  }  if (!matchingProduct) {
+    // Remove invalid product from cart
+    removeFromCart(productId);
     return; // Skip this item if product not found
   }
 

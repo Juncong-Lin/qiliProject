@@ -1,4 +1,4 @@
-import {cart} from '../../data/cart.js';
+import {cart, cleanInvalidItems} from '../../data/cart.js';
 import {formatCurrency} from '../shared/money.js';
 import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
@@ -8,8 +8,37 @@ import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js'
 
 
 export function renderPaymentSummary() {
+  // First, clean invalid items from cart
+  const allValidProductIds = [];
+  
+  // Collect all valid product IDs
+  products.forEach(p => allValidProductIds.push(p.id));
+  
+  for (const brand in printheadProducts) {
+    printheadProducts[brand].forEach(p => allValidProductIds.push(p.id));
+  }
+  
+  for (const category in printerProducts) {
+    printerProducts[category].forEach(p => allValidProductIds.push(p.id));
+  }
+  
+  // Clean cart of invalid items
+  cleanInvalidItems(allValidProductIds);
+  
+  // If cart is empty after cleaning, show empty cart message
+  if (cart.length === 0) {
+    document.querySelector('.js-payment-summary').style.display = 'none';
+    document.querySelector('.checkout-grid').style.display = 'none';
+    document.querySelector('.js-empty-cart').style.display = 'block';
+    const pageTitleElement = document.querySelector('.page-title');
+    if (pageTitleElement) {
+      pageTitleElement.style.display = 'none';
+    }
+    return;
+  }
+  
   let productPriceCents = 0;
-  let shippingPriceCents = 0;  cart.forEach((cartItem) => {
+  let shippingPriceCents = 0;cart.forEach((cartItem) => {
     let product;
     
     // First search in regular products
