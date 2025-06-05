@@ -459,10 +459,11 @@ function handleHashFallback(hash) {
       window.loadPrintheadProducts(brand);
     } else {
       loadAllProducts();
-    }
-  } else if (window.loadSpecificCategory) {    // Try to handle other category hashes
+    }  } else if (window.loadSpecificCategory) {    // Try to handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
+      'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',
+      'eco-solvent-xp600-printers': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
@@ -637,11 +638,42 @@ window.loadSpecificCategory = function(categoryName) {
   } else {
     location.hash = `#${categorySlug}`;
   }
-
   // Small delay for smooth transition
   setTimeout(() => {
-    // Special handling for XP600 printer category
-    if (categoryName === 'Eco-Solvent Inkjet Printers - With XP600 Printhead') {
+    // Special handling for printer categories
+    if (categoryName === 'Inkjet Printers') {
+      // Load all printer products
+      let allPrinters = [];
+      for (const category in printerProducts) {
+        allPrinters = allPrinters.concat(printerProducts[category]);
+      }
+      
+      const productsHTML = renderProducts(allPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Inkjet Printers');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Inkjet Printers</span>
+      `;
+    } else if (categoryName === 'Eco-Solvent Inkjet Printers - With XP600 Printhead') {
       // Load XP600 printers instead of showing placeholder
       const xp600Printers = getXP600Printers();
       const productsHTML = renderProducts(xp600Printers, 'printer');
@@ -664,12 +696,41 @@ window.loadSpecificCategory = function(categoryName) {
         const mainElement = document.querySelector('.main');
         mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
       }
+      breadcrumbElement.innerHTML = `        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">XP600 Eco-Solvent Printers</span>
+      `;
+    } else if (categoryName === 'Eco-Solvent Inkjet Printers') {
+      // Load eco-solvent printers (which are the XP600 printers)
+      const xp600Printers = getXP600Printers();
+      const productsHTML = renderProducts(xp600Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Eco-Solvent Inkjet Printers');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
       breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">XP600 Eco-Solvent Printers</span>
+        <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
       `;
     } else {
       // For other categories, show placeholder content

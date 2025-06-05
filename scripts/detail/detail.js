@@ -973,9 +973,11 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       breadcrumbElement.innerHTML = `
         <a href="index.html" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <a href="javascript:void(0)" onclick="loadXP600Printers()" class="breadcrumb-link">XP600 Eco-Solvent Printers</a>
+        <a href="index.html#inkjetprinters-ecosolvent" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#eco-solvent-xp600-printers" class="breadcrumb-link">With XP600 Printhead</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">${product.name}</span>
       `;
@@ -983,7 +985,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       breadcrumbElement.innerHTML = `
         <a href="index.html" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <a href="javascript:void(0)" onclick="loadAllPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">${product.name}</span>
       `;
