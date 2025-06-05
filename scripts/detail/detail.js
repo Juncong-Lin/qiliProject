@@ -1,6 +1,6 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
-import { printerProducts } from '../../data/printer-products.js';
+import { printerProducts, getI1600Printers } from '../../data/printer-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
@@ -102,13 +102,17 @@ if (product) {
   // Set basic product description
   document.querySelector('.js-product-description').textContent = product.description || 'No description available.';
     // Update the page title
-  document.title = `${product.name} - Qilitrading.com`;
-    // For printhead products, try to load additional product information
+  document.title = `${product.name} - Qilitrading.com`;  // For printhead products, try to load additional product information
   if (productType === 'printhead') {
     loadPrintheadDetails(product);
   } else if (productType === 'printer') {
-    // For printer products, set up printer-specific content
-    setupPrinterProductContent(product);
+    // Check if this is an I1600 printer that needs special .docx handling
+    if (isI1600Printer(product, productBrand)) {
+      loadI1600PrinterDetails(product);
+    } else {
+      // For other printer products, set up printer-specific content
+      setupPrinterProductContent(product);
+    }
   } else {
     // For regular products, set up default content
     setupRegularProductContent(product);
@@ -830,6 +834,186 @@ function setupPrinterProductContent(product) {
   
   specsHTML += '</tbody></table>';
   document.querySelector('.js-product-specifications').innerHTML = specsHTML;
+}
+
+/**
+ * Check if a printer product is an I1600 printer
+ */
+function isI1600Printer(product, productBrand) {
+  return productType === 'printer' && productBrand === 'eco-solvent-i1600';
+}
+
+/**
+ * Load detailed information for I1600 printer products from .docx files
+ */
+async function loadI1600PrinterDetails(product) {
+  try {
+    // Check if mammoth is available
+    if (typeof mammoth === 'undefined') {
+      console.error('Mammoth.js is not available');
+      // Fall back to setupPrinterProductContent if mammoth is not available
+      setupPrinterProductContent(product);
+      return;
+    }
+    
+    // Extract the path to the docx file
+    const imagePath = product.image;
+    
+    // Get the path components for I1600 printers
+    // Format: images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead/image.jpg
+    const pathParts = imagePath.split('/');
+    const categoryFolder = pathParts[3]; // "Eco-Solvent Inkjet Printers"
+    const subCategoryFolder = pathParts[4]; // "with I1600 Printhead"
+    const modelFolder = pathParts[5]; // "AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead"
+    
+    // Construct path to DOCX file
+    const docxFilePath = `images/products-detail/Inkjet Printers/${categoryFolder}/${subCategoryFolder}/${modelFolder}/${modelFolder} (the economic version).docx`;
+    
+    // Fetch the DOCX file as ArrayBuffer
+    const response = await fetch(docxFilePath);
+      if (!response.ok) {
+      console.log('Failed to load product details from:', docxFilePath);
+      // Fall back to standard printer content setup
+      setupPrinterProductContent(product);
+      return;
+    }
+    
+    const arrayBuffer = await response.arrayBuffer();
+    
+    // Parse the DOCX content using mammoth.js
+    const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+    const docxContent = result.value;
+    
+    // Parse the content into sections
+    const contentSections = separateI1600PrinterContent(docxContent);
+    
+    // Update product description with the short description
+    if (contentSections.shortDescription) {
+      document.querySelector('.js-product_description').innerHTML = contentSections.shortDescription;
+    }
+    
+    // Update the product details tab content
+    document.querySelector('.js-product-details-content').innerHTML = contentSections.mainContent || '';
+    
+    // Update compatibility section if available
+    if (contentSections.compatibility) {
+      document.querySelector('.js-product-compatibility').innerHTML = contentSections.compatibility;
+    } else {
+      document.querySelector('.product-compatibility-section').style.display = 'none';
+    }
+    
+    // Update specifications section if available
+    if (contentSections.specifications) {
+      document.querySelector('.js-product-specifications').innerHTML = contentSections.specifications;
+    } else {
+      document.querySelector('.product-specifications-section').style.display = 'none';
+    }
+      } catch (error) {
+    console.error('Error loading I1600 printer details:', error);
+    // Fall back to standard printer content setup
+    setupPrinterProductContent(product);
+  }
+}
+
+/**
+ * Separate the Word document content into different sections for I1600 printers
+ */
+function separateI1600PrinterContent(docxContent) {
+  // Define the sections we want to extract
+  const sections = {
+    shortDescription: '',
+    mainContent: '',
+    compatibility: '',
+    specifications: '',
+    notices: ''
+  };
+  
+  // Split content into lines
+  const lines = docxContent.split('\n');
+  
+  // Initial processing to extract the main title and short description
+  let currentSection = 'mainContent';
+  let titleFound = false;
+  let shortDescEnded = false;
+  
+  // Process each line
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Skip empty lines at the beginning
+    if (line === '' && !titleFound) {
+      continue;
+    }
+    
+    // Extract main title (first meaningful line that looks like a title)
+    if (!titleFound && line.length > 10 && (line.includes('AM16') || line.includes('AM18') || line.includes('AM19'))) {
+      sections.mainContent += `# ${line}\n\n`;
+      titleFound = true;
+      continue;
+    }
+    
+    // Short description is the text right after the title until we hit specifications or other sections
+    if (titleFound && !shortDescEnded) {
+      if (line.toLowerCase().includes('specification') || 
+          line.toLowerCase().includes('technical specification') ||
+          line.toLowerCase().includes('key features') ||
+          line.toLowerCase().includes('applications') ||
+          line.toLowerCase().includes('price range')) {
+        shortDescEnded = true;
+      } else if (line !== '') {
+        sections.shortDescription += line + '\n';
+        continue;
+      }
+    }
+    
+    // Detect section based on headers or content
+    if (line.toLowerCase().includes('technical specification') || 
+        line.toLowerCase().includes('specification')) {
+      currentSection = 'specifications';
+      sections[currentSection] += `## ${line}\n\n`;
+    }
+    else if (line.toLowerCase().includes('key features') ||
+             line.toLowerCase().includes('features')) {
+      currentSection = 'specifications';
+      sections[currentSection] += `## ${line}\n\n`;
+    }
+    else if (line.toLowerCase().includes('applications') ||
+             line.toLowerCase().includes('perfect for')) {
+      currentSection = 'compatibility';
+      sections[currentSection] += `## ${line}\n\n`;
+    }
+    else if (line.toLowerCase().includes('price range') ||
+             line.toLowerCase().includes('additional features')) {
+      currentSection = 'specifications';
+      sections[currentSection] += `## ${line}\n\n`;
+    }
+    else if (line.toLowerCase().includes('attention') ||
+             line.toLowerCase().includes('notice') ||
+             line.toLowerCase().includes('warning')) {
+      currentSection = 'notices';
+      sections[currentSection] += `## ${line}\n\n`;
+    }
+    else if (line !== '') {
+      // Add the line to the current section
+      sections[currentSection] += line + '\n';
+    }
+  }
+  
+  // If we have notices, add them to the specifications section
+  if (sections.notices) {
+    if (sections.specifications) {
+      sections.specifications += '\n\n' + sections.notices;
+    } else {
+      sections.specifications = sections.notices;
+    }
+  }
+  
+  // Clean up sections - remove excess whitespace
+  Object.keys(sections).forEach(key => {
+    sections[key] = sections[key].trim();
+  });
+  
+  return sections;
 }
 
 // Add to cart functionality
