@@ -273,10 +273,9 @@ class SubHeaderNavigation {
       }
     }
   }
-
   expandPrintSparePartsMenu() {
     // Find and expand the print spare parts menu in the sidebar if it exists
-    const sparePartsLink = document.querySelector('[onclick*="loadPrintSpareParts"]');
+    const sparePartsLink = document.querySelector('[onclick*="loadAllPrintSpareParts"]');
     if (sparePartsLink) {
       const submenu = sparePartsLink.nextElementSibling;
       if (submenu && submenu.classList.contains('submenu')) {
@@ -289,13 +288,31 @@ class SubHeaderNavigation {
   // Handle hash navigation - called from external scripts
   handleHashNavigation(hash) {
     if (!hash) return;
-    
-    // Handle printhead-specific hashes
+      // Handle printhead-specific hashes
     if (hash === 'print-heads' || hash === 'printheads') {
       if (window.loadAllPrintheadProducts) {
         window.loadAllPrintheadProducts();
         this.setActiveCategory('Print Heads');
         this.expandPrintHeadsMenu();
+      }
+      return;
+    }
+    
+    // Handle print spare parts specific hashes
+    if (hash === 'print-spare-parts') {
+      if (window.loadAllPrintSpareParts) {
+        window.loadAllPrintSpareParts();
+        this.setActiveCategory('Print Spare Parts');
+        this.expandPrintSparePartsMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'epson-printer-spare-parts') {
+      if (window.loadEpsonPrinterSpareParts) {
+        window.loadEpsonPrinterSpareParts();
+        this.setActiveCategory('Print Spare Parts');
+        this.expandPrintSparePartsMenu();
       }
       return;
     }
@@ -308,7 +325,7 @@ class SubHeaderNavigation {
         this.expandPrintHeadsMenu();
       }
       return;
-    }    // Handle other category hashes
+    }// Handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',

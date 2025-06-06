@@ -2,6 +2,7 @@ import {cart, addToCart} from '../../data/cart.js';
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
+import {printSparePartProducts, getPrintSparePartsByCategory} from '../../data/printsparepart-products.js';
 import { formatCurrency } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
@@ -19,8 +20,8 @@ function renderProducts(productList, type = 'regular') {
           <a href="detail.html?productId=${product.id}" class="product-link">
             ${product.name}
           </a>
-        </div>          <div class="product-price">
-          ${type === 'printhead' || type === 'printer' ? '$' + formatCurrency(product.price) : 
+        </div>        <div class="product-price">
+          ${type === 'printhead' || type === 'printer' || type === 'printsparepart' || type === 'mixed' ? '$' + formatCurrency(product.price) : 
             (product.getPrice ? product.getPrice() : formatCurrency(product.price))}
         </div>
         <div class="product-quantity-section">
@@ -138,29 +139,33 @@ window.loadAllProducts = function() {
   
   // Highlight selected menu item
   highlightSelectedMenuItem('all');
-  
-  // Show hero banner for main homepage view
+    // Show hero banner for main homepage view
   showHeroBanner();
+    // Initialize hero carousel
+  if (!heroCarousel) {
+    console.log('Creating new HeroCarousel instance');
+    heroCarousel = new HeroCarousel();
+    window.heroCarousel = heroCarousel;
+  } else {
+    console.log('HeroCarousel already exists');
+  }
   
-  // Add loading animation
-  showLoadingState();
-    // Small delay for smooth transition
-  setTimeout(() => {
-    const productsHTML = renderProducts(products);
-    const productsGrid = document.querySelector('.js-prodcts-grid');
-    productsGrid.innerHTML = productsHTML;
-    productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners
-    attachAddToCartListeners();
-      // Reset page header
-    updatePageHeader('All Products');
-      // Update breadcrumb navigation
-    updateBreadcrumb('all');
-    
-    // Scroll to top of products
-    scrollToProducts();
-  }, 200);
+  // Clear products grid for homepage - just show hero banner
+  const productsGrid = document.querySelector('.js-prodcts-grid');
+  productsGrid.innerHTML = '';
+  productsGrid.classList.remove('showing-coming-soon');
+  
+  // Remove page header for clean homepage
+  const pageHeader = document.querySelector('.page-header');
+  if (pageHeader) {
+    pageHeader.remove();
+  }
+  
+  // Remove breadcrumb for clean homepage
+  const breadcrumbElement = document.querySelector('.breadcrumb-nav');
+  if (breadcrumbElement) {
+    breadcrumbElement.remove();
+  }
 };
 
 // Function to load XP600 printer products
@@ -292,6 +297,42 @@ function showLoadingState() {
   productsGrid.classList.remove('showing-coming-soon');
 }
 
+// Function to show hero banner
+function showHeroBanner() {
+  const heroBanner = document.querySelector('.hero-banner');
+  if (heroBanner) {
+    heroBanner.style.display = 'block';
+    // Add the show class for CSS transition
+    setTimeout(() => {
+      heroBanner.classList.add('show');
+    }, 10);
+  }
+}
+
+// Function to hide hero banner
+function hideHeroBanner() {
+  const heroBanner = document.querySelector('.hero-banner');
+  if (heroBanner) {
+    heroBanner.classList.remove('show');
+    // Hide after transition completes
+    setTimeout(() => {
+      heroBanner.style.display = 'none';
+    }, 600);
+  }
+}
+
+// Function to show coming soon message
+function showComingSoonMessage() {
+  const productsGrid = document.querySelector('.js-prodcts-grid');
+  productsGrid.innerHTML = `
+    <div class="coming-soon">
+      <h2>Loading Products...</h2>
+      <p>Please wait while we load the products for you.</p>
+    </div>
+  `;
+  productsGrid.classList.add('showing-coming-soon');
+}
+
 // Function to scroll to products section
 function scrollToProducts() {
   // Get the main container to scroll to
@@ -338,8 +379,7 @@ function updateBreadcrumb(brand) {
   
   // Check if we're on the detail page
   const isDetailPage = window.location.pathname.includes('detail.html');
-  
-  if (brand && brand !== 'all') {
+    if (brand && brand !== 'all') {
     // Special case for 'printHeads' which is the main category
     if (brand === 'printHeads') {
       if (isDetailPage) {
@@ -353,6 +393,38 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Print Heads</span>
+        `;
+      }
+    } else if (brand === 'printSpareParts') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Print Spare Parts</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Print Spare Parts</span>
+        `;
+      }
+    } else if (brand === 'epsonPrinterSpareParts') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Epson Printer Spare Parts</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Epson Printer Spare Parts</span>
         `;
       }
     } else {
@@ -375,16 +447,10 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads</span>
         `;
       }
-    }
-  } else {
-    if (isDetailPage) {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-      `;
-    } else {
-      breadcrumbElement.innerHTML = `
-        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
-      `;
+    }  } else {
+    // For homepage (all products), remove breadcrumb completely for clean look
+    if (breadcrumbElement) {
+      breadcrumbElement.remove();
     }
   }
 }
@@ -466,6 +532,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isIndexPage && !hash) {
       // Show hero banner for default homepage view
       showHeroBanner();
+        // Initialize hero carousel
+      if (!heroCarousel) {
+        heroCarousel = new HeroCarousel();
+        window.heroCarousel = heroCarousel;
+      }
     }
   }, 150);
 });
@@ -478,13 +549,26 @@ function handleHashFallback(hash) {
     } else {
       loadAllProducts();
     }
+  } else if (hash === 'print-spare-parts') {
+    if (window.loadAllPrintSpareParts) {
+      window.loadAllPrintSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'epson-printer-spare-parts') {
+    if (window.loadEpsonPrinterSpareParts) {
+      window.loadEpsonPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
   } else if (hash.startsWith('printheads-')) {
     const brand = hash.replace('printheads-', '');
     if (window.loadPrintheadProducts) {
       window.loadPrintheadProducts(brand);
     } else {
       loadAllProducts();
-    }  } else if (window.loadSpecificCategory) {    // Try to handle other category hashes
+    }
+  } else if (window.loadSpecificCategory) {// Try to handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',
@@ -639,7 +723,6 @@ window.loadSpecificCategory = function(categoryName) {
   
   // Add loading animation
   showLoadingState();
-
   // --- Highlight the corresponding nav item (including special sidebar categories) ---
   const subHeaderMap = {
     'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
@@ -647,6 +730,7 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Inkjet Printers': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
+    'Epson Printer Spare Parts': 'Print Spare Parts',
     // fallback: categoryName itself
   };
   document.querySelectorAll('.sub-header-link').forEach(link => {
@@ -818,12 +902,74 @@ window.loadSpecificCategory = function(categoryName) {
 
         const mainElement = document.querySelector('.main');
         mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
-      }      breadcrumbElement.innerHTML = `
-        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+      }      breadcrumbElement.innerHTML = `        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
+      `;
+    } else if (categoryName === 'Print Spare Parts') {
+      // Load all print spare parts
+      let allPrintSpareParts = [];
+      for (const category in printSparePartProducts) {
+        allPrintSpareParts = allPrintSpareParts.concat(printSparePartProducts[category]);
+      }
+      
+      const productsHTML = renderProducts(allPrintSpareParts, 'printsparepart');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Print Spare Parts');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Print Spare Parts</span>
+      `;
+    } else if (categoryName === 'Epson Printer Spare Parts') {
+      // Load Epson printer spare parts specifically
+      const epsonSpareParts = getPrintSparePartsByCategory('epson-printer-spare-parts');
+      
+      const productsHTML = renderProducts(epsonSpareParts, 'printsparepart');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Epson Printer Spare Parts');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Epson Printer Spare Parts</span>
       `;
     } else {
       // For other categories, show placeholder content
@@ -869,122 +1015,221 @@ window.loadPrintSpareParts = function() {
   window.loadSpecificCategory('Print Spare Parts');
 };
 
-// Function to show the hero banner
-function showHeroBanner() {
-  const heroBanner = document.querySelector('.hero-banner');
-  if (heroBanner) {
-    heroBanner.style.display = 'block';
-    // Add a small delay to trigger the animation
-    setTimeout(() => {
-      heroBanner.classList.add('show');
-      // Initialize carousel after hero banner is shown
-      setTimeout(() => {
-        if (!window.heroCarousel) {
-          window.heroCarousel = new HeroCarousel();
-        }
-      }, 100);
-    }, 10);
-  }
-}
+// Function to load all print spare parts
+window.loadAllPrintSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Print Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get all print spare parts
+    let allPrintSpareParts = [];
+    for (const category in printSparePartProducts) {
+      allPrintSpareParts = allPrintSpareParts.concat(printSparePartProducts[category]);
+    }
+    
+    const productsHTML = renderProducts(allPrintSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show print spare parts category
+    updatePageHeader('Print Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('printSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
 
-// Function to hide the hero banner
-function hideHeroBanner() {
-  const heroBanner = document.querySelector('.hero-banner');
-  if (heroBanner) {
-    heroBanner.classList.remove('show');
-    // Hide the element after the animation completes
-    setTimeout(() => {
-      heroBanner.style.display = 'none';
-    }, 300);
-  }
-}
+// Function to load Epson Printer Spare Parts specifically
+window.loadEpsonPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Epson Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Epson printer spare parts
+    const epsonSpareParts = getPrintSparePartsByCategory('epson-printer-spare-parts');
+    
+    const productsHTML = renderProducts(epsonSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Epson printer spare parts category
+    updatePageHeader('Epson Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('epsonPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
 
-// Hero Carousel Functionality
+// Hero Carousel functionality
 class HeroCarousel {
   constructor() {
+    console.log('HeroCarousel constructor called');
     this.currentSlide = 0;
     this.slides = document.querySelectorAll('.hero-slide');
     this.indicators = document.querySelectorAll('.hero-indicator');
-    this.autoplayInterval = null;
-    this.autoplayDelay = 8000; // 8 seconds
+    this.autoPlayInterval = null;
+    this.autoPlayDelay = 5000; // 5 seconds
     
-    console.log(`Hero Carousel initialized with ${this.slides.length} slides`);
-    this.init();
+    console.log(`Found ${this.slides.length} slides and ${this.indicators.length} indicators`);
+    
+    if (this.slides.length > 0) {
+      this.init();
+    } else {
+      console.warn('No hero slides found!');
+    }
   }
   
   init() {
-    if (this.slides.length === 0) {
-      console.log('No slides found for carousel');
-      return;
-    }
+    console.log('Initializing hero carousel');
+    // Show first slide
+    this.showSlide(0);
     
-    // Start autoplay
-    this.startAutoplay();
-    console.log('Carousel autoplay started');
+    // Start auto-play
+    this.startAutoPlay();
     
-    // Pause autoplay on hover
-    const heroCarousel = document.querySelector('.hero-carousel');
-    if (heroCarousel) {
-      heroCarousel.addEventListener('mouseenter', () => this.stopAutoplay());
-      heroCarousel.addEventListener('mouseleave', () => this.startAutoplay());
-    }
+    // Add event listeners for manual navigation
+    this.addEventListeners();
   }
-  
-  goToSlide(index) {
-    if (index < 0 || index >= this.slides.length) return;
+    showSlide(index) {
+    console.log(`Showing slide ${index}`);
+    // Hide all slides
+    this.slides.forEach((slide, i) => {
+      slide.style.opacity = '0';
+      slide.style.transform = i < index ? 'translateX(-100%)' : 'translateX(100%)';
+      slide.style.zIndex = '1';
+      slide.classList.remove('active');
+    });
     
-    // Remove active class from current slide and indicator
-    this.slides[this.currentSlide].classList.remove('active');
-    this.indicators[this.currentSlide].classList.remove('active');
+    // Show current slide
+    if (this.slides[index]) {
+      this.slides[index].style.opacity = '1';
+      this.slides[index].style.transform = 'translateX(0)';
+      this.slides[index].style.zIndex = '2';
+      this.slides[index].classList.add('active');
+      console.log(`Slide ${index} is now active`);
+    }
     
-    // Add active class to new slide and indicator
+    // Update indicators
+    this.indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === index);
+    });
+    
     this.currentSlide = index;
-    this.slides[this.currentSlide].classList.add('active');
-    this.indicators[this.currentSlide].classList.add('active');
-    
-    // Reset autoplay
-    this.stopAutoplay();
-    this.startAutoplay();
+  }
+    goToSlide(index) {
+    if (index >= 0 && index < this.slides.length) {
+      this.showSlide(index);
+      this.restartAutoPlay();
+    }
   }
   
   next() {
-    const nextIndex = (this.currentSlide + 1) % this.slides.length;
-    this.goToSlide(nextIndex);
+    this.nextSlide();
+    this.restartAutoPlay();
   }
   
   prev() {
+    this.previousSlide();
+    this.restartAutoPlay();
+  }
+  
+  nextSlide() {
+    const nextIndex = (this.currentSlide + 1) % this.slides.length;
+    this.showSlide(nextIndex);
+  }
+  
+  previousSlide() {
     const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-    this.goToSlide(prevIndex);
+    this.showSlide(prevIndex);
   }
   
-  startAutoplay() {
-    this.stopAutoplay();
-    this.autoplayInterval = setInterval(() => {
-      this.next();
-    }, this.autoplayDelay);
+  startAutoPlay() {
+    this.autoPlayInterval = setInterval(() => {
+      this.nextSlide();
+    }, this.autoPlayDelay);
   }
   
-  stopAutoplay() {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-      this.autoplayInterval = null;
+  stopAutoPlay() {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+      this.autoPlayInterval = null;
+    }
+  }
+  
+  restartAutoPlay() {
+    this.stopAutoPlay();
+    this.startAutoPlay();
+  }
+  
+  addEventListeners() {
+    // Pause auto-play on hover
+    const heroCarousel = document.querySelector('.hero-carousel');
+    if (heroCarousel) {
+      heroCarousel.addEventListener('mouseenter', () => this.stopAutoPlay());
+      heroCarousel.addEventListener('mouseleave', () => this.startAutoPlay());
     }
   }
 }
 
-// Initialize carousel when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize carousel if hero banner is already visible
-  const heroBanner = document.querySelector('.hero-banner');
-  if (heroBanner && heroBanner.style.display !== 'none') {
-    window.heroCarousel = new HeroCarousel();
-  }
-});
+// Initialize hero carousel
+let heroCarousel;
 
-// Global function to ensure carousel is initialized when needed
-window.initializeHeroCarousel = function() {
-  if (!window.heroCarousel && document.querySelector('.hero-slide')) {
-    window.heroCarousel = new HeroCarousel();
-  }
-};
+// Make heroCarousel globally accessible
+window.heroCarousel = null;
 

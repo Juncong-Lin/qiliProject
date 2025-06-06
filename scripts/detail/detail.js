@@ -1,19 +1,20 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
 import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
+import { printSparePartProducts, getPrintSparePartById } from '../../data/printsparepart-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
 
 let productId;
-let productType = 'regular'; // Can be 'regular', 'printhead', or 'printer'
+let productType = 'regular'; // Can be 'regular', 'printhead', 'printer', or 'printsparepart'
 let productBrand = '';
 
 // Get the product ID from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 productId = urlParams.get('id') || urlParams.get('productId');
 
-// Find the product in our data - check regular products, printhead products, and printer products
+// Find the product in our data - check regular products, printhead products, printer products, and print spare parts
 let product = products.find(product => product.id === productId);
 
 // If not found in regular products, search in printhead products
@@ -39,6 +40,15 @@ if (!product) {
       productBrand = category;
       break;
     }
+  }
+}
+
+// If not found in printer products, search in print spare parts
+if (!product) {
+  product = getPrintSparePartById(productId);
+  if (product) {
+    productType = 'printsparepart';
+    productBrand = product.subcategory || 'epson-printer-spare-parts';
   }
 }
 
@@ -100,7 +110,7 @@ if (product) {
   }
   
   // Set basic product description
-  document.querySelector('.js-product-description').textContent = product.description || 'No description available.';
+  document.querySelector('.js-product-description').textContent = product.description || '';
     // Update the page title
   document.title = `${product.name} - Qilitrading.com`;  // For printhead products, try to load additional product information
   if (productType === 'printhead') {
@@ -273,11 +283,37 @@ function setupImageGallery(product) {
       console.error('Error setting up printer image gallery:', error);
       // Fallback to main image only
       setupSingleImageGallery(product);
-    }
+    }  } else if (productType === 'printsparepart' && product.images && product.images.length > 1) {
+    // For print spare parts with multiple images
+    setupMultipleImageGallery(product);
   } else {
     // For products with only main image (regular products or printers without additional images)
     setupSingleImageGallery(product);
   }
+}
+
+/**
+ * Setup gallery for products with multiple images (like print spare parts)
+ */
+function setupMultipleImageGallery(product) {
+  const thumbnailsContainer = document.querySelector('.js-product-thumbnails');
+  
+  let thumbnailsHTML = '';
+  product.images.forEach((imagePath, index) => {
+    thumbnailsHTML += `
+      <div class="thumbnail-item ${index === 0 ? 'active' : ''}" data-image="${imagePath}" data-index="${index}">
+        <img src="${imagePath}" alt="${product.name} thumbnail ${index + 1}" class="thumbnail-img">
+      </div>
+    `;
+  });
+  
+  thumbnailsContainer.innerHTML = thumbnailsHTML;
+  
+  // Set main image to first image
+  document.querySelector('.js-product-image').src = product.images[0];
+  
+  // Setup thumbnail gallery functionality
+  setupThumbnailGalleryLogic();
 }
 
 /**
@@ -615,15 +651,18 @@ function setupProductTabs() {
  */
 function setupRegularProductContent(product) {
   // Set basic product details content
-  document.querySelector('.js-product-details-content').innerHTML = `
-    <p>This is a high-quality product designed to meet your needs. Check the specifications below for detailed information.</p>
-  `;
-  
+  document.querySelector('.js-product-details-content').innerHTML = '';
+
   // Set compatibility content
-  document.querySelector('.js-product-compatibility').innerHTML = `
-    <p>This product is compatible with various systems and applications. Please check the specifications for detailed compatibility information.</p>
-  `;
-  
+  const compatibilitySection = document.querySelector('.product-compatibility-section');
+  if (product.compatibility && product.compatibility.length > 0) {
+    document.querySelector('.js-product-compatibility').innerHTML = product.compatibility.map(item => `<li>${item}</li>`).join('');
+    compatibilitySection.style.display = 'block';
+  } else {
+    document.querySelector('.js-product-compatibility').innerHTML = '';
+    compatibilitySection.style.display = 'none';
+  }
+
   // Set specifications content
   const specs = product.specifications || {};
   let specsHTML = '<table class="product-table"><tbody>';
@@ -1187,6 +1226,17 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-current">${product.name}</span>
       `;
     }
+  } else if (productType === 'printsparepart') {
+    // For print spare parts, show proper breadcrumb navigation
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#epson-printer-spare-parts" class="breadcrumb-link">Epson Printer Spare Parts</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
   } else {
     // For regular products, show category, subcategory, brand if available
     let html = `<a href="index.html" class="breadcrumb-link">Home</a>`;
