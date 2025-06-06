@@ -31,9 +31,6 @@ export const printSparePartProducts = {
       ],
       tags: ['epson', 'mainboard', 'spare-parts', 'f6070', 'f6080', 'control-board'],
       keywords: 'epson mainboard f6070 f6080 control board spare parts replacement',
-      inStock: true,
-      rating: 4.5,
-      ratingCount: 12
     },
     {
       id: 'mainboard-epson-s30680-s30675',
@@ -61,9 +58,7 @@ export const printSparePartProducts = {
         'Automatic media handling support'
       ],
       tags: ['epson', 'mainboard', 'spare-parts', 's30680', 's30675', 'control-board'],
-      keywords: 'epson mainboard s30680 s30675 control board spare parts replacement commercial',      inStock: true,
-      rating: 4.7,
-      ratingCount: 8
+      keywords: 'epson mainboard s30680 s30675 control board spare parts replacement commercial',     
     }
   ],
   'roland-printer-spare-parts': [
@@ -102,9 +97,6 @@ export const printSparePartProducts = {
       ],
       tags: ['roland', 'mainboard', 'spare-parts', 're-640', 'rf-640', 'vs-640', 'control-board'],
       keywords: 'roland mainboard re-640 rf-640 vs-640 vs-640i control board spare parts replacement 6000005184',
-      inStock: true,
-      rating: 4.6,
-      ratingCount: 15
     },
     {
       id: 'mainboard-roland-rs640-rs540',
@@ -141,9 +133,6 @@ export const printSparePartProducts = {
       ],
       tags: ['roland', 'mainboard', 'spare-parts', 'rs-640', 'rs-540', 'control-board'],
       keywords: 'roland mainboard rs-640 rs-540 control board spare parts replacement 6700989010',
-      inStock: true,
-      rating: 4.5,
-      ratingCount: 11
     },
     {
       id: 'mainboard-roland-vp540-vp640',
@@ -181,9 +170,6 @@ export const printSparePartProducts = {
       ],
       tags: ['roland', 'mainboard', 'spare-parts', 'vp-540', 'vp-640', 'control-board'],
       keywords: 'roland mainboard vp-540 vp-640 control board spare parts replacement 6700469010',
-      inStock: true,
-      rating: 4.7,
-      ratingCount: 9
     },
     {
       id: 'motor-cleaning-station-roland-sj645',
@@ -220,9 +206,6 @@ export const printSparePartProducts = {
       ],
       tags: ['roland', 'motor', 'spare-parts', 'sj-645', 'cleaning-station'],
       keywords: 'roland motor cleaning station sj-645 sh1421-5042 spare parts replacement 22435106',
-      inStock: true,
-      rating: 4.4,
-      ratingCount: 7
     }
   ]
 };
