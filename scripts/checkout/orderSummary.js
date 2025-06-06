@@ -2,6 +2,7 @@ import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts} from '../../data/printer-products.js';
+import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {formatCurrency} from '../shared/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
@@ -38,7 +39,6 @@ cart.forEach((cartItem) => {
       }
     }
   }
-
   // If not found in printhead products, search in printer products
   if (!matchingProduct) {
     for (const category in printerProducts) {
@@ -49,7 +49,21 @@ cart.forEach((cartItem) => {
         break;
       }
     }
-  }  if (!matchingProduct) {
+  }
+  
+  // If not found in printer products, search in print spare part products
+  if (!matchingProduct) {
+    for (const category in printSparePartProducts) {
+      const categoryProducts = printSparePartProducts[category];
+      const found = categoryProducts.find(product => product.id === productId);
+      if (found) {
+        matchingProduct = found;
+        break;
+      }
+    }
+  }
+  
+  if (!matchingProduct) {
     // Remove invalid product from cart
     removeFromCart(productId);
     return; // Skip this item if product not found

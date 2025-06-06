@@ -3,12 +3,12 @@ import {formatCurrency} from '../shared/money.js';
 import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts} from '../../data/printer-products.js';
+import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {removeFromCart, updateDeliveryOption} from '../../data/cart.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 
 
-export function renderPaymentSummary() {
-  // First, clean invalid items from cart
+export function renderPaymentSummary() {  // First, clean invalid items from cart
   const allValidProductIds = [];
   
   // Collect all valid product IDs
@@ -20,6 +20,10 @@ export function renderPaymentSummary() {
   
   for (const category in printerProducts) {
     printerProducts[category].forEach(p => allValidProductIds.push(p.id));
+  }
+  
+  for (const category in printSparePartProducts) {
+    printSparePartProducts[category].forEach(p => allValidProductIds.push(p.id));
   }
   
   // Clean cart of invalid items
@@ -55,11 +59,22 @@ export function renderPaymentSummary() {
         }
       }
     }
-    
-    // If not found in printhead products, search in printer products
+      // If not found in printhead products, search in printer products
     if (!product) {
       for (const category in printerProducts) {
         const categoryProducts = printerProducts[category];
+        const found = categoryProducts.find(p => p.id === cartItem.productId);
+        if (found) {
+          product = found;
+          break;
+        }
+      }
+    }
+    
+    // If not found in printer products, search in print spare part products
+    if (!product) {
+      for (const category in printSparePartProducts) {
+        const categoryProducts = printSparePartProducts[category];
         const found = categoryProducts.find(p => p.id === cartItem.productId);
         if (found) {
           product = found;
@@ -145,11 +160,22 @@ export function renderOrderSummary() {
         }
       }
     }
-    
-    // If not found in printhead products, search in printer products
+      // If not found in printhead products, search in printer products
     if (!matchingProduct) {
       for (const category in printerProducts) {
         const categoryProducts = printerProducts[category];
+        const found = categoryProducts.find(product => product.id === cartItem.productId);
+        if (found) {
+          matchingProduct = found;
+          break;
+        }
+      }
+    }
+    
+    // If not found in printer products, search in print spare part products
+    if (!matchingProduct) {
+      for (const category in printSparePartProducts) {
+        const categoryProducts = printSparePartProducts[category];
         const found = categoryProducts.find(product => product.id === cartItem.productId);
         if (found) {
           matchingProduct = found;
