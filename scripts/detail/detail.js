@@ -1,19 +1,20 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
 import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
+import { printSparePartProducts, getPrintSparePartById } from '../../data/printsparepart-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
 
 let productId;
-let productType = 'regular'; // Can be 'regular', 'printhead', or 'printer'
+let productType = 'regular'; // Can be 'regular', 'printhead', 'printer', or 'printsparepart'
 let productBrand = '';
 
 // Get the product ID from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 productId = urlParams.get('id') || urlParams.get('productId');
 
-// Find the product in our data - check regular products, printhead products, and printer products
+// Find the product in our data - check regular products, printhead products, printer products, and print spare parts
 let product = products.find(product => product.id === productId);
 
 // If not found in regular products, search in printhead products
@@ -39,6 +40,15 @@ if (!product) {
       productBrand = category;
       break;
     }
+  }
+}
+
+// If not found in printer products, search in print spare parts
+if (!product) {
+  product = getPrintSparePartById(productId);
+  if (product) {
+    productType = 'printsparepart';
+    productBrand = product.subcategory || 'epson-printer-spare-parts';
   }
 }
 
@@ -1187,6 +1197,17 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-current">${product.name}</span>
       `;
     }
+  } else if (productType === 'printsparepart') {
+    // For print spare parts, show proper breadcrumb navigation
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#epson-printer-spare-parts" class="breadcrumb-link">Epson Printer Spare Parts</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
   } else {
     // For regular products, show category, subcategory, brand if available
     let html = `<a href="index.html" class="breadcrumb-link">Home</a>`;
