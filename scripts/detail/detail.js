@@ -1225,15 +1225,15 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">${product.name}</span>
       `;
-    }
-  } else if (productType === 'printsparepart') {
-    // For print spare parts, show proper breadcrumb navigation
+    }  } else if (productType === 'printsparepart') {
+    // For print spare parts, show proper breadcrumb navigation based on subcategory
+    const subcategoryHash = product.subcategory.toLowerCase().replace(/\s+/g, '-');
     breadcrumbElement.innerHTML = `
       <a href="index.html" class="breadcrumb-link">Home</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
       <span class="breadcrumb-separator">&gt;</span>
-      <a href="index.html#epson-printer-spare-parts" class="breadcrumb-link">Epson Printer Spare Parts</a>
+      <a href="index.html#${subcategoryHash}" class="breadcrumb-link">${product.subcategory}</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;

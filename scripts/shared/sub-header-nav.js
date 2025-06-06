@@ -307,10 +307,18 @@ class SubHeaderNavigation {
       }
       return;
     }
-    
-    if (hash === 'epson-printer-spare-parts') {
+      if (hash === 'epson-printer-spare-parts') {
       if (window.loadEpsonPrinterSpareParts) {
         window.loadEpsonPrinterSpareParts();
+        this.setActiveCategory('Print Spare Parts');
+        this.expandPrintSparePartsMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'roland-printer-spare-parts') {
+      if (window.loadRolandPrinterSpareParts) {
+        window.loadRolandPrinterSpareParts();
         this.setActiveCategory('Print Spare Parts');
         this.expandPrintSparePartsMenu();
       }
