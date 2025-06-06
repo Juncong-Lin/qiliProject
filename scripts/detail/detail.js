@@ -110,7 +110,7 @@ if (product) {
   }
   
   // Set basic product description
-  document.querySelector('.js-product-description').textContent = product.description || 'No description available.';
+  document.querySelector('.js-product-description').textContent = product.description || '';
     // Update the page title
   document.title = `${product.name} - Qilitrading.com`;  // For printhead products, try to load additional product information
   if (productType === 'printhead') {
@@ -625,15 +625,18 @@ function setupProductTabs() {
  */
 function setupRegularProductContent(product) {
   // Set basic product details content
-  document.querySelector('.js-product-details-content').innerHTML = `
-    <p>This is a high-quality product designed to meet your needs. Check the specifications below for detailed information.</p>
-  `;
-  
+  document.querySelector('.js-product-details-content').innerHTML = '';
+
   // Set compatibility content
-  document.querySelector('.js-product-compatibility').innerHTML = `
-    <p>This product is compatible with various systems and applications. Please check the specifications for detailed compatibility information.</p>
-  `;
-  
+  const compatibilitySection = document.querySelector('.product-compatibility-section');
+  if (product.compatibility && product.compatibility.length > 0) {
+    document.querySelector('.js-product-compatibility').innerHTML = product.compatibility.map(item => `<li>${item}</li>`).join('');
+    compatibilitySection.style.display = 'block';
+  } else {
+    document.querySelector('.js-product-compatibility').innerHTML = '';
+    compatibilitySection.style.display = 'none';
+  }
+
   // Set specifications content
   const specs = product.specifications || {};
   let specsHTML = '<table class="product-table"><tbody>';
