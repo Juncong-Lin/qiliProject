@@ -11,7 +11,7 @@ export const printSparePartProducts = {
         'images/products-detail/Print Spare Parts/Epson Printer Spare Parts/Mainboard of Epson F6070 ,F6080/Mainboard of Epson F6070 ,F6080.img_3.jpg',
         'images/products-detail/Print Spare Parts/Epson Printer Spare Parts/Mainboard of Epson F6070 ,F6080/Mainboard of Epson F6070 ,F6080.img_4.jpg',
         'images/products-detail/Print Spare Parts/Epson Printer Spare Parts/Mainboard of Epson F6070 ,F6080/Mainboard of Epson F6070 ,F6080.img_5.jpg'
-      ],      price: 85000, // $850 estimated price
+      ],      price: 45000, 
       priceRange: '$750 - $950',
       factory: 'Epson',
       category: 'Print Spare Parts',
@@ -41,7 +41,7 @@ export const printSparePartProducts = {
       image: 'images/products-detail/Print Spare Parts/Epson Printer Spare Parts/Mainboard of Epson S30680 S30675/Mainboard of Epson S30680 S30675.img_1.jpg',
       images: [
         'images/products-detail/Print Spare Parts/Epson Printer Spare Parts/Mainboard of Epson S30680 S30675/Mainboard of Epson S30680 S30675.img_1.jpg'
-      ],      price: 92000, // $920 estimated price
+      ],      price: 67000, 
       priceRange: '$850 - $1050',
       factory: 'Epson',
       category: 'Print Spare Parts',

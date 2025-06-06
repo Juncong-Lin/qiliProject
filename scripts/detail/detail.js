@@ -283,11 +283,37 @@ function setupImageGallery(product) {
       console.error('Error setting up printer image gallery:', error);
       // Fallback to main image only
       setupSingleImageGallery(product);
-    }
+    }  } else if (productType === 'printsparepart' && product.images && product.images.length > 1) {
+    // For print spare parts with multiple images
+    setupMultipleImageGallery(product);
   } else {
     // For products with only main image (regular products or printers without additional images)
     setupSingleImageGallery(product);
   }
+}
+
+/**
+ * Setup gallery for products with multiple images (like print spare parts)
+ */
+function setupMultipleImageGallery(product) {
+  const thumbnailsContainer = document.querySelector('.js-product-thumbnails');
+  
+  let thumbnailsHTML = '';
+  product.images.forEach((imagePath, index) => {
+    thumbnailsHTML += `
+      <div class="thumbnail-item ${index === 0 ? 'active' : ''}" data-image="${imagePath}" data-index="${index}">
+        <img src="${imagePath}" alt="${product.name} thumbnail ${index + 1}" class="thumbnail-img">
+      </div>
+    `;
+  });
+  
+  thumbnailsContainer.innerHTML = thumbnailsHTML;
+  
+  // Set main image to first image
+  document.querySelector('.js-product-image').src = product.images[0];
+  
+  // Setup thumbnail gallery functionality
+  setupThumbnailGalleryLogic();
 }
 
 /**
