@@ -1,0 +1,10 @@
+Product Name:
+Mainboard of Roland RE-640 Part Number 600002233 (replaced by 6000005184)
+
+Printer Compatibility:
+Roland RE-640,RF-640,VS-640,VS-640i
+Manufacturer:
+Roland Japan( or Roland Thailand)
+Note: All the mainboard of Roland RE,RF,VS,VS-Xi are with same hardware now, but with different firmware.
+We sell those board without firmware, you need to install the firmware in your side after you receive the mainboard.
+If you need us to install the firmware for you, you need to contact us before the payment.
