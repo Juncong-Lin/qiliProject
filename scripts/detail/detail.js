@@ -61,6 +61,14 @@ if (product) {
   document.querySelector('.js-product-image').src = product.image;
   document.querySelector('.js-product-name').textContent = product.name;
   
+  // For printer products, hide the product description (red box)
+  if (productType === 'printer') {
+    const descriptionElement = document.querySelector('.js-product-description');
+    if (descriptionElement) {
+      descriptionElement.style.display = 'none';
+    }
+  }
+  
   // Add document viewer for Eco-Solvent Inkjet Printer products
   addDocumentViewerIfEcoSolvent(product, productId);
     

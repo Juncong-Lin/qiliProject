@@ -20,9 +20,15 @@ export async function displayDocumentContent(productId, documentPath) {
     
     // Show loading indicator
     detailsContainer.innerHTML = '<div class="document-loading">Loading document content...</div>';
+      console.log('Attempting to load document:', documentPath);
     
-    console.log('Attempting to load document:', documentPath);
-      // Hide the product title as requested
+    // Hide the product description (red box)
+    const productDescriptionElement = document.querySelector('.js-product-description');
+    if (productDescriptionElement) {
+      productDescriptionElement.style.display = 'none';
+    }
+      
+    // Hide the product title as requested
     const productTitleContainer = document.querySelector('.product-title-container');
     if (productTitleContainer) {
       productTitleContainer.style.display = 'none';

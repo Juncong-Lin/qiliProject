@@ -44,3 +44,8 @@
   display: inline-block;
   margin-top: 20px;
 }
+
+/* Hide product description (red box) on printer detail pages */
+.product-description.js-product-description {
+  display: none !important;
+}
