@@ -5,6 +5,7 @@ import { printSparePartProducts, getPrintSparePartById } from '../../data/prints
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
+import { displayDocumentContent } from '../shared/document-content-extractor.js';
 
 let productId;
 let productType = 'regular'; // Can be 'regular', 'printhead', 'printer', or 'printsparepart'
@@ -59,6 +60,9 @@ if (product) {
   // Update the product details on the page
   document.querySelector('.js-product-image').src = product.image;
   document.querySelector('.js-product-name').textContent = product.name;
+  
+  // Add document viewer for Eco-Solvent Inkjet Printer products
+  addDocumentViewerIfEcoSolvent(product, productId);
     
   // Handle rating display - hide rating elements for printhead products since ratings were removed
   const ratingElement = document.querySelector('.js-product-rating');
@@ -694,6 +698,19 @@ function setupPrinterProductContent(product) {
   // Set product description with detailed information
   document.querySelector('.js-product-description').innerHTML = product.description || 'High-quality inkjet printer designed for professional printing applications.';
   
+  // For Eco-Solvent printers, we'll add the document content directly in addDocumentViewerIfEcoSolvent
+  // so we'll only handle non-Eco-Solvent printers here
+  
+  const isEcoSolventPrinter = 
+    (productBrand === 'eco-solvent-xp600' || 
+     productBrand === 'eco-solvent-i1600' || 
+     productBrand === 'eco-solvent-i3200');
+     
+  if (isEcoSolventPrinter) {
+    // Content will be handled by addDocumentViewerIfEcoSolvent
+    return;
+  }
+  
   // Set detailed product content with comprehensive information
   const specs = product.specifications || {};
   document.querySelector('.js-product-details-content').innerHTML = `
@@ -1179,6 +1196,82 @@ function setupMobileArrowScrolling(leftArrow, rightArrow, thumbnailsContainer) {
   // Setup mobile scroll behavior
   thumbnailsContainer.style.overflow = 'hidden auto';
   thumbnailsContainer.style.scrollBehavior = 'smooth';
+}
+
+// Function to extract and display document content directly for Eco-Solvent Inkjet Printer products
+function addDocumentViewerIfEcoSolvent(product, productId) {
+  // Check if the product is an Eco-Solvent Inkjet Printer
+  const isEcoSolventPrinter = 
+    (productType === 'printer') && 
+    (productBrand === 'eco-solvent-xp600' || 
+     productBrand === 'eco-solvent-i1600' || 
+     productBrand === 'eco-solvent-i3200');
+  
+  if (!isEcoSolventPrinter) return;
+  
+  console.log('Processing eco-solvent printer:', productId);
+  
+  // Extract information from the product image path to determine the document path
+  const imagePath = product.image;
+  console.log('Image path:', imagePath);
+  
+  const pathSegments = imagePath.split('/');
+  
+  // Extract the base path of the printer category (without the image filename)
+  const basePath = pathSegments.slice(0, -1).join('/');
+  
+  // Get the full product name from the image filename (without extension)
+  // The image filename format is like: "Product Name (the economic version).jpg"
+  const fullImageFilename = pathSegments[pathSegments.length - 1];
+  const productNameWithSuffix = fullImageFilename.substring(0, fullImageFilename.lastIndexOf('.'));
+  
+  console.log('Looking for documents with base name:', productNameWithSuffix);
+  
+  // Direct approach: hardcode the path structure since we know the format
+  const documentFiles = [];
+  
+  // Add potential document paths with extensions
+  documentFiles.push(`${basePath}/${productNameWithSuffix}.pdf`);
+  documentFiles.push(`${basePath}/${productNameWithSuffix}.docx`);
+  documentFiles.push(`${basePath}/${productNameWithSuffix}.doc`);
+  
+  // Try additional formats with truncated names (as seen in some files)
+  const truncatedName = productNameWithSuffix.substring(0, productNameWithSuffix.lastIndexOf('(') - 1);
+  documentFiles.push(`${basePath}/${truncatedName}.pdf`);
+  documentFiles.push(`${basePath}/${truncatedName}.docx`);
+  documentFiles.push(`${basePath}/${truncatedName}.doc`);
+  documentFiles.push(`${basePath}/${truncatedName}(t.pdf`);  // Special case observed in files
+  documentFiles.push(`${basePath}/${truncatedName}(t.docx`); // Special case observed in files
+  
+  console.log('Possible document paths:', documentFiles);
+  
+  // Try each possible document path and use the first one that exists
+  (async () => {
+    for (const path of documentFiles) {
+      try {
+        const response = await fetch(path, { method: 'HEAD' });
+        if (response.ok) {
+          console.log('Found document:', path);
+          // Extract and display the document content directly in product details
+          displayDocumentContent(productId, path);
+          return; // Exit after finding the first valid document
+        }
+      } catch (error) {
+        console.log(`File not found: ${path}`);
+      }
+    }
+    
+    // If no document is found, show an error message
+    console.error('No document found for product:', productId);
+    const detailsContainer = document.querySelector('.js-product-details-content');
+    if (detailsContainer) {
+      detailsContainer.innerHTML += `
+        <div class="document-error">
+          <p>Product documentation could not be loaded.</p>
+        </div>
+      `;
+    }
+  })();
 }
 
 function updateBreadcrumbDetail(product, productType, productBrand) {

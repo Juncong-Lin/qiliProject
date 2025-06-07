@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html>  <head>
     <title>Product Detail - Qilitrading.com</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -12,6 +11,7 @@
     <link rel="stylesheet" href="styles/shared/qili-header.css">
     <link rel="stylesheet" href="styles/shared/sub-header.css">    <link rel="stylesheet" href="styles/shared/sidebar.css">    <link rel="stylesheet" href="styles/pages/detail.css">
     <link rel="stylesheet" href="styles/shared/footer.css">
+    <link rel="stylesheet" href="styles/shared/document-viewer.css">
   </head>  <body class="no-sidebar">
     <!-- Main Header - Loaded dynamically from shared component -->
     <div id="shared-header-placeholder"></div><!-- Sub Header Navigation - Loaded dynamically from shared component -->
@@ -114,15 +114,20 @@
         </div>
       </div>    </div>
       <!-- Shared Footer - Loaded dynamically from shared component -->
-    <div id="shared-footer-placeholder"></div>
-    
-    <!-- Mammoth.js for parsing Word documents -->
+    <div id="shared-footer-placeholder"></div>    <!-- Libraries for document parsing -->
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.worker.min.js"></script>
+    <script>
+      // Initialize PDF.js worker
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.worker.min.js';
+      }
+    </script>
     
       <script type="module" src="scripts/detail/detail.js"></script>    <script type="module" src="scripts/index/qilitrading.js"></script>    <script src="scripts/shared/url-utils.js"></script>
     <script src="scripts/shared/shared-header-loader.js"></script>
-    <script src="scripts/shared/sub-header-nav.js"></script>
-    <script src="scripts/shared/shared-subheader-loader.js"></script>
+    <script src="scripts/shared/sub-header-nav.js"></script>    <script src="scripts/shared/shared-subheader-loader.js"></script>
     <script src="scripts/shared/shared-footer-loader.js"></script>
   </body>
 </html>
