@@ -284,16 +284,49 @@ class SubHeaderNavigation {
       }
     }
   }
-
   // Handle hash navigation - called from external scripts
   handleHashNavigation(hash) {
     if (!hash) return;
-      // Handle printhead-specific hashes
+    
+    // Handle special category prefixes
+    if (hash.startsWith('category-')) {
+      hash = hash.replace('category-', '');
+    }
+    
+    // Handle printhead-specific hashes
     if (hash === 'print-heads' || hash === 'printheads') {
       if (window.loadAllPrintheadProducts) {
         window.loadAllPrintheadProducts();
         this.setActiveCategory('Print Heads');
         this.expandPrintHeadsMenu();
+      }
+      return;
+    }
+    
+    // Direct handling for eco-solvent printer categories to ensure first-click functionality
+    if (hash === 'eco-solvent-xp600-printers') {
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory('Eco-Solvent Inkjet Printers - With XP600 Printhead');
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'eco-solvent-i1600-printers') {
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory('Eco-Solvent Inkjet Printers - With I1600 Printhead');
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'eco-solvent-i3200-printers') {
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory('Eco-Solvent Inkjet Printers - With I3200 Printhead');
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
       }
       return;
     }

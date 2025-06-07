@@ -15,10 +15,29 @@ export async function displayDocumentContent(productId, documentPath) {
     const fileExtension = documentPath.split('.').pop().toLowerCase();
     const detailsContainer = document.querySelector('.js-product-details-content');
     
+    // Add eco-solvent-printer class to help with hiding elements
+    detailsContainer.classList.add('eco-solvent-printer');
+    
     // Show loading indicator
     detailsContainer.innerHTML = '<div class="document-loading">Loading document content...</div>';
     
     console.log('Attempting to load document:', documentPath);
+      // Hide the product title as requested
+    const productTitleContainer = document.querySelector('.product-title-container');
+    if (productTitleContainer) {
+      productTitleContainer.style.display = 'none';
+    }
+    
+    // Also hide compatibility and specifications tabs/sections
+    const compatibilitySection = document.querySelector('.product-compatibility-section');
+    if (compatibilitySection) {
+      compatibilitySection.style.display = 'none';
+    }
+    
+    const specificationsSection = document.querySelector('.product-specifications-section');
+    if (specificationsSection) {
+      specificationsSection.style.display = 'none';
+    }
     
     // First check if the file exists
     try {
@@ -40,13 +59,12 @@ export async function displayDocumentContent(productId, documentPath) {
     const detailsContainer = document.querySelector('.js-product-details-content');
     detailsContainer.innerHTML = `
       <div class="document-error">
-        <p>There was an error loading the document content: ${error.message}</p>
+        <p>There was an error loading the document content.</p>
         <p>Please <a href="${documentPath}" download>download the document</a> to view its contents.</p>
-        <div class="debug-info" style="margin-top: 20px; color: #777; font-size: 0.8em;">
-          <p>Debug Information (for developers):</p>
+        <div class="debug-info" style="display: none;">
+          <p>Error Details: ${error.toString()}</p>
           <p>Document Path: ${documentPath}</p>
           <p>Product ID: ${productId}</p>
-          <p>Error Details: ${error.toString()}</p>
         </div>
       </div>
     `;
@@ -136,14 +154,8 @@ async function extractDocContent(docPath, container) {
     // Create a wrapper for the content with document title
     const filenameParts = docPath.split('/');
     const filename = filenameParts[filenameParts.length - 1];
-    const fileExtension = docPath.split('.').pop().toUpperCase();
-    
-    // Display the extracted content with download link
+    const fileExtension = docPath.split('.').pop().toUpperCase();    // Display the extracted content without document title, but with download link
     container.innerHTML = `
-      <div class="document-header">
-        <span class="document-type">${fileExtension} Document</span>
-        <span class="document-filename">${filename}</span>
-      </div>
       <div class="document-content docx-content">${html}</div>
       <div class="doc-download-link">
         <a href="${docPath}" download class="download-btn">Download ${fileExtension} Document</a>
@@ -232,15 +244,12 @@ async function extractDocContent(docPath, container) {
         }
       }
     }
-    
-  } catch (error) {
+      } catch (error) {
     console.error('DOCX extraction error:', error);
-    
-    // Show user-friendly error with download option
+    // Show error message with download option
     container.innerHTML = `
       <div class="document-error">
-        <h3>Error Converting Document</h3>
-        <p>The document could not be displayed in the browser: ${error.message}</p>
+        <p>The document could not be displayed in the browser.</p>
         <p>You can still access the document by downloading it:</p>
         <a href="${docPath}" download class="download-btn">Download Document</a>
       </div>
@@ -321,14 +330,10 @@ async function extractPdfContent(pdfPath, container) {
     // Fetch the PDF document
     const loadingTask = pdfLib.getDocument(pdfUrlWithTimestamp);
     const pdf = await loadingTask.promise;
-    console.log('PDF loaded successfully, pages:', pdf.numPages);
-    
-    // Create PDF viewer container
+    console.log('PDF loaded successfully, pages:', pdf.numPages);    // Create PDF viewer container without page count but with download button
     container.innerHTML = `
       <div class="document-content pdf-content">
-        <div class="pdf-controls">
-          <span class="pdf-page-count">Document: ${pdf.numPages} pages</span>
-        </div>
+        <!-- PDF content will be rendered here -->
       </div>
       <div class="doc-download-link">
         <a href="${pdfPath}" download class="download-btn">Download PDF</a>
@@ -353,15 +358,9 @@ async function extractPdfContent(pdfPath, container) {
         const viewport = page.getViewport({ scale: 1.0 });
         const scale = containerWidth / viewport.width;
         const scaledViewport = page.getViewport({ scale: scale });
-        
-        // Create page container and header
+          // Create page container without header
         const pageDiv = document.createElement('div');
         pageDiv.className = 'pdf-page';
-        
-        const pageHeader = document.createElement('div');
-        pageHeader.className = 'pdf-page-header';
-        pageHeader.textContent = `Page ${i} of ${numPages}`;
-        pageDiv.appendChild(pageHeader);
         
         // Create canvas for rendering
         const canvas = document.createElement('canvas');
@@ -394,34 +393,28 @@ async function extractPdfContent(pdfPath, container) {
         errorDiv.textContent = `Error rendering page ${i}`;
         contentDiv.appendChild(errorDiv);
       }
-    }
-    
-    // Show message if not all pages are displayed
+    }    // Show download link if not all pages are displayed
     if (numPages > maxPagesToShow) {
       const morePages = document.createElement('div');
       morePages.className = 'pdf-more-pages';
       morePages.innerHTML = `
-        <p>Showing ${maxPagesToShow} of ${numPages} pages. <a href="${pdfPath}" download class="download-link">Download the full PDF</a> to view all pages.</p>
+        <p><a href="${pdfPath}" download class="download-link">Download the full PDF</a> to view all pages.</p>
       `;
       contentDiv.appendChild(morePages);
     }
-    
-    // Update page count with success message
+      // Remove page count message
     const pageCountElement = document.querySelector('.pdf-page-count');
     if (pageCountElement) {
-      pageCountElement.textContent = `Displaying ${maxPagesToShow} of ${numPages} pages`;
+      pageCountElement.style.display = 'none';
     }
     
     // Apply styling
-    applyContentStyling();
-  } catch (error) {
+    applyContentStyling();  } catch (error) {
     console.error('PDF extraction error:', error);
-    
-    // Show user-friendly error with download option
+    // Show error message with download option
     container.innerHTML = `
       <div class="document-error">
-        <h3>Error Loading PDF</h3>
-        <p>The PDF document could not be displayed in the browser: ${error.message}</p>
+        <p>The document could not be displayed in the browser.</p>
         <p>You can still access the document by downloading it:</p>
         <a href="${pdfPath}" download class="download-btn">Download PDF Document</a>
       </div>
@@ -439,6 +432,14 @@ function applyContentStyling() {
   // Add classes to headings, tables, lists, etc.
   documentContent.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
     heading.classList.add('document-heading');
+    
+    // Hide "Compatibility" and "Specifications" headings per user request
+    const headingText = heading.textContent.toLowerCase();
+    if (headingText.includes('compatibility') || 
+        headingText.includes('specifications') || 
+        headingText.includes('features')) {
+      heading.style.display = 'none';
+    }
   });
   
   documentContent.querySelectorAll('table').forEach(table => {
