@@ -35,14 +35,19 @@ export async function displayDocumentContent(productId, documentPath) {
       await extractPdfContent(documentPath, detailsContainer);
     } else if (fileExtension === 'docx' || fileExtension === 'doc') {
       await extractDocContent(documentPath, detailsContainer);
-    }
-  } catch (error) {
+    }  } catch (error) {
     console.error('Error extracting document content:', error);
     const detailsContainer = document.querySelector('.js-product-details-content');
     detailsContainer.innerHTML = `
       <div class="document-error">
         <p>There was an error loading the document content: ${error.message}</p>
         <p>Please <a href="${documentPath}" download>download the document</a> to view its contents.</p>
+        <div class="debug-info" style="margin-top: 20px; color: #777; font-size: 0.8em;">
+          <p>Debug Information (for developers):</p>
+          <p>Document Path: ${documentPath}</p>
+          <p>Product ID: ${productId}</p>
+          <p>Error Details: ${error.toString()}</p>
+        </div>
       </div>
     `;
   }
@@ -57,11 +62,43 @@ async function extractDocContent(docPath, container) {
   try {
     console.log('Extracting DOCX content from:', docPath);
     
-    // Show loading indicator
-    container.innerHTML = '<div class="document-loading">Converting document to HTML...</div>';
+    // Show loading indicator with spinner
+    container.innerHTML = `
+      <div class="document-loading">
+        <p>Converting document to HTML...</p>
+        <div class="loading-spinner"></div>
+      </div>
+    `;
     
-    // Fetch the document file
-    const response = await fetch(docPath);
+    // Check if we need to load mammoth.js
+    if (typeof mammoth === 'undefined') {
+      try {
+        console.log('Mammoth.js not loaded, loading it now...');
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js';
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+          
+          // Set timeout in case the script doesn't load
+          setTimeout(() => reject(new Error('Mammoth.js loading timeout')), 5000);
+        });
+      } catch (error) {
+        console.error('Failed to load Mammoth.js:', error);
+        throw new Error('Document converter library could not be loaded');
+      }
+    }
+    
+    // Check if mammoth is loaded now
+    if (typeof mammoth === 'undefined') {
+      throw new Error('Mammoth.js library not available');
+    }
+    
+    // Fetch the document file with timestamp to avoid caching
+    const docUrlWithTimestamp = `${docPath}?t=${new Date().getTime()}`;
+    const response = await fetch(docUrlWithTimestamp);
+    
     if (!response.ok) {
       throw new Error(`Failed to fetch document: ${response.status} ${response.statusText}`);
     }
@@ -69,36 +106,47 @@ async function extractDocContent(docPath, container) {
     const blob = await response.blob();
     console.log('Document fetched, size:', Math.round(blob.size / 1024), 'KB');
     
-    // Check if mammoth is loaded
-    if (typeof mammoth === 'undefined') {
-      console.error('Mammoth.js is not loaded!');
-      throw new Error('Mammoth.js library not found');
-    }
-    
-    // Use mammoth.js to convert DOCX to HTML
+    // Use mammoth.js to convert DOCX to HTML with improved styling
     const result = await mammoth.convertToHtml({ 
       arrayBuffer: await blob.arrayBuffer(),
       styleMap: [
         "p[style-name='Heading 1'] => h1:fresh",
         "p[style-name='Heading 2'] => h2:fresh",
         "p[style-name='Heading 3'] => h3:fresh",
-        "p[style-name='Title'] => h1.document-title:fresh"
-      ]
+        "p[style-name='Title'] => h1.document-title:fresh",
+        "p[style-name='Subtitle'] => h2.document-subtitle:fresh",
+        "r[style-name='Strong'] => strong:fresh",
+        "p[style-name='List Paragraph'] => li:fresh",
+        "table => table.document-table:fresh"
+      ],
+      includeDefaultStyleMap: true,
+      transformDocument: function(document) {
+        return document;
+      }
     });
     
     const html = result.value;
-    console.log('Document converted to HTML');
+    console.log('Document converted to HTML successfully');
     
     // If there are any warnings, log them
     if (result.messages.length > 0) {
-      console.log('Mammoth conversion warnings:', result.messages);
+      console.log('Document conversion notes:', result.messages);
     }
+    
+    // Create a wrapper for the content with document title
+    const filenameParts = docPath.split('/');
+    const filename = filenameParts[filenameParts.length - 1];
+    const fileExtension = docPath.split('.').pop().toUpperCase();
     
     // Display the extracted content with download link
     container.innerHTML = `
+      <div class="document-header">
+        <span class="document-type">${fileExtension} Document</span>
+        <span class="document-filename">${filename}</span>
+      </div>
       <div class="document-content docx-content">${html}</div>
       <div class="doc-download-link">
-        <a href="${docPath}" download class="download-btn">Download Document</a>
+        <a href="${docPath}" download class="download-btn">Download ${fileExtension} Document</a>
       </div>
     `;
     
@@ -108,10 +156,14 @@ async function extractDocContent(docPath, container) {
     // Add special handling for tables in DOCX
     const tables = container.querySelectorAll('table');
     tables.forEach(table => {
+      // Add responsive wrapper
       const wrapper = document.createElement('div');
       wrapper.className = 'table-responsive';
       table.parentNode.insertBefore(wrapper, table);
       wrapper.appendChild(table);
+      
+      // Add table classes
+      table.classList.add('document-table');
       
       // Ensure all cells have borders
       const cells = table.querySelectorAll('td, th');
@@ -123,14 +175,76 @@ async function extractDocContent(docPath, container) {
     
     // Fix images in the document
     const images = container.querySelectorAll('img');
-    images.forEach(img => {
-      img.style.maxWidth = '100%';
-      img.style.height = 'auto';
-    });
+    if (images.length > 0) {
+      console.log(`Found ${images.length} images in document`);
+      images.forEach(img => {
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        img.classList.add('document-image');
+        
+        // Add error handling for images
+        img.addEventListener('error', () => {
+          img.style.display = 'none';
+          const errorText = document.createElement('span');
+          errorText.textContent = '[Image not available]';
+          errorText.className = 'image-error';
+          img.parentNode.insertBefore(errorText, img.nextSibling);
+        });
+      });
+    }
+    
+    // Fix lists - sometimes mammoth doesn't properly convert list structures
+    const lists = container.querySelectorAll('li');
+    if (lists.length > 0 && !container.querySelector('ul, ol')) {
+      // Find sequential list items and wrap them in ul elements
+      let currentListItems = [];
+      let allElements = Array.from(container.querySelector('.docx-content').childNodes);
+      
+      for (let i = 0; i < allElements.length; i++) {
+        const element = allElements[i];
+        
+        if (element.tagName === 'LI') {
+          currentListItems.push(element);
+          
+          // Remove from DOM temporarily
+          element.parentNode.removeChild(element);
+          
+          // If next element is not an LI or we're at the end, create a list
+          if (i === allElements.length - 1 || 
+              allElements[i+1].tagName !== 'LI') {
+            
+            const ul = document.createElement('ul');
+            ul.className = 'document-list';
+            
+            // Add all collected list items to the list
+            currentListItems.forEach(li => ul.appendChild(li));
+            
+            // Insert the list at the current position
+            if (i < allElements.length - 1) {
+              allElements[i+1].parentNode.insertBefore(ul, allElements[i+1]);
+            } else {
+              container.querySelector('.docx-content').appendChild(ul);
+            }
+            
+            // Reset the collection
+            currentListItems = [];
+          }
+        }
+      }
+    }
     
   } catch (error) {
     console.error('DOCX extraction error:', error);
-    throw new Error(`Error extracting DOCX content: ${error.message}`);
+    
+    // Show user-friendly error with download option
+    container.innerHTML = `
+      <div class="document-error">
+        <h3>Error Converting Document</h3>
+        <p>The document could not be displayed in the browser: ${error.message}</p>
+        <p>You can still access the document by downloading it:</p>
+        <a href="${docPath}" download class="download-btn">Download Document</a>
+      </div>
+    `;
   }
 }
 
@@ -148,113 +262,170 @@ async function extractPdfContent(pdfPath, container) {
   try {
     console.log('Extracting PDF content from:', pdfPath);
     
-    // Check if PDF.js is loaded
-    if (typeof pdfjsLib === 'undefined') {
-      console.log('PDF.js not loaded, loading it now...');
+    // Show user-friendly loading message
+    container.innerHTML = `
+      <div class="document-loading">
+        <p>Loading PDF document...</p>
+        <div class="loading-spinner"></div>
+      </div>
+    `;
+    
+    // Ensure PDF.js is loaded
+    if (typeof pdfjsLib === 'undefined' && typeof window.pdfjsLib === 'undefined') {
+      console.log('PDF.js not loaded, trying to load it now...');
       
-      // Load PDF.js from CDN
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js';
-        script.onload = resolve;
-        script.onerror = () => reject(new Error('Failed to load PDF.js'));
-        document.head.appendChild(script);
-      });
-      
-      // Set up worker
-      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.worker.min.js';
+      try {
+        // Load PDF.js from CDN
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js';
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+          
+          // Set a timeout in case the script doesn't load
+          setTimeout(() => reject(new Error('PDF.js loading timeout')), 5000);
+        });
+        
+        // Load worker script
+        await new Promise((resolve, reject) => {
+          const workerScript = document.createElement('script');
+          workerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.worker.min.js';
+          workerScript.onload = resolve;
+          workerScript.onerror = reject;
+          document.head.appendChild(workerScript);
+          
+          setTimeout(() => reject(new Error('PDF.js worker loading timeout')), 5000);
+        });
+        
+        // Set worker location
+        if (window.pdfjsLib) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.worker.min.js';
+        }
+      } catch (error) {
+        console.error('Failed to load PDF.js:', error);
+        throw new Error('PDF viewer libraries could not be loaded');
+      }
     }
     
-    console.log('PDF.js loaded, processing document...');
+    // Use whichever PDF library is available
+    const pdfLib = pdfjsLib || window.pdfjsLib;
+    
+    if (!pdfLib) {
+      throw new Error('PDF.js library not available');
+    }
+    
+    // Workaround for CORS issues - add a timestamp to avoid caching
+    const pdfUrlWithTimestamp = `${pdfPath}?t=${new Date().getTime()}`;
     
     // Fetch the PDF document
-    const loadingTask = pdfjsLib.getDocument(pdfPath);
-    console.log('Loading PDF document...');
-    
+    const loadingTask = pdfLib.getDocument(pdfUrlWithTimestamp);
     const pdf = await loadingTask.promise;
     console.log('PDF loaded successfully, pages:', pdf.numPages);
     
-    // Create a better container for PDF content with fallback option
+    // Create PDF viewer container
     container.innerHTML = `
-      <div class="document-content pdf-content"></div>
+      <div class="document-content pdf-content">
+        <div class="pdf-controls">
+          <span class="pdf-page-count">Document: ${pdf.numPages} pages</span>
+        </div>
+      </div>
       <div class="doc-download-link">
         <a href="${pdfPath}" download class="download-btn">Download PDF</a>
       </div>
     `;
-    const contentDiv = container.querySelector('.document-content');
+    const contentDiv = container.querySelector('.pdf-content');
     
     // Get all pages and extract text
     const numPages = pdf.numPages;
+    const maxPagesToShow = Math.min(numPages, 5); // Limit to first 5 pages for performance
     
     // Process pages in sequence
-    for (let i = 1; i <= Math.min(numPages, 10); i++) { // Limit to first 10 pages for performance
-      console.log(`Processing page ${i} of ${numPages}`);
-      
-      const page = await pdf.getPage(i);
-      const scale = 1.5;
-      const viewport = page.getViewport({ scale });
-      
-      // Create a canvas for this page
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-      canvas.style.width = '100%';
-      canvas.style.height = 'auto';
-      
-      // Add page number indicator
-      const pageHeader = document.createElement('div');
-      pageHeader.className = 'pdf-page-header';
-      pageHeader.textContent = `Page ${i} of ${numPages}`;
-      
-      // Create page container
-      const pageDiv = document.createElement('div');
-      pageDiv.className = 'pdf-page';
-      pageDiv.appendChild(pageHeader);
-      pageDiv.appendChild(canvas);
-      
-      contentDiv.appendChild(pageDiv);
-      
-      // Render PDF page to canvas
-      const renderContext = {
-        canvasContext: context,
-        viewport: viewport
-      };
-      
-      await page.render(renderContext).promise;
-      
-      // Also get text content for accessibility and search
-      const textContent = await page.getTextContent();
-      const textLayer = document.createElement('div');
-      textLayer.className = 'pdf-text-layer';
-      textLayer.setAttribute('style', `width: ${viewport.width}px; height: ${viewport.height}px; position: absolute; top: 0; left: 0;`);
-      
-      pdfjsLib.renderTextLayer({
-        textContent: textContent,
-        container: textLayer,
-        viewport: viewport,
-        textDivs: []
-      });
-      
-      // For simplicity, we'll show page images instead of trying to extract and format text
-      // This gives a more accurate representation of the PDF
+    for (let i = 1; i <= maxPagesToShow; i++) {
+      try {
+        console.log(`Rendering PDF page ${i} of ${numPages}`);
+        
+        // Get the page
+        const page = await pdf.getPage(i);
+        
+        // Calculate optimal scale for display (fit to container width)
+        const containerWidth = contentDiv.clientWidth || 800;
+        const viewport = page.getViewport({ scale: 1.0 });
+        const scale = containerWidth / viewport.width;
+        const scaledViewport = page.getViewport({ scale: scale });
+        
+        // Create page container and header
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'pdf-page';
+        
+        const pageHeader = document.createElement('div');
+        pageHeader.className = 'pdf-page-header';
+        pageHeader.textContent = `Page ${i} of ${numPages}`;
+        pageDiv.appendChild(pageHeader);
+        
+        // Create canvas for rendering
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pdf-canvas';
+        const context = canvas.getContext('2d');
+        canvas.height = scaledViewport.height;
+        canvas.width = scaledViewport.width;
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
+        
+        // Add canvas to page
+        pageDiv.appendChild(canvas);
+        contentDiv.appendChild(pageDiv);
+        
+        // Render PDF page to canvas
+        await page.render({
+          canvasContext: context,
+          viewport: scaledViewport
+        }).promise;
+        
+        // Show loading progress
+        const progressElement = document.querySelector('.pdf-page-count');
+        if (progressElement) {
+          progressElement.textContent = `Loading: ${i} of ${maxPagesToShow} pages rendered`;
+        }
+      } catch (pageError) {
+        console.error(`Error rendering PDF page ${i}:`, pageError);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'pdf-page-error';
+        errorDiv.textContent = `Error rendering page ${i}`;
+        contentDiv.appendChild(errorDiv);
+      }
     }
     
-    if (numPages > 10) {
+    // Show message if not all pages are displayed
+    if (numPages > maxPagesToShow) {
       const morePages = document.createElement('div');
       morePages.className = 'pdf-more-pages';
       morePages.innerHTML = `
-        <p>Showing first 10 pages. Download the full PDF to view all ${numPages} pages.</p>
+        <p>Showing ${maxPagesToShow} of ${numPages} pages. <a href="${pdfPath}" download class="download-link">Download the full PDF</a> to view all pages.</p>
       `;
       contentDiv.appendChild(morePages);
+    }
+    
+    // Update page count with success message
+    const pageCountElement = document.querySelector('.pdf-page-count');
+    if (pageCountElement) {
+      pageCountElement.textContent = `Displaying ${maxPagesToShow} of ${numPages} pages`;
     }
     
     // Apply styling
     applyContentStyling();
   } catch (error) {
     console.error('PDF extraction error:', error);
-    throw new Error(`Error extracting PDF content: ${error.message}`);
+    
+    // Show user-friendly error with download option
+    container.innerHTML = `
+      <div class="document-error">
+        <h3>Error Loading PDF</h3>
+        <p>The PDF document could not be displayed in the browser: ${error.message}</p>
+        <p>You can still access the document by downloading it:</p>
+        <a href="${pdfPath}" download class="download-btn">Download PDF Document</a>
+      </div>
+    `;
   }
 }
 

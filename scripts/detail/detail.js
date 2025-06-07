@@ -1215,61 +1215,245 @@ function addDocumentViewerIfEcoSolvent(product, productId) {
   const imagePath = product.image;
   console.log('Image path:', imagePath);
   
+  // Use the model ID for consistent file naming resolution
+  console.log('Product model ID:', productId);
+  
+  // Extract folder path components
   const pathSegments = imagePath.split('/');
-  
-  // Extract the base path of the printer category (without the image filename)
   const basePath = pathSegments.slice(0, -1).join('/');
+  const productFolder = pathSegments[pathSegments.length - 2];
   
-  // Get the full product name from the image filename (without extension)
-  // The image filename format is like: "Product Name (the economic version).jpg"
-  const fullImageFilename = pathSegments[pathSegments.length - 1];
-  const productNameWithSuffix = fullImageFilename.substring(0, fullImageFilename.lastIndexOf('.'));
+  console.log('Product folder:', productFolder);
   
-  console.log('Looking for documents with base name:', productNameWithSuffix);
-  
-  // Direct approach: hardcode the path structure since we know the format
-  const documentFiles = [];
-  
-  // Add potential document paths with extensions
-  documentFiles.push(`${basePath}/${productNameWithSuffix}.pdf`);
-  documentFiles.push(`${basePath}/${productNameWithSuffix}.docx`);
-  documentFiles.push(`${basePath}/${productNameWithSuffix}.doc`);
-  
-  // Try additional formats with truncated names (as seen in some files)
-  const truncatedName = productNameWithSuffix.substring(0, productNameWithSuffix.lastIndexOf('(') - 1);
-  documentFiles.push(`${basePath}/${truncatedName}.pdf`);
-  documentFiles.push(`${basePath}/${truncatedName}.docx`);
-  documentFiles.push(`${basePath}/${truncatedName}.doc`);
-  documentFiles.push(`${basePath}/${truncatedName}(t.pdf`);  // Special case observed in files
-  documentFiles.push(`${basePath}/${truncatedName}(t.docx`); // Special case observed in files
-  
-  console.log('Possible document paths:', documentFiles);
-  
-  // Try each possible document path and use the first one that exists
+  // Direct approach: scan the folder and find relevant PDF or DOCX files
   (async () => {
-    for (const path of documentFiles) {
-      try {
-        const response = await fetch(path, { method: 'HEAD' });
-        if (response.ok) {
-          console.log('Found document:', path);
-          // Extract and display the document content directly in product details
-          displayDocumentContent(productId, path);
-          return; // Exit after finding the first valid document
-        }
-      } catch (error) {
-        console.log(`File not found: ${path}`);
+    try {
+      // Try to load the product folder content (this won't work in browser due to CORS,
+      // but we'll fall back to predefined patterns)
+      
+      // Prepare a list of possible document filenames
+      const documentFiles = [];
+        // Extract different name variations from the product data
+      const variations = [];
+      
+      // 1. Get filename from image path (most common case)
+      const fullImageFilename = pathSegments[pathSegments.length - 1];
+      const filenameWithoutExt = fullImageFilename.substring(0, fullImageFilename.lastIndexOf('.'));
+      variations.push(filenameWithoutExt);
+      
+      // 2. Use product name
+      variations.push(product.name);
+      
+      // 3. Use product model ID
+      variations.push(productId);
+      
+      // 4. Handle XP600 filename inconsistencies specifically
+      if (productId === 'AM1802XP') {
+        variations.push('AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)');
+        variations.push('AM1802XP 1.8meter Inkjet Printer With 2XP600 Print Head(The Economic Version)');
+        variations.push('AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (The Economic Version)');
+        variations.push('AM1802XP 1.8meter Inkjet Printer With 2 XP600 Print Head (the economic version)');
       }
-    }
-    
-    // If no document is found, show an error message
-    console.error('No document found for product:', productId);
-    const detailsContainer = document.querySelector('.js-product-details-content');
-    if (detailsContainer) {
-      detailsContainer.innerHTML += `
-        <div class="document-error">
-          <p>Product documentation could not be loaded.</p>
-        </div>
-      `;
+      
+      // 4. Some products have capitalization differences
+      if (filenameWithoutExt.includes('(')) {
+        const baseName = filenameWithoutExt.substring(0, filenameWithoutExt.lastIndexOf('(') - 1);
+        const suffix = filenameWithoutExt.substring(filenameWithoutExt.lastIndexOf('('));
+        
+        // Add variation with different casing in suffix
+        variations.push(`${baseName} ${suffix.toLowerCase()}`);
+        variations.push(`${baseName} ${suffix.toUpperCase()}`);
+        
+        // Add variations with different spacing
+        variations.push(`${baseName}${suffix}`);
+        
+        // Add truncated name variations
+        variations.push(baseName);
+        variations.push(`${baseName}(t`);  // Special case observed
+      }
+      
+      // Generate all possible document paths
+      variations.forEach(name => {
+        // Standard extensions
+        documentFiles.push(`${basePath}/${name}.pdf`);
+        documentFiles.push(`${basePath}/${name}.docx`);
+        documentFiles.push(`${basePath}/${name}.doc`);
+        
+        // Try with normalized casing for extensions
+        const normalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+        documentFiles.push(`${basePath}/${normalizedName}.pdf`);
+        documentFiles.push(`${basePath}/${normalizedName}.docx`);
+        documentFiles.push(`${basePath}/${normalizedName}.doc`);
+      });
+        // Extra check - look for documents with similar model IDs
+      // For example, "AM1802XP" might match "AM1802XP 1.8meter Inkjet Printer With 2XP600 Print Head(The Economic Version).pdf"
+      const productIdVariations = [
+        productId,
+        productId.toLowerCase(),
+        productId.toUpperCase(),
+        `${productId} `,
+        `${productId}-`
+      ];
+      
+      productIdVariations.forEach(idVar => {
+        documentFiles.push(`${basePath}/*${idVar}*.pdf`);
+        documentFiles.push(`${basePath}/*${idVar}*.docx`);
+        documentFiles.push(`${basePath}/*${idVar}*.doc`);
+      });
+      
+      // Try different folder structures/naming conventions
+      let folderName = '';
+      for (const segment of pathSegments) {
+        if (segment.includes(productId)) {
+          folderName = segment;
+          break;
+        }
+      }
+      
+      if (folderName) {
+        // Extract possible subpaths where documents might be located
+        const possibleFolderPaths = [
+          `${basePath}`,
+          `${pathSegments.slice(0, -2).join('/')}/${folderName}`,
+          `${pathSegments.slice(0, -3).join('/')}/${folderName}`
+        ];
+        
+        // Check all possible paths for documents
+        possibleFolderPaths.forEach(path => {
+          documentFiles.push(`${path}/${productId}*.pdf`);
+          documentFiles.push(`${path}/${productId}*.docx`);
+          documentFiles.push(`${path}/${productId}*.doc`);
+        });
+      }
+      
+      console.log('Searching for documents with these patterns:', documentFiles);
+      
+      // Temporary timeout to ensure this doesn't block indefinitely
+      let documentFound = false;
+      const maxWaitTime = 5000;
+      const startTime = Date.now();
+      
+      // Try each possible document path and use the first one that exists
+      for (const path of documentFiles) {
+        try {
+          // Check if we've spent too long looking
+          if (Date.now() - startTime > maxWaitTime) {
+            console.warn('Document search timeout exceeded');
+            break;
+          }
+          
+          // Skip wildcard paths (they won't work with fetch directly)
+          if (path.includes('*')) continue;
+          
+          const response = await fetch(path, { method: 'HEAD' });
+          if (response.ok) {
+            console.log('Found document:', path);
+            // Extract and display the document content directly in product details
+            displayDocumentContent(productId, path);
+            documentFound = true;
+            return; // Exit after finding the first valid document
+          }
+        } catch (error) {
+          // Continue trying other paths
+        }
+      }
+      
+      // FALLBACK: If no document is found through the patterns, try direct known file paths
+      if (!documentFound) {        // These are specific to the printer models observed in the screenshots
+        const knownDocuments = {
+          // XP600 printhead model documents
+          'AM1802XP': `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`,
+          'AM1601XP': `${pathSegments.slice(0, -1).join('/')}/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).pdf`,
+          'AM1901XP': `${pathSegments.slice(0, -1).join('/')}/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).pdf`,
+          
+          // i1600 printhead model documents
+          'AM1601i16': `${pathSegments.slice(0, -2).join('/')}/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).pdf`,
+          'AM1802i16': `${pathSegments.slice(0, -2).join('/')}/with I1600 Printhead/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).pdf`,
+          'AM1901i16': `${pathSegments.slice(0, -2).join('/')}/with I1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).pdf`,
+          
+          // i3200 printhead model documents
+          'AM1601i32': `${pathSegments.slice(0, -2).join('/')}/with I3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).pdf`,
+          'AM1802i32': `${pathSegments.slice(0, -2).join('/')}/with I3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).pdf`,
+          'AM1901i32': `${pathSegments.slice(0, -2).join('/')}/with I3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).pdf`,
+        };
+        
+        // Add an additional AM1802XP specific check due to observed naming inconsistencies
+        if (productId === 'AM1802XP') {
+          knownDocuments['AM1802XP'] = `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`;
+        }
+        
+        // Try the known path for this product
+        if (knownDocuments[productId]) {
+          try {
+            const response = await fetch(knownDocuments[productId], { method: 'HEAD' });
+            if (response.ok) {
+              console.log('Found document using known path:', knownDocuments[productId]);
+              displayDocumentContent(productId, knownDocuments[productId]);
+              documentFound = true;
+              return;
+            }
+          } catch (error) {
+            console.log('Known document path failed:', error);
+          }
+        }
+          // Try with alternative casing for the filename (some files have inconsistent casing)
+        if (!documentFound && knownDocuments[productId]) {
+          // Try multiple casing variations
+          const altCasings = [
+            // Original path
+            knownDocuments[productId],
+            // Economic Version capitalized
+            knownDocuments[productId].replace('economic version', 'Economic Version'),
+            // Change "Print head" to "Printhead"
+            knownDocuments[productId].replace('Print head', 'Printhead'),
+            // Change "Printhead" to "Print head"
+            knownDocuments[productId].replace('Printhead', 'Print head'),
+            // Change spacing around parentheses
+            knownDocuments[productId].replace(' (', '('),
+            // Change "printer" to "Printer"
+            knownDocuments[productId].replace('printer', 'Printer'),
+            // Change "with" to "With"
+            knownDocuments[productId].replace(' with ', ' With ')
+          ];
+          
+          for (const altPath of altCasings) {
+            try {
+              console.log('Trying alternative casing:', altPath);
+              const response = await fetch(altPath, { method: 'HEAD' });
+              if (response.ok) {
+                console.log('Found document with alternative casing:', altPath);
+                displayDocumentContent(productId, altPath);
+                documentFound = true;
+                return;
+              }
+            } catch (error) {
+              console.log('Alternative casing path failed:', altPath);
+            }
+          }
+        }
+      }
+        // If we reach here, no document was found
+      if (!documentFound) {
+        console.error('No document found for product:', productId);
+        const detailsContainer = document.querySelector('.js-product-details-content');
+        if (detailsContainer) {
+          // Display a more helpful error with debug info
+          detailsContainer.innerHTML = `
+            <div class="document-error">
+              <p>Product documentation could not be loaded.</p>
+              <p>Please check the browser console for detailed error messages.</p>
+              <div class="debug-info" style="margin-top: 20px; color: #777; font-size: 0.8em;">
+                <p>Debug Information (for developers):</p>
+                <p>Product ID: ${productId}</p>
+                <p>Image Path: ${imagePath}</p>
+                <p>Base Path: ${basePath}</p>
+              </div>
+            </div>
+          `;
+        }
+      }
+    } catch (error) {
+      console.error('Error searching for document:', error);
     }
   })();
 }
