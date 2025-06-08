@@ -40,12 +40,7 @@ export const printSparePartProducts = {
       price: 18500
     }
   ],
-  canon: [    {
-      id: 'encoder-strip-180lpi-7000mm',
-      name: '180LPI 7000mm Long Encoder Strip for Wide Format Inkjet Printers',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/180LPI 7000mm Long Encoder Strip for Wide Format Inkjet Printers/image/180LPI 7000mm Long Encoder Strip for Wide Format Inkjet Printers.img_1.jpg',
-      price: 3500
-    },
+  canon: [
     {
       id: 'release-lever-w6200',
       name: 'Canon imagePROGRAF W6200 Release Lever',
@@ -57,72 +52,6 @@ export const printSparePartProducts = {
       name: 'Canon IPF-9010S Suction Fan Unit',
       image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Canon IPF-9010S Suction Fan Unit/image/Canon IPF-9010S Suction Fan Unit.img_1.jpg',
       price: 8500
-    },
-    {
-      id: 'data-cable-14pin-infiniti',
-      name: 'Data Cable 14pin 5.5m for Infiniti, Incontact, Phaeton Printer',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Data Cable 14pin 5.5m for Infiniti  Incontact  Phaeton Printer/image/Data Cable 14pin 5.5m for Infiniti  Incontact  Phaeton Printer.img_1.jpg',
-      price: 2500
-    },
-    {
-      id: 'dc24v-big-uv-ink-pump-sino',
-      name: 'DC24V Big UV Ink Pump for Sino Printers',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/DC24V Big UV Ink Pump for Sino Printers/image/DC24V Big UV Ink Pump for Sino Printers.img_1.jpg',
-      price: 4200
-    },
-    {
-      id: 'dx5-cap-top-with-base',
-      name: 'DX5 Cap Top with Base for Wide Format Inkjet Print',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/DX5 Cap Top with Base for Wide Format Inkjet Print/image/DX5 Cap Top with Base for Wide Format Inkjet Print.img_1.jpg',
-      price: 1800
-    },
-    {
-      id: 'dx5-printhead-small-joint-damper',
-      name: 'DX5 Printhead Small Joint Damper (3mm 2mm) for Xuli',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/DX5 Printhead Small Joint Damper (3mm 2mm) for Xuli/image/DX5 Printhead Small Joint Damper (3mm 2mm) for Xuli.img_1.jpg',
-      price: 900
-    },
-    {
-      id: 'manual-three-way-uv-valve-plastic',
-      name: 'Manual Three-way UV Valve (plastic)',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Manual Three-way UV Valve (plastic)/image/Manual Three-way UV Valve (plastic).img_1.jpg',
-      price: 1500
-    },
-    {
-      id: 'manual-two-way-valve-plastic',
-      name: 'Manual Two-way UV Valve (plastic)',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Manual Two-way UV Valve (plastic)/image/Manual Two-way UV Valve (plastic).img_1.jpg',
-      price: 1200
-    },
-    {
-      id: 'manual-three-way-valve-plastic',
-      name: 'Manual Three-way Valve (plastic)',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Manual Three-way Valve (plastic)/image/Manual Three-way Valve (plastic).img_1.jpg',
-      price: 1300
-    },
-    {
-      id: 'shielded-data-cable-14pin-infiniti',
-      name: 'Shielded Data Cable 14pin for Infiniti Incontek Phaeton Printer',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Shielded Data Cable 14pin for Infiniti  Incontek  Phaeton Printer/image/Shielded Data Cable 14pin for Infiniti  Incontek  Phaeton Printer.img_1.jpg',
-      price: 3000
-    },
-    {
-      id: 'spyda-big-ink-pump-infiniti',
-      name: 'SPYDA Big Ink Pump for Infiniti, Crystaljet, Gongzheng Inkjet Printers',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/SPYDA  Big Ink Pump for Infiniti  Crystaljet  Gongzheng Inkjet Printers/image/SPYDA  Big Ink Pump for Infiniti  Crystaljet  GongZheng Inkjet Printers.img_1.jpg',
-      price: 5200
-    },
-    {
-      id: 'stainless-steel-three-way-cleaning-valve',
-      name: 'Stainless Steel Three Way Cleaning Valve Device for Large Format Printer',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Stainless Steel Three Way Cleaning Valve Device for Large Format Printer/image/Stainless Steel Three Way Cleaning Valve Device for Large Format Printer.img_1.jpg',
-      price: 6800
-    },
-    {
-      id: 'uv-light-filter-cotton',
-      name: 'UV Light Filter Cotton for UV Printer (Width 1.5m)',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/UV Light Filter Cotton for UV Printer (Width 1.5m)/image/UV Light Filter Cotton for UV Printer (Width 1.5m).img_1.jpg',
-      price: 850
     }
   ],
   ricoh: [
@@ -131,11 +60,6 @@ export const printSparePartProducts = {
       name: 'Generic Ricoh Gen4 Cap Top',
       image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Generic Ricoh Gen4 Cap Top/image/Generic Ricoh Gen4 Cap Top.img_1.jpg',
       price: 2500
-    },
-    {id: 'cleanroom-wiper-dustless-non-woven-cloth-for-printers-23x23cm-150pcs',
-      name: 'Cleanroom Wiper Dustless Non-woven Cloth for Printers(23x23cm, 150pcs)',
-      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Cleanroom Wiper Dustless Non-woven Cloth for Printers(23x23cm, 150pcs)/image/Cleanroom Wiper Dustless Non-woven Cloth for Printers(23x23cm, 150pcs).img_1.jpg',
-      price: 1200
     },
     {
       id: 'generic-ricoh-gen5-cap-top',
