@@ -11,15 +11,58 @@ let productId;
 let productType = 'regular'; // Can be 'regular', 'printhead', 'printer', or 'printsparepart'
 let productBrand = '';
 
-// Get the product ID from URL parameters
+// Get the product ID and type from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
-productId = urlParams.get('id') || urlParams.get('productId');
+productId = urlParams.get('id') || urlParams.get('productId') || urlParams.get('product');
+const urlProductType = urlParams.get('productType');
 
-// Find the product in our data - check regular products, printhead products, printer products, and print spare parts
-let product = products.find(product => product.id === productId);
+// If productType is specified in URL, use it directly
+if (urlProductType) {
+  productType = urlProductType;
+}
 
-// If not found in regular products, search in printhead products
-if (!product) {
+let product = null;
+
+// If product type is specified in URL, search in the appropriate data structure
+if (productType === 'printsparepart' || productType === 'print-spare-parts') {
+  product = getPrintSparePartById(productId);
+  if (product) {
+    // Map brand to old category name for breadcrumb compatibility
+    const brandToCategoryMap = {
+      'epson': 'epson-printer-spare-parts',
+      'roland': 'roland-printer-spare-parts', 
+      'canon': 'canon-printer-spare-parts'
+    };
+    productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
+  }
+} else if (productType === 'printhead') {
+  // Search in printhead products
+  for (const brand in printheadProducts) {
+    const brandProducts = printheadProducts[brand];
+    product = brandProducts.find(p => p.id === productId);
+    if (product) {
+      productBrand = brand;
+      break;
+    }
+  }
+} else if (productType === 'printer') {
+  // Search in printer products
+  for (const category in printerProducts) {
+    const categoryProducts = printerProducts[category];
+    product = categoryProducts.find(p => p.id === productId);
+    if (product) {
+      productBrand = category;
+      break;
+    }
+  }
+} else {
+  // Search in regular products or auto-detect if no productType specified
+  product = products.find(product => product.id === productId);
+}
+
+// If productType was not specified in URL and product not found, try auto-detection
+if (!product && !urlProductType) {
+  // Search in printhead products
   for (const brand in printheadProducts) {
     const brandProducts = printheadProducts[brand];
     product = brandProducts.find(p => p.id === productId);
@@ -29,27 +72,33 @@ if (!product) {
       break;
     }
   }
-}
 
-// If not found in printhead products, search in printer products
-if (!product) {
-  for (const category in printerProducts) {
-    const categoryProducts = printerProducts[category];
-    product = categoryProducts.find(p => p.id === productId);
-    if (product) {
-      productType = 'printer';
-      productBrand = category;
-      break;
+  // If not found in printhead products, search in printer products
+  if (!product) {
+    for (const category in printerProducts) {
+      const categoryProducts = printerProducts[category];
+      product = categoryProducts.find(p => p.id === productId);
+      if (product) {
+        productType = 'printer';
+        productBrand = category;
+        break;
+      }
     }
   }
-}
 
-// If not found in printer products, search in print spare parts
-if (!product) {
-  product = getPrintSparePartById(productId);
-  if (product) {
-    productType = 'printsparepart';
-    productBrand = product.subcategory || 'epson-printer-spare-parts';
+  // If not found in printer products, search in print spare parts
+  if (!product) {
+    product = getPrintSparePartById(productId);
+    if (product) {
+      productType = 'printsparepart';
+      // Map brand to old category name for breadcrumb compatibility
+      const brandToCategoryMap = {
+        'epson': 'epson-printer-spare-parts',
+        'roland': 'roland-printer-spare-parts', 
+        'canon': 'canon-printer-spare-parts'
+      };
+      productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
+    }
   }
 }
 
@@ -87,9 +136,18 @@ if (product) {
     const ratingContainer = document.querySelector('.product-rating-container');
     if (ratingContainer) ratingContainer.style.display = 'none';
   }
-  
-  // Handle price display - printhead products have price in cents, regular products have getPrice() method
-  const priceText = product.getPrice ? product.getPrice() : `$${(product.price / 100).toFixed(2)}`;
+    // Handle price display - different product types have different price formats
+  let priceText;
+  if (product.getPrice) {
+    // Regular products with getPrice() method
+    priceText = product.getPrice();
+  } else if (productType === 'printsparepart') {
+    // Print spare parts store price in cents
+    priceText = `$${(product.price / 100).toFixed(2)}`;
+  } else {
+    // Printhead and printer products also store price in cents
+    priceText = `$${(product.price / 100).toFixed(2)}`;
+  }
   document.querySelector('.js-product-price').textContent = priceText;
   
   // If there's an original price (for sale items), show it
@@ -124,19 +182,18 @@ if (product) {
   // Set basic product description
   document.querySelector('.js-product-description').textContent = product.description || '';
     // Update the page title
-  document.title = `${product.name} - Qilitrading.com`;  // For printhead products, try to load additional product information
+  document.title = `${product.name} - Qilitrading.com`;  // Load content based on product type
   if (productType === 'printhead') {
     loadPrintheadDetails(product);
+  } else if (productType === 'printsparepart' || productType === 'print-spare-parts') {
+    setupPrintSparePartContent(product);
   } else if (productType === 'printer') {
-    // Check if this is a printer that needs special .docx handling (I1600 or I3200)
     if (isDocxPrinter(product, productBrand)) {
       loadPrinterDetailsFromDocx(product);
     } else {
-      // For other printer products, set up printer-specific content
       setupPrinterProductContent(product);
     }
   } else {
-    // For regular products, set up default content
     setupRegularProductContent(product);
   }
   // Set up the product image gallery
@@ -294,10 +351,9 @@ function setupImageGallery(product) {
     } catch (error) {
       console.error('Error setting up printer image gallery:', error);
       // Fallback to main image only
-      setupSingleImageGallery(product);
-    }  } else if (productType === 'printsparepart' && product.images && product.images.length > 1) {
-    // For print spare parts with multiple images
-    setupMultipleImageGallery(product);
+      setupSingleImageGallery(product);    }  } else if (productType === 'printsparepart') {
+    // For print spare parts - they typically have only a main image
+    setupSingleImageGallery(product);
   } else {
     // For products with only main image (regular products or printers without additional images)
     setupSingleImageGallery(product);
@@ -515,9 +571,7 @@ async function loadPrintheadDetails(product) {
     
     // Fetch the markdown file content
     const response = await fetch(mdFilePath);
-    
-    if (!response.ok) {
-      console.log('Failed to load product details from:', mdFilePath);
+      if (!response.ok) {
       return;
     }
     
@@ -545,11 +599,13 @@ async function loadPrintheadDetails(product) {
     } else {
       document.querySelector('.product-specifications-section').style.display = 'none';
     }
-    
-  } catch (error) {
+      } catch (error) {
     console.error('Error loading printhead details:', error);
   }
 }
+
+
+
 
 /**
  * Separate the markdown content into different sections based on content
@@ -706,21 +762,9 @@ function setupPrinterProductContent(product) {
   // Set product description with detailed information
   document.querySelector('.js-product-description').innerHTML = product.description || 'High-quality inkjet printer designed for professional printing applications.';
   
-  // For Eco-Solvent printers, we'll add the document content directly in addDocumentViewerIfEcoSolvent
-  // so we'll only handle non-Eco-Solvent printers here
-  
-  const isEcoSolventPrinter = 
-    (productBrand === 'eco-solvent-xp600' || 
-     productBrand === 'eco-solvent-i1600' || 
-     productBrand === 'eco-solvent-i3200');
-     
-  if (isEcoSolventPrinter) {
-    // Content will be handled by addDocumentViewerIfEcoSolvent
-    return;
-  }
+  const specs = product.specifications || {};
   
   // Set detailed product content with comprehensive information
-  const specs = product.specifications || {};
   document.querySelector('.js-product-details-content').innerHTML = `
     <h3>Product Overview</h3>
     <p>This professional inkjet printer offers ${specs.printWidth || 'wide format'} printing capabilities with high-quality output suitable for various applications including signage, banners, and promotional materials.</p>
@@ -787,114 +831,46 @@ function setupPrinterProductContent(product) {
   // Set comprehensive specifications content
   let specsHTML = '<table class="product-table"><tbody>';
   
-  // Basic Information
-  if (product.model) {
-    specsHTML += `<tr><td><strong>Model</strong></td><td>${product.model}</td></tr>`;
-  }
-  if (specs.printWidth) {
-    specsHTML += `<tr><td><strong>Print Width</strong></td><td>${specs.printWidth}</td></tr>`;
-  }
-  if (specs.maximumMediaWidth) {
-    specsHTML += `<tr><td><strong>Maximum Media Width</strong></td><td>${specs.maximumMediaWidth}</td></tr>`;
-  }
+  // Build specifications table dynamically
+  const specFields = [
+    ['Model', product.model],
+    ['Print Width', specs.printWidth],
+    ['Maximum Media Width', specs.maximumMediaWidth],
+    ['Print Head', specs.printHead],
+    ['Number of Print Heads', specs.numberOfPrintHeads],
+    ['Resolution', specs.resolution],
+    ['Printing Speed', specs.printingSpeed],
+    ['Printing System', specs.printingSystem],
+    ['Ink Type', specs.ink],
+    ['Color', specs.color],
+    ['Ink Capacity', specs.inkCapacity],
+    ['Compatible Media', specs.printingMedia],
+    ['Maximum Media Weight', specs.maximumMediaWeight],
+    ['Connection Port', specs.connectionPort],
+    ['Print Head Distance', specs.printHeadToMediaDistance],
+    ['Location System', specs.printingLocationSystem],
+    ['Ink Drying System', specs.inkDryingSystem],
+    ['Motor & Driver System', specs.motorAndDriverSystem],
+    ['Ink Station', specs.inkStation],
+    ['Heating System', specs.heatingSystem],
+    ['Media Supply System', specs.mediaSupplySystem],
+    ['RIP Software', specs.ripSoftware],
+    ['Supported Formats', specs.photoFormat],
+    ['Machine Size', specs.machineSize],
+    ['Net Weight', specs.netWeight],
+    ['Packing Size', specs.packingSize],
+    ['Gross Weight', specs.grossWeight],
+    ['Power Requirements', specs.powerDemand],
+    ['Working Temperature', specs.workingTemperature],
+    ['Working Humidity', specs.workingHumidity],
+    ['Price Range', product.priceRange]
+  ];
   
-  // Print Technology
-  if (specs.printHead) {
-    specsHTML += `<tr><td><strong>Print Head</strong></td><td>${specs.printHead}</td></tr>`;
-  }
-  if (specs.numberOfPrintHeads) {
-    specsHTML += `<tr><td><strong>Number of Print Heads</strong></td><td>${specs.numberOfPrintHeads}</td></tr>`;
-  }
-  if (specs.resolution) {
-    specsHTML += `<tr><td><strong>Resolution</strong></td><td>${specs.resolution}</td></tr>`;
-  }
-  if (specs.printingSpeed) {
-    specsHTML += `<tr><td><strong>Printing Speed</strong></td><td>${specs.printingSpeed}</td></tr>`;
-  }
-  if (specs.printingSystem) {
-    specsHTML += `<tr><td><strong>Printing System</strong></td><td>${specs.printingSystem}</td></tr>`;
-  }
-  
-  // Ink and Media
-  if (specs.ink) {
-    specsHTML += `<tr><td><strong>Ink Type</strong></td><td>${specs.ink}</td></tr>`;
-  }
-  if (specs.color) {
-    specsHTML += `<tr><td><strong>Color</strong></td><td>${specs.color}</td></tr>`;
-  }
-  if (specs.inkCapacity) {
-    specsHTML += `<tr><td><strong>Ink Capacity</strong></td><td>${specs.inkCapacity}</td></tr>`;
-  }
-  if (specs.printingMedia) {
-    specsHTML += `<tr><td><strong>Compatible Media</strong></td><td>${specs.printingMedia}</td></tr>`;
-  }
-  if (specs.maximumMediaWeight) {
-    specsHTML += `<tr><td><strong>Maximum Media Weight</strong></td><td>${specs.maximumMediaWeight}</td></tr>`;
-  }
-  
-  // Technical Specifications
-  if (specs.connectionPort) {
-    specsHTML += `<tr><td><strong>Connection Port</strong></td><td>${specs.connectionPort}</td></tr>`;
-  }
-  if (specs.printHeadToMediaDistance) {
-    specsHTML += `<tr><td><strong>Print Head Distance</strong></td><td>${specs.printHeadToMediaDistance}</td></tr>`;
-  }
-  if (specs.printingLocationSystem) {
-    specsHTML += `<tr><td><strong>Location System</strong></td><td>${specs.printingLocationSystem}</td></tr>`;
-  }
-  if (specs.inkDryingSystem) {
-    specsHTML += `<tr><td><strong>Ink Drying System</strong></td><td>${specs.inkDryingSystem}</td></tr>`;
-  }
-  if (specs.motorAndDriverSystem) {
-    specsHTML += `<tr><td><strong>Motor & Driver System</strong></td><td>${specs.motorAndDriverSystem}</td></tr>`;
-  }
-  if (specs.inkStation) {
-    specsHTML += `<tr><td><strong>Ink Station</strong></td><td>${specs.inkStation}</td></tr>`;
-  }
-  if (specs.heatingSystem) {
-    specsHTML += `<tr><td><strong>Heating System</strong></td><td>${specs.heatingSystem}</td></tr>`;
-  }
-  if (specs.mediaSupplySystem) {
-    specsHTML += `<tr><td><strong>Media Supply System</strong></td><td>${specs.mediaSupplySystem}</td></tr>`;
-  }
-  
-  // Software and Formats
-  if (specs.ripSoftware) {
-    specsHTML += `<tr><td><strong>RIP Software</strong></td><td>${specs.ripSoftware}</td></tr>`;
-  }
-  if (specs.photoFormat) {
-    specsHTML += `<tr><td><strong>Supported Formats</strong></td><td>${specs.photoFormat}</td></tr>`;
-  }
-  
-  // Physical Specifications
-  if (specs.machineSize) {
-    specsHTML += `<tr><td><strong>Machine Size</strong></td><td>${specs.machineSize}</td></tr>`;
-  }
-  if (specs.netWeight) {
-    specsHTML += `<tr><td><strong>Net Weight</strong></td><td>${specs.netWeight}</td></tr>`;
-  }
-  if (specs.packingSize) {
-    specsHTML += `<tr><td><strong>Packing Size</strong></td><td>${specs.packingSize}</td></tr>`;
-  }
-  if (specs.grossWeight) {
-    specsHTML += `<tr><td><strong>Gross Weight</strong></td><td>${specs.grossWeight}</td></tr>`;
-  }
-  
-  // Operating Environment
-  if (specs.powerDemand) {
-    specsHTML += `<tr><td><strong>Power Requirements</strong></td><td>${specs.powerDemand}</td></tr>`;
-  }
-  if (specs.workingTemperature) {
-    specsHTML += `<tr><td><strong>Working Temperature</strong></td><td>${specs.workingTemperature}</td></tr>`;
-  }
-  if (specs.workingHumidity) {
-    specsHTML += `<tr><td><strong>Working Humidity</strong></td><td>${specs.workingHumidity}</td></tr>`;
-  }
-  
-  // Price Information
-  if (product.priceRange) {
-    specsHTML += `<tr><td><strong>Price Range</strong></td><td>${product.priceRange}</td></tr>`;
-  }
+  specFields.forEach(([label, value]) => {
+    if (value) {
+      specsHTML += `<tr><td><strong>${label}</strong></td><td>${value}</td></tr>`;
+    }
+  });
   
   specsHTML += '</tbody></table>';
   document.querySelector('.js-product-specifications').innerHTML = specsHTML;
@@ -929,16 +905,12 @@ async function loadPrinterDetailsFromDocx(product) {
     // Check if mammoth is available
     if (typeof mammoth === 'undefined') {
       console.error('Mammoth.js is not available');
-      // Fall back to setupPrinterProductContent if mammoth is not available
       setupPrinterProductContent(product);
       return;
     }
     
     // Extract the path to the docx file
     const imagePath = product.image;
-    
-    // Get the path components for I1600 printers
-    // Format: images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead/image.jpg
     const pathParts = imagePath.split('/');
     const categoryFolder = pathParts[3]; // "Eco-Solvent Inkjet Printers"
     const subCategoryFolder = pathParts[4]; // "with I1600 Printhead"
@@ -948,10 +920,7 @@ async function loadPrinterDetailsFromDocx(product) {
     const docxFilePath = `images/products-detail/Inkjet Printers/${categoryFolder}/${subCategoryFolder}/${modelFolder}/${modelFolder} (the economic version).docx`;
     
     // Fetch the DOCX file as ArrayBuffer
-    const response = await fetch(docxFilePath);
-      if (!response.ok) {
-      console.log('Failed to load product details from:', docxFilePath);
-      // Fall back to standard printer content setup
+    const response = await fetch(docxFilePath);    if (!response.ok) {
       setupPrinterProductContent(product);
       return;
     }
@@ -961,12 +930,13 @@ async function loadPrinterDetailsFromDocx(product) {
     // Parse the DOCX content using mammoth.js
     const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
     const docxContent = result.value;
-      // Parse the content into sections
+    
+    // Parse the content into sections
     const contentSections = separatePrinterDocxContent(docxContent);
     
     // Update product description with the short description
     if (contentSections.shortDescription) {
-      document.querySelector('.js-product_description').innerHTML = contentSections.shortDescription;
+      document.querySelector('.js-product-description').innerHTML = contentSections.shortDescription;
     }
     
     // Update the product details tab content
@@ -985,9 +955,8 @@ async function loadPrinterDetailsFromDocx(product) {
     } else {
       document.querySelector('.product-specifications-section').style.display = 'none';
     }
-      } catch (error) {
-    console.error('Error loading I1600 printer details:', error);
-    // Fall back to standard printer content setup
+  } catch (error) {
+    console.error('Error loading printer details:', error);
     setupPrinterProductContent(product);
   }
 }
@@ -1221,23 +1190,13 @@ function addDocumentViewerIfEcoSolvent(product, productId) {
   const productTitleElement = document.querySelector('.product-title-container');
   if (productTitleElement) {
     productTitleElement.style.display = 'none';
-  }
-  
-  console.log('Processing eco-solvent printer:', productId);
-  
-  // Extract information from the product image path to determine the document path
+  }    // Extract information from the product image path to determine the document path
   const imagePath = product.image;
-  console.log('Image path:', imagePath);
-  
-  // Use the model ID for consistent file naming resolution
-  console.log('Product model ID:', productId);
   
   // Extract folder path components
   const pathSegments = imagePath.split('/');
   const basePath = pathSegments.slice(0, -1).join('/');
   const productFolder = pathSegments[pathSegments.length - 2];
-  
-  console.log('Product folder:', productFolder);
   
   // Direct approach: scan the folder and find relevant PDF or DOCX files
   (async () => {
@@ -1338,8 +1297,7 @@ function addDocumentViewerIfEcoSolvent(product, productId) {
           documentFiles.push(`${path}/${productId}*.docx`);
           documentFiles.push(`${path}/${productId}*.doc`);
         });
-      }
-      
+      }      
       console.log('Searching for documents with these patterns:', documentFiles);
       
       // Temporary timeout to ensure this doesn't block indefinitely
@@ -1348,20 +1306,15 @@ function addDocumentViewerIfEcoSolvent(product, productId) {
       const startTime = Date.now();
       
       // Try each possible document path and use the first one that exists
-      for (const path of documentFiles) {
-        try {
+      for (const path of documentFiles) {        try {
           // Check if we've spent too long looking
           if (Date.now() - startTime > maxWaitTime) {
-            console.warn('Document search timeout exceeded');
             break;
           }
           
-          // Skip wildcard paths (they won't work with fetch directly)
-          if (path.includes('*')) continue;
-          
-          const response = await fetch(path, { method: 'HEAD' });
-          if (response.ok) {
-            console.log('Found document:', path);
+          // Skip wildcard paths (they won't work with fetch directly)            if (path.includes('*')) continue;
+            
+            const response = await fetch(path, { method: 'HEAD' });          if (response.ok) {
             // Extract and display the document content directly in product details
             displayDocumentContent(productId, path);
             documentFound = true;
@@ -1395,19 +1348,17 @@ function addDocumentViewerIfEcoSolvent(product, productId) {
         if (productId === 'AM1802XP') {
           knownDocuments['AM1802XP'] = `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`;
         }
-        
-        // Try the known path for this product
+          // Try the known path for this product
         if (knownDocuments[productId]) {
           try {
             const response = await fetch(knownDocuments[productId], { method: 'HEAD' });
             if (response.ok) {
-              console.log('Found document using known path:', knownDocuments[productId]);
               displayDocumentContent(productId, knownDocuments[productId]);
               documentFound = true;
               return;
             }
           } catch (error) {
-            console.log('Known document path failed:', error);
+            // Continue to alternative casing attempt
           }
         }
           // Try with alternative casing for the filename (some files have inconsistent casing)
@@ -1429,19 +1380,16 @@ function addDocumentViewerIfEcoSolvent(product, productId) {
             // Change "with" to "With"
             knownDocuments[productId].replace(' with ', ' With ')
           ];
-          
-          for (const altPath of altCasings) {
+            for (const altPath of altCasings) {
             try {
-              console.log('Trying alternative casing:', altPath);
               const response = await fetch(altPath, { method: 'HEAD' });
               if (response.ok) {
-                console.log('Found document with alternative casing:', altPath);
                 displayDocumentContent(productId, altPath);
                 documentFound = true;
                 return;
               }
             } catch (error) {
-              console.log('Alternative casing path failed:', altPath);
+              // Continue to next alternative casing
             }
           }
         }
@@ -1541,14 +1489,14 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-current">${product.name}</span>
       `;
     }  } else if (productType === 'printsparepart') {
-    // For print spare parts, show proper breadcrumb navigation based on subcategory
-    const subcategoryHash = product.subcategory.toLowerCase().replace(/\s+/g, '-');
+    // For print spare parts, show proper breadcrumb navigation based on brand
+    const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
     breadcrumbElement.innerHTML = `
       <a href="index.html" class="breadcrumb-link">Home</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
       <span class="breadcrumb-separator">&gt;</span>
-      <a href="index.html#${subcategoryHash}" class="breadcrumb-link">${product.subcategory}</a>
+      <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('${brandName} Printer Spare Parts')" class="breadcrumb-link">${brandName} Printer Spare Parts</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;
@@ -1566,4 +1514,61 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
     }
     breadcrumbElement.innerHTML = html;
   }
+}
+
+/**
+ * Set up content for print spare parts products
+ */
+function setupPrintSparePartContent(product) {
+  // Set product description
+  const description = `High-quality ${product.name.toLowerCase()} designed for professional printer maintenance and repair. This genuine spare part ensures optimal printer performance and longevity.`;
+  document.querySelector('.js-product-description').innerHTML = description;
+  
+  // Set detailed product content
+  const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>Product Overview</h3>
+    <p>This ${product.name.toLowerCase()} is an essential component for ${brandName} printers, designed to maintain optimal printing performance and extend the life of your printer.</p>
+    
+    <h4>Key Features</h4>
+    <ul>
+      <li>Genuine ${brandName} spare part</li>
+      <li>High-quality materials and construction</li>
+      <li>Easy installation and replacement</li>
+      <li>Designed for long-lasting performance</li>
+      <li>Compatible with specified printer models</li>
+    </ul>
+    
+    <h4>Quality Assurance</h4>
+    <ul>
+      <li>Factory-tested for reliability</li>
+      <li>Meets original equipment specifications</li>
+      <li>Professional grade components</li>
+      <li>Quality guarantee included</li>
+    </ul>
+    
+    <h4>Installation</h4>
+    <p>Professional installation recommended. Refer to your printer manual or contact our technical support team for installation guidance.</p>
+  `;
+  
+  // Set compatibility content
+  document.querySelector('.js-product-compatibility').innerHTML = `
+    <h3>Compatible Printer Models</h3>
+    <p>This spare part is specifically designed for ${brandName} printer models. Please verify compatibility with your specific printer model before ordering.</p>
+    
+    <h3>Technical Support</h3>
+    <p>For compatibility questions or installation assistance, please contact our technical support team.</p>
+  `;
+  
+  // Set specifications content
+  let specsHTML = '<table class="product-table"><tbody>';
+  specsHTML += `<tr><td><strong>Brand</strong></td><td>${brandName}</td></tr>`;
+  specsHTML += `<tr><td><strong>Product Type</strong></td><td>Printer Spare Part</td></tr>`;
+  specsHTML += `<tr><td><strong>Part Category</strong></td><td>${product.name}</td></tr>`;
+  specsHTML += `<tr><td><strong>Quality</strong></td><td>Original Equipment Specification</td></tr>`;
+  specsHTML += `<tr><td><strong>Warranty</strong></td><td>Standard Manufacturer Warranty</td></tr>`;
+  specsHTML += `<tr><td><strong>Installation</strong></td><td>Professional Installation Recommended</td></tr>`;
+  specsHTML += '</tbody></table>';
+  
+  document.querySelector('.js-product-specifications').innerHTML = specsHTML;
 }
