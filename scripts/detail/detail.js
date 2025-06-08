@@ -338,13 +338,77 @@ function setupImageGallery(product) {
         // Setup thumbnail gallery functionality
         setupThumbnailGalleryLogic();
         
-      });
-    } catch (error) {
+      });    } catch (error) {
       console.error('Error setting up printer image gallery:', error);
       // Fallback to main image only
-      setupSingleImageGallery(product);    }  } else if (productType === 'printsparepart') {
-    // For print spare parts - they typically have only a main image
-    setupSingleImageGallery(product);
+      setupSingleImageGallery(product);
+    }
+  } else if (productType === 'printsparepart') {
+    // For print spare parts - check for multiple images like printhead products
+    try {
+      const imageParts = mainImagePath.split('/');
+      const fileName = imageParts[imageParts.length - 1];
+      const basePath = mainImagePath.substring(0, mainImagePath.lastIndexOf('/') + 1);
+      const baseFileName = fileName.split('.img_')[0];
+      const imagePaths = [];
+
+      for (let i = 1; i <= 10; i++) {
+        imagePaths.push(`${basePath}${baseFileName}.img_${i}.jpg`);
+      }
+
+      // Check which images actually exist before creating thumbnails
+      let validImages = [];
+      let loadPromises = [];
+
+      // Create promises to check each image
+      imagePaths.forEach((path, index) => {
+        const promise = new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve({ path, index, exists: true });
+          img.onerror = () => resolve({ path, index, exists: false });
+          img.src = path;
+        });
+        loadPromises.push(promise);
+      });
+
+      // Wait for all image checks to complete
+      Promise.all(loadPromises).then((results) => {
+        // Filter only existing images
+        validImages = results.filter(img => img.exists);
+
+        let thumbnailsHTML = '';
+        if (validImages.length === 0) {
+          // If no thumbnail images exist, use the main product image
+          thumbnailsHTML = `
+            <div class="thumbnail-item active" data-image="${product.image}" data-index="0">
+              <img src="${product.image}" alt="${product.name} thumbnail" class="thumbnail-img">
+            </div>
+          `;
+        } else {
+          // Create thumbnails for existing images only
+          validImages.forEach((img, i) => {
+            thumbnailsHTML += `
+              <div class="thumbnail-item ${i === 0 ? 'active' : ''}" data-image="${img.path}" data-index="${i}">
+                <img src="${img.path}" alt="${product.name} thumbnail ${i + 1}" class="thumbnail-img">
+              </div>
+            `;
+          });
+
+          // Set main image to first valid image
+          document.querySelector('.js-product-image').src = validImages[0].path;
+        }
+
+        thumbnailsContainer.innerHTML = thumbnailsHTML;
+
+        // Setup thumbnail gallery functionality
+        setupThumbnailGalleryLogic();
+
+      });
+    } catch (error) {
+      console.error('Error setting up print spare part image gallery:', error);
+      // Fallback to main image only
+      setupSingleImageGallery(product);
+    }
   } else {
     // For products with only main image (regular products or printers without additional images)
     setupSingleImageGallery(product);
