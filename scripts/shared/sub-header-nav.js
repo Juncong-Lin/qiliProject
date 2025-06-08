@@ -356,10 +356,18 @@ class SubHeaderNavigation {
       }
       return;
     }
-    
-    if (hash === 'canon-printer-spare-parts') {
+      if (hash === 'canon-printer-spare-parts') {
       if (window.loadCanonPrinterSpareParts) {
         window.loadCanonPrinterSpareParts();
+        this.setActiveCategory('Print Spare Parts');
+        this.expandPrintSparePartsMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'ricoh-printer-spare-parts') {
+      if (window.loadRicohPrinterSpareParts) {
+        window.loadRicohPrinterSpareParts();
         this.setActiveCategory('Print Spare Parts');
         this.expandPrintSparePartsMenu();
       }

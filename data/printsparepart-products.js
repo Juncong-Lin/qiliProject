@@ -130,6 +130,31 @@ export const printSparePartProducts = {
       image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/UV Light Filter Cotton for UV Printer (Width 1.5m)/image/UV Light Filter Cotton for UV Printer (Width 1.5m).img_1.jpg',
       price: 850
     }
+  ],
+  ricoh: [    {
+      id: 'cleanroom-wiper-dustless-ricoh',
+      name: 'Cleanroom Wiper Dustless Non-woven Cloth for Print',
+      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Cleanroom Wiper Dustless Non-woven Cloth for Print/image/Cleanroom Wiper Dustless Non-woven Cloth for Print.img_1.jpg',
+      price: 1200
+    },
+    {
+      id: 'generic-ricoh-gen4-cap-top',
+      name: 'Generic Ricoh Gen4 Cap Top',
+      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Generic Ricoh Gen4 Cap Top/image/Generic Ricoh Gen4 Cap Top.img_1.jpg',
+      price: 2500
+    },
+    {
+      id: 'generic-ricoh-gen5-cap-top',
+      name: 'Generic Ricoh Gen5 Cap Top',
+      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Generic Ricoh Gen5 Cap Top/image/Generic Ricoh Gen5 Cap Top.img_1.jpg',
+      price: 2800
+    },
+    {
+      id: 'generic-ricoh-gh2220-head-cable',
+      name: 'Generic Ricoh GH2220 Head Cable; 24pin, 50cm',
+      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Generic Ricoh GH2220 Head Cable; 24pin, 50cm/image/Generic Ricoh GH2220 Head Cable; 24pin, 50cm.img_1.jpg',
+      price: 3500
+    }
   ]
 };
 
@@ -152,7 +177,8 @@ export function getPrintSparePartsByCategory(category) {
   const categoryMap = {
     'epson-printer-spare-parts': 'epson',
     'roland-printer-spare-parts': 'roland',
-    'canon-printer-spare-parts': 'canon'
+    'canon-printer-spare-parts': 'canon',
+    'ricoh-printer-spare-parts': 'ricoh'
   };
   
   const brand = categoryMap[category];

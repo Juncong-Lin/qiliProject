@@ -25,13 +25,13 @@ let product = null;
 
 // If product type is specified in URL, search in the appropriate data structure
 if (productType === 'printsparepart' || productType === 'print-spare-parts') {
-  product = getPrintSparePartById(productId);
-  if (product) {
+  product = getPrintSparePartById(productId);  if (product) {
     // Map brand to old category name for breadcrumb compatibility
     const brandToCategoryMap = {
       'epson': 'epson-printer-spare-parts',
       'roland': 'roland-printer-spare-parts', 
-      'canon': 'canon-printer-spare-parts'
+      'canon': 'canon-printer-spare-parts',
+      'ricoh': 'ricoh-printer-spare-parts'
     };
     productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
   }

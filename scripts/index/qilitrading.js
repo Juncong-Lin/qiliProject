@@ -442,8 +442,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Roland Printer Spare Parts</span>
         `;
-      }
-    } else if (brand === 'canonPrinterSpareParts') {
+      }    } else if (brand === 'canonPrinterSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
           <a href="index.html" class="breadcrumb-link">Home</a>
@@ -459,6 +458,24 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Canon Printer Spare Parts</span>
+        `;
+      }
+    } else if (brand === 'ricohPrinterSpareParts') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Ricoh Printer Spare Parts</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Ricoh Printer Spare Parts</span>
         `;
       }
     } else {
@@ -777,6 +794,7 @@ window.loadSpecificCategory = function(categoryName) {
     'Epson Printer Spare Parts': 'Print Spare Parts',
     'Roland Printer Spare Parts': 'Print Spare Parts',
     'Canon Printer Spare Parts': 'Print Spare Parts',
+    'Ricoh Printer Spare Parts': 'Print Spare Parts',
     // fallback: categoryName itself
   };
   document.querySelectorAll('.sub-header-link').forEach(link => {
@@ -1068,13 +1086,43 @@ window.loadSpecificCategory = function(categoryName) {
 
         const mainElement = document.querySelector('.main');
         mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Canon Printer Spare Parts</span>
+      `;
+    } else if (categoryName === 'Ricoh Printer Spare Parts') {
+      // Load Ricoh printer spare parts specifically
+      const ricohSpareParts = getPrintSparePartsByCategory('ricoh-printer-spare-parts');
+      
+      const productsHTML = renderProducts(ricohSpareParts, 'printsparepart');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Ricoh Printer Spare Parts');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
       }
       breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
         <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">Canon Printer Spare Parts</span>
+        <span class="breadcrumb-current">Ricoh Printer Spare Parts</span>
       `;
     } else {
       // For other categories, show placeholder content
@@ -1424,6 +1472,55 @@ window.loadCanonPrinterSpareParts = function() {
     
     // Update breadcrumb navigation
     updateBreadcrumb('canonPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Ricoh Printer Spare Parts specifically
+window.loadRicohPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Ricoh Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Ricoh printer spare parts
+    const ricohSpareParts = getPrintSparePartsByCategory('ricoh-printer-spare-parts');
+    
+    const productsHTML = renderProducts(ricohSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Ricoh printer spare parts category
+    updatePageHeader('Ricoh Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('ricohPrinterSpareParts');
     
     // Check if we need to skip scrolling
     const urlSearchParams = new URLSearchParams(window.location.search);
