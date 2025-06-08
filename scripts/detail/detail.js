@@ -616,13 +616,13 @@ async function loadPrintheadDetails(product) {
     const imagePath = product.image;
     
     // Get the brand and model name from the image path
-    // Format: images/products-detail/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/...
+    // Format: images/products/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/...
     const pathParts = imagePath.split('/');
     const brandFolder = pathParts[3]; // "Epson Printhead"
     const modelFolder = pathParts[4]; // "Epson F1440-A1 (DX5) Printhead for Chinese Printer"
     
     // Construct path to MD file
-    const mdFilePath = `images/products-detail/Inkjet Printheads/${brandFolder}/${modelFolder}/${modelFolder}.md`;
+    const mdFilePath = `images/products/Inkjet Printheads/${brandFolder}/${modelFolder}/${modelFolder}.md`;
     
     // Fetch the markdown file content
     const response = await fetch(mdFilePath);
@@ -778,7 +778,7 @@ async function setupRegularProductContent(product) {
     const imagePath = product.image;
     
     // Get the path components from the image path
-    // Expected format: images/products-detail/Inkjet Printers/.../Product Name/Product Name.md
+    // Expected format: images/products/Inkjet Printers/.../Product Name/Product Name.md
     const pathParts = imagePath.split('/');
     if (pathParts.length >= 5 && pathParts[2] === 'Inkjet' && pathParts[3] === 'Printers') {
       // Find the product folder (usually the second-to-last folder before the image file)
@@ -1343,13 +1343,13 @@ async function setupPrintSparePartContent(product) {
     const imagePath = product.image;
     
     // Get the brand folder and product folder from the image path
-    // Format: images/products-detail/Print Spare Parts/Canon Printer Spare Parts/Product Name/image/...
+    // Format: images/products/Print Spare Parts/Canon Printer Spare Parts/Product Name/image/...
     const pathParts = imagePath.split('/');
     const brandFolder = pathParts[3]; // "Canon Printer Spare Parts"
     const productFolder = pathParts[4]; // Product name folder
     
     // Construct path to MD file
-    const mdFilePath = `images/products-detail/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
+    const mdFilePath = `images/products/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
     
     // Fetch the markdown file content
     const response = await fetch(mdFilePath);

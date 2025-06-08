@@ -4,7 +4,7 @@ export const printerProducts = {
     {
       id: 'AM1601XP',
       name: 'AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
       price: 195000, // $1950-2950 range
       priceRange: '$1950 - $2950',
       description: 'AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead - Professional eco-solvent inkjet printer designed for cost-effective, high-quality printing applications.',
@@ -46,15 +46,15 @@ export const printerProducts = {
         'Media Pinch Roller'
       ],
       additionalImages: [
-        'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/ink-supply-system.jpg',
-        'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/maintenance-station.jpg',
-        'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/media-pinch-roller.jpg'
+        'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/ink-supply-system.jpg',
+        'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/maintenance-station.jpg',
+        'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead/media-pinch-roller.jpg'
       ]
     },
     {
       id: 'AM1802XP',
       name: 'AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head/AM1802XP 1.8meter Inkjet Printer With 2XP600 Print Head(The Economic Version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head/AM1802XP 1.8meter Inkjet Printer With 2XP600 Print Head(The Economic Version).jpg',
       price: 330000, // $3300-4300 range
       priceRange: '$3300 - $4300',
       description: 'AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head - High-performance dual-head eco-solvent printer with advanced Hoson printing system technology.',
@@ -94,7 +94,7 @@ export const printerProducts = {
     {
       id: 'AM1901XP',
       name: 'AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
       price: 200000, // $2000-3000 range
       priceRange: '$2000 - $3000',
       description: 'AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead - Professional wide-format eco-solvent printer with Sengyang printing system for reliable operation.',
@@ -136,9 +136,9 @@ export const printerProducts = {
         'Media Pinch Roller'
       ],
       additionalImages: [
-        'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/ink-supply-system.jpg',
-        'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/maintenance-station.jpg',
-        'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/media-pinch-roller.jpg'
+        'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/ink-supply-system.jpg',
+        'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/maintenance-station.jpg',
+        'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with XP600 Printhead/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead/media-pinch-roller.jpg'
       ]
     }
   ],
@@ -146,7 +146,7 @@ export const printerProducts = {
     {
       id: 'AM1601i16',
       name: 'AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
       price: 320000, // $3200-4200 range
       priceRange: '$3200 - $4200',
       description: 'AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead - Advanced eco-solvent inkjet printer with high-performance Epson i1600 printhead technology.',
@@ -191,7 +191,7 @@ export const printerProducts = {
     {
       id: 'AM1802i16',
       name: 'AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).jpg',
       price: 580000, // $5800-7800 range
       priceRange: '$5800 - $7800',
       description: 'AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead - High-performance dual-head eco-solvent printer with superior Epson i1600 printhead technology for professional applications.',
@@ -231,7 +231,7 @@ export const printerProducts = {
     {
       id: 'AM1901i16',
       name: 'AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
       price: 340000, // $3400-4400 range
       priceRange: '$3400 - $4400',
       description: 'AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead - Professional wide-format eco-solvent printer with advanced Epson i1600 printhead for superior print quality.',
@@ -278,7 +278,7 @@ export const printerProducts = {
     {
       id: 'AM1601i32',
       name: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
       price: 450000, // $4500-5500 range (higher than I1600 due to advanced I3200 printhead)
       priceRange: '$4500 - $5500',
       description: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead - Premium eco-solvent inkjet printer with cutting-edge Epson i3200 printhead technology for superior performance.',
@@ -323,7 +323,7 @@ export const printerProducts = {
     {
       id: 'AM1802i32',
       name: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).jpg',
       price: 780000, // $7800-9800 range (premium dual-head configuration)
       priceRange: '$7800 - $9800',
       description: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead - Professional dual-head eco-solvent printer with superior Epson i3200 printhead technology for high-volume production.',
@@ -368,7 +368,7 @@ export const printerProducts = {
     {
       id: 'AM1901i32',
       name: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)',
-      image: 'images/products-detail/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
+      image: 'images/products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
       price: 520000, // $5200-6200 range (wide format single head)
       priceRange: '$5200 - $6200',
       description: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead - Wide-format eco-solvent printer with advanced Epson i3200 printhead technology for large-scale professional printing.',
