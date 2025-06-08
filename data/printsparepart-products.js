@@ -59,12 +59,6 @@ export const printSparePartProducts = {
       price: 8500
     },
     {
-      id: 'cleanroom-wiper-dustless',
-      name: 'Cleanroom Wiper Dustless Non-woven Cloth for Print',
-      image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Cleanroom Wiper Dustless Non woven Cloth for Print/image/Cleanroom Wiper Dustless Non woven Cloth for Print.img_1.jpg',
-      price: 1200
-    },
-    {
       id: 'data-cable-14pin-infiniti',
       name: 'Data Cable 14pin 5.5m for Infiniti, Incontact, Phaeton Printer',
       image: 'images/products/Print Spare Parts/Canon Printer Spare Parts/Data Cable 14pin 5.5m for Infiniti  Incontact  Phaeton Printer/image/Data Cable 14pin 5.5m for Infiniti  Incontact  Phaeton Printer.img_1.jpg',
@@ -131,17 +125,17 @@ export const printSparePartProducts = {
       price: 850
     }
   ],
-  ricoh: [    {
-      id: 'cleanroom-wiper-dustless-ricoh',
-      name: 'Cleanroom Wiper Dustless Non-woven Cloth for Print',
-      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Cleanroom Wiper Dustless Non-woven Cloth for Print/image/Cleanroom Wiper Dustless Non-woven Cloth for Print.img_1.jpg',
-      price: 1200
-    },
+  ricoh: [
     {
       id: 'generic-ricoh-gen4-cap-top',
       name: 'Generic Ricoh Gen4 Cap Top',
       image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Generic Ricoh Gen4 Cap Top/image/Generic Ricoh Gen4 Cap Top.img_1.jpg',
       price: 2500
+    },
+    {id: 'cleanroom-wiper-dustless-non-woven-cloth-for-printers-23x23cm-150pcs',
+      name: 'Cleanroom Wiper Dustless Non-woven Cloth for Printers(23x23cm, 150pcs)',
+      image: 'images/products/Print Spare Parts/Ricoh Printer Spare Parts/Cleanroom Wiper Dustless Non-woven Cloth for Printers(23x23cm, 150pcs)/image/Cleanroom Wiper Dustless Non-woven Cloth for Printers(23x23cm, 150pcs).img_1.jpg',
+      price: 1200
     },
     {
       id: 'generic-ricoh-gen5-cap-top',

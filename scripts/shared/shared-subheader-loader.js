@@ -57,9 +57,33 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#eco-solvent-i1600-printers';
     } else if (categoryName === 'Eco-Solvent Inkjet Printers - With I3200 Printhead') {
       hashValue = '#eco-solvent-i3200-printers';
+    } else if (categoryName === 'Epson Printer Spare Parts') {
+      hashValue = '#epson-printer-spare-parts';
+    } else if (categoryName === 'Roland Printer Spare Parts') {
+      hashValue = '#roland-printer-spare-parts';
+    } else if (categoryName === 'Canon Printer Spare Parts') {
+      hashValue = '#canon-printer-spare-parts';
+    } else if (categoryName === 'Ricoh Printer Spare Parts') {
+      hashValue = '#ricoh-printer-spare-parts';
+    } else if (categoryName === 'HP Printer Spare Parts') {
+      hashValue = '#hp-printer-spare-parts';
+    } else if (categoryName === 'Brother Printer Spare Parts') {
+      hashValue = '#brother-printer-spare-parts';
+    } else if (categoryName === 'Mutoh Printer Spare Parts') {
+      hashValue = '#mutoh-printer-spare-parts';
+    } else if (categoryName === 'Mimaki Printer Spare Parts') {
+      hashValue = '#mimaki-printer-spare-parts';
+    } else if (categoryName === 'Flora Printer Spare Parts') {
+      hashValue = '#flora-printer-spare-parts';
+    } else if (categoryName === 'Galaxy Printer Spare Parts') {
+      hashValue = '#galaxy-printer-spare-parts';
+    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts') {
+      hashValue = '#infiniti-challenger-printer-spare-parts';
+    } else if (categoryName === 'Wit-color Printer Spare Parts') {
+      hashValue = '#wit-color-printer-spare-parts';
     } else {
       // Default hash conversion for other categories
-      const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '');
+      const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
       hashValue = '#' + categorySlug;
     }
     
@@ -81,13 +105,38 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#eco-solvent-i1600-printers';
     } else if (categoryName === 'Eco-Solvent Inkjet Printers - With I3200 Printhead') {
       hashValue = '#eco-solvent-i3200-printers';
+    } else if (categoryName === 'Epson Printer Spare Parts') {
+      hashValue = '#epson-printer-spare-parts';
+    } else if (categoryName === 'Roland Printer Spare Parts') {
+      hashValue = '#roland-printer-spare-parts';
+    } else if (categoryName === 'Canon Printer Spare Parts') {
+      hashValue = '#canon-printer-spare-parts';
+    } else if (categoryName === 'Ricoh Printer Spare Parts') {
+      hashValue = '#ricoh-printer-spare-parts';
+    } else if (categoryName === 'HP Printer Spare Parts') {
+      hashValue = '#hp-printer-spare-parts';
+    } else if (categoryName === 'Brother Printer Spare Parts') {
+      hashValue = '#brother-printer-spare-parts';
+    } else if (categoryName === 'Mutoh Printer Spare Parts') {
+      hashValue = '#mutoh-printer-spare-parts';
+    } else if (categoryName === 'Mimaki Printer Spare Parts') {
+      hashValue = '#mimaki-printer-spare-parts';
+    } else if (categoryName === 'Flora Printer Spare Parts') {
+      hashValue = '#flora-printer-spare-parts';
+    } else if (categoryName === 'Galaxy Printer Spare Parts') {
+      hashValue = '#galaxy-printer-spare-parts';
+    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts') {
+      hashValue = '#infiniti-challenger-printer-spare-parts';
+    } else if (categoryName === 'Wit-color Printer Spare Parts') {
+      hashValue = '#wit-color-printer-spare-parts';
     } else {
-      // Default hash conversion
-      const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '');
-      hashValue = '#category-' + categorySlug;
+      // Default hash conversion - for other pages, no category prefix is needed since the above covers all Print Spare Parts
+      const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
+      hashValue = '#' + categorySlug;
     }
     
-    // Navigate to index page with the appropriate hash    UrlUtils.navigateToIndex(hashValue);
+    // Navigate to index page with the appropriate hash
+    UrlUtils.navigateToIndex(hashValue);
   }
 };
 
@@ -156,6 +205,97 @@ function fixEcoSolventSubmenuItems() {
   }, 300); // Small delay to ensure shared subheader is fully loaded
 }
 
+// Helper function to fix Print Spare Parts submenu items click behavior
+function fixPrintSparePartsSubmenuItems() {
+  // We specifically want to ensure these Print Spare Parts submenu items work on first click
+  setTimeout(() => {
+    // Find and fix the print spare parts submenu items
+    const printSparePartsItems = document.querySelectorAll('.sub-header-submenu-item');
+    
+    printSparePartsItems.forEach(item => {
+      const itemText = item.textContent.trim();
+      
+      // Target Print Spare Parts submenu items
+      if (itemText.includes('Printer Parts') || itemText.includes('Printer Spare Parts')) {
+        // Define the mapping for print spare parts categories
+        let categoryName = "";
+        let hashValue = "";
+        
+        if (itemText === 'Epson Printer Parts') {
+          categoryName = 'Epson Printer Spare Parts';
+          hashValue = 'epson-printer-spare-parts';
+        } else if (itemText === 'Roland Printer Parts') {
+          categoryName = 'Roland Printer Spare Parts';
+          hashValue = 'roland-printer-spare-parts';
+        } else if (itemText === 'Canon Printer Parts') {
+          categoryName = 'Canon Printer Spare Parts';
+          hashValue = 'canon-printer-spare-parts';
+        } else if (itemText === 'Ricoh Printer Parts') {
+          categoryName = 'Ricoh Printer Spare Parts';
+          hashValue = 'ricoh-printer-spare-parts';
+        } else if (itemText === 'HP Printer Parts') {
+          categoryName = 'HP Printer Spare Parts';
+          hashValue = 'hp-printer-spare-parts';
+        } else if (itemText === 'Brother Printer Parts') {
+          categoryName = 'Brother Printer Spare Parts';
+          hashValue = 'brother-printer-spare-parts';
+        } else if (itemText === 'Mutoh Printer Parts') {
+          categoryName = 'Mutoh Printer Spare Parts';
+          hashValue = 'mutoh-printer-spare-parts';
+        } else if (itemText === 'Mimaki Printer Parts') {
+          categoryName = 'Mimaki Printer Spare Parts';
+          hashValue = 'mimaki-printer-spare-parts';
+        } else if (itemText === 'Flora Printer Parts') {
+          categoryName = 'Flora Printer Spare Parts';
+          hashValue = 'flora-printer-spare-parts';
+        } else if (itemText === 'Galaxy Printer Parts') {
+          categoryName = 'Galaxy Printer Spare Parts';
+          hashValue = 'galaxy-printer-spare-parts';
+        } else if (itemText === 'Infiniti/Challenger Parts') {
+          categoryName = 'Infiniti / Challenger Printer Spare Parts';
+          hashValue = 'infiniti-challenger-printer-spare-parts';
+        } else if (itemText === 'Wit-color Printer Parts') {
+          categoryName = 'Wit-color Printer Spare Parts';
+          hashValue = 'wit-color-printer-spare-parts';
+        }
+        
+        // Only continue if we found a match
+        if (categoryName && hashValue) {
+          // Clone and replace the element to override any existing click handlers
+          const newItem = item.cloneNode(true);
+          item.parentNode.replaceChild(newItem, item);
+          
+          // Add a direct click event handler that will work on any page
+          newItem.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            // Hide any active submenus
+            document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+              submenu.classList.remove('active');
+            });
+            
+            // Check if we're on the index page or another page
+            if (UrlUtils.isIndexPage() && window.loadSpecificCategory) {
+              // We're on the index page - update hash and load content directly
+              if (history.pushState) {
+                history.pushState(null, null, `#${hashValue}`);
+              } else {
+                window.location.hash = `#${hashValue}`;
+              }
+              
+              // Then load the category content
+              window.loadSpecificCategory(categoryName);
+            } else {
+              // We're on a different page (like detail.html) - navigate to index page with hash
+              UrlUtils.navigateToIndex(`#${hashValue}`);
+            }
+          });
+        }
+      }
+    });
+  }, 300); // Small delay to ensure shared subheader is fully loaded
+}
+
 window.handlePrintheadClick = function(brand) {
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadPrintheadProducts && typeof window.loadPrintheadProducts === 'function') {
@@ -177,6 +317,9 @@ function initializeSubHeaderAfterLoad() {
       
       // Fix for Eco-Solvent submenu items clicking issue
       fixEcoSolventSubmenuItems();
+      
+      // Fix for Print Spare Parts submenu items clicking issue
+      fixPrintSparePartsSubmenuItems();
       
       // Handle URL hash navigation on initial page load if there's a hash
       let hash = window.location.hash.substring(1);
