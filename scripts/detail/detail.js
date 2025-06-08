@@ -717,7 +717,66 @@ function setupProductTabs() {
 /**
  * Set up content for regular (non-printhead) products
  */
-function setupRegularProductContent(product) {
+async function setupRegularProductContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    
+    // Get the path components from the image path
+    // Expected format: images/products-detail/Inkjet Printers/.../Product Name/Product Name.md
+    const pathParts = imagePath.split('/');
+    if (pathParts.length >= 5 && pathParts[2] === 'Inkjet' && pathParts[3] === 'Printers') {
+      // Find the product folder (usually the second-to-last folder before the image file)
+      const productFolder = pathParts[pathParts.length - 2]; // Folder containing the image
+      const pathUpToProduct = pathParts.slice(0, -1).join('/'); // Path up to the product folder
+      
+      // Try to find markdown file with same name as product folder
+      let mdFilePath = `${pathUpToProduct}/${productFolder}.md`;
+      
+      // If image has a special suffix like "(the economic version)", try that for the MD file too
+      const imageName = pathParts[pathParts.length - 1];
+      const baseImageName = imageName.split('.')[0];
+      if (baseImageName !== productFolder) {
+        mdFilePath = `${pathUpToProduct}/${baseImageName}.md`;
+      }
+      
+      // Fetch the markdown file content
+      const response = await fetch(mdFilePath);
+      if (!response.ok) {
+        // Fallback to hardcoded content if markdown file is not found
+        setupFallbackRegularProductContent(product);
+        return;
+      }
+      
+      const mdContent = await response.text();
+      
+      // Update product description and content with the markdown content
+      // For regular products, we'll use the entire markdown content as the main content
+      const parsedContent = parseMarkdown(mdContent);
+      
+      // Update the product details tab content with the full markdown content
+      document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+      
+      // Hide compatibility and specifications sections since we're loading everything from markdown
+      document.querySelector('.product-compatibility-section').style.display = 'none';
+      document.querySelector('.product-specifications-section').style.display = 'none';
+      
+    } else {
+      // If path doesn't match expected format, use fallback
+      setupFallbackRegularProductContent(product);
+    }
+    
+  } catch (error) {
+    console.error('Error loading regular product details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackRegularProductContent(product);
+  }
+}
+
+/**
+ * Fallback function for regular product content when markdown loading fails
+ */
+function setupFallbackRegularProductContent(product) {
   // Set basic product details content
   document.querySelector('.js-product-details-content').innerHTML = '';
 
@@ -805,26 +864,6 @@ function setupPrinterProductContent(product) {
       <li>Reliable and durable construction</li>
       <li>Cost-effective printing solution</li>
       <li>Easy maintenance and operation</li>
-    </ul>
-  `;
-  
-  // Set compatibility content with detailed information
-  document.querySelector('.js-product-compatibility').innerHTML = `
-    <h3>Compatible Media Types</h3>
-    <p>This printer supports: ${specs.printingMedia || 'Various professional media types'}</p>
-    
-    <h3>Software Compatibility</h3>
-    <p>RIP Software: ${specs.ripSoftware || 'Professional RIP software'}</p>
-    <p>Supported Formats: ${specs.photoFormat || 'Standard image formats'}</p>
-    
-    <h3>Connection Options</h3>
-    <p>Connection Port: ${specs.connectionPort || 'Multiple connectivity options'}</p>
-    
-    <h3>Operating Requirements</h3>
-    <ul>
-      <li>Working Temperature: ${specs.workingTemperature || 'Standard office temperature'}</li>
-      <li>Working Humidity: ${specs.workingHumidity || 'Standard humidity range'}</li>
-      <li>Power Requirements: ${specs.powerDemand || 'Standard power requirements'}</li>
     </ul>
   `;
   
@@ -1519,46 +1558,54 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
 /**
  * Set up content for print spare parts products
  */
-function setupPrintSparePartContent(product) {
-  // Set product description
-  const description = `High-quality ${product.name.toLowerCase()} designed for professional printer maintenance and repair. This genuine spare part ensures optimal printer performance and longevity.`;
-  document.querySelector('.js-product-description').innerHTML = description;
-  
+async function setupPrintSparePartContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    
+    // Get the brand folder and product folder from the image path
+    // Format: images/products-detail/Print Spare Parts/Canon Printer Spare Parts/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const brandFolder = pathParts[3]; // "Canon Printer Spare Parts"
+    const productFolder = pathParts[4]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `images/products-detail/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackPrintSparePartContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For spare parts, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    // Hide compatibility and specifications sections since spare parts typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading print spare part details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackPrintSparePartContent(product);
+  }
+}
+
+/**
+ * Fallback function for print spare part content when markdown loading fails
+ */
+function setupFallbackPrintSparePartContent(product) {
   // Set detailed product content
   const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
-  document.querySelector('.js-product-details-content').innerHTML = `
-    <h3>Product Overview</h3>
-    <p>This ${product.name.toLowerCase()} is an essential component for ${brandName} printers, designed to maintain optimal printing performance and extend the life of your printer.</p>
-    
-    <h4>Key Features</h4>
-    <ul>
-      <li>Genuine ${brandName} spare part</li>
-      <li>High-quality materials and construction</li>
-      <li>Easy installation and replacement</li>
-      <li>Designed for long-lasting performance</li>
-      <li>Compatible with specified printer models</li>
-    </ul>
-    
-    <h4>Quality Assurance</h4>
-    <ul>
-      <li>Factory-tested for reliability</li>
-      <li>Meets original equipment specifications</li>
-      <li>Professional grade components</li>
-      <li>Quality guarantee included</li>
-    </ul>
-    
-    <h4>Installation</h4>
-    <p>Professional installation recommended. Refer to your printer manual or contact our technical support team for installation guidance.</p>
-  `;
-  
-  // Set compatibility content
-  document.querySelector('.js-product-compatibility').innerHTML = `
-    <h3>Compatible Printer Models</h3>
-    <p>This spare part is specifically designed for ${brandName} printer models. Please verify compatibility with your specific printer model before ordering.</p>
-    
-    <h3>Technical Support</h3>
-    <p>For compatibility questions or installation assistance, please contact our technical support team.</p>
-  `;
   
   // Set specifications content
   let specsHTML = '<table class="product-table"><tbody>';
