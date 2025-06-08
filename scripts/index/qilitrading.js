@@ -425,8 +425,7 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Epson Printer Spare Parts</span>        `;
-      }
-    } else if (brand === 'rolandPrinterSpareParts') {
+      }    } else if (brand === 'rolandPrinterSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
           <a href="index.html" class="breadcrumb-link">Home</a>
@@ -442,6 +441,24 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Roland Printer Spare Parts</span>
+        `;
+      }
+    } else if (brand === 'canonPrinterSpareParts') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Canon Printer Spare Parts</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Canon Printer Spare Parts</span>
         `;
       }
     } else {
@@ -576,10 +593,15 @@ function handleHashFallback(hash) {
       window.loadEpsonPrinterSpareParts();
     } else {
       loadAllProducts();
-    }
-  } else if (hash === 'roland-printer-spare-parts') {
+    }  } else if (hash === 'roland-printer-spare-parts') {
     if (window.loadRolandPrinterSpareParts) {
       window.loadRolandPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'canon-printer-spare-parts') {
+    if (window.loadCanonPrinterSpareParts) {
+      window.loadCanonPrinterSpareParts();
     } else {
       loadAllProducts();
     }
@@ -742,9 +764,10 @@ window.loadSpecificCategory = function(categoryName) {
   
   // Hide hero banner for specific category views
   hideHeroBanner();
-  
-  // Add loading animation
-  showLoadingState();  // --- Highlight the corresponding nav item (including special sidebar categories) ---
+    // Add loading animation
+  showLoadingState();
+
+  // --- Highlight the corresponding nav item (including special sidebar categories) ---
   const subHeaderMap = {
     'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
     'Solvent Inket Printers': 'Inkjet Printers',
@@ -753,6 +776,7 @@ window.loadSpecificCategory = function(categoryName) {
     'Double Side Printers': 'Inkjet Printers',
     'Epson Printer Spare Parts': 'Print Spare Parts',
     'Roland Printer Spare Parts': 'Print Spare Parts',
+    'Canon Printer Spare Parts': 'Print Spare Parts',
     // fallback: categoryName itself
   };
   document.querySelectorAll('.sub-header-link').forEach(link => {
@@ -991,8 +1015,7 @@ window.loadSpecificCategory = function(categoryName) {
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Epson Printer Spare Parts</span>
-      `;
-    } else if (categoryName === 'Roland Printer Spare Parts') {
+      `;    } else if (categoryName === 'Roland Printer Spare Parts') {
       // Load Roland printer spare parts specifically
       const rolandSpareParts = getPrintSparePartsByCategory('roland-printer-spare-parts');
       
@@ -1021,6 +1044,37 @@ window.loadSpecificCategory = function(categoryName) {
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Roland Printer Spare Parts</span>
+      `;
+    } else if (categoryName === 'Canon Printer Spare Parts') {
+      // Load Canon printer spare parts specifically
+      const canonSpareParts = getPrintSparePartsByCategory('canon-printer-spare-parts');
+      
+      const productsHTML = renderProducts(canonSpareParts, 'printsparepart');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Canon Printer Spare Parts');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Canon Printer Spare Parts</span>
       `;
     } else {
       // For other categories, show placeholder content
@@ -1332,4 +1386,53 @@ let heroCarousel;
 
 // Make heroCarousel globally accessible
 window.heroCarousel = null;
+
+// Function to load Canon Printer Spare Parts specifically
+window.loadCanonPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Canon Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Canon printer spare parts
+    const canonSpareParts = getPrintSparePartsByCategory('canon-printer-spare-parts');
+    
+    const productsHTML = renderProducts(canonSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Canon printer spare parts category
+    updatePageHeader('Canon Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('canonPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
 

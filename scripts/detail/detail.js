@@ -1308,16 +1308,17 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
     }  } else if (productType === 'printsparepart') {
     // For print spare parts, show proper breadcrumb navigation based on brand
     const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
+    const brandSlug = product.brand.toLowerCase() + '-printer-spare-parts';
     breadcrumbElement.innerHTML = `
       <a href="index.html" class="breadcrumb-link">Home</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
       <span class="breadcrumb-separator">&gt;</span>
-      <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('${brandName} Printer Spare Parts')" class="breadcrumb-link">${brandName} Printer Spare Parts</a>
+      <a href="index.html#${brandSlug}" class="breadcrumb-link">${brandName} Printer Spare Parts</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;
-  } else {
+  }else {
     // For regular products, show category, subcategory, brand if available
     let html = `<a href="index.html" class="breadcrumb-link">Home</a>`;
     if (product.category) {

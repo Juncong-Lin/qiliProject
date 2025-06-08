@@ -348,10 +348,18 @@ class SubHeaderNavigation {
       }
       return;
     }
-    
-    if (hash === 'roland-printer-spare-parts') {
+      if (hash === 'roland-printer-spare-parts') {
       if (window.loadRolandPrinterSpareParts) {
         window.loadRolandPrinterSpareParts();
+        this.setActiveCategory('Print Spare Parts');
+        this.expandPrintSparePartsMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'canon-printer-spare-parts') {
+      if (window.loadCanonPrinterSpareParts) {
+        window.loadCanonPrinterSpareParts();
         this.setActiveCategory('Print Spare Parts');
         this.expandPrintSparePartsMenu();
       }
