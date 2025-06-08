@@ -108,8 +108,8 @@ export const printSparePartProducts = {
     },
     {
       id: 'shielded-data-cable-14pin-infiniti',
-      name: 'Shielded Data Cable 14pin for Infiniti, Incontek',
-      image: 'images/products-detail/Print Spare Parts/Canon Printer Spare Parts/Shielded Data Cable 14pin for Infiniti  Incontek/image/Shielded Data Cable 14pin for Infiniti  Incontek.img_1.jpg',
+      name: 'Shielded Data Cable 14pin for Infiniti Incontek Phaeton Printer',
+      image: 'images/products-detail/Print Spare Parts/Canon Printer Spare Parts/Shielded Data Cable 14pin for Infiniti  Incontek  Phaeton Printer/image/Shielded Data Cable 14pin for Infiniti  Incontek  Phaeton Printer.img_1.jpg',
       price: 3000
     },
     {
