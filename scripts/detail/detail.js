@@ -614,19 +614,19 @@ async function loadPrintheadDetails(product) {
   try {
     // Extract the path to the markdown file
     const imagePath = product.image;
-    
-    // Get the brand and model name from the image path
-    // Format: images/products/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/...
+      // Get the brand and model name from the image path
+    // Format: products/Inkjet Printheads/Canon Printhead/Canon PF-03 Printhead/image/...
     const pathParts = imagePath.split('/');
-    const brandFolder = pathParts[3]; // "Epson Printhead"
-    const modelFolder = pathParts[4]; // "Epson F1440-A1 (DX5) Printhead for Chinese Printer"
+    const brandFolder = pathParts[2]; // "Canon Printhead"
+    const modelFolder = pathParts[3]; // "Canon PF-03 Printhead"
     
     // Construct path to MD file
-    const mdFilePath = `images/products/Inkjet Printheads/${brandFolder}/${modelFolder}/${modelFolder}.md`;
-    
-    // Fetch the markdown file content
+    const mdFilePath = `products/Inkjet Printheads/${brandFolder}/${modelFolder}/${modelFolder}.md`;
+      // Fetch the markdown file content
     const response = await fetch(mdFilePath);
       if (!response.ok) {
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackPrintheadContent(product);
       return;
     }
     
@@ -778,7 +778,7 @@ async function setupRegularProductContent(product) {
     const imagePath = product.image;
     
     // Get the path components from the image path
-    // Expected format: images/products/Inkjet Printers/.../Product Name/Product Name.md
+    // Expected format: products/Inkjet Printers/.../Product Name/Product Name.md
     const pathParts = imagePath.split('/');
     if (pathParts.length >= 5 && pathParts[2] === 'Inkjet' && pathParts[3] === 'Printers') {
       // Find the product folder (usually the second-to-last folder before the image file)
@@ -836,6 +836,21 @@ function setupFallbackRegularProductContent(product) {
   document.querySelector('.js-product-details-content').innerHTML = `
     <h3>${product.name}</h3>
     <p>Product information is currently being updated. Please contact us for detailed specifications.</p>
+  `;
+
+  // Hide sections since we don't have structured data
+  document.querySelector('.product-compatibility-section').style.display = 'none';
+  document.querySelector('.product-specifications-section').style.display = 'none';
+}
+
+/**
+ * Fallback function for printhead content when markdown loading fails
+ */
+function setupFallbackPrintheadContent(product) {
+  // Set minimal fallback content for printheads
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>High-quality printhead for industrial inkjet printing applications. Product information is currently being updated. Please contact us for detailed specifications and compatibility information.</p>
   `;
 
   // Hide sections since we don't have structured data
@@ -1341,15 +1356,14 @@ async function setupPrintSparePartContent(product) {
   try {
     // Extract the path to the markdown file from the image path
     const imagePath = product.image;
-    
-    // Get the brand folder and product folder from the image path
-    // Format: images/products/Print Spare Parts/Canon Printer Spare Parts/Product Name/image/...
+      // Get the brand folder and product folder from the image path
+    // Format: products/Print Spare Parts/Canon Printer Spare Parts/Product Name/image/...
     const pathParts = imagePath.split('/');
-    const brandFolder = pathParts[3]; // "Canon Printer Spare Parts"
-    const productFolder = pathParts[4]; // Product name folder
+    const brandFolder = pathParts[2]; // "Canon Printer Spare Parts"
+    const productFolder = pathParts[3]; // Product name folder
     
     // Construct path to MD file
-    const mdFilePath = `images/products/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
+    const mdFilePath = `products/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
     
     // Fetch the markdown file content
     const response = await fetch(mdFilePath);

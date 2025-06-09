@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Path Testing</title>
+</head>
+<body>
+    <h1>Path Parsing Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Test the path parsing logic
+        function testPathParsing() {
+            const results = document.getElementById('results');
+            
+            // Test printhead paths
+            const printheadPaths = [
+                'products/Inkjet Printheads/Canon Printhead/Canon PF-03 Printhead/image/Canon PF-03 Printhead.img_1.jpg',
+                'products/Inkjet Printheads/Epson Printhead/Epson F1440-A1 (DX5) Printhead for Chinese Printer/image/Epson F1440-A1 (DX5) Printhead for Chinese Printer.img_1.jpg'
+            ];
+            
+            results.innerHTML += '<h2>Printhead Path Testing:</h2>';
+            printheadPaths.forEach(path => {
+                const pathParts = path.split('/');
+                const brandFolder = pathParts[2];
+                const modelFolder = pathParts[3];
+                const mdFilePath = `products/Inkjet Printheads/${brandFolder}/${modelFolder}/${modelFolder}.md`;
+                
+                results.innerHTML += `<p><strong>Image Path:</strong> ${path}</p>`;
+                results.innerHTML += `<p><strong>Brand Folder:</strong> ${brandFolder}</p>`;
+                results.innerHTML += `<p><strong>Model Folder:</strong> ${modelFolder}</p>`;
+                results.innerHTML += `<p><strong>MD File Path:</strong> ${mdFilePath}</p><hr>`;
+            });
+            
+            // Test spare part paths
+            const sparePartPaths = [
+                'products/Print Spare Parts/Epson Printer Spare Parts/Mainboard of Epson F6070 ,F6080/Mainboard of Epson F6070 ,F6080.img_1.jpg',
+                'products/Print Spare Parts/Roland Printer Spare Parts/Mainboard of Roland RE-640,RF-640,VS-640,VS-640i Part Number 6000005184/Mainboard of Roland RE-640,RF-640,VS-640,VS-640i Part Number 6000005184.img_1.jpg'
+            ];
+            
+            results.innerHTML += '<h2>Spare Part Path Testing:</h2>';
+            sparePartPaths.forEach(path => {
+                const pathParts = path.split('/');
+                const brandFolder = pathParts[2];
+                const productFolder = pathParts[3];
+                const mdFilePath = `products/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
+                
+                results.innerHTML += `<p><strong>Image Path:</strong> ${path}</p>`;
+                results.innerHTML += `<p><strong>Brand Folder:</strong> ${brandFolder}</p>`;
+                results.innerHTML += `<p><strong>Product Folder:</strong> ${productFolder}</p>`;
+                results.innerHTML += `<p><strong>MD File Path:</strong> ${mdFilePath}</p><hr>`;
+            });
+        }
+        
+        testPathParsing();
+    </script>
+</body>
+</html>
