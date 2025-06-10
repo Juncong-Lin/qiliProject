@@ -33,17 +33,16 @@ def sanitize_filename(name):
     return " ".join(sanitized.split()).strip()
 
 def process_and_save_image(image_bytes, output_path, target_size=1000):
-    """Processes an image to fit into a 1000x1000 canvas and saves it as JPEG."""
+    """Processes an image to fit proportionally into a 1000x1000 canvas and saves it as JPEG."""
     try:
-        img = Image.open(io.BytesIO(image_bytes))
-        if img.mode in ('P', 'LA', 'RGBA'):
-            img = img.convert('RGB')
-        img.thumbnail((target_size, target_size), Image.Resampling.LANCZOS)
+        img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
+        w, h = img.size
+        ratio = min(target_size/w, target_size/h)
+        new_w, new_h = int(w*ratio), int(h*ratio)
+        img_resized = img.resize((new_w, new_h), Image.LANCZOS)
         canvas = Image.new('RGB', (target_size, target_size), (255, 255, 255))
-        x_offset = (target_size - img.width) // 2
-        y_offset = (target_size - img.height) // 2
-        canvas.paste(img, (x_offset, y_offset))
-        canvas.save(output_path, 'JPEG', quality=95)
+        canvas.paste(img_resized, ((target_size-new_w)//2, (target_size-new_h)//2))
+        canvas.save(output_path, format='JPEG', quality=95)
         return True
     except Exception as e:
         print(f"    - ERROR: Failed to process image. Reason: {e}")

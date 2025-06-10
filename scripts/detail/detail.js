@@ -1,7 +1,7 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
 import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
-import { printSparePartProducts, getPrintSparePartById } from '../../data/printsparepart-products.js';
+import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
@@ -10,6 +10,17 @@ import { displayDocumentContent } from '../shared/document-content-extractor.js'
 let productId;
 let productType = 'regular'; // Can be 'regular', 'printhead', 'printer', or 'printsparepart'
 let productBrand = '';
+
+// Helper function to find print spare part by ID across all brands
+function findPrintSparePartById(id) {
+  for (const brand in printSparePartProducts) {
+    const product = printSparePartProducts[brand].find(item => item.id === id);
+    if (product) {
+      return { ...product, brand };
+    }
+  }
+  return null;
+}
 
 // Get the product ID and type from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
@@ -25,7 +36,8 @@ let product = null;
 
 // If product type is specified in URL, search in the appropriate data structure
 if (productType === 'printsparepart' || productType === 'print-spare-parts') {
-  product = getPrintSparePartById(productId);  if (product) {
+  product = findPrintSparePartById(productId);
+  if (product) {
     // Map brand to old category name for breadcrumb compatibility
     const brandToCategoryMap = {
       'epson': 'epson-printer-spare-parts',
@@ -85,10 +97,9 @@ if (!product && !urlProductType) {
       }
     }
   }
-
   // If not found in printer products, search in print spare parts
   if (!product) {
-    product = getPrintSparePartById(productId);
+    product = findPrintSparePartById(productId);
     if (product) {
       productType = 'printsparepart';
       // Map brand to old category name for breadcrumb compatibility

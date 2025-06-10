@@ -2,7 +2,7 @@ import {cart, addToCart} from '../../data/cart.js';
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
-import {printSparePartProducts, getPrintSparePartsByCategory} from '../../data/printsparepart-products.js';
+import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import { formatCurrency } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
@@ -1003,10 +1003,9 @@ window.loadSpecificCategory = function(categoryName) {
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Print Spare Parts</span>
-      `;
-    } else if (categoryName === 'Epson Printer Spare Parts') {
+      `;    } else if (categoryName === 'Epson Printer Spare Parts') {
       // Load Epson printer spare parts specifically
-      const epsonSpareParts = getPrintSparePartsByCategory('epson-printer-spare-parts');
+      const epsonSpareParts = printSparePartProducts.epson || [];
       
       const productsHTML = renderProducts(epsonSpareParts, 'printsparepart');
       const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1035,7 +1034,7 @@ window.loadSpecificCategory = function(categoryName) {
         <span class="breadcrumb-current">Epson Printer Spare Parts</span>
       `;    } else if (categoryName === 'Roland Printer Spare Parts') {
       // Load Roland printer spare parts specifically
-      const rolandSpareParts = getPrintSparePartsByCategory('roland-printer-spare-parts');
+      const rolandSpareParts = printSparePartProducts.roland || [];
       
       const productsHTML = renderProducts(rolandSpareParts, 'printsparepart');
       const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1062,10 +1061,9 @@ window.loadSpecificCategory = function(categoryName) {
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Roland Printer Spare Parts</span>
-      `;
-    } else if (categoryName === 'Canon Printer Spare Parts') {
+      `;    } else if (categoryName === 'Canon Printer Spare Parts') {
       // Load Canon printer spare parts specifically
-      const canonSpareParts = getPrintSparePartsByCategory('canon-printer-spare-parts');
+      const canonSpareParts = printSparePartProducts.canon || [];
       
       const productsHTML = renderProducts(canonSpareParts, 'printsparepart');
       const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1092,10 +1090,9 @@ window.loadSpecificCategory = function(categoryName) {
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Canon Printer Spare Parts</span>
-      `;
-    } else if (categoryName === 'Ricoh Printer Spare Parts') {
+      `;    } else if (categoryName === 'Ricoh Printer Spare Parts') {
       // Load Ricoh printer spare parts specifically
-      const ricohSpareParts = getPrintSparePartsByCategory('ricoh-printer-spare-parts');
+      const ricohSpareParts = printSparePartProducts.ricoh || [];
       
       const productsHTML = renderProducts(ricohSpareParts, 'printsparepart');
       const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1240,9 +1237,8 @@ window.loadEpsonPrinterSpareParts = function() {
   showLoadingState();
   
   // Small delay for smooth transition
-  setTimeout(() => {
-    // Get Epson printer spare parts
-    const epsonSpareParts = getPrintSparePartsByCategory('epson-printer-spare-parts');
+  setTimeout(() => {    // Get Epson printer spare parts
+    const epsonSpareParts = printSparePartProducts.epson || [];
     
     const productsHTML = renderProducts(epsonSpareParts, 'printsparepart');
     const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1289,9 +1285,8 @@ window.loadRolandPrinterSpareParts = function() {
   showLoadingState();
   
   // Small delay for smooth transition
-  setTimeout(() => {
-    // Get Roland printer spare parts
-    const rolandSpareParts = getPrintSparePartsByCategory('roland-printer-spare-parts');
+  setTimeout(() => {    // Get Roland printer spare parts
+    const rolandSpareParts = printSparePartProducts.roland || [];
     
     const productsHTML = renderProducts(rolandSpareParts, 'printsparepart');
     const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1455,9 +1450,8 @@ window.loadCanonPrinterSpareParts = function() {
   showLoadingState();
   
   // Small delay for smooth transition
-  setTimeout(() => {
-    // Get Canon printer spare parts
-    const canonSpareParts = getPrintSparePartsByCategory('canon-printer-spare-parts');
+  setTimeout(() => {    // Get Canon printer spare parts
+    const canonSpareParts = printSparePartProducts.canon || [];
     
     const productsHTML = renderProducts(canonSpareParts, 'printsparepart');
     const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1504,9 +1498,8 @@ window.loadRicohPrinterSpareParts = function() {
   showLoadingState();
   
   // Small delay for smooth transition
-  setTimeout(() => {
-    // Get Ricoh printer spare parts
-    const ricohSpareParts = getPrintSparePartsByCategory('ricoh-printer-spare-parts');
+  setTimeout(() => {    // Get Ricoh printer spare parts
+    const ricohSpareParts = printSparePartProducts.ricoh || [];
     
     const productsHTML = renderProducts(ricohSpareParts, 'printsparepart');
     const productsGrid = document.querySelector('.js-prodcts-grid');

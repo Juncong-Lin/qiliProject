@@ -627,6 +627,8 @@ export const printheadProducts = {
       higher_price: 170000
     },
   ],
+  xaar: [
+  ],
   starfire: [
     {
       id: 'StarFire-SG1024-SA2C-10pl',
@@ -666,6 +668,5 @@ export const printheadProducts = {
   ],
   toshiba: [
   ],
-  xaar: [
-  ],
+
 };
