@@ -425,7 +425,7 @@ export const printheadProducts = {
     {
       id: 'DX5-Original-Printhead-of-Mutoh-Original-Mutoh-Drafstation-RJ-900C-RJ-901C-RJ-900X-Part-Number-DG-44246',
       name: 'DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C  RJ-901C RJ-900X Part Number  DG-44246',
-      image: 'products/printhead/Mutoh printhead/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X/image/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X.jpg',
+      image: 'products/printhead/Mutoh printhead/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X Part Number DG-44246/image/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X Part Number DG-44246.jpg',
       lower_price: 122000,
       higher_price: 125000
     },
