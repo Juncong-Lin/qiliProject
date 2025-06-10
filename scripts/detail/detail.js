@@ -6,6 +6,7 @@ import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
 import { displayDocumentContent } from '../shared/document-content-extractor.js';
+import { formatPriceRange } from '../shared/money.js';
 
 let productId;
 let productType = 'regular'; // Can be 'regular', 'printhead', 'printer', or 'printsparepart'
@@ -142,18 +143,19 @@ if (product) {
     // For printhead products or products without ratings, hide rating elements
     const ratingContainer = document.querySelector('.product-rating-container');
     if (ratingContainer) ratingContainer.style.display = 'none';
-  }
-    // Handle price display - different product types have different price formats
+  }  // Handle price display - different product types have different price formats
   let priceText;
   if (product.getPrice) {
     // Regular products with getPrice() method
     priceText = product.getPrice();
-  } else if (productType === 'printsparepart') {
-    // Print spare parts store price in cents
-    priceText = `$${(product.price / 100).toFixed(2)}`;
+  } else if (product.lower_price !== undefined || product.higher_price !== undefined) {
+    // Products with new price range format (printhead, printer, print spare parts)
+    priceText = formatPriceRange(product.lower_price, product.higher_price);
+  } else if (product.price) {
+    // Fallback for products still using old price format
+    priceText = `USD:$${(product.price / 100).toFixed(0)}`;
   } else {
-    // Printhead and printer products also store price in cents
-    priceText = `$${(product.price / 100).toFixed(2)}`;
+    priceText = 'Price not available';
   }
   document.querySelector('.js-product-price').textContent = priceText;
   

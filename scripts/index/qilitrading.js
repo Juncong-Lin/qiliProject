@@ -3,7 +3,7 @@ import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
-import { formatCurrency } from '../shared/money.js';
+import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
 function renderProducts(productList, type = 'regular') {
@@ -21,8 +21,17 @@ function renderProducts(productList, type = 'regular') {
             ${product.name}
           </a>
         </div>        <div class="product-price">
-          ${type === 'printhead' || type === 'printer' || type === 'printsparepart' || type === 'mixed' ? '$' + formatCurrency(product.price) : 
-            (product.getPrice ? product.getPrice() : formatCurrency(product.price))}
+          ${(() => {
+            if (type === 'regular' && product.getPrice) {
+              return product.getPrice();
+            } else if (product.lower_price !== undefined || product.higher_price !== undefined) {
+              return formatPriceRange(product.lower_price, product.higher_price);
+            } else if (product.price) {
+              return 'USD:$' + formatCurrency(product.price);
+            } else {
+              return 'Price not available';
+            }
+          })()}
         </div>
         <div class="product-quantity-section">
           <div class="product-quantity-container">

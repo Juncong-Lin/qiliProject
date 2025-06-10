@@ -1,5 +1,5 @@
 import {cart, cleanInvalidItems} from '../../data/cart.js';
-import {formatCurrency} from '../shared/money.js';
+import {formatCurrency, formatPriceRange} from '../shared/money.js';
 import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts} from '../../data/printer-products.js';
@@ -40,9 +40,11 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
     }
     return;
   }
-  
-  let productPriceCents = 0;
-  let shippingPriceCents = 0;cart.forEach((cartItem) => {
+    let productPriceCents = 0;
+  let higherProductPriceCents = 0;
+  let shippingPriceCents = 0;
+
+  cart.forEach((cartItem) => {
     let product;
     
     // First search in regular products
@@ -88,18 +90,37 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
       console.warn(`Product with ID ${cartItem.productId} not found`);
       return;
     }
+      // Handle different price formats: priceCents (regular) vs lower_price/higher_price (new format)
+    let lowerPricePerItem, higherPricePerItem;
     
-    // Handle different price formats: priceCents (regular) vs price (printhead)
-    const pricePerItem = product.priceCents || product.price;
-    productPriceCents += pricePerItem * cartItem.quantity;
+    if (product.priceCents) {
+      // Regular products with priceCents
+      lowerPricePerItem = higherPricePerItem = product.priceCents;
+    } else if (product.lower_price !== undefined) {
+      // Products with new price range format
+      lowerPricePerItem = product.lower_price;
+      higherPricePerItem = product.higher_price || product.lower_price;
+    } else if (product.price) {
+      // Fallback for old price format
+      lowerPricePerItem = higherPricePerItem = product.price;
+    } else {
+      console.warn(`No valid price found for product ${cartItem.productId}`);
+      return;
+    }
+    
+    productPriceCents += lowerPricePerItem * cartItem.quantity;
+    higherProductPriceCents += higherPricePerItem * cartItem.quantity;
 
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
     shippingPriceCents += deliveryOption.priceCents;
   });
 
-  const totalBeforeTax = productPriceCents + shippingPriceCents;
-  const tax = totalBeforeTax * 0.1;
-  const total = totalBeforeTax + tax;
+  const lowerTotalBeforeTax = productPriceCents + shippingPriceCents;
+  const higherTotalBeforeTax = higherProductPriceCents + shippingPriceCents;
+  const lowerTax = lowerTotalBeforeTax * 0.1;
+  const higherTax = higherTotalBeforeTax * 0.1;
+  const lowerTotal = lowerTotalBeforeTax + lowerTax;
+  const higherTotal = higherTotalBeforeTax + higherTax;
 
   let paymentSummaryHTML = `
     <div class="payment-summary-title">
@@ -108,27 +129,27 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
 
     <div class="payment-summary-row">
       <div>Items (${cart.length}):</div>
-      <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
+      <div class="payment-summary-money">USD:$${formatCurrency(productPriceCents)}~$${formatCurrency(higherProductPriceCents)}</div>
     </div>
 
     <div class="payment-summary-row">
       <div>Shipping &amp; handling:</div>
-      <div class="payment-summary-money">$${formatCurrency(shippingPriceCents)}</div>
+      <div class="payment-summary-money">USD:$${formatCurrency(shippingPriceCents)}</div>
     </div>
 
     <div class="payment-summary-row subtotal-row">
       <div>Total before tax:</div>
-      <div class="payment-summary-money">$${formatCurrency(totalBeforeTax)}</div>
+      <div class="payment-summary-money">USD:$${formatCurrency(lowerTotalBeforeTax)}~$${formatCurrency(higherTotalBeforeTax)}</div>
     </div>
 
     <div class="payment-summary-row">
       <div>Estimated tax (10%):</div>
-      <div class="payment-summary-money">$${formatCurrency(tax)}</div>
+      <div class="payment-summary-money">USD:$${formatCurrency(lowerTax)}~$${formatCurrency(higherTax)}</div>
     </div>
 
     <div class="payment-summary-row total-row">
       <div>Order total:</div>
-      <div class="payment-summary-money">$${formatCurrency(total)}</div>
+      <div class="payment-summary-money">USD:$${formatCurrency(lowerTotal)}~$${formatCurrency(higherTotal)}</div>
     </div>
 
     <button class="place-order-button button-primary">
@@ -199,9 +220,18 @@ export function renderOrderSummary() {
         <div class="order-summary-product-details">
           <div class="product-name">
             ${matchingProduct.name}
-          </div>
-          <div class="product-price">
-            $${formatCurrency(matchingProduct.priceCents || matchingProduct.price)}
+          </div>          <div class="product-price">
+            ${(() => {
+              if (matchingProduct.getPrice) {
+                return matchingProduct.getPrice();
+              } else if (matchingProduct.lower_price !== undefined || matchingProduct.higher_price !== undefined) {
+                return formatPriceRange(matchingProduct.lower_price, matchingProduct.higher_price);
+              } else if (matchingProduct.priceCents || matchingProduct.price) {
+                return '$' + formatCurrency(matchingProduct.priceCents || matchingProduct.price);
+              } else {
+                return 'Price not available';
+              }
+            })()}
           </div>
           <div class="product-quantity">
             <span>

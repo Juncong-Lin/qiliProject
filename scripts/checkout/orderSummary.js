@@ -3,7 +3,7 @@ import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts} from '../../data/printer-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
-import {formatCurrency} from '../shared/money.js';
+import {formatCurrency, formatPriceRange} from '../shared/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
@@ -100,9 +100,18 @@ cart.forEach((cartItem) => {
           <div class="cart-item-details">
             <div class="product-name">
               <a href="detail.html?id=${matchingProduct.id}">${matchingProduct.name}</a>
-            </div>
-            <div class="product-price">
-              $${formatCurrency(matchingProduct.priceCents || matchingProduct.price)}
+            </div>            <div class="product-price">
+              ${(() => {
+                if (matchingProduct.getPrice) {
+                  return matchingProduct.getPrice();
+                } else if (matchingProduct.lower_price !== undefined || matchingProduct.higher_price !== undefined) {
+                  return formatPriceRange(matchingProduct.lower_price, matchingProduct.higher_price);
+                } else if (matchingProduct.priceCents || matchingProduct.price) {
+                  return 'USD:$' + formatCurrency(matchingProduct.priceCents || matchingProduct.price);
+                } else {
+                  return 'Price not available';
+                }
+              })()}
             </div>
             <div class="product-quantity">
               <span>

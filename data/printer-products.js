@@ -143,8 +143,8 @@ export const printerProducts = {
     {
       id: 'AM1601i16',
       name: 'AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)',      image: 'products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
-      lower_price: 320000,
-      higher_price: 420000,
+      lower_price: 235000,
+      higher_price: 335000,
       description: 'AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead - Advanced eco-solvent inkjet printer with high-performance Epson i1600 printhead technology.',
       model: 'AM1601i16',
       specifications: {
@@ -226,8 +226,8 @@ export const printerProducts = {
     {
       id: 'AM1901i16',
       name: 'AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)',      image: 'products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
-      lower_price: 340000,
-      higher_price: 440000,
+      lower_price: 240000,
+      higher_price: 340000,
       description: 'AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead - Professional wide-format eco-solvent printer with advanced Epson i1600 printhead for superior print quality.',
       model: 'AM1901i16',
       specifications: {
@@ -272,8 +272,8 @@ export const printerProducts = {
     {
       id: 'AM1601i32',
       name: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)',      image: 'products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
-      lower_price: 450000,
-      higher_price: 550000,
+      lower_price: 275000,
+      higher_price: 375000,
       description: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead - Premium eco-solvent inkjet printer with cutting-edge Epson i3200 printhead technology for superior performance.',
       model: 'AM1601i32',
       specifications: {
@@ -316,8 +316,8 @@ export const printerProducts = {
     {
       id: 'AM1802i32',
       name: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)',      image: 'products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).jpg',
-      lower_price: 780000,
-      higher_price: 980000,
+      lower_price: 490000,
+      higher_price: 590000,
       description: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead - Professional dual-head eco-solvent printer with superior Epson i3200 printhead technology for high-volume production.',
       model: 'AM1802i32',
       specifications: {
@@ -360,8 +360,8 @@ export const printerProducts = {
     {
       id: 'AM1901i32',
       name: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)',      image: 'products/Inkjet Printers/Eco-Solvent Inkjet Printers/with I3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
-      lower_price: 520000,
-      higher_price: 620000,
+      lower_price: 280000,
+      higher_price: 380000,
       description: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead - Wide-format eco-solvent printer with advanced Epson i3200 printhead technology for large-scale professional printing.',
       model: 'AM1901i32',
       specifications: {
