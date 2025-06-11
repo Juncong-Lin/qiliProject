@@ -3,6 +3,7 @@ import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts} from '../../data/printer-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
+import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {formatCurrency, formatPriceRange} from '../shared/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
@@ -50,12 +51,23 @@ cart.forEach((cartItem) => {
       }
     }
   }
-  
-  // If not found in printer products, search in print spare part products
+    // If not found in printer products, search in print spare part products
   if (!matchingProduct) {
     for (const category in printSparePartProducts) {
       const categoryProducts = printSparePartProducts[category];
       const found = categoryProducts.find(product => product.id === productId);
+      if (found) {
+        matchingProduct = found;
+        break;
+      }
+    }
+  }
+  
+  // If not found in print spare part products, search in upgrading kit products
+  if (!matchingProduct) {
+    for (const brand in upgradingKitProducts) {
+      const brandProducts = upgradingKitProducts[brand];
+      const found = brandProducts.find(product => product.id === productId);
       if (found) {
         matchingProduct = found;
         break;

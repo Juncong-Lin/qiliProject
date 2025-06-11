@@ -4,6 +4,7 @@ import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts} from '../../data/printer-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
+import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {removeFromCart, updateDeliveryOption} from '../../data/cart.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deleveryOptions.js';
 
@@ -21,9 +22,12 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
   for (const category in printerProducts) {
     printerProducts[category].forEach(p => allValidProductIds.push(p.id));
   }
-  
-  for (const category in printSparePartProducts) {
+    for (const category in printSparePartProducts) {
     printSparePartProducts[category].forEach(p => allValidProductIds.push(p.id));
+  }
+  
+  for (const brand in upgradingKitProducts) {
+    upgradingKitProducts[brand].forEach(p => allValidProductIds.push(p.id));
   }
   
   // Clean cart of invalid items
@@ -72,12 +76,23 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
         }
       }
     }
-    
-    // If not found in printer products, search in print spare part products
+      // If not found in printer products, search in print spare part products
     if (!product) {
       for (const category in printSparePartProducts) {
         const categoryProducts = printSparePartProducts[category];
         const found = categoryProducts.find(p => p.id === cartItem.productId);
+        if (found) {
+          product = found;
+          break;
+        }
+      }
+    }
+    
+    // If not found in print spare part products, search in upgrading kit products
+    if (!product) {
+      for (const brand in upgradingKitProducts) {
+        const brandProducts = upgradingKitProducts[brand];
+        const found = brandProducts.find(p => p.id === cartItem.productId);
         if (found) {
           product = found;
           break;
