@@ -1,4 +1,5 @@
-import {cart, addToCart} from '../../data/cart.js'; 
+// Temporarily commented out cart imports - preserved for future reuse
+// import {cart, addToCart} from '../../data/cart.js'; 
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
@@ -32,8 +33,9 @@ function renderProducts(productList, type = 'regular') {
             } else {
               return 'Price not available';
             }
-          })()}
-        </div>
+          })()}        </div>
+        <!-- Temporarily commented out quantity section - not needed for View Details -->
+        <!--
         <div class="product-quantity-section">
           <div class="product-quantity-container">
             <select>
@@ -51,10 +53,10 @@ function renderProducts(productList, type = 'regular') {
           </div>
           <div class="added-message">Added</div>
         </div>
-        <div class="product-spacer"></div>
-        <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
-          Add to Cart
-        </button>
+        --><div class="product-spacer"></div>
+        <a class="add-to-cart-button button-primary" href="detail.html?productId=${product.id}">
+          View Details
+        </a>
       </div>`;
   });
   return productsHTML;
@@ -638,7 +640,11 @@ function updateBreadcrumb(brand) {
 }
 
 // Function to attach add to cart event listeners
+// Temporarily disabled since we're using "View Details" instead of "Add to Cart"
 function attachAddToCartListeners() {
+  // No-op function - cart functionality is temporarily disabled
+  // Original cart functionality is preserved in comments for future reuse
+  /*
   document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
       button.addEventListener('click', () => {
@@ -663,16 +669,16 @@ function attachAddToCartListeners() {
         }
       });
     });
+  */
 }
 
 // Load default products on page load
 document.addEventListener('DOMContentLoaded', () => {
   // Only run on the main index page, not on checkout or other pages
   const isIndexPage = document.querySelector('.products-grid') || document.querySelector('#products-grid');
-  
-  if (isIndexPage) {
-    // Initialize cart quantity display on page load immediately
-    updateCartQuantity();
+    if (isIndexPage) {
+    // Initialize cart quantity display on page load immediately - temporarily disabled
+    // updateCartQuantity();
     
     // Small delay to ensure sub-header navigation is initialized
     setTimeout(() => {
@@ -793,6 +799,9 @@ function handleHashFallback(hash) {
 }
 
 function updateCartQuantity() {
+  // Temporarily disabled since cart is hidden from header
+  // Original cart quantity functionality is preserved for future reuse
+  /*
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
@@ -802,6 +811,7 @@ function updateCartQuantity() {
   if (cartQuantityElement) {
     cartQuantityElement.innerHTML = cartQuantity;
   }
+  */
 }
 
 // Function to find any product by ID (regular, printhead, print spare parts, or upgrading kit)

@@ -3,8 +3,9 @@ import { printheadProducts } from '../../data/printhead-products.js';
 import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
-import { cart, addToCart } from '../../data/cart.js';
-import { updateCartQuantity } from '../shared/cart-quantity.js';
+// Temporarily commented out cart imports - preserved for future reuse
+// import { cart, addToCart } from '../../data/cart.js';
+// import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
 import { displayDocumentContent } from '../shared/document-content-extractor.js';
 import { formatPriceRange } from '../shared/money.js';
@@ -232,9 +233,8 @@ if (product) {
   
   // Set up product information tabs
   setupProductTabs();
-  
-  // Initialize cart quantity display on page load
-  updateCartQuantity();
+    // Initialize cart quantity display on page load - temporarily disabled
+  // updateCartQuantity();
   
 } else {
   // Handle case when product is not found
@@ -1086,7 +1086,9 @@ function setupFallbackUpgradingKitContent(product) {
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
 
-// Add to cart functionality
+// Add to cart functionality - Temporarily commented out
+// All cart functionality is preserved for future reuse
+/*
 document.querySelector('.js-add-to-cart')
   .addEventListener('click', () => {
     if (!productId) return;
@@ -1105,6 +1107,7 @@ document.querySelector('.js-add-to-cart')
     setTimeout(() => {
       addedMessage.style.opacity = '0';
     }, 2000);  });
+*/
 
 /**
  * Setup mobile touch scrolling for thumbnail gallery

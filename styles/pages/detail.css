@@ -478,6 +478,9 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
+  text-decoration: none; /* Remove underline for anchor tags */
+  text-align: center; /* Center the text */
+  display: inline-block; /* Ensure proper block behavior for anchor tags */
 }
 
 .add-to-cart-button:hover {
