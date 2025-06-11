@@ -653,7 +653,7 @@
   color: #555;
 }
 
-.contact-info {
+.js-product-details-content .contact-info {
   margin: 30px 0 20px 0;
   padding: 20px;
   background: #e8f4f8;
@@ -661,12 +661,12 @@
   border: 1px solid #007cba;
 }
 
-.contact-info p {
+.js-product-details-content .contact-info p {
   margin: 8px 0;
   color: #37475A;
 }
 
-.contact-info p:first-child {
+.js-product-details-content .contact-info p:first-child {
   font-weight: 600;
   margin-bottom: 12px;
 }
@@ -699,12 +699,11 @@
     margin: 20px 0;
     padding: 15px;
   }
-  
-  .product-info-section h4 {
+    .product-info-section h4 {
     font-size: 16px;
   }
   
-  .contact-info {
+  .js-product-details-content .contact-info {
     margin: 25px 0 15px 0;
     padding: 15px;
   }
