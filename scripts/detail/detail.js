@@ -2,6 +2,7 @@ import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
 import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
+import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { cart, addToCart } from '../../data/cart.js';
 import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
@@ -16,6 +17,17 @@ let productBrand = '';
 function findPrintSparePartById(id) {
   for (const brand in printSparePartProducts) {
     const product = printSparePartProducts[brand].find(item => item.id === id);
+    if (product) {
+      return { ...product, brand };
+    }
+  }
+  return null;
+}
+
+// Helper function to find upgrading kit product by ID across all brands
+function findUpgradingKitById(id) {
+  for (const brand in upgradingKitProducts) {
+    const product = upgradingKitProducts[brand].find(item => item.id === id);
     if (product) {
       return { ...product, brand };
     }
@@ -68,6 +80,11 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
       break;
     }
   }
+} else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
+  product = findUpgradingKitById(productId);
+  if (product) {
+    productBrand = product.brand;
+  }
 } else {
   // Search in regular products or auto-detect if no productType specified
   product = products.find(product => product.id === productId);
@@ -97,8 +114,7 @@ if (!product && !urlProductType) {
         break;
       }
     }
-  }
-  // If not found in printer products, search in print spare parts
+  }  // If not found in printer products, search in print spare parts
   if (!product) {
     product = findPrintSparePartById(productId);
     if (product) {
@@ -110,6 +126,15 @@ if (!product && !urlProductType) {
         'canon': 'canon-printer-spare-parts'
       };
       productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
+    }
+  }
+  
+  // If not found in print spare parts, search in upgrading kit products
+  if (!product) {
+    product = findUpgradingKitById(productId);
+    if (product) {
+      productType = 'upgradingkit';
+      productBrand = product.brand;
     }
   }
 }
@@ -192,10 +217,12 @@ if (product) {
   document.querySelector('.js-product-description').textContent = product.description || '';
     // Update the page title
   document.title = `${product.name} - Qilitrading.com`;  // Load content based on product type
-  if (productType === 'printhead') {
-    loadPrintheadDetails(product);
+  if (productType === 'printhead') {    loadPrintheadDetails(product);
   } else if (productType === 'printsparepart' || productType === 'print-spare-parts') {
-    setupPrintSparePartContent(product);  } else if (productType === 'printer') {
+    setupPrintSparePartContent(product);  
+  } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
+    setupUpgradingKitContent(product);
+  } else if (productType === 'printer') {
     setupPrinterProductContent(product);
   } else {
     setupRegularProductContent(product);
@@ -907,11 +934,66 @@ function setupBasicPrinterContent(product) {
   if (specificationsSection) specificationsSection.style.display = 'none';
 }
 
+/**
+ * Set up content for upgrading kit products
+ */
+async function setupUpgradingKitContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    // Get the brand folder and product folder from the image path
+    // Format: products/upgradingKit/Brand/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const brandFolder = pathParts[2]; // Brand folder
+    const productFolder = pathParts[3]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `products/upgradingKit/${brandFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackUpgradingKitContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For upgrading kits, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    // Hide compatibility and specifications sections since upgrading kits typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading upgrading kit details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackUpgradingKitContent(product);
+  }
+}
 
-
-
-
-
+/**
+ * Fallback function for upgrading kit content when markdown loading fails
+ */
+function setupFallbackUpgradingKitContent(product) {
+  // Set minimal fallback content
+  const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1).replace(/_/g, ' ');
+  
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>${brandName} upgrading kit product. Product information is currently being updated. Please contact us for detailed specifications.</p>
+  `;
+  
+  // Hide sections since we don't have detailed data
+  document.querySelector('.product-compatibility-section').style.display = 'none';
+  document.querySelector('.product-specifications-section').style.display = 'none';
+}
 
 // Add to cart functionality
 document.querySelector('.js-add-to-cart')
@@ -1342,7 +1424,18 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#print-spare-parts" class="breadcrumb-link">Print Spare Parts</a>
       <span class="breadcrumb-separator">&gt;</span>
-      <a href="index.html#${brandSlug}" class="breadcrumb-link">${brandName} Printer Spare Parts</a>
+      <a href="index.html#${brandSlug}" class="breadcrumb-link">${brandName} Printer Spare Parts</a>      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
+  } else if (productType === 'upgradingkit') {
+    // For upgrading kit products, show proper breadcrumb navigation based on brand
+    const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1).replace(/_/g, ' ');
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#upgrading-kit" class="breadcrumb-link">Upgrading Kit</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#upgrading-kit-${product.brand}" class="breadcrumb-link">${brandName} Products</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;

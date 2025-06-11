@@ -3,6 +3,7 @@ import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
+import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
 // Unified product rendering function with optional type parameter
@@ -275,12 +276,101 @@ window.loadI3200Printers = function() {
     
     // Update page title
     updatePageHeader('I3200 Inkjet Printers');
-    
-    // Update breadcrumb navigation
+      // Update breadcrumb navigation
     updateBreadcrumb('i3200-printers');
     
     // Scroll to top of products
     scrollToProducts();
+  }, 200);
+};
+
+// Function to load upgrading kit products for a specific brand
+window.loadUpgradingKitProducts = function(brand) {
+  const brandProducts = upgradingKitProducts[brand];
+  if (brandProducts) {
+    // Hide the submenu after selection
+    hideActiveSubmenus();
+    
+    // Hide hero banner for specific category views
+    hideHeroBanner();
+    
+    // Highlight selected menu item
+    highlightSelectedMenuItem(brand);
+    
+    // Add loading animation
+    showLoadingState();
+    
+    // Small delay for smooth transition
+    setTimeout(() => {
+      const productsHTML = renderProducts(brandProducts, 'upgradingkit');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page title or add a header to show which brand is selected
+      updatePageHeader(`${brand.charAt(0).toUpperCase() + brand.slice(1)} Upgrading Kit`);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb(brand, 'upgradingkit');
+      
+      // Scroll to top of products
+      scrollToProducts();
+    }, 200);
+  }
+};
+
+// Function to load all upgrading kit products from all brands
+window.loadAllUpgradingKitProducts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Upgrading Kit') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all upgrading kit products from all brands
+    let allUpgradingKitProducts = [];
+    for (const brand in upgradingKitProducts) {
+      allUpgradingKitProducts = allUpgradingKitProducts.concat(upgradingKitProducts[brand]);
+    }
+    
+    const productsHTML = renderProducts(allUpgradingKitProducts, 'upgradingkit');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show upgrading kit category
+    updatePageHeader('Upgrading Kit');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('upgradingKit');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
   }, 200);
 };
 
@@ -468,8 +558,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Canon Printer Spare Parts</span>
         `;
-      }
-    } else if (brand === 'ricohPrinterSpareParts') {
+      }    } else if (brand === 'ricohPrinterSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
           <a href="index.html" class="breadcrumb-link">Home</a>
@@ -485,6 +574,39 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadAllPrintSpareParts()" class="breadcrumb-link">Print Spare Parts</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">Ricoh Printer Spare Parts</span>
+        `;
+      }
+    } else if (brand === 'upgradingKit') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Upgrading Kit</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Upgrading Kit</span>
+        `;
+      }
+    } else if (brand === 'hoson' || brand === 'mimaki' || brand === 'mutoh' || brand === 'roll_to_roll_style' || brand === 'uv_flatbed' || brand === 'without_cable_work') {
+      // These are upgrading kit brands
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#upgrading-kit" class="breadcrumb-link">Upgrading Kit</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" class="breadcrumb-link" onclick="loadUpgradingKitProducts('${brand}')">${brand.charAt(0).toUpperCase() + brand.slice(1).replace(/_/g, ' ')} Products</a>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllUpgradingKitProducts()" class="breadcrumb-link">Upgrading Kit</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1).replace(/_/g, ' ')} Products</span>
         `;
       }
     } else {
@@ -682,7 +804,7 @@ function updateCartQuantity() {
   }
 }
 
-// Function to find any product by ID (regular or printhead)
+// Function to find any product by ID (regular, printhead, print spare parts, or upgrading kit)
 export function findProductById(productId) {
   // First check regular products
   let product = products.find(p => p.id === productId);
@@ -691,6 +813,24 @@ export function findProductById(productId) {
   if (!product) {
     for (const brand in printheadProducts) {
       const brandProducts = printheadProducts[brand];
+      product = brandProducts.find(p => p.id === productId);
+      if (product) break;
+    }
+  }
+  
+  // If not found, check print spare part products
+  if (!product) {
+    for (const brand in printSparePartProducts) {
+      const brandProducts = printSparePartProducts[brand];
+      product = brandProducts.find(p => p.id === productId);
+      if (product) break;
+    }
+  }
+  
+  // If not found, check upgrading kit products
+  if (!product) {
+    for (const brand in upgradingKitProducts) {
+      const brandProducts = upgradingKitProducts[brand];
       product = brandProducts.find(p => p.id === productId);
       if (product) break;
     }
@@ -1122,13 +1262,44 @@ window.loadSpecificCategory = function(categoryName) {
 
         const mainElement = document.querySelector('.main');
         mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
-      }
-      breadcrumbElement.innerHTML = `
+      }      breadcrumbElement.innerHTML = `
         <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
         <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Print Spare Parts')" class="breadcrumb-link">Print Spare Parts</a>
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Ricoh Printer Spare Parts</span>
+      `;
+    } else if (categoryName === 'Upgrading Kit') {
+      // Load all upgrading kit products
+      let allUpgradingKitProducts = [];
+      for (const brand in upgradingKitProducts) {
+        allUpgradingKitProducts = allUpgradingKitProducts.concat(upgradingKitProducts[brand]);
+      }
+      
+      const productsHTML = renderProducts(allUpgradingKitProducts, 'upgradingkit');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Upgrading Kit');
+      
+      // Update breadcrumb
+      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
+      if (!breadcrumbElement) {
+        breadcrumbElement = document.createElement('div');
+        breadcrumbElement.className = 'breadcrumb-nav';
+
+        const mainElement = document.querySelector('.main');
+        mainElement.insertBefore(breadcrumbElement, mainElement.firstChild);
+      }
+      breadcrumbElement.innerHTML = `
+        <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Upgrading Kit</span>
       `;
     } else {
       // For other categories, show placeholder content

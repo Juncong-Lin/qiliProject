@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrading Kit Functionality Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Upgrading Kit Functionality Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Data Loading</h2>
+        <div id="data-test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Product Search</h2>
+        <div id="search-test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: Function Availability</h2>
+        <div id="function-test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 4: Navigation Links</h2>
+        <button onclick="testNavigation('loadAllUpgradingKitProducts')">Test Load All</button>
+        <button onclick="testNavigation('loadUpgradingKitProducts', 'hoson')">Test Hoson</button>
+        <button onclick="testNavigation('loadUpgradingKitProducts', 'mimaki')">Test Mimaki</button>
+        <div id="navigation-test-results"></div>
+    </div>
+    
+    <script type="module">
+        import { upgradingKitProducts } from './data/upgradingkit-products.js';
+        import { findProductById } from './scripts/index/qilitrading.js';
+        
+        // Test 1: Data Loading
+        function testDataLoading() {
+            const results = document.getElementById('data-test-results');
+            let html = '';
+            
+            try {
+                const totalProducts = Object.values(upgradingKitProducts)
+                    .reduce((total, brandProducts) => total + brandProducts.length, 0);
+                
+                const brandsWithProducts = Object.keys(upgradingKitProducts)
+                    .filter(brand => upgradingKitProducts[brand].length > 0);
+                
+                html += `<div class="test-result success">✅ Data loaded successfully</div>`;
+                html += `<div class="test-result success">✅ Total products: ${totalProducts}</div>`;
+                html += `<div class="test-result success">✅ Brands with products: ${brandsWithProducts.join(', ')}</div>`;
+                
+                // Test individual products
+                brandsWithProducts.forEach(brand => {
+                    const products = upgradingKitProducts[brand];
+                    products.slice(0, 2).forEach(product => {
+                        if (product.id && product.name && product.image) {
+                            html += `<div class="test-result success">✅ ${brand}: ${product.name}</div>`;
+                        } else {
+                            html += `<div class="test-result error">❌ ${brand}: Missing required fields</div>`;
+                        }
+                    });
+                });
+                
+            } catch (error) {
+                html += `<div class="test-result error">❌ Error loading data: ${error.message}</div>`;
+            }
+            
+            results.innerHTML = html;
+        }
+        
+        // Test 2: Product Search
+        function testProductSearch() {
+            const results = document.getElementById('search-test-results');
+            let html = '';
+            
+            try {
+                // Test findProductById with upgrading kit products
+                const testProductId = 'Hoson-i3200-boards-kit-with-cable-work-for-4-piece-i3200-Flatbed-Version';
+                const foundProduct = findProductById(testProductId);
+                
+                if (foundProduct) {
+                    html += `<div class="test-result success">✅ Product search works: Found "${foundProduct.name}"</div>`;
+                } else {
+                    html += `<div class="test-result error">❌ Product search failed: Could not find product with ID "${testProductId}"</div>`;
+                }
+                
+                // Test with another product
+                const testProductId2 = 'Kit-i3200-for-Upgrade-Mimaki-JV150-or-JV300-with-3-I3200-printheads';
+                const foundProduct2 = findProductById(testProductId2);
+                
+                if (foundProduct2) {
+                    html += `<div class="test-result success">✅ Second product search works: Found "${foundProduct2.name}"</div>`;
+                } else {
+                    html += `<div class="test-result error">❌ Second product search failed</div>`;
+                }
+                
+            } catch (error) {
+                html += `<div class="test-result error">❌ Error in product search: ${error.message}</div>`;
+            }
+            
+            results.innerHTML = html;
+        }
+        
+        // Test 3: Function Availability
+        function testFunctionAvailability() {
+            const results = document.getElementById('function-test-results');
+            let html = '';
+            
+            const functionsToTest = [
+                'loadAllUpgradingKitProducts',
+                'loadUpgradingKitProducts',
+                'loadSpecificCategory'
+            ];
+            
+            functionsToTest.forEach(funcName => {
+                if (typeof window[funcName] === 'function') {
+                    html += `<div class="test-result success">✅ Function ${funcName} is available</div>`;
+                } else {
+                    html += `<div class="test-result error">❌ Function ${funcName} is not available</div>`;
+                }
+            });
+            
+            results.innerHTML = html;
+        }
+        
+        // Test 4: Navigation
+        window.testNavigation = function(functionName, ...args) {
+            const results = document.getElementById('navigation-test-results');
+            
+            try {
+                if (typeof window[functionName] === 'function') {
+                    window[functionName](...args);
+                    results.innerHTML += `<div class="test-result success">✅ Successfully called ${functionName}(${args.join(', ')})</div>`;
+                } else {
+                    results.innerHTML += `<div class="test-result error">❌ Function ${functionName} not found</div>`;
+                }
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Error calling ${functionName}: ${error.message}</div>`;
+            }
+        };
+        
+        // Run tests
+        testDataLoading();
+        testProductSearch();
+        testFunctionAvailability();
+        
+        console.log('Upgrading Kit Test Results:');
+        console.log('Data:', upgradingKitProducts);
+        console.log('Functions available:', {
+            loadAllUpgradingKitProducts: typeof window.loadAllUpgradingKitProducts,
+            loadUpgradingKitProducts: typeof window.loadUpgradingKitProducts,
+            findProductById: typeof findProductById
+        });
+    </script>
+</body>
+</html>
