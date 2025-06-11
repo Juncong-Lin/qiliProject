@@ -67,10 +67,10 @@ class SubHeaderNavigation {
           } else if (linkText === 'Print Spare Parts' && window.loadSpecificCategory) {
             window.loadSpecificCategory('Print Spare Parts');
             this.setActiveCategory('Print Spare Parts');
-            window.location.hash = hash;
-          } else if (linkText === 'Upgrading Kit' && window.loadSpecificCategory) {
+            window.location.hash = hash;          } else if (linkText === 'Upgrading Kit' && window.loadSpecificCategory) {
             window.loadSpecificCategory('Upgrading Kit');
             this.setActiveCategory('Upgrading Kit');
+            window.location.hash = hash;
           }          else if (linkText === 'Material' && window.loadSpecificCategory) {
             window.loadSpecificCategory('Material');
             this.setActiveCategory('Material');
@@ -272,14 +272,25 @@ class SubHeaderNavigation {
         submenu.style.display = 'block';
       }
     }
-  }
-  expandPrintSparePartsMenu() {
+  }  expandPrintSparePartsMenu() {
     // Find and expand the print spare parts menu in the sidebar if it exists
     const sparePartsLink = document.querySelector('[onclick*="loadAllPrintSpareParts"]');
     if (sparePartsLink) {
       const submenu = sparePartsLink.nextElementSibling;
       if (submenu && submenu.classList.contains('submenu')) {
         sparePartsLink.classList.add('expanded');
+        submenu.style.display = 'block';
+      }
+    }
+  }
+
+  expandUpgradingKitMenu() {
+    // Find and expand the upgrading kit menu in the sidebar if it exists
+    const upgradingKitLink = document.querySelector('[onclick*="loadAllUpgradingKitProducts"]');
+    if (upgradingKitLink) {
+      const submenu = upgradingKitLink.nextElementSibling;
+      if (submenu && submenu.classList.contains('submenu')) {
+        upgradingKitLink.classList.add('expanded');
         submenu.style.display = 'block';
       }
     }
@@ -373,8 +384,7 @@ class SubHeaderNavigation {
       }
       return;
     }
-    
-    if (hash.startsWith('printheads-')) {
+      if (hash.startsWith('printheads-')) {
       const brand = hash.replace('printheads-', '');
       if (window.loadPrintheadProducts) {
         window.loadPrintheadProducts(brand);
@@ -382,7 +392,28 @@ class SubHeaderNavigation {
         this.expandPrintHeadsMenu();
       }
       return;
-    }// Handle other category hashes
+    }
+
+    if (hash.startsWith('upgrading-kit-')) {
+      const kitType = hash.replace('upgrading-kit-', '');
+      let brandKey = kitType;
+      
+      // Map hash names to data keys
+      if (kitType === 'roll-to-roll') {
+        brandKey = 'roll_to_roll_style';
+      } else if (kitType === 'uv-flatbed') {
+        brandKey = 'uv_flatbed';
+      } else if (kitType === 'without-cable') {
+        brandKey = 'without_cable_work';
+      }
+      
+      if (window.loadUpgradingKitProducts) {
+        window.loadUpgradingKitProducts(brandKey);
+        this.setActiveCategory('Upgrading Kit');
+        this.expandUpgradingKitMenu();
+      }
+      return;
+    }    // Handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',
@@ -408,12 +439,13 @@ class SubHeaderNavigation {
     if (categoryName && window.loadSpecificCategory) {
       window.loadSpecificCategory(categoryName);
       this.setActiveCategory(categoryName);
-      
-      // Expand appropriate sidebar menu
+        // Expand appropriate sidebar menu
       if (categoryName === 'Inkjet Printers') {
         this.expandInkjetPrintersMenu();
       } else if (categoryName === 'Print Spare Parts') {
         this.expandPrintSparePartsMenu();
+      } else if (categoryName === 'Upgrading Kit') {
+        this.expandUpgradingKitMenu();
       }
     }
   }

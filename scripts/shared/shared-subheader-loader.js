@@ -307,6 +307,39 @@ window.handlePrintheadClick = function(brand) {
   }
 };
 
+// Helper function to handle upgrading kit clicks from subheader
+window.handleUpgradingKitClick = function(kitType) {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadUpgradingKitProducts && typeof window.loadUpgradingKitProducts === 'function') {
+    // We're on the index page - load products directly
+    window.loadUpgradingKitProducts(kitType);
+    
+    // Map kit types to hash values
+    let hashValue = `upgrading-kit-${kitType}`;
+    if (kitType === 'roll_to_roll_style') {
+      hashValue = 'upgrading-kit-roll-to-roll';
+    } else if (kitType === 'uv_flatbed') {
+      hashValue = 'upgrading-kit-uv-flatbed';
+    } else if (kitType === 'without_cable_work') {
+      hashValue = 'upgrading-kit-without-cable';
+    }
+    
+    // Update URL hash for proper navigation
+    window.location.hash = hashValue;
+  } else {
+    // We're on a different page (like detail.html) - navigate to index page with hash
+    let hashValue = `#upgrading-kit-${kitType}`;
+    if (kitType === 'roll_to_roll_style') {
+      hashValue = '#upgrading-kit-roll-to-roll';
+    } else if (kitType === 'uv_flatbed') {
+      hashValue = '#upgrading-kit-uv-flatbed';
+    } else if (kitType === 'without_cable_work') {
+      hashValue = '#upgrading-kit-without-cable';
+    }
+    UrlUtils.navigateToIndex(hashValue);
+  }
+};
+
 // Function to initialize sub-header navigation after shared content is loaded
 function initializeSubHeaderAfterLoad() {
   // Wait a bit to ensure DOM is fully updated
