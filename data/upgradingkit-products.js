@@ -193,7 +193,7 @@ export const upgradingKitProducts = {
     {
       id: 'Kit-i3200-for-Upgrading-Chinese-Inkjet-Printer-with-4-i3200-printheads-roll-to-roll-style',
       name: 'Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads (roll to roll style)',
-      image: 'products/upgradingKit/Roll To Roll Style upgradingKit/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads (roll to roll style)/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads (roll to roll style).jpg',
+      image: 'products/upgradingKit/Roll To Roll Style upgradingKit/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads.jpg',
       lower_price: 695000,
       higher_price: 750000
     },
@@ -314,7 +314,7 @@ export const upgradingKitProducts = {
     {
       id: 'YXP-xp600-boards-kit-without-cable-work-for-1-piece-xp600-printhead-brushless-motor-version',
       name: 'YXP xp600 boards kit without cable work for 1 piece xp600 printhead(brushless motor version)',
-      image: 'products/upgradingKit/Without Cable Work upgradingKit/YXP xp600 boards kit without cable work for 1 piece xp600 printhead(brushless motor version)/image/YXP xp600 boards kit without cable work for 1 piece xp600 printhead(brushless motor version).jpg',
+      image: 'products/upgradingKit/Without Cable Work upgradingKit/YXP xp600 boards kit without cable work for 1 piece xp600 printhead/image/YXP xp600 boards kit without cable work for 1 piece xp600 printhead.jpg',
       lower_price: 120000,
       higher_price: 120000
     },
