@@ -654,17 +654,18 @@ async function loadPrintheadDetails(product) {
   try {
     // Extract the path to the markdown file
     const imagePath = product.image;
-      // Get the brand and model name from the image path
-    // Format: products/Inkjet Printheads/Canon Printhead/Canon PF-03 Printhead/image/...
+    // Get the brand and model name from the image path
+    // Format: products/printhead/Canon printhead/Canon PF-03 Printhead/image/...
     const pathParts = imagePath.split('/');
-    const brandFolder = pathParts[2]; // "Canon Printhead"
+    const brandFolder = pathParts[2]; // "Canon printhead"
     const modelFolder = pathParts[3]; // "Canon PF-03 Printhead"
     
     // Construct path to MD file
-    const mdFilePath = `products/Inkjet Printheads/${brandFolder}/${modelFolder}/${modelFolder}.md`;
-      // Fetch the markdown file content
+    const mdFilePath = `products/printhead/${brandFolder}/${modelFolder}/${modelFolder}.md`;
+    
+    // Fetch the markdown file content
     const response = await fetch(mdFilePath);
-      if (!response.ok) {
+    if (!response.ok) {
       // Fallback to hardcoded content if markdown file is not found
       setupFallbackPrintheadContent(product);
       return;
@@ -672,119 +673,25 @@ async function loadPrintheadDetails(product) {
     
     const mdContent = await response.text();
     
-    // Parse the markdown content into sections
-    const contentSections = separatePrintheadContent(mdContent);
+    // For printhead products, load the entire markdown content directly
+    const parsedContent = parseMarkdown(mdContent);
     
-    // Update product description with the short description
-    if (contentSections.shortDescription) {
-      document.querySelector('.js-product-description').innerHTML = parseMarkdown(contentSections.shortDescription);
-    }
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
     
-    // Update the product details tab content
-    document.querySelector('.js-product-details-content').innerHTML = parseMarkdown(contentSections.mainContent) || '';
-      // Update compatibility section if available
-    if (contentSections.compatibility) {
-      document.querySelector('.js-product-compatibility').innerHTML = parseMarkdown(contentSections.compatibility);
-    } else {
-      document.querySelector('.product-compatibility-section').style.display = 'none';
-    }
-      // Update specifications section if available
-    if (contentSections.specifications) {
-      document.querySelector('.js-product-specifications').innerHTML = parseMarkdown(contentSections.specifications);
-    } else {
-      document.querySelector('.product-specifications-section').style.display = 'none';
-    }
-      } catch (error) {
+    // Hide compatibility and specifications sections since we're loading everything from markdown
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
     console.error('Error loading printhead details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackPrintheadContent(product);
   }
 }
 
 
 
-
-/**
- * Separate the markdown content into different sections based on content
- */
-function separatePrintheadContent(mdContent) {
-  // Define the sections we want to extract
-  const sections = {
-    shortDescription: '',
-    mainContent: '',
-    compatibility: '',
-    specifications: '',
-    notices: ''
-  };
-  
-  // Split content into lines
-  const lines = mdContent.split('\n');
-  
-  // Initial processing to extract the main title and short description
-  let currentSection = 'mainContent';
-  let titleFound = false;
-  let shortDescEnded = false;
-  
-  // Process each line
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    
-    // Skip HTML comments or empty lines at the beginning
-    if (line.startsWith('<!--') || (line === '' && !titleFound)) {
-      continue;
-    }
-    
-    // Extract main title (first H1)
-    if (line.startsWith('# ') && !titleFound) {
-      sections.mainContent += line + '\n\n';
-      titleFound = true;
-      continue;
-    }
-    
-    // Short description is the text right after the title until a blank line
-    if (titleFound && !shortDescEnded) {
-      if (line === '') {
-        shortDescEnded = true;
-      } else {
-        sections.shortDescription += line + '\n';
-      }
-      continue;
-    }
-    
-    // Detect section based on headers or content
-    if (line.toLowerCase().includes('compatibility') || 
-        line.toLowerCase().includes('compatible with') ||
-        line.toLowerCase().includes('to be used with')) {
-      currentSection = 'compatibility';
-      sections[currentSection] += line + '\n';
-    }
-    else if (line.toLowerCase().includes('specification') || 
-             line.toLowerCase().includes('model:') || 
-             line.toLowerCase().includes('ink compatibility:')) {
-      currentSection = 'specifications';
-      sections[currentSection] += line + '\n';
-    }
-    else if (line.toLowerCase().includes('notice') || 
-             line.toLowerCase().includes('attention') ||
-             line.toLowerCase().includes('warning')) {
-      currentSection = 'notices';
-      sections[currentSection] += line + '\n';
-    }
-    else {
-      // Add the line to the current section
-      sections[currentSection] += line + '\n';
-    }
-  }
-  
-  // If we have notices, add them to the specifications section
-  if (sections.notices) {
-    if (sections.specifications) {
-      sections.specifications += '\n\n' + sections.notices;
-    } else {
-      sections.specifications = sections.notices;
-    }
-  }
-  
-  return sections;
-}
 
 /**
  * Set up the product information tabs
@@ -1462,14 +1369,14 @@ async function setupPrintSparePartContent(product) {
   try {
     // Extract the path to the markdown file from the image path
     const imagePath = product.image;
-      // Get the brand folder and product folder from the image path
-    // Format: products/Print Spare Parts/Canon Printer Spare Parts/Product Name/image/...
+    // Get the brand folder and product folder from the image path
+    // Format: products/printSparePart/Brand/Product Name/image/...
     const pathParts = imagePath.split('/');
-    const brandFolder = pathParts[2]; // "Canon Printer Spare Parts"
+    const brandFolder = pathParts[2]; // Brand folder
     const productFolder = pathParts[3]; // Product name folder
     
     // Construct path to MD file
-    const mdFilePath = `products/Print Spare Parts/${brandFolder}/${productFolder}/${productFolder}.md`;
+    const mdFilePath = `products/printSparePart/${brandFolder}/${productFolder}/${productFolder}.md`;
     
     // Fetch the markdown file content
     const response = await fetch(mdFilePath);
