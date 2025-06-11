@@ -242,13 +242,6 @@ export const printSparePartProducts = {
       higher_price: 180000
     },
     {
-      id: 'Printhead-board-the-Printing-Control-Board-of-Flora-lj320p-Series-solvent-inkjet-printers-with-Spectra-Polaris-Printhead',
-      name: 'Printhead board the Printing Control Board of Flora lj320p Series solvent inkjet printers with Spectra Polaris Printhead',
-      image: 'products/printSparePart/Flora/Printhead board the Printing Control Board of Flora lj320p Series solvent inkjet printers with Spectra Polaris Printhead/image/Printhead board the Printing Control Board of Flora lj320p Series solvent inkjet printers with Spectra Polaris Printhead.jpg',
-      lower_price: 150000,
-      higher_price: 180000
-    },
-    {
       id: 'Printhead-board-the-Printing-Control-Board-of-Flora-LJ3204K-Series-solvent-inkjet-printers-with-Konica512-Printhead',
       name: 'Printhead board the Printing Control Board of Flora LJ3204K Series solvent inkjet printers with Konica512 Printhead',
       image: 'products/printSparePart/Flora/Printhead board the Printing Control Board of Flora LJ3204K Series solvent inkjet printers with Konica512 Printhead/image/Printhead board the Printing Control Board of Flora LJ3204K Series solvent inkjet printers with Konica512 Printhead.jpg',

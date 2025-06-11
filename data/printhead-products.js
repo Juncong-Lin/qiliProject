@@ -4,7 +4,7 @@ export const printheadProducts = {
     {
       id: 'Epson-XP600-XP700-XP800-Printhead',
       name: 'Epson XP600 XP700 XP800 Printhead',
-      image: 'products/printhead/Epson printhead/Epson XP600 XP700 XP800 Printhead/image/Epson XP600 XP700 XP800 Printhead.jpg',
+      image: 'products/printhead/Epson printhead/Epson XP600 XP700 XP800 Printhead/image/Epson XP600 XP700 XP800 Printhead.png',
       lower_price: 19000,
       higher_price: 19000
     },
@@ -425,7 +425,7 @@ export const printheadProducts = {
     {
       id: 'DX5-Original-Printhead-of-Mutoh-Original-Mutoh-Drafstation-RJ-900C-RJ-901C-RJ-900X-Part-Number-DG-44246',
       name: 'DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C  RJ-901C RJ-900X Part Number  DG-44246',
-      image: 'products/printhead/Mutoh printhead/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X/image/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X.jpg',
+      image: 'products/printhead/Mutoh printhead/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X Part Number DG-44246/image/DX5 Original Printhead of Mutoh Original Mutoh Drafstation RJ-900C RJ-901C RJ-900X Part Number DG-44246.jpg',
       lower_price: 122000,
       higher_price: 125000
     },
