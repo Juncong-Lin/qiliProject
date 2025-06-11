@@ -1099,3 +1099,32 @@ body.has-sidebar .main {
     padding: 10px 0;
   }
 }
+
+/* Mobile main content adjustments for fixed header */
+@media (max-width: 768px) {
+  .main,
+  body.has-sidebar .main {
+    margin-top: 97px !important; /* 60px header + 32px sub-header + 5px gap */
+    padding-top: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main,
+  body.has-sidebar .main {
+    margin-top: 97px !important;
+    padding-top: 15px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .main,
+  body.has-sidebar .main {
+    margin-top: 92px !important; /* 55px header + 32px sub-header + 5px gap */
+    padding-top: 15px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}

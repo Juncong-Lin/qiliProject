@@ -219,6 +219,28 @@
   }
 }
 
+/* Mobile main content adjustments for fixed header */
+@media (max-width: 768px) {
+  .main {
+    margin-top: 97px !important; /* 60px header + 32px sub-header + 5px gap */
+    padding: 20px 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    margin-top: 97px !important;
+    padding: 15px 10px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .main {
+    margin-top: 92px !important; /* 55px header + 32px sub-header + 5px gap */
+    padding: 15px 8px !important;
+  }
+}
+
 /* Override any sidebar interference - ensure no-sidebar pages are not affected by sidebar CSS */
 body.no-sidebar .main {
   margin-left: auto;

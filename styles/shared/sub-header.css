@@ -333,3 +333,10 @@
     padding: 10px;
   }
 }
+
+/* Mobile sub-header positioning adjustments */
+@media (max-width: 320px) {
+  .sub-header {
+    top: 55px !important; /* Position below reduced-height main header */
+  }
+}

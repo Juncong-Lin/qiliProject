@@ -153,51 +153,43 @@
   z-index: 10001; /* Higher than sub-header to create proper stacking context */
 }
 
-/* Mobile search centering - ensure equal side widths without overlap */
+/* Mobile search centering - ensure search bar is truly centered */
 @media (max-width: 768px) {
   .qili-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* Auto-size side columns based on content */
     align-items: center;
-    justify-content: space-between; /* Keep space-between for proper distribution */
-    position: relative;
-    padding: 0 5px; /* Slightly more padding for breathing room */
+    gap: 5px; /* Small gap between sections */
+    padding: 0 5px;
   }
   
   .qili-header-left-section {
-    width: 40px;
-    min-width: 40px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    flex-shrink: 0;
-    z-index: 10002; /* Above search */
-  }
-  
-  .qili-header-right-section {
-    width: 40px;
-    min-width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    z-index: 10002; /* Above search */
+    margin: 0; /* Remove margin for grid layout */
   }
   
   .qili-header-middle-section {
-    flex: 1;
-    max-width: calc(100% - 90px); /* Leave space for both sides + padding */
-    margin: 0 5px; /* Small margin to prevent overlap */
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    z-index: 10001; /* Below sides */
+    margin: 0; /* Remove margin for grid layout */
+    min-width: 0; /* Allow shrinking */
+    max-width: none; /* Remove max-width constraint */
+  }
+  
+  .qili-header-right-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }
 
 @media (max-width: 480px) {
   .qili-header {
-    padding: 0 3px; /* Reduce padding */
+    padding: 0 3px;
+    grid-template-columns: 32px 1fr 32px; /* Smaller equal side columns */
   }
   
   .qili-header-left-section {
@@ -208,17 +200,13 @@
   .qili-header-right-section {
     width: 32px;
     min-width: 32px;
-  }
-  
-  .qili-header-middle-section {
-    max-width: calc(100% - 70px); /* Adjust for smaller sides */
-    margin: 0 3px;
   }
 }
 
 @media (max-width: 360px) {
   .qili-header {
     padding: 0 2px;
+    grid-template-columns: 28px 1fr 28px; /* Even smaller equal side columns */
   }
   
   .qili-header-left-section {
@@ -229,18 +217,14 @@
   .qili-header-right-section {
     width: 28px;
     min-width: 28px;
-  }
-  
-  .qili-header-middle-section {
-    max-width: calc(100% - 60px); /* Adjust for smaller sides */
-    margin: 0 2px;
   }
 }
 
 @media (max-width: 320px) {
   .qili-header {
     padding: 0 1px;
-    height: 55px; /* Slightly reduced height for ultra-small screens */
+    height: 55px;
+    grid-template-columns: 25px 1fr 25px; /* Ultra-small equal side columns */
   }
   
   .qili-header-left-section {
@@ -253,14 +237,28 @@
     min-width: 25px;
   }
   
-  .qili-header-middle-section {
-    max-width: calc(100% - 52px); /* Adjust for smallest sides */
-    margin: 0 1px;
-  }
-  
   /* Hide orders link on ultra-small screens for more space */
   .qili-header-right-section .orders-link {
     display: none;
+  }
+}
+
+/* Mobile-specific positioning fixes */
+@media (max-width: 768px) {
+  /* Ensure body has proper top padding for fixed header */
+  body {
+    padding-top: 60px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .qili-header {
+    height: 55px !important; /* Reduced height for ultra-small screens */
+  }
+  
+  /* Adjust body padding for reduced header height */
+  body {
+    padding-top: 55px !important;
   }
 }
 
