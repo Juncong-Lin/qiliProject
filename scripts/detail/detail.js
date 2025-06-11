@@ -837,8 +837,114 @@ function setupBasicPrinterContent(product) {
   const compatibilitySection = document.querySelector('.product-compatibility-section');
   const specificationsSection = document.querySelector('.product-specifications-section');
   
-  if (compatibilitySection) compatibilitySection.style.display = 'none';
-  if (specificationsSection) specificationsSection.style.display = 'none';
+  if (compatibilitySection) compatibilitySection.style.display = 'none';  if (specificationsSection) specificationsSection.style.display = 'none';
+}
+
+/**
+ * Clean up formatting issues in upgrading kit markdown content
+ */
+function cleanUpgradingKitMarkdown(mdContent) {
+  if (!mdContent) return '';
+  
+  let cleaned = mdContent;
+  
+  // Remove HTML comments
+  cleaned = cleaned.replace(/<!--[\s\S]*?-->/g, '');
+  
+  // Split into lines for processing
+  let lines = cleaned.split('\n');
+  let processedLines = [];
+  let currentSection = '';
+  
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
+    
+    // Skip empty lines at this stage
+    if (!line) {
+      processedLines.push('');
+      continue;
+    }
+    
+    // Keep headers as-is
+    if (line.startsWith('#')) {
+      processedLines.push(line);
+      continue;
+    }
+    
+    // Keep price lines as-is
+    if (line.startsWith('Price:')) {
+      processedLines.push(line);
+      processedLines.push(''); // Add empty line after price
+      continue;
+    }
+    
+    // Handle section headers (like "Product Details:", "Application:", etc.)
+    if (line.endsWith(':') && !line.includes(' ')) {
+      currentSection = line;
+      processedLines.push(`### ${line}`);
+      continue;
+    }
+      // Handle multi-word section headers
+    if (line.match(/^(Product Details|Application|Software|Supported ink|Comment|Inkjet Printer|Supported inkjet series|Price|Features|Specifications).*:$/)) {
+      currentSection = line;
+      processedLines.push(`### ${line}`);
+      continue;
+    }
+    
+    // Handle broken lines - if current line seems incomplete, try to join with next non-empty line
+    if (line.length > 0 && !line.endsWith('.') && !line.endsWith(',') && !line.endsWith(')') && !line.endsWith(':') && !line.match(/^(Photo|Below|Image|\d+\.)/)) {
+      let nextLineIndex = i + 1;
+      let combinedLine = line;
+      
+      // Look ahead to combine broken lines
+      while (nextLineIndex < lines.length) {
+        let nextLine = lines[nextLineIndex].trim();
+        
+        if (!nextLine) {
+          nextLineIndex++;
+          continue;
+        }
+        
+        // If next line starts with uppercase or looks like a new section, don't combine
+        if (nextLine.startsWith('#') || nextLine.endsWith(':') || nextLine.startsWith('Price:')) {
+          break;
+        }
+        
+        // If next line is very short (likely continuation), combine it
+        if (nextLine.length <= 50 && !nextLine.match(/^(Photo \d+|Below Photo)/)) {
+          combinedLine += ' ' + nextLine;
+          i = nextLineIndex; // Skip the next line since we combined it
+          nextLineIndex++;
+        } else {
+          break;
+        }
+      }
+      
+      processedLines.push(combinedLine);
+    } else {
+      processedLines.push(line);
+    }
+  }
+  
+  // Join lines back together
+  cleaned = processedLines.join('\n');
+  // Clean up multiple consecutive empty lines
+  cleaned = cleaned.replace(/\n\n\n+/g, '\n\n');
+  
+  // Remove empty photo references
+  cleaned = cleaned.replace(/Photo \d+:\s*\n/g, '');
+  cleaned = cleaned.replace(/photo \d+:\s*\n/g, '');
+  cleaned = cleaned.replace(/Below Photo Referencia[^\n]*\n/g, '');
+  
+  // Fix common formatting issues
+  cleaned = cleaned.replace(/：/g, ':'); // Replace Chinese colon with regular colon
+  cleaned = cleaned.replace(/，/g, ','); // Replace Chinese comma with regular comma
+  
+  // Clean up spacing around punctuation
+  cleaned = cleaned.replace(/\s+([,.;:])/g, '$1');
+  cleaned = cleaned.replace(/([,.;:])\s+/g, '$1 ');
+  
+  return cleaned;
 }
 
 /**
@@ -856,10 +962,10 @@ async function setupUpgradingKitContent(product) {
     
     // Construct path to MD file
     const mdFilePath = `products/upgradingKit/${brandFolder}/${productFolder}/${productFolder}.md`;
-    
-    // Fetch the markdown file content
+      // Fetch the markdown file content
     const response = await fetch(mdFilePath);
     if (!response.ok) {
+      console.log(`Markdown file not found for ${product.name}: ${mdFilePath}`);
       // Fallback to hardcoded content if markdown file is not found
       setupFallbackUpgradingKitContent(product);
       return;
@@ -867,12 +973,22 @@ async function setupUpgradingKitContent(product) {
     
     const mdContent = await response.text();
     
-    // Update product description and content with the markdown content
-    // For upgrading kits, we'll use the entire markdown content as the main content
-    const parsedContent = parseMarkdown(mdContent);
+    // Clean up the markdown content to fix formatting issues
+    const cleanedMdContent = cleanUpgradingKitMarkdown(mdContent);
     
-    // Update the product details tab content with the full markdown content
-    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    if (cleanedMdContent && cleanedMdContent.trim()) {
+      // Update product description and content with the cleaned markdown content
+      // For upgrading kits, we'll use the entire markdown content as the main content
+      const parsedContent = parseMarkdown(cleanedMdContent);
+      
+      // Update the product details tab content with the full markdown content
+      document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+      
+      console.log(`Successfully loaded and cleaned markdown content for ${product.name}`);
+    } else {
+      console.log(`Empty or invalid markdown content for ${product.name}, using fallback`);
+      setupFallbackUpgradingKitContent(product);
+    }
     
     // Hide compatibility and specifications sections since upgrading kits typically don't have structured sections
     document.querySelector('.product-compatibility-section').style.display = 'none';
@@ -889,15 +1005,83 @@ async function setupUpgradingKitContent(product) {
  * Fallback function for upgrading kit content when markdown loading fails
  */
 function setupFallbackUpgradingKitContent(product) {
-  // Set minimal fallback content
+  // Set more informative fallback content based on product name analysis
   const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1).replace(/_/g, ' ');
+  const productName = product.name;
+  
+  // Extract key information from product name
+  let printerType = 'inkjet printer';
+  let printHeadInfo = '';
+  let styleInfo = '';
+  
+  // Detect printer style
+  if (productName.toLowerCase().includes('flatbed')) {
+    printerType = 'flatbed printer';
+    styleInfo = 'This kit is designed for flatbed printer applications.';
+  } else if (productName.toLowerCase().includes('roll to roll')) {
+    printerType = 'roll-to-roll printer';
+    styleInfo = 'This kit is designed for roll-to-roll printer applications.';
+  } else if (productName.toLowerCase().includes('uv')) {
+    printerType = 'UV printer';
+    styleInfo = 'This kit is designed for UV printing applications.';
+  }
+  
+  // Extract printhead information
+  if (productName.match(/(\d+)\s*(piece|pieces|head|heads)/i)) {
+    const match = productName.match(/(\d+)\s*(piece|pieces|head|heads)/i);
+    printHeadInfo = `This kit supports ${match[1]} printhead${match[1] > 1 ? 's' : ''}.`;
+  }
+  
+  // Extract printhead type
+  let headType = '';
+  if (productName.toLowerCase().includes('i3200')) {
+    headType = 'I3200 printheads';
+  } else if (productName.toLowerCase().includes('xp600')) {
+    headType = 'XP600 printheads';
+  } else if (productName.toLowerCase().includes('tx800')) {
+    headType = 'TX800 printheads';
+  } else if (productName.toLowerCase().includes('i1600')) {
+    headType = 'I1600 printheads';
+  }
   
   document.querySelector('.js-product-details-content').innerHTML = `
-    <h3>${product.name}</h3>
-    <p>${brandName} upgrading kit product. Product information is currently being updated. Please contact us for detailed specifications.</p>
+    <h3>${productName}</h3>
+    
+    <div class="product-info-section">
+      <h4>Product Overview</h4>
+      <p>This is a ${brandName} upgrading kit designed to upgrade your existing ${printerType} with modern components and improved performance.</p>
+      ${headType ? `<p><strong>Printhead Type:</strong> ${headType}</p>` : ''}
+      ${printHeadInfo ? `<p><strong>Configuration:</strong> ${printHeadInfo}</p>` : ''}
+      ${styleInfo ? `<p><strong>Application:</strong> ${styleInfo}</p>` : ''}
+    </div>
+    
+    <div class="product-info-section">
+      <h4>General Features</h4>
+      <ul>
+        <li>Complete upgrading solution with all necessary components</li>
+        <li>Compatible with various Chinese inkjet printer brands</li>
+        <li>Includes control boards and cable work</li>
+        <li>Professional installation recommended</li>
+      </ul>
+    </div>
+    
+    <div class="product-info-section">
+      <h4>Typical Applications</h4>
+      <ul>
+        <li>Upgrading older inkjet printers</li>
+        <li>Replacing obsolete printhead systems</li>
+        <li>Improving print quality and reliability</li>
+        <li>Extending printer lifespan</li>
+      </ul>
+    </div>
+    
+    <div class="contact-info">
+      <p><strong>Need More Information?</strong></p>
+      <p>For detailed specifications, compatibility information, and installation support, please contact our technical team.</p>
+    </div>
   `;
   
-  // Hide sections since we don't have detailed data
+  // Hide sections since we don't have detailed structured data
   document.querySelector('.product-compatibility-section').style.display = 'none';
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
