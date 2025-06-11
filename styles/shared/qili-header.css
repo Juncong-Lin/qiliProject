@@ -10,8 +10,9 @@
   left: 0;
   right: 0;
   height: 60px;
-  z-index: 100;
+  z-index: 10000; /* Increased z-index to be above sub-header */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: visible; /* Ensure dropdown can overflow the header */
 }
 
 /* Ensure proper flex distribution for better search bar width */
@@ -140,6 +141,8 @@
   align-items: center;
   margin: 0 20px;
   position: relative; /* Ensure this is the positioning context for the dropdown */
+  overflow: visible; /* Ensure dropdown can overflow the container */
+  z-index: 10001; /* Higher than sub-header to create proper stacking context */
 }
 
 .search-bar {
@@ -250,21 +253,23 @@
   border-top: none;
   border-radius: 0 0 4px 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 9999 !important; /* Force highest z-index */
+  z-index: 1000; /* High z-index relative to parent stacking context */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-5px);
+  transform: translateY(-10px);
   transition: all 0.2s ease;
   max-height: 250px;
   overflow-y: auto;
   pointer-events: none;
+  min-width: 250px; /* Ensure adequate width */
+  width: calc(100% - 45px); /* Full width minus search button */
 }
 
 .search-history-dropdown.show {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateY(0) !important;
-  z-index: 10000 !important; /* Force even higher when shown */
+  z-index: 1001 !important; /* Slightly higher when shown */
   pointer-events: auto !important;
 }
 

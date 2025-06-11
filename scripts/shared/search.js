@@ -1,6 +1,5 @@
 // Search functionality for the header
-class SearchSystem {
-  constructor() {
+class SearchSystem {  constructor() {
     this.searchInput = null;
     this.searchButton = null;
     this.searchHistoryDropdown = null;
@@ -8,8 +7,14 @@ class SearchSystem {
     this.maxHistoryItems = 10;
     this.searchHistory = this.loadSearchHistory();
   }
-
   init() {
+    // Prevent double initialization
+    if (this.isInitialized) {
+      console.log('SearchSystem already initialized, skipping...');
+      return;
+    }
+    
+    console.log('Initializing SearchSystem...');
     // Wait for the header to be loaded
     this.waitForHeader();
   }
@@ -54,7 +59,9 @@ class SearchSystem {
       this.handleSearchInput(e.target.value);
     });    // Handle focus/blur for search history
     this.searchInput.addEventListener('focus', () => {
-      this.showSearchHistory();
+      if (this.searchHistory.length > 0) {
+        this.showSearchHistory();
+      }
     });
 
     this.searchInput.addEventListener('blur', (e) => {
@@ -97,16 +104,30 @@ class SearchSystem {
       if (searchContainer) {
         searchContainer.appendChild(this.searchHistoryDropdown);
         this.updateSearchHistoryDisplay();
+        console.log('Search history dropdown created successfully');
+      } else {
+        console.error('Search container not found');
       }
     } catch (error) {
       console.error('Error setting up search history:', error);
     }
   }
-
   loadSearchHistory() {
     try {
       const stored = localStorage.getItem('qili_search_history');
-      return stored ? JSON.parse(stored) : [];
+      let history = stored ? JSON.parse(stored) : [];
+      
+      // Add some default search history for testing if none exists
+      if (history.length === 0) {
+        history = [
+          { term: 'inkjet', timestamp: Date.now() - 1000000 },
+          { term: 'print heads', timestamp: Date.now() - 2000000 },
+          { term: 'epson', timestamp: Date.now() - 3000000 },
+          { term: 'printer', timestamp: Date.now() - 4000000 }
+        ];
+      }
+      
+      return history;
     } catch (e) {
       console.error('Error loading search history:', e);
       return [];
@@ -205,8 +226,9 @@ class SearchSystem {
     if (!this.searchHistoryDropdown) return;
     if (this.searchHistory.length === 0) return;
     
-    // Force the dropdown to appear with higher z-index
-    this.searchHistoryDropdown.style.zIndex = '10000';
+    // Force the dropdown to appear
+    this.searchHistoryDropdown.style.zIndex = '1001';
+    this.searchHistoryDropdown.style.position = 'absolute';
     this.searchHistoryDropdown.classList.add('show');
   }
 
@@ -624,10 +646,8 @@ class SearchSystem {
 // Initialize search system
 const searchSystem = new SearchSystem();
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  searchSystem.init();
-});
+// Don't initialize automatically on DOMContentLoaded since header loads dynamically
+// The shared-header-loader.js will call searchSystem.init() when header is ready
 
 // Make search system globally available
 window.searchSystem = searchSystem;
