@@ -258,3 +258,9 @@ function deleveryOptionsHTML(matchingProduct, cartItem) {
   return html;
 }
 
+// Expose product data globally for search system
+window.printerProducts = printerProducts;
+window.printheadProducts = printheadProducts;
+window.printSparePartProducts = printSparePartProducts;
+window.upgradingKitProducts = upgradingKitProducts;
+

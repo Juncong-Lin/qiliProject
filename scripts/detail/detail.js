@@ -1086,6 +1086,12 @@ function setupFallbackUpgradingKitContent(product) {
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
 
+// Expose product data globally for search system
+window.printerProducts = printerProducts;
+window.printheadProducts = printheadProducts;
+window.printSparePartProducts = printSparePartProducts;
+window.upgradingKitProducts = upgradingKitProducts;
+
 // Add to cart functionality - Temporarily commented out
 // All cart functionality is preserved for future reuse
 /*
@@ -1609,3 +1615,9 @@ function setupFallbackPrintSparePartContent(product) {
   document.querySelector('.product-compatibility-section').style.display = 'none';
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
+
+// Expose product data globally for search system
+window.printerProducts = printerProducts;
+window.printheadProducts = printheadProducts;
+window.printSparePartProducts = printSparePartProducts;
+window.upgradingKitProducts = upgradingKitProducts;

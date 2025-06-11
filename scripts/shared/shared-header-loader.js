@@ -12,11 +12,22 @@ async function loadSharedHeader() {
       
       // Initialize cart quantity after header is loaded
       initializeCartQuantityAfterHeaderLoad();
+      
+      // Initialize search functionality after header is loaded
+      initializeSearchAfterHeaderLoad();
     } else {
       console.error('Shared header placeholder not found');
     }
   } catch (error) {
     console.error('Error loading shared header:', error);
+  }
+}
+
+// Initialize search functionality after header is loaded
+function initializeSearchAfterHeaderLoad() {
+  // Initialize search system if it exists
+  if (window.searchSystem) {
+    window.searchSystem.init();
   }
 }
 

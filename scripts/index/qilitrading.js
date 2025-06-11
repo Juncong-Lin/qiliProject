@@ -1716,3 +1716,17 @@ window.loadRicohPrinterSpareParts = function() {
   }, 200);
 };
 
+// Expose product data globally for search system
+window.printerProducts = printerProducts;
+window.printheadProducts = printheadProducts;
+window.printSparePartProducts = printSparePartProducts;
+window.upgradingKitProducts = upgradingKitProducts;
+
+// Expose utility functions globally for search system
+window.updatePageHeader = updatePageHeader;
+window.hideHeroBanner = hideHeroBanner;
+window.hideActiveSubmenus = hideActiveSubmenus;
+window.renderProducts = renderProducts;
+window.attachAddToCartListeners = attachAddToCartListeners;
+window.scrollToProducts = scrollToProducts;
+
