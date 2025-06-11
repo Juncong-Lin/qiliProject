@@ -3,7 +3,10 @@ class SearchSystem {
   constructor() {
     this.searchInput = null;
     this.searchButton = null;
+    this.searchHistoryDropdown = null;
     this.isInitialized = false;
+    this.maxHistoryItems = 10;
+    this.searchHistory = this.loadSearchHistory();
   }
 
   init() {
@@ -14,10 +17,9 @@ class SearchSystem {
     // Check if header elements exist, if not wait and try again
     const checkInterval = setInterval(() => {
       this.searchInput = document.querySelector('.search-bar');
-      this.searchButton = document.querySelector('.search-button');
-
-      if (this.searchInput && this.searchButton && !this.isInitialized) {
+      this.searchButton = document.querySelector('.search-button');      if (this.searchInput && this.searchButton && !this.isInitialized) {
         this.setupEventListeners();
+        this.setupSearchHistory();
         this.isInitialized = true;
         clearInterval(checkInterval);
         
@@ -47,14 +49,172 @@ class SearchSystem {
         e.preventDefault();
         this.performSearch();
       }
-    });
-
-    // Handle input changes for live search (optional)
+    });    // Handle input changes for live search (optional)
     this.searchInput.addEventListener('input', (e) => {
       this.handleSearchInput(e.target.value);
+    });    // Handle focus/blur for search history
+    this.searchInput.addEventListener('focus', () => {
+      this.showSearchHistory();
     });
+
+    this.searchInput.addEventListener('blur', (e) => {
+      // Delay hiding to allow clicks on dropdown items
+      setTimeout(() => {
+        this.hideSearchHistory();
+      }, 200);
+    });
+
+    // Also show on hover for better UX
+    this.searchInput.addEventListener('mouseenter', () => {
+      if (this.searchHistory.length > 0) {
+        this.showSearchHistory();
+      }
+    });
+
+    // Keep dropdown visible when hovering over it
+    const searchContainer = this.searchInput.parentNode;
+    if (searchContainer) {
+      searchContainer.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          this.hideSearchHistory();
+        }, 300);
+      });
+    }// Handle clicks outside to hide dropdown
+    document.addEventListener('click', (e) => {
+      if (!this.searchInput?.contains(e.target) && 
+          !this.searchHistoryDropdown?.contains(e.target) &&
+          !this.searchButton?.contains(e.target)) {
+        this.hideSearchHistory();
+      }
+    });  }  setupSearchHistory() {
+    try {
+      // Create search history dropdown
+      this.searchHistoryDropdown = document.createElement('div');
+      this.searchHistoryDropdown.className = 'search-history-dropdown';
+      
+      // Insert after the search input
+      const searchContainer = this.searchInput.parentNode;
+      if (searchContainer) {
+        searchContainer.appendChild(this.searchHistoryDropdown);
+        this.updateSearchHistoryDisplay();
+      }
+    } catch (error) {
+      console.error('Error setting up search history:', error);
+    }
   }
 
+  loadSearchHistory() {
+    try {
+      const stored = localStorage.getItem('qili_search_history');
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      console.error('Error loading search history:', e);
+      return [];
+    }
+  }
+
+  saveSearchHistory() {
+    try {
+      localStorage.setItem('qili_search_history', JSON.stringify(this.searchHistory));
+    } catch (e) {
+      console.error('Error saving search history:', e);
+    }
+  }
+
+  addToSearchHistory(searchTerm) {
+    if (!searchTerm || searchTerm.trim().length < 2) return;
+    
+    const term = searchTerm.trim();
+    
+    // Remove existing entry if it exists
+    this.searchHistory = this.searchHistory.filter(item => item.term !== term);
+    
+    // Add to beginning of array
+    this.searchHistory.unshift({
+      term: term,
+      timestamp: Date.now()
+    });
+    
+    // Keep only the most recent items
+    this.searchHistory = this.searchHistory.slice(0, this.maxHistoryItems);
+    
+    this.saveSearchHistory();
+    this.updateSearchHistoryDisplay();
+  }
+
+  clearSearchHistory() {
+    this.searchHistory = [];
+    this.saveSearchHistory();
+    this.updateSearchHistoryDisplay();
+  }
+
+  formatTimeAgo(timestamp) {
+    const now = Date.now();
+    const diff = now - timestamp;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    
+    if (days > 0) return `${days}d ago`;
+    if (hours > 0) return `${hours}h ago`;
+    if (minutes > 0) return `${minutes}m ago`;
+    return 'Just now';
+  }
+
+  updateSearchHistoryDisplay() {
+    if (!this.searchHistoryDropdown) return;
+    
+    if (this.searchHistory.length === 0) {
+      this.searchHistoryDropdown.innerHTML = `
+        <div class="search-history-empty">No recent searches</div>
+      `;
+    } else {
+      const historyItems = this.searchHistory.map(item => `
+        <div class="search-history-item" data-term="${item.term}">
+          <span class="search-history-text">${item.term}</span>
+          <span class="search-history-time">${this.formatTimeAgo(item.timestamp)}</span>
+        </div>
+      `).join('');
+      
+      this.searchHistoryDropdown.innerHTML = `
+        <div class="search-history-header">Recent Searches</div>
+        ${historyItems}
+        <div class="search-history-clear">Clear History</div>
+      `;
+      
+      // Add event listeners
+      this.searchHistoryDropdown.querySelectorAll('.search-history-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          const term = e.currentTarget.getAttribute('data-term');
+          this.searchInput.value = term;
+          this.hideSearchHistory();
+          this.performSearch();
+        });
+      });
+      
+      const clearButton = this.searchHistoryDropdown.querySelector('.search-history-clear');
+      if (clearButton) {
+        clearButton.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.clearSearchHistory();
+        });
+      }
+    }
+  }  showSearchHistory() {
+    if (!this.searchHistoryDropdown) return;
+    if (this.searchHistory.length === 0) return;
+    
+    // Force the dropdown to appear with higher z-index
+    this.searchHistoryDropdown.style.zIndex = '10000';
+    this.searchHistoryDropdown.classList.add('show');
+  }
+
+  hideSearchHistory() {
+    if (!this.searchHistoryDropdown) return;
+    
+    this.searchHistoryDropdown.classList.remove('show');
+  }
   performSearch() {
     const searchTerm = this.searchInput.value.trim();
     
@@ -62,6 +222,12 @@ class SearchSystem {
       this.showSearchMessage('Please enter a search term');
       return;
     }
+
+    // Add to search history
+    this.addToSearchHistory(searchTerm);
+    
+    // Hide search history dropdown
+    this.hideSearchHistory();
 
     // Redirect to index page if not already there, then perform search
     if (!this.isIndexPage()) {
@@ -76,36 +242,29 @@ class SearchSystem {
     const searchTermLower = searchTerm.toLowerCase();
     let searchResults = [];
 
-    console.log('Search initiated for term:', searchTerm);
-
     try {
       // Check if product data is available, if not wait for it to load
       const hasProducts = window.printerProducts || window.printheadProducts || 
                          window.printSparePartProducts || window.upgradingKitProducts;
       
-      console.log('Product data availability:', {
-        printerProducts: !!window.printerProducts,
-        printheadProducts: !!window.printheadProducts,
-        printSparePartProducts: !!window.printSparePartProducts,
-        upgradingKitProducts: !!window.upgradingKitProducts
-      });
-      
       if (!hasProducts) {
-        console.log('No product data available, waiting...');
         // Wait for product data to load, then retry search
         this.waitForProductData(() => this.searchProducts(searchTerm));
         return;
       }
 
-      // Search in all product datasets
-      // Search printer products
+      // Search in all product datasets      // Search printer products
       if (window.printerProducts) {
         for (const category in window.printerProducts) {
           const products = window.printerProducts[category];
           const matches = products.filter(product => 
-            this.productMatchesSearch(product, searchTermLower)
+            this.productMatchesSearch(product, searchTermLower, {
+              category: category,
+              brand: null,
+              type: 'printer'
+            })
           );
-          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'printer'})));
+          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'printer', category: category})));
         }
       }
 
@@ -114,9 +273,13 @@ class SearchSystem {
         for (const brand in window.printheadProducts) {
           const products = window.printheadProducts[brand];
           const matches = products.filter(product => 
-            this.productMatchesSearch(product, searchTermLower)
+            this.productMatchesSearch(product, searchTermLower, {
+              category: 'printhead',
+              brand: brand,
+              type: 'printhead'
+            })
           );
-          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'printhead'})));
+          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'printhead', brand: brand, category: 'printhead'})));
         }
       }
 
@@ -125,9 +288,13 @@ class SearchSystem {
         for (const brand in window.printSparePartProducts) {
           const products = window.printSparePartProducts[brand];
           const matches = products.filter(product => 
-            this.productMatchesSearch(product, searchTermLower)
+            this.productMatchesSearch(product, searchTermLower, {
+              category: 'print spare parts',
+              brand: brand,
+              type: 'printsparepart'
+            })
           );
-          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'printsparepart'})));
+          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'printsparepart', brand: brand, category: 'print spare parts'})));
         }
       }
 
@@ -136,21 +303,22 @@ class SearchSystem {
         for (const brand in window.upgradingKitProducts) {
           const products = window.upgradingKitProducts[brand];
           const matches = products.filter(product => 
-            this.productMatchesSearch(product, searchTermLower)
+            this.productMatchesSearch(product, searchTermLower, {
+              category: 'upgrading kit',
+              brand: brand,
+              type: 'upgradingkit'
+            })
           );
-          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'upgradingkit'})));        }
+          searchResults = searchResults.concat(matches.map(p => ({...p, type: 'upgradingkit', brand: brand, category: 'upgrading kit'})));        }
       }
 
-      console.log('Search completed. Found', searchResults.length, 'results');
       this.displaySearchResults(searchResults, searchTerm);
 
     } catch (error) {
       console.error('Search error:', error);
       this.showSearchMessage('Search temporarily unavailable. Please try again.');
     }
-  }
-
-  productMatchesSearch(product, searchTerm) {
+  }  productMatchesSearch(product, searchTerm, context = {}) {
     if (!product) return false;
 
     // Search in product name
@@ -158,28 +326,49 @@ class SearchSystem {
       return true;
     }
 
-    // Search in product keywords
-    if (product.keywords && product.keywords.toLowerCase().includes(searchTerm)) {
+    // Search in derived category (from data structure)
+    if (context.category && context.category.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
-    // Search in product category
+    // Search in product category (if exists)
     if (product.category && product.category.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
-    // Search in product subcategory
+    // Search in product subcategory (if exists)
     if (product.subcategory && product.subcategory.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
-    // Search in product brand
+    // Search in derived brand (from data structure)
+    if (context.brand && context.brand.toLowerCase().includes(searchTerm)) {
+      return true;
+    }
+
+    // Search in product brand (if exists)
     if (product.brand && product.brand.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
-    // Search in product description (if available)
-    if (product.description && product.description.toLowerCase().includes(searchTerm)) {
+    // Special handling for common search terms
+    // Handle "print heads" or "printheads" searches
+    if ((searchTerm.includes('print head') || searchTerm.includes('printhead')) && context.category === 'printhead') {
+      return true;
+    }
+
+    // Handle "print spare parts" searches
+    if (searchTerm.includes('print spare') && context.category === 'print spare parts') {
+      return true;
+    }
+
+    // Handle "upgrading kit" searches
+    if (searchTerm.includes('upgrading') && context.category === 'upgrading kit') {
+      return true;
+    }
+
+    // Handle printer-related searches
+    if ((searchTerm.includes('printer') || searchTerm.includes('inkjet')) && context.type === 'printer') {
       return true;
     }
 
@@ -328,9 +517,7 @@ class SearchSystem {
   handleSearchInput(value) {
     // Optional: implement live search suggestions
     // For now, we'll keep it simple and only search on Enter/Click
-  }
-
-  handleURLSearchParams() {
+  }  handleURLSearchParams() {
     // Check if there's a search parameter in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const searchTerm = urlParams.get('search');
@@ -339,6 +526,25 @@ class SearchSystem {
       // Set the search input value
       if (this.searchInput) {
         this.searchInput.value = searchTerm;
+      }
+      
+      // Add to search history (but only if not already added)
+      this.addToSearchHistory(searchTerm);
+      
+      // If this was detected early, hide hero banner and active submenus immediately
+      if (window.isEarlySearchDetection) {
+        // Hide hero banner
+        if (window.hideHeroBanner) {
+          window.hideHeroBanner();
+        }
+        
+        // Hide any active submenus
+        if (window.hideActiveSubmenus) {
+          window.hideActiveSubmenus();
+        }
+        
+        // Clear sub-header highlighting
+        this.clearSubHeaderHighlight();
       }
       
       // Perform the search automatically

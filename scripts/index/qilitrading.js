@@ -7,6 +7,26 @@ import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
+// Early search parameter detection to prevent hero banner flash
+// Check immediately if this is a search request and hide hero banner
+const urlParams = new URLSearchParams(window.location.search);
+const isSearchRequest = urlParams.has('search');
+
+// If this is a search request, immediately hide the hero banner to prevent flash
+if (isSearchRequest) {
+  // Add CSS to immediately hide hero banner before it renders
+  const style = document.createElement('style');
+  style.textContent = `
+    .hero-banner {
+      display: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Also set a flag for the search system to know this is an early detection
+  window.isEarlySearchDetection = true;
+}
+
 // Unified product rendering function with optional type parameter
 function renderProducts(productList, type = 'regular') {
   let productsHTML = '';
@@ -679,9 +699,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isIndexPage) {
     // Initialize cart quantity display on page load immediately - temporarily disabled
     // updateCartQuantity();
-    
-    // Small delay to ensure sub-header navigation is initialized
+      // Small delay to ensure sub-header navigation is initialized
     setTimeout(() => {
+      // Check for search parameters first
+      const urlParams = new URLSearchParams(window.location.search);
+      const isSearchRequest = urlParams.has('search');
+      
+      // If this is a search request, don't load default products - let search system handle it
+      if (isSearchRequest) {
+        return;
+      }
+      
       // Check if there's a hash in the URL that should load specific content
       const hash = window.location.hash.substring(1);    
       if (hash) {
@@ -703,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
       } else {
-        // Only load all products if there's no hash
+        // Only load all products if there's no hash and no search request
         loadAllProducts();
       }
     }, 100);
@@ -712,13 +740,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize hero banner visibility on page load
 document.addEventListener('DOMContentLoaded', () => {
-  // Show hero banner by default on index page when no hash is present
+  // Show hero banner by default on index page when no hash is present and no search request
   setTimeout(() => {
     const hash = window.location.hash;
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSearchRequest = urlParams.has('search');
     const isIndexPage = document.querySelector('.products-grid') || document.querySelector('#products-grid');
     
-    if (isIndexPage && !hash) {
-      // Show hero banner for default homepage view
+    if (isIndexPage && !hash && !isSearchRequest) {
+      // Show hero banner for default homepage view only
       showHeroBanner();
         // Initialize hero carousel
       if (!heroCarousel) {

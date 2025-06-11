@@ -14,19 +14,87 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Ensure proper flex distribution for better search bar width */
+@media (max-width: 768px) {
+  .qili-header {
+    padding: 0 8px;
+    gap: 4px;
+  }
+  
+  .qili-header-left-section {
+    width: 90px;
+    min-width: 70px;
+    margin-right: 0;
+  }
+  
+  .qili-header-middle-section {
+    margin: 0 6px;
+    max-width: none;
+  }
+  
+  .qili-header-right-section {
+    width: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .qili-header {
+    padding: 0 6px;
+    gap: 3px;
+  }
+  
+  .qili-header-left-section {
+    width: 60px;
+    min-width: 50px;
+    margin-right: 0;
+  }
+  
+  .qili-header-middle-section {
+    margin: 0 4px;
+    max-width: none;
+  }
+  
+  .qili-header-right-section {
+    width: 60px;
+  }
+}
+
+@media (max-width: 360px) {
+  .qili-header {
+    padding: 0 4px;
+    gap: 2px;
+  }
+  
+  .qili-header-left-section {
+    width: 45px;
+    min-width: 40px;
+    margin-right: 0;
+  }
+  
+  .qili-header-middle-section {
+    margin: 0 2px;
+  }
+  
+  .qili-header-right-section {
+    width: 45px;
+  }
+  
+  /* Hide right section content on very small screens if needed */
+  .qili-header-right-section > * {
+    display: none;
+  }
+}
+
 .qili-header-left-section {
   width: 180px;
   min-width: 100px;
   margin-right: 10px;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
-@media (max-width: 800px) {
-  .qili-header-left-section {
-    width: unset;
-  }
-}
+
 
 .header-link {
   display: inline-block;
@@ -71,6 +139,7 @@
   display: flex;
   align-items: center;
   margin: 0 20px;
+  position: relative; /* Ensure this is the positioning context for the dropdown */
 }
 
 .search-bar {
@@ -82,6 +151,32 @@
   border-radius: 4px 0 0 4px;
   font-size: 16px;
   transition: all 0.2s ease;
+  min-width: 0; /* Allow shrinking below content size */
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    height: 36px;
+    padding: 0 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    height: 32px;
+    padding: 0 8px;
+    font-size: 13px;
+    min-width: 120px; /* Ensure minimum usable width */
+  }
+}
+
+@media (max-width: 360px) {
+  .search-bar {
+    padding: 0 6px;
+    font-size: 12px;
+    min-width: 100px; /* Smaller minimum for very small screens */
+  }
 }
 
 .search-bar::placeholder {
@@ -103,6 +198,21 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .search-button {
+    min-width: 40px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-button {
+    min-width: 36px;
+    height: 32px;
+  }
 }
 
 .search-button:hover {
@@ -113,6 +223,182 @@
   width: 22px;
   height: 22px;
   filter: brightness(0) invert(1); /* Make icon white */
+}
+
+@media (max-width: 768px) {
+  .search-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Search History Dropdown */
+.search-history-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 45px; /* Account for search button width */
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999 !important; /* Force highest z-index */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+  max-height: 250px;
+  overflow-y: auto;
+  pointer-events: none;
+}
+
+.search-history-dropdown.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  z-index: 10000 !important; /* Force even higher when shown */
+  pointer-events: auto !important;
+}
+
+.search-history-header {
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-history-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-history-item:hover {
+  background-color: #f8f8f8;
+}
+
+.search-history-item:last-child {
+  border-bottom: none;
+}
+
+.search-history-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.search-history-time {
+  font-size: 11px;
+  color: #999;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.search-history-clear {
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  border-top: 1px solid #e0e0e0;
+  background: #f9f9f9;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-history-clear:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.search-history-empty {
+  padding: 20px 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .search-history-dropdown {
+    right: 40px; /* Account for smaller search button */
+    max-height: 200px;
+  }
+  
+  .search-history-item {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  
+  .search-history-time {
+    font-size: 10px;
+  }
+  
+  .search-history-header {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .search-history-clear {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-history-dropdown {
+    right: 36px; /* Account for smallest search button */
+    max-height: 180px;
+    left: 0; /* Ensure it starts from the left edge */
+  }
+  
+  .search-history-item {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  
+  .search-history-header {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  
+  .search-history-clear {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  
+  .search-history-empty {
+    padding: 15px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .search-history-dropdown {
+    right: 32px; /* Even smaller for very small screens */
+  }
 }
 
 .qili-header-right-section {
