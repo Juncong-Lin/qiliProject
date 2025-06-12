@@ -152,8 +152,8 @@
   }
   
   .magnifier-result {
-    width: 280px !important;
-    height: 280px !important;
+    width: 350px !important;
+    height: 350px !important;
     position: fixed;
     top: 20px;
     right: 20px;
@@ -169,8 +169,8 @@
   }
   
   .magnifier-result {
-    width: 220px !important;
-    height: 220px !important;
+    width: 280px !important;
+    height: 280px !important;
   }
 }
 
@@ -182,22 +182,8 @@
   }
   
   .magnifier-result {
-    width: 400px !important;
-    height: 400px !important;
-  }
-}
-    height: 80px !important;
-  }
-  
-  .magnifier-result {
-    width: 160px !important;
-    height: 160px !important;
-  }
-  
-  .magnifier-toggle {
-    width: 26px;
-    height: 26px;
-    font-size: 11px;
+    width: 600px !important;
+    height: 600px !important;
   }
 }
 
