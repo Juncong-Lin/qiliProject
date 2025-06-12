@@ -1,5 +1,5 @@
 # Save this file as xxxx.py (e.g., printhead_scraper.py)
-# The output folder will be named 'xxxx' (e.g., 'printhead_scraper')
+# The output folder will be named 'xxxx' (e.g., 'printhead_scraper') in the same directory as this script
 
 import os
 import re
@@ -7,20 +7,20 @@ import sys
 import requests
 import io
 import time
+from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from PIL import Image
 
 # --- Configuration ---
-BASE_URL = "https://www.wangemo.com"
-URL_TEMPLATE = "https://www.wangemo.com/?list_3_{page_num}/"
-TOTAL_PAGES = 5
+BASE_URL = "https://signchinasign.com"
+URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/4/price/index.php"
+TOTAL_PAGES = 3
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 BRANDS = [
-    'Roland', 'Epson','Mimaki', 'Mutoh', 'Witcolor', 'Galaxy','Human', 
-    'Gongzheng', 'Flora', 'Xuli', 'Xenos', 'Yongli',  'Zhongye', 'Skyjet', 'Yaselan', 'Teckwin','Ricoh',  'TitanJet',  'Seiko', 'Skycolor', 'Myjet', 'Phaeton', 'Meitu', 'JHF',  'Kingfisher', 'Liyu', 'Locor', 'Infiniti Challenger','Handtop', 'FunsunJet', 'Ecotech',  'Encad', 'DGI',  'Docan', 'Crystaljet', 'Atexco',  'Audley', 'Allwin'
+    'Roll_To_Roll_Style', 'Hoson', 'Without_Cable_Work', 'UV_Flatbed', 'Roland', 'Epson','Mimaki', 'Mutoh', 'Witcolor', 'Galaxy','Human', 'Gongzheng', 'Flora', 'Xuli', 'Xenos', 'Yongli',  'Zhongye', 'Skyjet', 'Yaselan', 'Teckwin','Ricoh',  'TitanJet',  'Seiko', 'Skycolor', 'Myjet', 'Phaeton', 'Meitu', 'JHF',  'Kingfisher', 'Liyu', 'Locor', 'Infiniti_Challenger','Handtop', 'FunsunJet', 'Ecotech',  'Encad', 'DGI',  'Docan', 'Crystaljet', 'Atexco',  'Audley', 'Allwin', 'Photo_Papers', 'Mesh', 'Adhevie_Vinyl', 'Oneway_Vision', 'Flex_banner', 'ink'
 ]
 MAX_RETRIES = 3  # Maximum number of retries for any task
 
@@ -68,13 +68,12 @@ def get_brand(product_name, brands_list):
     for brand in brands_list:
         if brand.lower() in product_name.lower():
             return brand
-    # If no known brand is found, extract the first word as the brand
     potential_brand = product_name.split()[0]
     if potential_brand:
         print(f"    - Adding new brand: {potential_brand}")
         brands_list.append(potential_brand)
         return potential_brand
-    return None  # Fallback if no brand can be determined
+    return None
 
 def generate_id(name):
     """Generates a unique ID from the product name."""
@@ -98,6 +97,17 @@ def parse_price(price_str):
         higher = float(numbers[1])
         return int(lower * 100), int(higher * 100)
     return None, None
+
+def load_previous_products(md_path):
+    """Loads previously scraped product names from the xxxx.md file."""
+    previous_products = set()
+    if os.path.exists(md_path):
+        with open(md_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                if line.startswith('- '):
+                    product_name = line[2:].strip()
+                    previous_products.add(product_name)
+    return previous_products
 
 # --- Core Scraping Functions ---
 
@@ -142,7 +152,6 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         if not product_details:
             product_details = "No details found."
 
-        # Organize by brand
         brand_folder_name = f"{brand} {script_name}"
         brand_folder = os.path.join(output_dir, brand_folder_name)
         os.makedirs(brand_folder, exist_ok=True)
@@ -150,7 +159,6 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         product_folder = os.path.join(brand_folder, sanitized_name)
         os.makedirs(product_folder, exist_ok=True)
 
-        # Save image
         image_folder = os.path.join(product_folder, 'image')
         os.makedirs(image_folder, exist_ok=True)
         image_filename = f"{sanitized_name}.jpg"
@@ -171,7 +179,6 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         else:
             print("    - WARNING: No product image found.")
 
-        # Save markdown file
         md_filename = f"{sanitized_name}.md"
         md_path = os.path.join(product_folder, md_filename)
         formatted_price = format_price(product_price)
@@ -185,10 +192,10 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
             f.write(md_content)
         print(f"    - Details saved to: {os.path.basename(md_path)}")
 
-        # Prepare JavaScript data
         lower_price, higher_price = parse_price(product_price)
         product_id = generate_id(product_name)
-        image_rel_path = f"products/{output_dir}/{brand_folder_name}/{sanitized_name}/image/{sanitized_name}.jpg"
+        # Keep original image path logic
+        image_rel_path = f"products/{script_name}/{brand_folder_name}/{sanitized_name}/image/{sanitized_name}.jpg"
 
         return {
             'id': product_id,
@@ -208,14 +215,33 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
 
 def main():
     root_folder_name = get_script_name()
-    os.makedirs(root_folder_name, exist_ok=True)
-    print(f"Scraper started. Data will be saved in '{root_folder_name}' folder.")
-    print("Ensure you have run 'pip install Pillow requests beautifulsoup4'.")
+    # Get the directory of the script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Set output directory to the same level as the script
+    output_dir = os.path.join(script_dir, root_folder_name)
+    os.makedirs(output_dir, exist_ok=True)
+    md_path = os.path.join(output_dir, f"{root_folder_name}.md")
+    
+    # Load previously scraped products
+    previous_products = load_previous_products(md_path)
+    if previous_products:
+        print(f"\nPreviously scraped products: {len(previous_products)} total")
+        for product in sorted(previous_products):
+            print(f"- {product}")
+        input("\nPress Enter to continue scraping...")
+    else:
+        print("\nPreviously scraped products: 0 total")
+        input("Press Enter to start scraping...")
 
-    # Task list: (task_type, url, retry_count)
+    print(f"\nScraper started. Data will be saved in '{root_folder_name}' folder.")
+    print("Ensure you have run 'pip install Pillow requests beautifulsoup4'.")
+    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     tasks = [('listing', URL_TEMPLATE.format(page_num=page_num), 0) for page_num in range(1, TOTAL_PAGES + 1)]
     products_by_brand = {brand.lower(): [] for brand in BRANDS}
     total_products = 0
+    current_products = set()
 
     with requests.Session() as session:
         while tasks:
@@ -243,6 +269,13 @@ def main():
                         link_tag = box.select_one('h3 > a')
                         if link_tag and link_tag.get('href'):
                             product_url = urljoin(BASE_URL, link_tag['href'])
+                            temp_response = session.get(product_url, headers=HEADERS, timeout=20)
+                            temp_soup = BeautifulSoup(temp_response.content, 'html.parser')
+                            name_tag = temp_soup.select_one('h1.text-capitalize')
+                            product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
+                            if product_name in previous_products:
+                                print(f"  - Skipping previously scraped product: {product_name}")
+                                continue
                             tasks.append(('product', product_url, 0))
                         else:
                             print("  - WARNING: Product box missing link.")
@@ -255,22 +288,22 @@ def main():
                 if retry_count >= MAX_RETRIES:
                     print(f"ERROR: Max retries ({MAX_RETRIES}) reached for product page {url}. Skipping.")
                     continue
-                product_data, new_retry_count = scrape_product_details(url, session, root_folder_name, root_folder_name, BRANDS, retry_count)
+                product_data, new_retry_count = scrape_product_details(url, session, output_dir, root_folder_name, BRANDS, retry_count)
                 if product_data:
                     brand_key = product_data['brand'].lower()
                     if brand_key not in products_by_brand:
                         products_by_brand[brand_key] = []
                     products_by_brand[brand_key].append(product_data)
                     total_products += 1
+                    current_products.add(product_data['name'])
                 else:
                     tasks.append((task_type, url, new_retry_count))
                     time.sleep(5)
 
-    # Generate JavaScript file
     js_filename = f"{root_folder_name}.js"
-    js_path = os.path.join(root_folder_name, js_filename)
+    js_path = os.path.join(output_dir, js_filename)
     with open(js_path, 'w', encoding='utf-8') as f:
-        f.write(f"// Total products scraped: {total_products}\n")
+        f.write(f"// Total products scraped: {total_products}, Date: {current_time}\n")
         f.write(f"export const {root_folder_name}Products = {{\n")
         for brand_key in sorted(products_by_brand.keys()):
             f.write(f"  {brand_key}: [\n")
@@ -288,8 +321,17 @@ def main():
             f.write(f"  ],\n")
         f.write(f"}};\n")
     print(f"JavaScript file saved to: {js_path}")
-    print(f"Total products scraped: {total_products}")
 
+    all_products = previous_products.union(current_products)
+    with open(md_path, 'w', encoding='utf-8') as f:
+        f.write(f"# Scraped Products\n\n")
+        f.write(f"Last updated: {current_time}\n\n")
+        f.write(f"Total products: {len(all_products)}\n\n")
+        for product in sorted(all_products):
+            f.write(f"- {product}\n")
+    print(f"Product list saved to: {md_path}")
+
+    print(f"\nTotal products scraped: {total_products}, Date: {current_time}")
     print(f"\n--- Scraping complete! Data saved in '{root_folder_name}' folder. ---")
 
 if __name__ == "__main__":
