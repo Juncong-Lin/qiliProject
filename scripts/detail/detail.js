@@ -299,13 +299,15 @@ function setupImageGallery(product) {
               </div>
             `;
           });
-          
-          // Set main image to first valid image
+            // Set main image to first valid image
           document.querySelector('.js-product-image').src = validImages[0].path;
         }          thumbnailsContainer.innerHTML = thumbnailsHTML;
         
         // Setup thumbnail gallery functionality
         setupThumbnailGalleryLogic();
+        
+        // Setup image magnifier
+        setupImageMagnifier();
         
       });
     } catch (error) {
@@ -368,8 +370,7 @@ function setupImageGallery(product) {
               </div>
             `;
           });
-          
-          // Set main image to first valid image
+            // Set main image to first valid image
           document.querySelector('.js-product-image').src = validImages[0].path;
         }
         
@@ -377,6 +378,9 @@ function setupImageGallery(product) {
         
         // Setup thumbnail gallery functionality
         setupThumbnailGalleryLogic();
+        
+        // Setup image magnifier
+        setupImageMagnifier();
         
       });    } catch (error) {
       console.error('Error setting up printer image gallery:', error);
@@ -432,9 +436,7 @@ function setupImageGallery(product) {
                 <img src="${img.path}" alt="${product.name} thumbnail ${i + 1}" class="thumbnail-img">
               </div>
             `;
-          });
-
-          // Set main image to first valid image
+          });          // Set main image to first valid image
           document.querySelector('.js-product-image').src = validImages[0].path;
         }
 
@@ -442,6 +444,9 @@ function setupImageGallery(product) {
 
         // Setup thumbnail gallery functionality
         setupThumbnailGalleryLogic();
+
+        // Setup image magnifier
+        setupImageMagnifier();
 
       });
     } catch (error) {
@@ -471,12 +476,14 @@ function setupMultipleImageGallery(product) {
   });
   
   thumbnailsContainer.innerHTML = thumbnailsHTML;
-  
-  // Set main image to first image
+    // Set main image to first image
   document.querySelector('.js-product-image').src = product.images[0];
   
   // Setup thumbnail gallery functionality
   setupThumbnailGalleryLogic();
+  
+  // Setup image magnifier
+  setupImageMagnifier();
 }
 
 /**
@@ -495,14 +502,21 @@ function setupSingleImageGallery(product) {
   const rightArrow = document.querySelector('.js-thumbnail-arrow-right');
   if (leftArrow) leftArrow.style.display = 'none';
   if (rightArrow) rightArrow.style.display = 'none';
-  
-  // Setup basic thumbnail click functionality
+    // Setup basic thumbnail click functionality
   const thumbnail = document.querySelector('.thumbnail-item');
   if (thumbnail) {
     thumbnail.addEventListener('click', () => {
       document.querySelector('.js-product-image').src = thumbnail.dataset.image;
+      
+      // Reinitialize magnifier for the new image
+      if (window.imageMagnifier) {
+        setupImageMagnifier();
+      }
     });
   }
+  
+  // Setup image magnifier
+  setupImageMagnifier();
 }
 
 /**
@@ -582,13 +596,17 @@ function setupThumbnailGalleryLogic() {
       });
     }
   }
-  
-  // Thumbnail click event
+    // Thumbnail click event
   thumbnails.forEach(thumbnail => {
     thumbnail.addEventListener('click', () => {
       document.querySelector('.js-product-image').src = thumbnail.dataset.image;
       thumbnails.forEach(t => t.classList.remove('active'));
       thumbnail.classList.add('active');
+      
+      // Reinitialize magnifier for the new image
+      if (window.imageMagnifier) {
+        setupImageMagnifier();
+      }
     });
   });
 
@@ -597,6 +615,9 @@ function setupThumbnailGalleryLogic() {
   
   // Mobile-friendly image sizing
   setupMobileImageSizing();
+  
+  // Setup image magnifier
+  setupImageMagnifier();
   
   // Handle window resize to switch between mobile and desktop scrolling modes
   function handleResize() {
@@ -1086,6 +1107,67 @@ function setupFallbackUpgradingKitContent(product) {
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
 
+/**
+ * Set up content for print spare parts products
+ */
+async function setupPrintSparePartContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    // Get the brand folder and product folder from the image path
+    // Format: products/printSparePart/Brand/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const brandFolder = pathParts[2]; // Brand folder
+    const productFolder = pathParts[3]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `products/printSparePart/${brandFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackPrintSparePartContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For spare parts, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    // Hide compatibility and specifications sections since spare parts typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading print spare part details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackPrintSparePartContent(product);
+  }
+}
+
+/**
+ * Fallback function for print spare part content when markdown loading fails
+ */
+function setupFallbackPrintSparePartContent(product) {
+  // Set minimal fallback content
+  const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
+  
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>${brandName} printer spare part. Product information is currently being updated. Please contact us for detailed specifications.</p>
+  `;
+  
+  // Hide sections since we don't have detailed data
+  document.querySelector('.product-compatibility-section').style.display = 'none';
+  document.querySelector('.product-specifications-section').style.display = 'none';
+}
+
 // Expose product data globally for search system
 window.printerProducts = printerProducts;
 window.printheadProducts = printheadProducts;
@@ -1556,68 +1638,181 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
 }
 
 /**
- * Set up content for print spare parts products
+ * Setup image magnifier functionality for the main product image
  */
-async function setupPrintSparePartContent(product) {
-  try {
-    // Extract the path to the markdown file from the image path
-    const imagePath = product.image;
-    // Get the brand folder and product folder from the image path
-    // Format: products/printSparePart/Brand/Product Name/image/...
-    const pathParts = imagePath.split('/');
-    const brandFolder = pathParts[2]; // Brand folder
-    const productFolder = pathParts[3]; // Product name folder
+function setupImageMagnifier() {
+  const productImage = document.querySelector('.js-product-image');
+  const imageContainer = document.querySelector('.product-main-image-container');
+  
+  if (!productImage || !imageContainer) return;
+  
+  // Remove existing magnifier elements
+  cleanupMagnifier();
+  
+  // Create magnifier container wrapper
+  const magnifierContainer = document.createElement('div');
+  magnifierContainer.className = 'image-magnifier-container';
+  
+  // Wrap the image with the magnifier container
+  productImage.parentNode.insertBefore(magnifierContainer, productImage);
+  magnifierContainer.appendChild(productImage);
+  
+  // Create lens element
+  const lens = document.createElement('div');
+  lens.className = 'magnifier-lens';
+  magnifierContainer.appendChild(lens);
+  
+  // Create result element (magnified view)
+  const result = document.createElement('div');
+  result.className = 'magnifier-result';
+  document.body.appendChild(result);
+  
+  // Setup hover-activated magnifier functionality
+  magnifierContainer.addEventListener('mouseenter', () => {
+    magnifierContainer.classList.add('magnifying');
+  });
+  
+  magnifierContainer.addEventListener('mouseleave', () => {
+    magnifierContainer.classList.remove('magnifying');
+    lens.style.display = 'none';
+    result.style.display = 'none';
+  });
+  
+  magnifierContainer.addEventListener('mousemove', (e) => {
+    const rect = productImage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    // Construct path to MD file
-    const mdFilePath = `products/printSparePart/${brandFolder}/${productFolder}/${productFolder}.md`;
-    
-    // Fetch the markdown file content
-    const response = await fetch(mdFilePath);
-    if (!response.ok) {
-      // Fallback to hardcoded content if markdown file is not found
-      setupFallbackPrintSparePartContent(product);
+    // Check if mouse is within image bounds
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+      lens.style.display = 'none';
+      result.style.display = 'none';
       return;
     }
     
-    const mdContent = await response.text();
+    showMagnifiedView(x, y, rect);
+  });
+  
+  // Mobile touch support
+  magnifierContainer.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = productImage.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
     
-    // Update product description and content with the markdown content
-    // For spare parts, we'll use the entire markdown content as the main content
-    const parsedContent = parseMarkdown(mdContent);
+    // Check if touch is within image bounds
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+      lens.style.display = 'none';
+      result.style.display = 'none';
+      return;
+    }
     
-    // Update the product details tab content with the full markdown content
-    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    showMagnifiedView(x, y, rect);
+  });
     
-    // Hide compatibility and specifications sections since spare parts typically don't have structured sections
-    document.querySelector('.product-compatibility-section').style.display = 'none';
-    document.querySelector('.product-specifications-section').style.display = 'none';
+  magnifierContainer.addEventListener('touchend', () => {
+    lens.style.display = 'none';
+    result.style.display = 'none';
+  });
     
-  } catch (error) {
-    console.error('Error loading print spare part details:', error);
-    // Fallback to hardcoded content if there's an error
-    setupFallbackPrintSparePartContent(product);
+  function showMagnifiedView(x, y, imageRect) {
+    // Calculate lens dimensions based on screen size - make larger for better visibility
+    const isMobile = window.innerWidth <= 768;
+    const lensWidth = isMobile ? 120 : 150;  // Larger rectangular lens
+    const lensHeight = isMobile ? 120 : 150;
+    const resultSize = isMobile ? 280 : 400;  // Much larger result window
+    
+    // Position lens with boundary checking
+    let lensX = x - lensWidth / 2;
+    let lensY = y - lensHeight / 2;
+    
+    // Keep lens within image bounds
+    lensX = Math.max(0, Math.min(lensX, imageRect.width - lensWidth));
+    lensY = Math.max(0, Math.min(lensY, imageRect.height - lensHeight));
+    
+    lens.style.width = lensWidth + 'px';
+    lens.style.height = lensHeight + 'px';
+    lens.style.left = lensX + 'px';
+    lens.style.top = lensY + 'px';
+    lens.style.display = 'block';
+    
+    // Position and size result window
+    result.style.width = resultSize + 'px';
+    result.style.height = resultSize + 'px';
+    
+    // Position result window based on cursor/touch position
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    let resultX, resultY;
+    
+    if (isMobile) {
+      // Fixed position for mobile (top-right corner)
+      resultX = viewportWidth - resultSize - 15;
+      resultY = 15;
+    } else {
+      // Smart positioning for desktop - always to the right of the image if possible
+      const imageRightEdge = imageRect.right;
+      const availableSpaceRight = viewportWidth - imageRightEdge;
+      
+      if (availableSpaceRight >= resultSize + 20) {
+        // Position to the right of the image
+        resultX = imageRightEdge + 15;
+        resultY = imageRect.top + (y - resultSize / 2);
+      } else {
+        // Position to the left of the image
+        resultX = imageRect.left - resultSize - 15;
+        resultY = imageRect.top + (y - resultSize / 2);
+      }
+      
+      // Ensure result window stays within viewport
+      resultX = Math.max(10, Math.min(resultX, viewportWidth - resultSize - 10));
+      resultY = Math.max(10, Math.min(resultY, viewportHeight - resultSize - 10));
+    }    
+    result.style.left = resultX + 'px';
+    result.style.top = resultY + 'px';
+    result.style.display = 'block';
+    
+    // Calculate magnified image position - improved calculation
+    const magnifyFactor = 3.0; // Higher magnification level for better detail viewing
+    
+    // Calculate the position of the lens relative to the actual mouse position
+    const actualLensX = lensX + lensWidth / 2;
+    const actualLensY = lensY + lensHeight / 2;
+    
+    result.style.backgroundImage = `url('${productImage.src}')`;
+    result.style.backgroundSize = (imageRect.width * magnifyFactor) + 'px ' + (imageRect.height * magnifyFactor) + 'px';
+    
+    // Position the background to show the magnified area
+    const bgX = -(actualLensX * magnifyFactor) + (resultSize / 2);
+    const bgY = -(actualLensY * magnifyFactor) + (resultSize / 2);
+      result.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
   }
 }
 
 /**
- * Fallback function for print spare part content when markdown loading fails
+ * Clean up existing magnifier elements
  */
-function setupFallbackPrintSparePartContent(product) {
-  // Set minimal fallback content
-  const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
+function cleanupMagnifier() {
+  // Remove any existing magnifier elements
+  const existingResult = document.querySelector('.magnifier-result');
+  if (existingResult) {
+    existingResult.remove();
+  }
   
-  document.querySelector('.js-product-details-content').innerHTML = `
-    <h3>${product.name}</h3>
-    <p>${brandName} printer spare part. Product information is currently being updated. Please contact us for detailed specifications.</p>
-  `;
+  const existingContainer = document.querySelector('.image-magnifier-container');
+  if (existingContainer) {
+    const productImage = existingContainer.querySelector('.js-product-image');
+    const imageContainer = document.querySelector('.product-main-image-container');
+    
+    if (productImage && imageContainer) {
+      imageContainer.appendChild(productImage);
+      existingContainer.remove();
+    }
+  }
   
-  // Hide sections since we don't have detailed data
-  document.querySelector('.product-compatibility-section').style.display = 'none';
-  document.querySelector('.product-specifications-section').style.display = 'none';
+  window.imageMagnifier = false;
 }
 
-// Expose product data globally for search system
-window.printerProducts = printerProducts;
-window.printheadProducts = printheadProducts;
-window.printSparePartProducts = printSparePartProducts;
-window.upgradingKitProducts = upgradingKitProducts;
+// Clean up magnifier when page is unloaded
+window.addEventListener('beforeunload', cleanupMagnifier);
