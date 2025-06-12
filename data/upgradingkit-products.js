@@ -221,7 +221,7 @@ export const upgradingKitProducts = {
     {
       id: 'Kit-xp600-for-Upgrading-Chinese-Inkjet-Printer-with-4-xp600-printheads-roll-to-roll-style',
       name: 'Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style)',
-      image: 'products/upgradingKit/Roll To Roll Style upgradingKit/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style)/image/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style).jpg',
+      image: 'products/upgradingKit/Roll To Roll Style upgradingKit/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style)/image/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads.png',
       lower_price: 360000,
       higher_price: 400000
     },
@@ -249,7 +249,7 @@ export const upgradingKitProducts = {
     {
       id: 'Kit-i3200-for-Upgrading-Chinese-Inkjet-Printer-with-8-i3200-printheads-roll-to-roll-style',
       name: 'Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style)',
-      image: 'products/upgradingKit/Roll To Roll Style upgradingKit/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style)/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style).jpg',
+      image: 'products/upgradingKit/Roll To Roll Style upgradingKit/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style)/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads.png',
       lower_price: 1280000,
       higher_price: 1400000
     },

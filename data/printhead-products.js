@@ -44,13 +44,6 @@ export const printheadProducts = {
       higher_price: 164000
     },
     {
-      id: 'Epson-F9200-Printhead',
-      name: 'Epson F9200 Printhead',
-      image: 'products/printhead/Epson printhead/Epson F9200 Printhead/image/Epson F9200 Printhead.jpg',
-      lower_price: 159000,
-      higher_price: 165000
-    },
-    {
       id: 'Epson-S30670-Printhead',
       name: 'Epson S30670 Printhead',
       image: 'products/printhead/Epson printhead/Epson S30670 Printhead/image/Epson S30670 Printhead.jpg',

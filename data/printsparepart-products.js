@@ -30,13 +30,6 @@ export const printSparePartProducts = {
       higher_price: 12000
     },
     {
-      id: 'Cutter-of-Epson-F6200',
-      name: 'Cutter of Epson F6200',
-      image: 'products/printSparePart/Epson/Cutter of Epson F6200/image/Cutter of Epson F6200.jpg',
-      lower_price: 8600,
-      higher_price: 9600
-    },
-    {
       id: 'Cartridge-of-Epson-Stylus-Pro-7800-9800',
       name: 'Cartridge of Epson Stylus Pro 7800 9800',
       image: 'products/printSparePart/Epson/Cartridge of Epson Stylus Pro 7800 9800/image/Cartridge of Epson Stylus Pro 7800 9800.jpg',
@@ -321,13 +314,6 @@ export const printSparePartProducts = {
       higher_price: 300
     },
     {
-      id: 'Cable-of-dx5-printhead-for-Galaxy-Sid-Triton-dx5-inkjet-printer',
-      name: 'Cable of dx5 printhead for Galaxy Sid Triton dx5 inkjet printer',
-      image: 'products/printSparePart/Galaxy/Cable of dx5 printhead for Galaxy Sid Triton dx5 inkjet printer/image/Cable of dx5 printhead for Galaxy Sid Triton dx5 inkjet printer.jpg',
-      lower_price: 300,
-      higher_price: 300
-    },
-    {
       id: 'Wiper-of-Galaxy-Sid-Triton-dx5-inkjet-printer',
       name: 'Wiper of Galaxy Sid Triton dx5 inkjet printer',
       image: 'products/printSparePart/Galaxy/Wiper of Galaxy Sid Triton dx5 inkjet printer/image/Wiper of Galaxy Sid Triton dx5 inkjet printer.jpg',
@@ -412,13 +398,6 @@ export const printSparePartProducts = {
       image: 'products/printSparePart/Gongzheng/Mini board gongzheng/image/Mini board gongzheng.jpg',
       lower_price: null,
       higher_price: null
-    },
-    {
-      id: 'Power-Cable-of-Starfire-Printhead-of-Gongzheng',
-      name: 'Power Cable of Starfire Printhead of Gongzheng',
-      image: 'products/printSparePart/Gongzheng/Power Cable of Starfire Printhead of Gongzheng/image/Power Cable of Starfire Printhead of Gongzheng.jpg',
-      lower_price: 6000,
-      higher_price: 6000
     },
     {
       id: 'Motor-gongzheng',
@@ -565,13 +544,6 @@ export const printSparePartProducts = {
       image: 'products/printSparePart/Mimaki/Cap of dx5 dx7 printhead of mimaki/image/Cap of dx5 dx7 printhead of mimaki.jpg',
       lower_price: 8600,
       higher_price: 9600
-    },
-    {
-      id: 'CP-Pad-Set-of-Mimaki',
-      name: 'CP Pad Set of Mimaki',
-      image: 'products/printSparePart/Mimaki/CP Pad Set of Mimaki/image/CP Pad Set of Mimaki.jpg',
-      lower_price: 5500,
-      higher_price: 5500
     },
     {
       id: 'Cleaning-Station-of-Mimaki-JV33',
@@ -737,13 +709,6 @@ export const printSparePartProducts = {
       image: 'products/printSparePart/Roland/Scan Motor of Roland XF-640 XT-640 EJ-640 Part Number 6702049010/image/Scan Motor of Roland XF-640 XT-640 EJ-640 Part Number 6702049010.jpg',
       lower_price: 60000,
       higher_price: 70000
-    },
-    {
-      id: 'Cap-of-DX7-Roland-Original-Part-Number-6701409200',
-      name: 'Cap of DX7 Roland Original Part Number 6701409200',
-      image: 'products/printSparePart/Roland/Cap of DX7 Roland Original Part Number 6701409200/image/Cap of DX7 Roland Original Part Number 6701409200.jpg',
-      lower_price: 6000,
-      higher_price: 7000
     },
     {
       id: 'Damper-of-DX4-of-Roland',
