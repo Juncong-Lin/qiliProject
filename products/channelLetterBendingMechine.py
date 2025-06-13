@@ -16,14 +16,12 @@ from PIL import Image
 
 # --- Configuration ---
 BASE_URL = "https://signchinasign.com"
-URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/132/price/index.php"
-TOTAL_PAGES = 21
+URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/44/price/index.php"
+TOTAL_PAGES = 3
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
-BRANDS = [
-    'Roland', 'Epson','Mimaki', 'Mutoh', 'Witcolor', 'Galaxy','Human', 
-    'Gongzheng', 'Flora', 'Xuli', 'Xenos', 'Yongli',  'Zhongye', 'Skyjet', 'Yaselan', 'Teckwin','Ricoh',  'TitanJet',  'Seiko', 'Skycolor', 'Myjet', 'Phaeton', 'Meitu', 'JHF',  'Kingfisher', 'Liyu', 'Locor', 'Infiniti Challenger','Handtop', 'FunsunJet', 'Ecotech',  'Encad', 'DGI',  'Docan', 'Crystaljet', 'Atexco',  'Audley', 'Allwin'
+BRANDS = ['Plate','Automatic','Special','Aluminum','Letter','Outdoor', 'Display', 'Hoson',  'Roland', 'Epson', 'Mimaki', 'Mutoh', 'Witcolor', 'Galaxy','Human', 'Gongzheng', 'Flora', 'Xuli', 'Xenos', 'Yongli', 'Zhongye', 'Skyjet', 'Yaselan', 'Teckwin', 'Ricoh', 'TitanJet','Seiko', 'Skycolor', 'Myjet', 'Phaeton', 'Meitu', 'JHF', 'Kingfisher', 'Liyu', 'Locor'
 ]
 MAX_RETRIES = 3  # Maximum number of retries for any task
 
