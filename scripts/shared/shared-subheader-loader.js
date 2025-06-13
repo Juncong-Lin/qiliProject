@@ -414,6 +414,21 @@ window.handleUpgradingKitClick = function(kitType) {
   }
 };
 
+// Helper function to handle material clicks from subheader
+window.handleMaterialClick = function(materialCategory) {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadMaterialProducts && typeof window.loadMaterialProducts === 'function') {
+    // We're on the index page - load products directly
+    window.loadMaterialProducts(materialCategory);
+    
+    // Update URL hash for proper navigation
+    window.location.hash = `material-${materialCategory}`;
+  } else {
+    // We're on a different page (like detail.html) - navigate to index page with hash
+    UrlUtils.navigateToIndex(`#material-${materialCategory}`);
+  }
+};
+
 // Function to initialize sub-header navigation after shared content is loaded
 function initializeSubHeaderAfterLoad() {
   // Wait a bit to ensure DOM is fully updated

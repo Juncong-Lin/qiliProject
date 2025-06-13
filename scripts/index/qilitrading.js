@@ -5,6 +5,7 @@ import {printheadProducts} from '../../data/printhead-products.js';
 import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} from '../../data/printer-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
+import {materialProducts} from '../../data/material-products.js';
 import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
 // Early search parameter detection to prevent hero banner flash
@@ -628,7 +629,40 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="loadAllUpgradingKitProducts()" class="breadcrumb-link">Upgrading Kit</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1).replace(/_/g, ' ')} Products</span>
+          <span class="breadcrumb-current">${brand.charAt(0).toUpperCase() + brand.slice(1).replace(/_/g, ' ')} Products</span>        `;
+      }
+    } else if (brand === 'material') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Material</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Material</span>
+        `;
+      }
+    } else if (brand.startsWith('material-')) {
+      // These are material categories like material-adhevie, material-flex, etc.
+      const materialCategory = brand.substring(9); // Remove 'material-' prefix
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#material" class="breadcrumb-link">Material</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" class="breadcrumb-link" onclick="loadMaterialProducts('${materialCategory}')">${materialCategory.charAt(0).toUpperCase() + materialCategory.slice(1)} Materials</a>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllMaterialProducts()" class="breadcrumb-link">Material</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${materialCategory.charAt(0).toUpperCase() + materialCategory.slice(1)} Materials</span>
         `;
       }
     } else {
@@ -870,6 +904,25 @@ function handleHashFallback(hash) {
     const brand = hash.replace('printheads-', '');
     if (window.loadPrintheadProducts) {
       window.loadPrintheadProducts(brand);
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'upgrading-kit') {
+    if (window.loadAllUpgradingKitProducts) {
+      window.loadAllUpgradingKitProducts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'material') {
+    if (window.loadAllMaterialProducts) {
+      window.loadAllMaterialProducts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash.startsWith('material-')) {
+    const materialCategory = hash.replace('material-', '');
+    if (window.loadMaterialProducts) {
+      window.loadMaterialProducts(materialCategory);
     } else {
       loadAllProducts();
     }
@@ -1824,6 +1877,7 @@ window.loadGalaxyPrinterSpareParts = function() {
   showLoadingState();
   
   // Small delay for smooth transition
+
   setTimeout(() => {
     // Get Galaxy printer spare parts
     const galaxySpareParts = printSparePartProducts.galaxy || [];
@@ -2424,4 +2478,94 @@ window.hideActiveSubmenus = hideActiveSubmenus;
 window.renderProducts = renderProducts;
 window.attachAddToCartListeners = attachAddToCartListeners;
 window.scrollToProducts = scrollToProducts;
+
+// Function to load material products for a specific category
+window.loadMaterialProducts = function(category) {
+  const categoryProducts = materialProducts[category];
+  if (categoryProducts) {
+    // Hide the submenu after selection
+    hideActiveSubmenus();
+    
+    // Hide hero banner for specific category views
+    hideHeroBanner();
+    
+    // Highlight selected menu item
+    highlightSelectedMenuItem(category);
+    
+    // Add loading animation
+    showLoadingState();
+    
+    // Small delay for smooth transition
+    setTimeout(() => {
+      const productsHTML = renderProducts(categoryProducts, 'material');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page title or add a header to show which category is selected
+      updatePageHeader(`${category.charAt(0).toUpperCase() + category.slice(1)} Materials`);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb(`material-${category}`);
+      
+      // Scroll to top of products
+      scrollToProducts();
+    }, 200);
+  }
+};
+
+// Function to load all material products from all categories
+window.loadAllMaterialProducts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Material') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all material products from all categories
+    let allMaterialProducts = [];
+    for (const category in materialProducts) {
+      allMaterialProducts = allMaterialProducts.concat(materialProducts[category]);
+    }
+    
+    const productsHTML = renderProducts(allMaterialProducts, 'material');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show material category
+    updatePageHeader('Material');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('material');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
 

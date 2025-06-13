@@ -24,9 +24,8 @@ class SubHeaderNavigation {
       link.addEventListener('click', (event) => {
         const submenuId = link.getAttribute('data-submenu');
         const linkText = link.textContent.trim();
-        
-        // Check if we're on the index page by looking for product grid or if load functions exist
-        const isIndexPage = window.loadSpecificCategory && window.loadAllPrintheadProducts;          // Handle navigation based on the category
+          // Check if we're on the index page by looking for product grid or if load functions exist
+        const isIndexPage = window.loadSpecificCategory && window.loadAllPrintheadProducts && window.loadAllMaterialProducts;// Handle navigation based on the category
         let hash = '';
         if (linkText === 'Inkjet Printers') {
             hash = '#inkjet-printers';
@@ -70,9 +69,8 @@ class SubHeaderNavigation {
             window.location.hash = hash;          } else if (linkText === 'Upgrading Kit' && window.loadSpecificCategory) {
             window.loadSpecificCategory('Upgrading Kit');
             this.setActiveCategory('Upgrading Kit');
-            window.location.hash = hash;
-          }          else if (linkText === 'Material' && window.loadSpecificCategory) {
-            window.loadSpecificCategory('Material');
+            window.location.hash = hash;          }          else if (linkText === 'Material' && window.loadAllMaterialProducts) {
+            window.loadAllMaterialProducts();
             this.setActiveCategory('Material');
             window.location.hash = hash;
           } else if (linkText === 'LED & LCD' && window.loadSpecificCategory) {
@@ -283,7 +281,6 @@ class SubHeaderNavigation {
       }
     }
   }
-
   expandUpgradingKitMenu() {
     // Find and expand the upgrading kit menu in the sidebar if it exists
     const upgradingKitLink = document.querySelector('[onclick*="loadAllUpgradingKitProducts"]');
@@ -291,6 +288,18 @@ class SubHeaderNavigation {
       const submenu = upgradingKitLink.nextElementSibling;
       if (submenu && submenu.classList.contains('submenu')) {
         upgradingKitLink.classList.add('expanded');
+        submenu.style.display = 'block';
+      }
+    }
+  }
+
+  expandMaterialMenu() {
+    // Find and expand the material menu in the sidebar if it exists
+    const materialLink = document.querySelector('[onclick*="loadAllMaterialProducts"]');
+    if (materialLink) {
+      const submenu = materialLink.nextElementSibling;
+      if (submenu && submenu.classList.contains('submenu')) {
+        materialLink.classList.add('expanded');
         submenu.style.display = 'block';
       }
     }
@@ -410,7 +419,26 @@ class SubHeaderNavigation {
       if (window.loadUpgradingKitProducts) {
         window.loadUpgradingKitProducts(brandKey);
         this.setActiveCategory('Upgrading Kit');
-        this.expandUpgradingKitMenu();
+        this.expandUpgradingKitMenu();      }
+      return;
+    }
+
+    if (hash === 'material') {
+      if (window.loadAllMaterialProducts) {
+        window.loadAllMaterialProducts();
+        this.setActiveCategory('Material');
+        this.expandMaterialMenu();
+      }
+      return;
+    }
+
+    if (hash.startsWith('material-')) {
+      const materialCategory = hash.replace('material-', '');
+      
+      if (window.loadMaterialProducts) {
+        window.loadMaterialProducts(materialCategory);
+        this.setActiveCategory('Material');
+        this.expandMaterialMenu();
       }
       return;
     }    // Handle other category hashes
@@ -438,14 +466,15 @@ class SubHeaderNavigation {
     const categoryName = categoryMap[hash];
     if (categoryName && window.loadSpecificCategory) {
       window.loadSpecificCategory(categoryName);
-      this.setActiveCategory(categoryName);
-        // Expand appropriate sidebar menu
+      this.setActiveCategory(categoryName);        // Expand appropriate sidebar menu
       if (categoryName === 'Inkjet Printers') {
         this.expandInkjetPrintersMenu();
       } else if (categoryName === 'Print Spare Parts') {
         this.expandPrintSparePartsMenu();
       } else if (categoryName === 'Upgrading Kit') {
         this.expandUpgradingKitMenu();
+      } else if (categoryName === 'Material') {
+        this.expandMaterialMenu();
       }
     }
   }

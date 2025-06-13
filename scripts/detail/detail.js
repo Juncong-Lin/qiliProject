@@ -3,6 +3,7 @@ import { printheadProducts } from '../../data/printhead-products.js';
 import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
+import { materialProducts } from '../../data/material-products.js';
 // Temporarily commented out cart imports - preserved for future reuse
 // import { cart, addToCart } from '../../data/cart.js';
 // import { updateCartQuantity } from '../shared/cart-quantity.js';
@@ -31,6 +32,17 @@ function findUpgradingKitById(id) {
     const product = upgradingKitProducts[brand].find(item => item.id === id);
     if (product) {
       return { ...product, brand };
+    }
+  }
+  return null;
+}
+
+// Helper function to find material product by ID across all categories
+function findMaterialById(id) {
+  for (const category in materialProducts) {
+    const product = materialProducts[category].find(item => item.id === id);
+    if (product) {
+      return { ...product, category };
     }
   }
   return null;
@@ -97,6 +109,11 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
   if (product) {
     productBrand = product.brand;
   }
+} else if (productType === 'material') {
+  product = findMaterialById(productId);
+  if (product) {
+    productBrand = product.category;
+  }
 } else {
   // Search in regular products or auto-detect if no productType specified
   product = products.find(product => product.id === productId);
@@ -152,13 +169,21 @@ if (!product && !urlProductType) {
       productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
     }
   }
-  
-  // If not found in print spare parts, search in upgrading kit products
+    // If not found in print spare parts, search in upgrading kit products
   if (!product) {
     product = findUpgradingKitById(productId);
     if (product) {
       productType = 'upgradingkit';
       productBrand = product.brand;
+    }
+  }
+  
+  // If not found in upgrading kit products, search in material products
+  if (!product) {
+    product = findMaterialById(productId);
+    if (product) {
+      productType = 'material';
+      productBrand = product.category;
     }
   }
 }
@@ -246,6 +271,8 @@ if (product) {
     setupPrintSparePartContent(product);  
   } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
     setupUpgradingKitContent(product);
+  } else if (productType === 'material') {
+    setupMaterialProductContent(product);
   } else if (productType === 'printer') {
     setupPrinterProductContent(product);
   } else {
@@ -1187,6 +1214,79 @@ function setupFallbackPrintSparePartContent(product) {
   `;
   
   // Hide sections since we don't have detailed data
+  document.querySelector('.product-compatibility-section').style.display = 'none';  document.querySelector('.product-specifications-section').style.display = 'none';
+}
+
+/**
+ * Set up content for material products
+ */
+async function setupMaterialProductContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    // Get the category folder and product folder from the image path
+    // Format: products/material/Category/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const categoryFolder = pathParts[2]; // Category folder
+    const productFolder = pathParts[3]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `products/material/${categoryFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      console.log(`Markdown file not found for ${product.name}: ${mdFilePath}`);
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackMaterialContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For materials, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    console.log(`Successfully loaded markdown content for ${product.name}`);
+    
+    // Hide compatibility and specifications sections since materials typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading material details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackMaterialContent(product);
+  }
+}
+
+/**
+ * Fallback function for material content when markdown loading fails
+ */
+function setupFallbackMaterialContent(product) {
+  // Set minimal fallback content
+  const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+  
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>${categoryName} material for printing applications. Product information is currently being updated. Please contact us for detailed specifications.</p>
+    <div class="product-specifications">
+      <h4>Product Category</h4>
+      <p>${categoryName}</p>
+      
+      <h4>Applications</h4>
+      <p>Suitable for various printing and signage applications.</p>
+      
+      <p><strong>Need More Information?</strong></p>
+      <p>For detailed specifications, compatibility information, and application guidelines, please contact our technical team.</p>
+    </div>
+  `;
+  
+  // Hide sections since we don't have detailed data
   document.querySelector('.product-compatibility-section').style.display = 'none';
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
@@ -1196,6 +1296,7 @@ window.printerProducts = printerProducts;
 window.printheadProducts = printheadProducts;
 window.printSparePartProducts = printSparePartProducts;
 window.upgradingKitProducts = upgradingKitProducts;
+window.materialProducts = materialProducts;
 
 // Add to cart functionality - Temporarily commented out
 // All cart functionality is preserved for future reuse
@@ -1631,8 +1732,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#${brandSlug}" class="breadcrumb-link">${brandName} Printer Spare Parts</a>      <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
-    `;
-  } else if (productType === 'upgradingkit') {
+    `;  } else if (productType === 'upgradingkit') {
     // For upgrading kit products, show proper breadcrumb navigation based on brand
     const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1).replace(/_/g, ' ');
     breadcrumbElement.innerHTML = `
@@ -1641,6 +1741,18 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#upgrading-kit" class="breadcrumb-link">Upgrading Kit</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#upgrading-kit-${product.brand}" class="breadcrumb-link">${brandName} Products</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
+  } else if (productType === 'material') {
+    // For material products, show proper breadcrumb navigation based on category
+    const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#material" class="breadcrumb-link">Material</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#material-${product.category}" class="breadcrumb-link">${categoryName} Materials</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;
