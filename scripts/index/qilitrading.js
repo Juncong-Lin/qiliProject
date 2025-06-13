@@ -8,6 +8,7 @@ import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {materialProducts} from '../../data/material-products.js';
 import {ledAndLcdProducts} from '../../data/ledAndLcd-products.js';
 import {channelLetterBendingMechineProducts} from '../../data/channelLetterBendingMechine-products.js';
+import {otherProducts} from '../../data/other-products.js';
 import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
 // Early search parameter detection to prevent hero banner flash
@@ -792,7 +793,40 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" class="breadcrumb-link" onclick="loadChannelLetterProducts('${channelLetterCategory}')">${channelLetterCategory.charAt(0).toUpperCase() + channelLetterCategory.slice(1)} Channel Letter</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <a href="javascript:void(0)" onclick="loadAllChannelLetterProducts()" class="breadcrumb-link">Channel Letter</a>
+          <a href="javascript:void(0)" onclick="loadAllChannelLetterProducts()" class="breadcrumb-link">Channel Letter</a>        `;
+      }
+    } else if (brand.startsWith('other-')) {
+      // These are Other categories like other-spectrophotometer, etc.
+      const otherCategory = brand.substring(6); // Remove 'other-' prefix
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#other" class="breadcrumb-link">Other</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${otherCategory.charAt(0).toUpperCase() + otherCategory.slice(1)} Other Products</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" class="breadcrumb-link" onclick="loadOtherProducts('${otherCategory}')">${otherCategory.charAt(0).toUpperCase() + otherCategory.slice(1)} Other Products</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllOtherProducts()" class="breadcrumb-link">Other</a>
+        `;
+      }
+    } else if (brand === 'other') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Other</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Other</span>
         `;
       }
     } else if (brand === 'channel-letter') {
@@ -1100,11 +1134,23 @@ function handleHashFallback(hash) {
       window.loadAllChannelLetterProducts();
     } else {
       loadAllProducts();
-    }
-  } else if (hash.startsWith('channel-letter-')) {
+    }  } else if (hash.startsWith('channel-letter-')) {
     const channelLetterCategory = hash.replace('channel-letter-', '');
     if (window.loadChannelLetterProducts) {
       window.loadChannelLetterProducts(channelLetterCategory);
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'other') {
+    if (window.loadAllOtherProducts) {
+      window.loadAllOtherProducts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash.startsWith('other-')) {
+    const otherCategory = hash.replace('other-', '');
+    if (window.loadOtherProducts) {
+      window.loadOtherProducts(otherCategory);
     } else {
       loadAllProducts();
     }
@@ -1260,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Cutting': 'Cutting',
         'Channel Letter': 'Channel Letter',
         'CNC': 'CNC',
-        'Displays': 'Displays',
+        'Dispalys': 'Displays',
         'Other': 'Other'
       };
       // Use mainCategory if it matches a sub-header, else fallback to sidebarCategory
@@ -2840,6 +2886,107 @@ window.loadAllChannelLetterProducts = function() {
     
     // Update breadcrumb navigation
     updateBreadcrumb('channel-letter');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load specific other category products
+window.loadOtherProducts = function(category) {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Other') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const productsToShow = otherProducts[category] || [];
+    const productsHTML = renderProducts(productsToShow, 'other');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+    updatePageHeader(`${categoryName} Other Products`);
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('other', category);
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      // Scroll to top of products
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load all other products from all categories
+window.loadAllOtherProducts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Other') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all other products from all categories
+    let allOtherProducts = [];
+    for (const category in otherProducts) {
+      allOtherProducts = allOtherProducts.concat(otherProducts[category]);
+    }
+    
+    const productsHTML = renderProducts(allOtherProducts, 'other');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show other category
+    updatePageHeader('Other Products');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('other');
     
     // Check if we need to skip scrolling
     const urlSearchParams = new URLSearchParams(window.location.search);

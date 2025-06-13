@@ -172,12 +172,16 @@
             <a class="department-link" href="javascript:void(0)" onclick="loadChannelLetterProducts('plate'); window.location.hash = 'channel-letter-plate'">Plate</a>
             <a class="department-link" href="javascript:void(0)" onclick="loadChannelLetterProducts('special'); window.location.hash = 'channel-letter-special'">Special</a>
           </div>
-        </div>
-        <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Laser')">Laser</a>
+        </div>        <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Laser')">Laser</a>
         <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Cutting')">Cutting</a>
         <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('CNC')">CNC</a>
         <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Displays')">Displays</a>
-        <a class="department-link" href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Other')">Other</a>
+        <div class="department-group">
+          <a class="department-link expandable" href="javascript:void(0)" onclick="window.loadAllOtherProducts && window.loadAllOtherProducts(); window.location.hash = 'other'">Other</a>
+          <div class="submenu">
+            <a class="department-link" href="javascript:void(0)" onclick="loadOtherProducts('spectrophotometer'); window.location.hash = 'other-spectrophotometer'">Spectrophotometer</a>
+          </div>
+        </div>
       </div>
     </div>
     

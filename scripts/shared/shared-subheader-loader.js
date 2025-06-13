@@ -459,6 +459,21 @@ window.handleChannelLetterClick = function(channelLetterCategory) {
   }
 };
 
+// Helper function to handle Other clicks from subheader
+window.handleOtherClick = function(otherCategory) {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadOtherProducts && typeof window.loadOtherProducts === 'function') {
+    // We're on the index page - load products directly
+    window.loadOtherProducts(otherCategory);
+    
+    // Update URL hash for proper navigation
+    window.location.hash = `other-${otherCategory}`;
+  } else {
+    // We're on a different page (like detail.html) - navigate to index page with hash
+    UrlUtils.navigateToIndex(`#other-${otherCategory}`);
+  }
+};
+
 // Function to initialize sub-header navigation after shared content is loaded
 function initializeSubHeaderAfterLoad() {
   // Wait a bit to ensure DOM is fully updated

@@ -6,6 +6,7 @@ import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { materialProducts } from '../../data/material-products.js';
 import { ledAndLcdProducts } from '../../data/ledAndLcd-products.js';
 import { channelLetterBendingMechineProducts } from '../../data/channelLetterBendingMechine-products.js';
+import { otherProducts } from '../../data/other-products.js';
 // Temporarily commented out cart imports - preserved for future reuse
 // import { cart, addToCart } from '../../data/cart.js';
 // import { updateCartQuantity } from '../shared/cart-quantity.js';
@@ -65,6 +66,17 @@ function findLedLcdById(id) {
 function findChannelLetterById(id) {
   for (const category in channelLetterBendingMechineProducts) {
     const product = channelLetterBendingMechineProducts[category].find(item => item.id === id);
+    if (product) {
+      return { ...product, category };
+    }
+  }
+  return null;
+}
+
+// Helper function to find Other product by ID across all categories
+function findOtherById(id) {
+  for (const category in otherProducts) {
+    const product = otherProducts[category].find(item => item.id === id);
     if (product) {
       return { ...product, category };
     }
@@ -148,6 +160,11 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
   if (product) {
     productBrand = product.category;
   }
+} else if (productType === 'other') {
+  product = findOtherById(productId);
+  if (product) {
+    productBrand = product.category;
+  }
 } else {
   // Search in regular products or auto-detect if no productType specified
   product = products.find(product => product.id === productId);
@@ -227,12 +244,20 @@ if (!product && !urlProductType) {
       productBrand = product.category;
     }
   }
-  
-  // If not found in LED & LCD products, search in Channel Letter products
+    // If not found in LED & LCD products, search in Channel Letter products
   if (!product) {
     product = findChannelLetterById(productId);
     if (product) {
       productType = 'channelletter';
+      productBrand = product.category;
+    }
+  }
+  
+  // If not found in Channel Letter products, search in Other products
+  if (!product) {
+    product = findOtherById(productId);
+    if (product) {
+      productType = 'other';
       productBrand = product.category;
     }
   }
@@ -322,9 +347,10 @@ if (product) {
   } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
     setupUpgradingKitContent(product);  } else if (productType === 'material') {
     setupMaterialProductContent(product);  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
-    setupLedLcdProductContent(product);
-  } else if (productType === 'channelletter' || productType === 'channel-letter') {
+    setupLedLcdProductContent(product);  } else if (productType === 'channelletter' || productType === 'channel-letter') {
     setupChannelLetterProductContent(product);
+  } else if (productType === 'other') {
+    setupOtherProductContent(product);
   } else if (productType === 'printer') {
     setupPrinterProductContent(product);
   } else {
@@ -1487,6 +1513,80 @@ function setupFallbackChannelLetterContent(product) {
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
 
+/**
+ * Set up content for Other products
+ */
+async function setupOtherProductContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    // Get the category folder and product folder from the image path
+    // Format: products/other/Category/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const categoryFolder = pathParts[2]; // Category folder
+    const productFolder = pathParts[3]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `products/other/${categoryFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      console.log(`Markdown file not found for ${product.name}: ${mdFilePath}`);
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackOtherContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For Other products, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    console.log(`Successfully loaded markdown content for ${product.name}`);
+    
+    // Hide compatibility and specifications sections since Other products typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading Other product details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackOtherContent(product);
+  }
+}
+
+/**
+ * Fallback function for Other product content when markdown loading fails
+ */
+function setupFallbackOtherContent(product) {
+  // Set minimal fallback content
+  const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+  
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>${categoryName} product for professional applications. Product information is currently being updated. Please contact us for detailed specifications.</p>
+    <div class="product-specifications">
+      <h4>Product Category</h4>
+      <p>${categoryName}</p>
+      
+      <h4>Applications</h4>
+      <p>Suitable for various professional applications.</p>
+      
+      <p><strong>Need More Information?</strong></p>
+      <p>For detailed specifications, compatibility information, and application guidelines, please contact our technical team.</p>
+    </div>
+  `;
+  
+  // Hide sections since we don't have detailed data
+  document.querySelector('.product-compatibility-section').style.display = 'none';
+  document.querySelector('.product-specifications-section').style.display = 'none';
+}
+
 // Expose product data globally for search system
 window.printerProducts = printerProducts;
 window.printheadProducts = printheadProducts;
@@ -1495,6 +1595,7 @@ window.upgradingKitProducts = upgradingKitProducts;
 window.materialProducts = materialProducts;
 window.ledAndLcdProducts = ledAndLcdProducts;
 window.channelLetterBendingMechineProducts = channelLetterBendingMechineProducts;
+window.otherProducts = otherProducts;
 
 // Add to cart functionality - Temporarily commented out
 // All cart functionality is preserved for future reuse
@@ -1963,8 +2064,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#led-lcd-${product.category}" class="breadcrumb-link">${categoryName} LED & LCD</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
-    `;
-  } else if (productType === 'channelletter' || productType === 'channel-letter') {
+    `;  } else if (productType === 'channelletter' || productType === 'channel-letter') {
     // For Channel Letter products, show proper breadcrumb navigation based on category
     const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
     breadcrumbElement.innerHTML = `
@@ -1973,6 +2073,18 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#channel-letter" class="breadcrumb-link">Channel Letter</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#channel-letter-${product.category}" class="breadcrumb-link">${categoryName} Channel Letter</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
+  } else if (productType === 'other') {
+    // For Other products, show proper breadcrumb navigation based on category
+    const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#other" class="breadcrumb-link">Other</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#other-${product.category}" class="breadcrumb-link">${categoryName} Products</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;

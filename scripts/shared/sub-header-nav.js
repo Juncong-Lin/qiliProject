@@ -325,6 +325,17 @@ class SubHeaderNavigation {
       }
     }
   }
+  expandOtherMenu() {
+    // Find and expand the Other menu in the sidebar if it exists
+    const otherLink = document.querySelector('[onclick*="loadAllOtherProducts"]');
+    if (otherLink) {
+      const submenu = otherLink.nextElementSibling;
+      if (submenu && submenu.classList.contains('submenu')) {
+        otherLink.classList.add('expanded');
+        submenu.style.display = 'block';
+      }
+    }
+  }
   // Handle hash navigation - called from external scripts
   handleHashNavigation(hash) {
     if (!hash) return;
@@ -487,15 +498,33 @@ class SubHeaderNavigation {
         this.expandChannelLetterMenu();
       }
       return;
-    }
-
-    if (hash.startsWith('channel-letter-')) {
+    }    if (hash.startsWith('channel-letter-')) {
       const channelLetterCategory = hash.replace('channel-letter-', '');
       
       if (window.loadChannelLetterProducts) {
         window.loadChannelLetterProducts(channelLetterCategory);
         this.setActiveCategory('Channel Letter');
         this.expandChannelLetterMenu();
+      }
+      return;
+    }
+
+    if (hash === 'other') {
+      if (window.loadAllOtherProducts) {
+        window.loadAllOtherProducts();
+        this.setActiveCategory('Other');
+        this.expandOtherMenu();
+      }
+      return;
+    }
+
+    if (hash.startsWith('other-')) {
+      const otherCategory = hash.replace('other-', '');
+      
+      if (window.loadOtherProducts) {
+        window.loadOtherProducts(otherCategory);
+        this.setActiveCategory('Other');
+        this.expandOtherMenu();
       }
       return;
     }// Handle other category hashes
