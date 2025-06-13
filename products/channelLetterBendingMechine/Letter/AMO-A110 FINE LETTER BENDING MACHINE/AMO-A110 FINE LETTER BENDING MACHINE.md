@@ -1,4 +1,4 @@
-# AMO-A110 FINE LETTER BENDING MACHINE
+# AMO-A110 Fine Letter Bending Machine
 
 Price: Not available
 

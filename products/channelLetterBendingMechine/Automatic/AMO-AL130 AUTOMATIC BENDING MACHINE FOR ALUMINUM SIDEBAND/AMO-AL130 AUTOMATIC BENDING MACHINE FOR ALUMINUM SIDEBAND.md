@@ -1,4 +1,4 @@
-# AMO-AL130 AUTOMATIC BENDING MACHINE FOR ALUMINUM SIDEBAND
+# AMO-AL130 Automatic Bending Machine for Aluminum Sideband
 
 Price: Not available
 

@@ -1,4 +1,4 @@
-# AMO-AL100 HIGHSPEED FLAT ALUMINUME BENDING MACHINE
+# AMO-AL100 Highspeed Flat Aluminum Bending Machine
 
 Price: Not available
 
