@@ -314,6 +314,17 @@ class SubHeaderNavigation {
       }
     }
   }
+  expandChannelLetterMenu() {
+    // Find and expand the Channel Letter menu in the sidebar if it exists
+    const channelLetterLink = document.querySelector('[onclick*="loadAllChannelLetterProducts"]');
+    if (channelLetterLink) {
+      const submenu = channelLetterLink.nextElementSibling;
+      if (submenu && submenu.classList.contains('submenu')) {
+        channelLetterLink.classList.add('expanded');
+        submenu.style.display = 'block';
+      }
+    }
+  }
   // Handle hash navigation - called from external scripts
   handleHashNavigation(hash) {
     if (!hash) return;
@@ -458,9 +469,7 @@ class SubHeaderNavigation {
         this.expandLedLcdMenu();
       }
       return;
-    }
-
-    if (hash.startsWith('led-lcd-')) {
+    }    if (hash.startsWith('led-lcd-')) {
       const ledLcdCategory = hash.replace('led-lcd-', '');
       
       if (window.loadLedLcdProducts) {
@@ -469,7 +478,27 @@ class SubHeaderNavigation {
         this.expandLedLcdMenu();
       }
       return;
-    }    // Handle other category hashes
+    }
+
+    if (hash === 'channel-letter') {
+      if (window.loadAllChannelLetterProducts) {
+        window.loadAllChannelLetterProducts();
+        this.setActiveCategory('Channel Letter');
+        this.expandChannelLetterMenu();
+      }
+      return;
+    }
+
+    if (hash.startsWith('channel-letter-')) {
+      const channelLetterCategory = hash.replace('channel-letter-', '');
+      
+      if (window.loadChannelLetterProducts) {
+        window.loadChannelLetterProducts(channelLetterCategory);
+        this.setActiveCategory('Channel Letter');
+        this.expandChannelLetterMenu();
+      }
+      return;
+    }// Handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',

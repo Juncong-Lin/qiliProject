@@ -5,6 +5,7 @@ import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { materialProducts } from '../../data/material-products.js';
 import { ledAndLcdProducts } from '../../data/ledAndLcd-products.js';
+import { channelLetterBendingMechineProducts } from '../../data/channelLetterBendingMechine-products.js';
 // Temporarily commented out cart imports - preserved for future reuse
 // import { cart, addToCart } from '../../data/cart.js';
 // import { updateCartQuantity } from '../shared/cart-quantity.js';
@@ -53,6 +54,17 @@ function findMaterialById(id) {
 function findLedLcdById(id) {
   for (const category in ledAndLcdProducts) {
     const product = ledAndLcdProducts[category].find(item => item.id === id);
+    if (product) {
+      return { ...product, category };
+    }
+  }
+  return null;
+}
+
+// Helper function to find Channel Letter product by ID across all categories
+function findChannelLetterById(id) {
+  for (const category in channelLetterBendingMechineProducts) {
+    const product = channelLetterBendingMechineProducts[category].find(item => item.id === id);
     if (product) {
       return { ...product, category };
     }
@@ -131,6 +143,11 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
   if (product) {
     productBrand = product.category;
   }
+} else if (productType === 'channelletter' || productType === 'channel-letter') {
+  product = findChannelLetterById(productId);
+  if (product) {
+    productBrand = product.category;
+  }
 } else {
   // Search in regular products or auto-detect if no productType specified
   product = products.find(product => product.id === productId);
@@ -202,12 +219,20 @@ if (!product && !urlProductType) {
       productBrand = product.category;
     }
   }
-  
-  // If not found in material products, search in LED & LCD products
+    // If not found in material products, search in LED & LCD products
   if (!product) {
     product = findLedLcdById(productId);
     if (product) {
       productType = 'ledlcd';
+      productBrand = product.category;
+    }
+  }
+  
+  // If not found in LED & LCD products, search in Channel Letter products
+  if (!product) {
+    product = findChannelLetterById(productId);
+    if (product) {
+      productType = 'channelletter';
       productBrand = product.category;
     }
   }
@@ -296,9 +321,10 @@ if (product) {
     setupPrintSparePartContent(product);  
   } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
     setupUpgradingKitContent(product);  } else if (productType === 'material') {
-    setupMaterialProductContent(product);
-  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
+    setupMaterialProductContent(product);  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
     setupLedLcdProductContent(product);
+  } else if (productType === 'channelletter' || productType === 'channel-letter') {
+    setupChannelLetterProductContent(product);
   } else if (productType === 'printer') {
     setupPrinterProductContent(product);
   } else {
@@ -786,9 +812,6 @@ async function loadPrintheadDetails(product) {
     setupFallbackPrintheadContent(product);
   }
 }
-
-
-
 
 /**
  * Set up the product information tabs
@@ -1390,12 +1413,88 @@ function setupFallbackLedLcdContent(product) {
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
 
+/**
+ * Set up content for Channel Letter Bending Machine products
+ */
+async function setupChannelLetterProductContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    // Get the category folder and product folder from the image path
+    // Format: products/channelLetterBendingMechine/Category/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const categoryFolder = pathParts[2]; // Category folder
+    const productFolder = pathParts[3]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `products/channelLetterBendingMechine/${categoryFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      console.log(`Markdown file not found for ${product.name}: ${mdFilePath}`);
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackChannelLetterContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For Channel Letter, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    console.log(`Successfully loaded markdown content for ${product.name}`);
+    
+    // Hide compatibility and specifications sections since Channel Letter typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading Channel Letter details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackChannelLetterContent(product);
+  }
+}
+
+/**
+ * Fallback function for Channel Letter content when markdown loading fails
+ */
+function setupFallbackChannelLetterContent(product) {
+  // Set minimal fallback content
+  const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+  
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>${categoryName} Channel Letter Bending Machine for professional signage manufacturing. Product information is currently being updated. Please contact us for detailed specifications.</p>
+    <div class="product-specifications">
+      <h4>Product Category</h4>
+      <p>${categoryName} Channel Letter Bending Machine</p>
+      
+      <h4>Applications</h4>
+      <p>Suitable for various channel letter and signage manufacturing applications.</p>
+      
+      <p><strong>Need More Information?</strong></p>
+      <p>For detailed specifications, compatibility information, and application guidelines, please contact our technical team.</p>
+    </div>
+  `;
+  
+  // Hide sections since we don't have detailed data
+  document.querySelector('.product-compatibility-section').style.display = 'none';
+  document.querySelector('.product-specifications-section').style.display = 'none';
+}
+
 // Expose product data globally for search system
 window.printerProducts = printerProducts;
 window.printheadProducts = printheadProducts;
 window.printSparePartProducts = printSparePartProducts;
 window.upgradingKitProducts = upgradingKitProducts;
 window.materialProducts = materialProducts;
+window.ledAndLcdProducts = ledAndLcdProducts;
+window.channelLetterBendingMechineProducts = channelLetterBendingMechineProducts;
 
 // Add to cart functionality - Temporarily commented out
 // All cart functionality is preserved for future reuse
@@ -1788,7 +1887,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">${product.name}</span>
       `;
-    } else if (productBrand === 'eco-solvent-i3200') {
+       } else if (productBrand === 'eco-solvent-i3200') {
       breadcrumbElement.innerHTML = `
         <a href="index.html" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>
@@ -1853,8 +1952,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#material-${product.category}" class="breadcrumb-link">${categoryName} Materials</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
-    `;
-  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
+    `;  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
     // For LED & LCD products, show proper breadcrumb navigation based on category
     const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
     breadcrumbElement.innerHTML = `
@@ -1863,6 +1961,18 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#led-lcd" class="breadcrumb-link">LED & LCD</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#led-lcd-${product.category}" class="breadcrumb-link">${categoryName} LED & LCD</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
+  } else if (productType === 'channelletter' || productType === 'channel-letter') {
+    // For Channel Letter products, show proper breadcrumb navigation based on category
+    const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#channel-letter" class="breadcrumb-link">Channel Letter</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#channel-letter-${product.category}" class="breadcrumb-link">${categoryName} Channel Letter</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;

@@ -7,6 +7,7 @@ import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {materialProducts} from '../../data/material-products.js';
 import {ledAndLcdProducts} from '../../data/ledAndLcd-products.js';
+import {channelLetterBendingMechineProducts} from '../../data/channelLetterBendingMechine-products.js';
 import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
 // Early search parameter detection to prevent hero banner flash
@@ -772,7 +773,40 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="loadAllLedLcdProducts()" class="breadcrumb-link">LED & LCD</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">${ledLcdCategory.charAt(0).toUpperCase() + ledLcdCategory.slice(1)} LED & LCD</span>
+          <span class="breadcrumb-current">${ledLcdCategory.charAt(0).toUpperCase() + ledLcdCategory.slice(1)} LED & LCD</span>        `;
+      }
+    } else if (brand.startsWith('channel-letter-')) {
+      // These are Channel Letter categories like channel-letter-aluminum, channel-letter-automatic, etc.
+      const channelLetterCategory = brand.substring(15); // Remove 'channel-letter-' prefix
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#channel-letter" class="breadcrumb-link">Channel Letter</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${channelLetterCategory.charAt(0).toUpperCase() + channelLetterCategory.slice(1)} Channel Letter</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" class="breadcrumb-link" onclick="loadChannelLetterProducts('${channelLetterCategory}')">${channelLetterCategory.charAt(0).toUpperCase() + channelLetterCategory.slice(1)} Channel Letter</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllChannelLetterProducts()" class="breadcrumb-link">Channel Letter</a>
+        `;
+      }
+    } else if (brand === 'channel-letter') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Channel Letter</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Channel Letter</span>
         `;
       }
     } else if (brand === 'led-lcd') {
@@ -1048,8 +1082,7 @@ function handleHashFallback(hash) {
       window.loadMaterialProducts(materialCategory);
     } else {
       loadAllProducts();
-    }
-  } else if (hash === 'led-lcd') {
+    }  } else if (hash === 'led-lcd') {
     if (window.loadAllLedLcdProducts) {
       window.loadAllLedLcdProducts();
     } else {
@@ -1059,6 +1092,19 @@ function handleHashFallback(hash) {
     const ledLcdCategory = hash.replace('led-lcd-', '');
     if (window.loadLedLcdProducts) {
       window.loadLedLcdProducts(ledLcdCategory);
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'channel-letter') {
+    if (window.loadAllChannelLetterProducts) {
+      window.loadAllChannelLetterProducts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash.startsWith('channel-letter-')) {
+    const channelLetterCategory = hash.replace('channel-letter-', '');
+    if (window.loadChannelLetterProducts) {
+      window.loadChannelLetterProducts(channelLetterCategory);
     } else {
       loadAllProducts();
     }
@@ -1215,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Channel Letter': 'Channel Letter',
         'CNC': 'CNC',
         'Displays': 'Displays',
-        'Other': 'Other',
+        'Other': 'Other'
       };
       // Use mainCategory if it matches a sub-header, else fallback to sidebarCategory
       const matchCategory = categoryMap[mainCategory] || categoryMap[sidebarCategory];
@@ -2693,6 +2739,107 @@ window.loadAllMaterialProducts = function() {
     
     // Update breadcrumb navigation
     updateBreadcrumb('material');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load specific channel letter category products
+window.loadChannelLetterProducts = function(category) {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Channel Letter') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const productsToShow = channelLetterBendingMechineProducts[category] || [];
+    const productsHTML = renderProducts(productsToShow, 'channel-letter');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+    updatePageHeader(`${categoryName} Channel Letter`);
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('channel-letter', category);
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      // Scroll to top of products
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load all channel letter products from all categories
+window.loadAllChannelLetterProducts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Channel Letter') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all channel letter products from all categories
+    let allChannelLetterProducts = [];
+    for (const category in channelLetterBendingMechineProducts) {
+      allChannelLetterProducts = allChannelLetterProducts.concat(channelLetterBendingMechineProducts[category]);
+    }
+    
+    const productsHTML = renderProducts(allChannelLetterProducts, 'channel-letter');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show channel letter category
+    updatePageHeader('Channel Letter');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('channel-letter');
     
     // Check if we need to skip scrolling
     const urlSearchParams = new URLSearchParams(window.location.search);

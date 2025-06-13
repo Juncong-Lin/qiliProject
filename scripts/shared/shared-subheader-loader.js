@@ -444,6 +444,21 @@ window.handleLedLcdClick = function(ledLcdCategory) {
   }
 };
 
+// Helper function to handle Channel Letter clicks from subheader
+window.handleChannelLetterClick = function(channelLetterCategory) {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadChannelLetterProducts && typeof window.loadChannelLetterProducts === 'function') {
+    // We're on the index page - load products directly
+    window.loadChannelLetterProducts(channelLetterCategory);
+    
+    // Update URL hash for proper navigation
+    window.location.hash = `channel-letter-${channelLetterCategory}`;
+  } else {
+    // We're on a different page (like detail.html) - navigate to index page with hash
+    UrlUtils.navigateToIndex(`#channel-letter-${channelLetterCategory}`);
+  }
+};
+
 // Function to initialize sub-header navigation after shared content is loaded
 function initializeSubHeaderAfterLoad() {
   // Wait a bit to ensure DOM is fully updated
