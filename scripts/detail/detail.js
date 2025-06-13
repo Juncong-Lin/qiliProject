@@ -51,13 +51,24 @@ let product = null;
 // If product type is specified in URL, search in the appropriate data structure
 if (productType === 'printsparepart' || productType === 'print-spare-parts') {
   product = findPrintSparePartById(productId);
-  if (product) {
-    // Map brand to old category name for breadcrumb compatibility
+  if (product) {    // Map brand to old category name for breadcrumb compatibility
     const brandToCategoryMap = {
       'epson': 'epson-printer-spare-parts',
       'roland': 'roland-printer-spare-parts', 
       'canon': 'canon-printer-spare-parts',
-      'ricoh': 'ricoh-printer-spare-parts'
+      'ricoh': 'ricoh-printer-spare-parts',
+      'infiniti_challenger': 'infiniti-challenger-printer-spare-parts',
+      'flora': 'flora-printer-spare-parts',
+      'galaxy': 'galaxy-printer-spare-parts',
+      'mimaki': 'mimaki-printer-spare-parts',
+      'mutoh': 'mutoh-printer-spare-parts',
+      'witcolor': 'wit-color-printer-spare-parts',
+      'gongzheng': 'gongzheng-printer-spare-parts',
+      'human': 'human-printer-spare-parts',
+      'teflon': 'teflon-printer-spare-parts',
+      'wiper': 'wiper-printer-spare-parts',
+      'xaar': 'xaar-printer-spare-parts',
+      'toshiba': 'toshiba-printer-spare-parts'
     };
     productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
   }
@@ -119,12 +130,24 @@ if (!product && !urlProductType) {
   if (!product) {
     product = findPrintSparePartById(productId);
     if (product) {
-      productType = 'printsparepart';
-      // Map brand to old category name for breadcrumb compatibility
+      productType = 'printsparepart';      // Map brand to old category name for breadcrumb compatibility
       const brandToCategoryMap = {
         'epson': 'epson-printer-spare-parts',
         'roland': 'roland-printer-spare-parts', 
-        'canon': 'canon-printer-spare-parts'
+        'canon': 'canon-printer-spare-parts',
+        'ricoh': 'ricoh-printer-spare-parts',
+        'infiniti_challenger': 'infiniti-challenger-printer-spare-parts',
+        'flora': 'flora-printer-spare-parts',
+        'galaxy': 'galaxy-printer-spare-parts',
+        'mimaki': 'mimaki-printer-spare-parts',
+        'mutoh': 'mutoh-printer-spare-parts',
+        'witcolor': 'wit-color-printer-spare-parts',
+        'gongzheng': 'gongzheng-printer-spare-parts',
+        'human': 'human-printer-spare-parts',
+        'teflon': 'teflon-printer-spare-parts',
+        'wiper': 'wiper-printer-spare-parts',
+        'xaar': 'xaar-printer-spare-parts',
+        'toshiba': 'toshiba-printer-spare-parts'
       };
       productBrand = brandToCategoryMap[product.brand] || 'epson-printer-spare-parts';
     }

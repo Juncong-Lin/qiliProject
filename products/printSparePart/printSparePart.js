@@ -555,7 +555,7 @@ export const printSparePartProducts = {
       higher_price: 1200
     },
   ],
-  infiniti challenger: [
+  infiniti_challenger: [
     {
       id: 'Convert-Board-of-Infiniti-Challenger-FY-320BR-FY3208H-FY3208HA-FY3206HF-UD3208-UD3206-ETC',
       name: 'Convert Board of Infiniti Challenger FY-320BR FY3208H FY3208HA FY3206HF UD3208 UD3206 ETC',

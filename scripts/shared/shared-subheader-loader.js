@@ -76,11 +76,22 @@ window.handleCategoryClick = function(categoryName) {
     } else if (categoryName === 'Flora Printer Spare Parts') {
       hashValue = '#flora-printer-spare-parts';
     } else if (categoryName === 'Galaxy Printer Spare Parts') {
-      hashValue = '#galaxy-printer-spare-parts';
-    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts') {
+      hashValue = '#galaxy-printer-spare-parts';    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts') {
       hashValue = '#infiniti-challenger-printer-spare-parts';
     } else if (categoryName === 'Wit-color Printer Spare Parts') {
       hashValue = '#wit-color-printer-spare-parts';
+    } else if (categoryName === 'Gongzheng Printer Spare Parts') {
+      hashValue = '#gongzheng-printer-spare-parts';
+    } else if (categoryName === 'Human Printer Spare Parts') {
+      hashValue = '#human-printer-spare-parts';
+    } else if (categoryName === 'Teflon Printer Spare Parts') {
+      hashValue = '#teflon-printer-spare-parts';
+    } else if (categoryName === 'Wiper Printer Spare Parts') {
+      hashValue = '#wiper-printer-spare-parts';
+    } else if (categoryName === 'Xaar Printer Spare Parts') {
+      hashValue = '#xaar-printer-spare-parts';
+    } else if (categoryName === 'Toshiba Printer Spare Parts') {
+      hashValue = '#toshiba-printer-spare-parts';
     } else {
       // Default hash conversion for other categories
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -93,9 +104,44 @@ window.handleCategoryClick = function(categoryName) {
     } else {
       window.location.hash = hashValue;
     }
-    
-    // Then load the category content
-    window.loadSpecificCategory(categoryName);
+      // Then load the category content
+    // Call specific loader functions for printer spare parts categories
+    if (categoryName === 'Epson Printer Spare Parts' && window.loadEpsonPrinterSpareParts) {
+      window.loadEpsonPrinterSpareParts();
+    } else if (categoryName === 'Roland Printer Spare Parts' && window.loadRolandPrinterSpareParts) {
+      window.loadRolandPrinterSpareParts();
+    } else if (categoryName === 'Canon Printer Spare Parts' && window.loadCanonPrinterSpareParts) {
+      window.loadCanonPrinterSpareParts();
+    } else if (categoryName === 'Ricoh Printer Spare Parts' && window.loadRicohPrinterSpareParts) {
+      window.loadRicohPrinterSpareParts();
+    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts' && window.loadInfinitiChallengerPrinterSpareParts) {
+      window.loadInfinitiChallengerPrinterSpareParts();
+    } else if (categoryName === 'Flora Printer Spare Parts' && window.loadFloraPrinterSpareParts) {
+      window.loadFloraPrinterSpareParts();
+    } else if (categoryName === 'Galaxy Printer Spare Parts' && window.loadGalaxyPrinterSpareParts) {
+      window.loadGalaxyPrinterSpareParts();
+    } else if (categoryName === 'Mimaki Printer Spare Parts' && window.loadMimakiPrinterSpareParts) {
+      window.loadMimakiPrinterSpareParts();
+    } else if (categoryName === 'Mutoh Printer Spare Parts' && window.loadMutohPrinterSpareParts) {
+      window.loadMutohPrinterSpareParts();
+    } else if (categoryName === 'Wit-color Printer Spare Parts' && window.loadWitColorPrinterSpareParts) {
+      window.loadWitColorPrinterSpareParts();
+    } else if (categoryName === 'Gongzheng Printer Spare Parts' && window.loadGongzhengPrinterSpareParts) {
+      window.loadGongzhengPrinterSpareParts();
+    } else if (categoryName === 'Human Printer Spare Parts' && window.loadHumanPrinterSpareParts) {
+      window.loadHumanPrinterSpareParts();
+    } else if (categoryName === 'Teflon Printer Spare Parts' && window.loadTeflonPrinterSpareParts) {
+      window.loadTeflonPrinterSpareParts();
+    } else if (categoryName === 'Wiper Printer Spare Parts' && window.loadWiperPrinterSpareParts) {
+      window.loadWiperPrinterSpareParts();
+    } else if (categoryName === 'Xaar Printer Spare Parts' && window.loadXaarPrinterSpareParts) {
+      window.loadXaarPrinterSpareParts();
+    } else if (categoryName === 'Toshiba Printer Spare Parts' && window.loadToshibaPrinterSpareParts) {
+      window.loadToshibaPrinterSpareParts();
+    } else {
+      // For other categories, use the generic loader
+      window.loadSpecificCategory(categoryName);
+    }
   } else {
     // We're on a different page - navigate to index and handle the category loading
     let hashValue = '';
@@ -124,11 +170,22 @@ window.handleCategoryClick = function(categoryName) {
     } else if (categoryName === 'Flora Printer Spare Parts') {
       hashValue = '#flora-printer-spare-parts';
     } else if (categoryName === 'Galaxy Printer Spare Parts') {
-      hashValue = '#galaxy-printer-spare-parts';
-    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts') {
+      hashValue = '#galaxy-printer-spare-parts';    } else if (categoryName === 'Infiniti / Challenger Printer Spare Parts') {
       hashValue = '#infiniti-challenger-printer-spare-parts';
     } else if (categoryName === 'Wit-color Printer Spare Parts') {
       hashValue = '#wit-color-printer-spare-parts';
+    } else if (categoryName === 'Gongzheng Printer Spare Parts') {
+      hashValue = '#gongzheng-printer-spare-parts';
+    } else if (categoryName === 'Human Printer Spare Parts') {
+      hashValue = '#human-printer-spare-parts';
+    } else if (categoryName === 'Teflon Printer Spare Parts') {
+      hashValue = '#teflon-printer-spare-parts';
+    } else if (categoryName === 'Wiper Printer Spare Parts') {
+      hashValue = '#wiper-printer-spare-parts';
+    } else if (categoryName === 'Xaar Printer Spare Parts') {
+      hashValue = '#xaar-printer-spare-parts';
+    } else if (categoryName === 'Toshiba Printer Spare Parts') {
+      hashValue = '#toshiba-printer-spare-parts';
     } else {
       // Default hash conversion - for other pages, no category prefix is needed since the above covers all Print Spare Parts
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -250,13 +307,30 @@ function fixPrintSparePartsSubmenuItems() {
           hashValue = 'flora-printer-spare-parts';
         } else if (itemText === 'Galaxy Printer Parts') {
           categoryName = 'Galaxy Printer Spare Parts';
-          hashValue = 'galaxy-printer-spare-parts';
-        } else if (itemText === 'Infiniti/Challenger Parts') {
+          hashValue = 'galaxy-printer-spare-parts';        } else if (itemText === 'Infiniti/Challenger Parts') {
           categoryName = 'Infiniti / Challenger Printer Spare Parts';
           hashValue = 'infiniti-challenger-printer-spare-parts';
         } else if (itemText === 'Wit-color Printer Parts') {
           categoryName = 'Wit-color Printer Spare Parts';
           hashValue = 'wit-color-printer-spare-parts';
+        } else if (itemText === 'Gongzheng Printer Parts') {
+          categoryName = 'Gongzheng Printer Spare Parts';
+          hashValue = 'gongzheng-printer-spare-parts';
+        } else if (itemText === 'Human Printer Parts') {
+          categoryName = 'Human Printer Spare Parts';
+          hashValue = 'human-printer-spare-parts';
+        } else if (itemText === 'Teflon Printer Parts') {
+          categoryName = 'Teflon Printer Spare Parts';
+          hashValue = 'teflon-printer-spare-parts';
+        } else if (itemText === 'Wiper Printer Parts') {
+          categoryName = 'Wiper Printer Spare Parts';
+          hashValue = 'wiper-printer-spare-parts';
+        } else if (itemText === 'Xaar Printer Parts') {
+          categoryName = 'Xaar Printer Spare Parts';
+          hashValue = 'xaar-printer-spare-parts';
+        } else if (itemText === 'Toshiba Printer Parts') {
+          categoryName = 'Toshiba Printer Spare Parts';
+          hashValue = 'toshiba-printer-spare-parts';
         }
         
         // Only continue if we found a match

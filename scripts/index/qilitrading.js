@@ -782,10 +782,87 @@ function handleHashFallback(hash) {
       window.loadRolandPrinterSpareParts();
     } else {
       loadAllProducts();
-    }
-  } else if (hash === 'canon-printer-spare-parts') {
+    }  } else if (hash === 'canon-printer-spare-parts') {
     if (window.loadCanonPrinterSpareParts) {
       window.loadCanonPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'ricoh-printer-spare-parts') {
+    if (window.loadRicohPrinterSpareParts) {
+      window.loadRicohPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'infiniti-challenger-printer-spare-parts') {
+    if (window.loadInfinitiChallengerPrinterSpareParts) {
+      window.loadInfinitiChallengerPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'flora-printer-spare-parts') {
+    if (window.loadFloraPrinterSpareParts) {
+      window.loadFloraPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'galaxy-printer-spare-parts') {
+    if (window.loadGalaxyPrinterSpareParts) {
+      window.loadGalaxyPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'mimaki-printer-spare-parts') {
+    if (window.loadMimakiPrinterSpareParts) {
+      window.loadMimakiPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'mutoh-printer-spare-parts') {
+    if (window.loadMutohPrinterSpareParts) {
+      window.loadMutohPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'wit-color-printer-spare-parts') {
+    if (window.loadWitColorPrinterSpareParts) {
+      window.loadWitColorPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'gongzheng-printer-spare-parts') {
+    if (window.loadGongzhengPrinterSpareParts) {
+      window.loadGongzhengPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'human-printer-spare-parts') {
+    if (window.loadHumanPrinterSpareParts) {
+      window.loadHumanPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'teflon-printer-spare-parts') {
+    if (window.loadTeflonPrinterSpareParts) {
+      window.loadTeflonPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'wiper-printer-spare-parts') {
+    if (window.loadWiperPrinterSpareParts) {
+      window.loadWiperPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'xaar-printer-spare-parts') {
+    if (window.loadXaarPrinterSpareParts) {
+      window.loadXaarPrinterSpareParts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'toshiba-printer-spare-parts') {
+    if (window.loadToshibaPrinterSpareParts) {
+      window.loadToshibaPrinterSpareParts();
     } else {
       loadAllProducts();
     }
@@ -1533,6 +1610,690 @@ window.loadRolandPrinterSpareParts = function() {
   }, 200);
 };
 
+// Function to load Canon Printer Spare Parts specifically
+window.loadCanonPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Canon Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {    // Get Canon printer spare parts
+    const canonSpareParts = printSparePartProducts.canon || [];
+    
+    const productsHTML = renderProducts(canonSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Canon printer spare parts category
+    updatePageHeader('Canon Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('canonPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Ricoh Printer Spare Parts specifically
+window.loadRicohPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Ricoh Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {    // Get Ricoh printer spare parts
+    const ricohSpareParts = printSparePartProducts.ricoh || [];
+    
+    const productsHTML = renderProducts(ricohSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Ricoh printer spare parts category
+    updatePageHeader('Ricoh Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('ricohPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Infiniti/Challenger Printer Spare Parts specifically
+window.loadInfinitiChallengerPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Infiniti / Challenger Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Infiniti/Challenger printer spare parts
+    const infinitiChallengerSpareParts = printSparePartProducts.infiniti_challenger || [];
+    
+    const productsHTML = renderProducts(infinitiChallengerSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Infiniti/Challenger printer spare parts category
+    updatePageHeader('Infiniti / Challenger Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('infinitiChallengerPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Flora Printer Spare Parts specifically
+window.loadFloraPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Flora Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Flora printer spare parts
+    const floraSpareParts = printSparePartProducts.flora || [];
+    
+    const productsHTML = renderProducts(floraSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Flora printer spare parts category
+    updatePageHeader('Flora Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('floraPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Galaxy Printer Spare Parts specifically
+window.loadGalaxyPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Galaxy Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Galaxy printer spare parts
+    const galaxySpareParts = printSparePartProducts.galaxy || [];
+    
+    const productsHTML = renderProducts(galaxySpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Galaxy printer spare parts category
+    updatePageHeader('Galaxy Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('galaxyPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Mimaki Printer Spare Parts specifically
+window.loadMimakiPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Mimaki Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Mimaki printer spare parts
+    const mimakiSpareParts = printSparePartProducts.mimaki || [];
+    
+    const productsHTML = renderProducts(mimakiSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Mimaki printer spare parts category
+    updatePageHeader('Mimaki Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('mimakiPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Mutoh Printer Spare Parts specifically
+window.loadMutohPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Mutoh Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Mutoh printer spare parts
+    const mutohSpareParts = printSparePartProducts.mutoh || [];
+    
+    const productsHTML = renderProducts(mutohSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Mutoh printer spare parts category
+    updatePageHeader('Mutoh Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('mutohPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Wit-color Printer Spare Parts specifically
+window.loadWitColorPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Wit-color Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Wit-color printer spare parts
+    const witcolorSpareParts = printSparePartProducts.witcolor || [];
+    
+    const productsHTML = renderProducts(witcolorSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Wit-color printer spare parts category
+    updatePageHeader('Wit-color Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('witColorPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Gongzheng Printer Spare Parts specifically
+window.loadGongzhengPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Gongzheng Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Gongzheng printer spare parts
+    const gongzhengSpareParts = printSparePartProducts.gongzheng || [];
+    
+    const productsHTML = renderProducts(gongzhengSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Gongzheng printer spare parts category
+    updatePageHeader('Gongzheng Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('gongzhengPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Human Printer Spare Parts specifically
+window.loadHumanPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Human Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Human printer spare parts
+    const humanSpareParts = printSparePartProducts.human || [];
+    
+    const productsHTML = renderProducts(humanSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Human printer spare parts category
+    updatePageHeader('Human Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('humanPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Teflon Printer Spare Parts specifically
+window.loadTeflonPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Teflon Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Teflon printer spare parts
+    const teflonSpareParts = printSparePartProducts.teflon || [];
+    
+    const productsHTML = renderProducts(teflonSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Teflon printer spare parts category
+    updatePageHeader('Teflon Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('teflonPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Wiper Printer Spare Parts specifically
+window.loadWiperPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Wiper Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Wiper printer spare parts
+    const wiperSpareParts = printSparePartProducts.wiper || [];
+    
+    const productsHTML = renderProducts(wiperSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Wiper printer spare parts category
+    updatePageHeader('Wiper Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('wiperPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Xaar Printer Spare Parts specifically
+window.loadXaarPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Xaar Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Xaar printer spare parts
+    const xaarSpareParts = printSparePartProducts.xaar || [];
+    
+    const productsHTML = renderProducts(xaarSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Xaar printer spare parts category
+    updatePageHeader('Xaar Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('xaarPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load Toshiba Printer Spare Parts specifically
+window.loadToshibaPrinterSpareParts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Toshiba Printer Spare Parts') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Get Toshiba printer spare parts
+    const toshibaSpareParts = printSparePartProducts.toshiba || [];
+    
+    const productsHTML = renderProducts(toshibaSpareParts, 'printsparepart');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show Toshiba printer spare parts category
+    updatePageHeader('Toshiba Printer Spare Parts');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('toshibaPrinterSpareParts');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
 // Hero Carousel functionality
 class HeroCarousel {
   constructor() {
@@ -1649,102 +2410,6 @@ let heroCarousel;
 
 // Make heroCarousel globally accessible
 window.heroCarousel = null;
-
-// Function to load Canon Printer Spare Parts specifically
-window.loadCanonPrinterSpareParts = function() {
-  // Hide the submenu after selection
-  hideActiveSubmenus();
-  
-  // Hide hero banner for specific category views
-  hideHeroBanner();
-  
-  // Highlight selected menu item in the navigation
-  document.querySelectorAll('.sub-header-link').forEach(link => {
-    link.classList.remove('active');
-    if (link.textContent.trim() === 'Canon Printer Spare Parts') {
-      link.classList.add('active');
-    }
-  });
-  
-  // Add loading animation
-  showLoadingState();
-  
-  // Small delay for smooth transition
-  setTimeout(() => {    // Get Canon printer spare parts
-    const canonSpareParts = printSparePartProducts.canon || [];
-    
-    const productsHTML = renderProducts(canonSpareParts, 'printsparepart');
-    const productsGrid = document.querySelector('.js-prodcts-grid');
-    productsGrid.innerHTML = productsHTML;
-    productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners for the new add to cart buttons
-    attachAddToCartListeners();
-    
-    // Update page title or add a header to show Canon printer spare parts category
-    updatePageHeader('Canon Printer Spare Parts');
-    
-    // Update breadcrumb navigation
-    updateBreadcrumb('canonPrinterSpareParts');
-    
-    // Check if we need to skip scrolling
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const skipScroll = urlSearchParams.get('noscroll') === 'true';
-    
-    // Scroll to top of products only if not skipping
-    if (!skipScroll) {
-      scrollToProducts();
-    }
-  }, 200);
-};
-
-// Function to load Ricoh Printer Spare Parts specifically
-window.loadRicohPrinterSpareParts = function() {
-  // Hide the submenu after selection
-  hideActiveSubmenus();
-  
-  // Hide hero banner for specific category views
-  hideHeroBanner();
-  
-  // Highlight selected menu item in the navigation
-  document.querySelectorAll('.sub-header-link').forEach(link => {
-    link.classList.remove('active');
-    if (link.textContent.trim() === 'Ricoh Printer Spare Parts') {
-      link.classList.add('active');
-    }
-  });
-  
-  // Add loading animation
-  showLoadingState();
-  
-  // Small delay for smooth transition
-  setTimeout(() => {    // Get Ricoh printer spare parts
-    const ricohSpareParts = printSparePartProducts.ricoh || [];
-    
-    const productsHTML = renderProducts(ricohSpareParts, 'printsparepart');
-    const productsGrid = document.querySelector('.js-prodcts-grid');
-    productsGrid.innerHTML = productsHTML;
-    productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners for the new add to cart buttons
-    attachAddToCartListeners();
-    
-    // Update page title or add a header to show Ricoh printer spare parts category
-    updatePageHeader('Ricoh Printer Spare Parts');
-    
-    // Update breadcrumb navigation
-    updateBreadcrumb('ricohPrinterSpareParts');
-    
-    // Check if we need to skip scrolling
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const skipScroll = urlSearchParams.get('noscroll') === 'true';
-    
-    // Scroll to top of products only if not skipping
-    if (!skipScroll) {
-      scrollToProducts();
-    }
-  }, 200);
-};
 
 // Expose product data globally for search system
 window.printerProducts = printerProducts;
