@@ -23,9 +23,8 @@ class SubHeaderNavigation {
       });      // Click event for both submenu toggle and navigation
       link.addEventListener('click', (event) => {
         const submenuId = link.getAttribute('data-submenu');
-        const linkText = link.textContent.trim();
-          // Check if we're on the index page by looking for product grid or if load functions exist
-        const isIndexPage = window.loadSpecificCategory && window.loadAllPrintheadProducts && window.loadAllMaterialProducts;// Handle navigation based on the category
+        const linkText = link.textContent.trim();        // Check if we're on the index page by looking for product grid or if load functions exist
+        const isIndexPage = window.loadSpecificCategory && window.loadAllPrintheadProducts && window.loadAllMaterialProducts && window.loadAllLedLcdProducts;// Handle navigation based on the category
         let hash = '';
         if (linkText === 'Inkjet Printers') {
             hash = '#inkjet-printers';
@@ -73,8 +72,8 @@ class SubHeaderNavigation {
             window.loadAllMaterialProducts();
             this.setActiveCategory('Material');
             window.location.hash = hash;
-          } else if (linkText === 'LED & LCD' && window.loadSpecificCategory) {
-            window.loadSpecificCategory('LED & LCD');
+          } else if (linkText === 'LED & LCD' && window.loadAllLedLcdProducts) {
+            window.loadAllLedLcdProducts();
             this.setActiveCategory('LED & LCD');
             window.location.hash = hash;
           } else if (linkText === 'Laser' && window.loadSpecificCategory) {
@@ -292,7 +291,6 @@ class SubHeaderNavigation {
       }
     }
   }
-
   expandMaterialMenu() {
     // Find and expand the material menu in the sidebar if it exists
     const materialLink = document.querySelector('[onclick*="loadAllMaterialProducts"]');
@@ -300,6 +298,18 @@ class SubHeaderNavigation {
       const submenu = materialLink.nextElementSibling;
       if (submenu && submenu.classList.contains('submenu')) {
         materialLink.classList.add('expanded');
+        submenu.style.display = 'block';
+      }
+    }
+  }
+
+  expandLedLcdMenu() {
+    // Find and expand the LED & LCD menu in the sidebar if it exists
+    const ledLcdLink = document.querySelector('[onclick*="loadAllLedLcdProducts"]');
+    if (ledLcdLink) {
+      const submenu = ledLcdLink.nextElementSibling;
+      if (submenu && submenu.classList.contains('submenu')) {
+        ledLcdLink.classList.add('expanded');
         submenu.style.display = 'block';
       }
     }
@@ -430,15 +440,33 @@ class SubHeaderNavigation {
         this.expandMaterialMenu();
       }
       return;
-    }
-
-    if (hash.startsWith('material-')) {
+    }    if (hash.startsWith('material-')) {
       const materialCategory = hash.replace('material-', '');
       
       if (window.loadMaterialProducts) {
         window.loadMaterialProducts(materialCategory);
         this.setActiveCategory('Material');
         this.expandMaterialMenu();
+      }
+      return;
+    }
+
+    if (hash === 'led-lcd') {
+      if (window.loadAllLedLcdProducts) {
+        window.loadAllLedLcdProducts();
+        this.setActiveCategory('LED & LCD');
+        this.expandLedLcdMenu();
+      }
+      return;
+    }
+
+    if (hash.startsWith('led-lcd-')) {
+      const ledLcdCategory = hash.replace('led-lcd-', '');
+      
+      if (window.loadLedLcdProducts) {
+        window.loadLedLcdProducts(ledLcdCategory);
+        this.setActiveCategory('LED & LCD');
+        this.expandLedLcdMenu();
       }
       return;
     }    // Handle other category hashes
@@ -471,10 +499,11 @@ class SubHeaderNavigation {
         this.expandInkjetPrintersMenu();
       } else if (categoryName === 'Print Spare Parts') {
         this.expandPrintSparePartsMenu();
-      } else if (categoryName === 'Upgrading Kit') {
-        this.expandUpgradingKitMenu();
+      } else if (categoryName === 'Upgrading Kit') {        this.expandUpgradingKitMenu();
       } else if (categoryName === 'Material') {
         this.expandMaterialMenu();
+      } else if (categoryName === 'LED & LCD') {
+        this.expandLedLcdMenu();
       }
     }
   }

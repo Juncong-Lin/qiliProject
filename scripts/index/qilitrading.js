@@ -6,6 +6,7 @@ import {printerProducts, getXP600Printers, getI1600Printers, getI3200Printers} f
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {materialProducts} from '../../data/material-products.js';
+import {ledAndLcdProducts} from '../../data/ledAndLcd-products.js';
 import { formatCurrency, formatPriceRange } from '../shared/money.js';
 
 // Early search parameter detection to prevent hero banner flash
@@ -397,6 +398,96 @@ window.loadAllUpgradingKitProducts = function() {
   }, 200);
 };
 
+// Function to load LED & LCD products for a specific category
+window.loadLedLcdProducts = function(category) {
+  const categoryProducts = ledAndLcdProducts[category];
+  if (categoryProducts) {
+    // Hide the submenu after selection
+    hideActiveSubmenus();
+    
+    // Hide hero banner for specific category views
+    hideHeroBanner();
+    
+    // Highlight selected menu item
+    highlightSelectedMenuItem(category);
+    
+    // Add loading animation
+    showLoadingState();
+    
+    // Small delay for smooth transition
+    setTimeout(() => {
+      const productsHTML = renderProducts(categoryProducts, 'ledlcd');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page title or add a header to show which category is selected
+      updatePageHeader(`${category.charAt(0).toUpperCase() + category.slice(1)} LED & LCD`);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb(`led-lcd-${category}`);
+      
+      // Scroll to top of products
+      scrollToProducts();
+    }, 200);
+  }
+};
+
+// Function to load all LED & LCD products from all categories
+window.loadAllLedLcdProducts = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item in the navigation
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'LED & LCD') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    // Combine all LED & LCD products from all categories
+    let allLedLcdProducts = [];
+    for (const category in ledAndLcdProducts) {
+      allLedLcdProducts = allLedLcdProducts.concat(ledAndLcdProducts[category]);
+    }
+    
+    const productsHTML = renderProducts(allLedLcdProducts, 'ledlcd');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title or add a header to show LED & LCD category
+    updatePageHeader('LED & LCD');
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('led-lcd');
+    
+    // Check if we need to skip scrolling
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    // Scroll to top of products only if not skipping
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
 // Function to hide all active submenus
 function hideActiveSubmenus() {
   document.querySelectorAll('.submenu.active').forEach(submenu => {
@@ -662,7 +753,40 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="loadAllMaterialProducts()" class="breadcrumb-link">Material</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">${materialCategory.charAt(0).toUpperCase() + materialCategory.slice(1)} Materials</span>
+          <span class="breadcrumb-current">${materialCategory.charAt(0).toUpperCase() + materialCategory.slice(1)} Materials</span>        `;
+      }
+    } else if (brand.startsWith('led-lcd-')) {
+      // These are LED & LCD categories like led-lcd-display, led-lcd-outdoor, etc.
+      const ledLcdCategory = brand.substring(8); // Remove 'led-lcd-' prefix
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#led-lcd" class="breadcrumb-link">LED & LCD</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" class="breadcrumb-link" onclick="loadLedLcdProducts('${ledLcdCategory}')">${ledLcdCategory.charAt(0).toUpperCase() + ledLcdCategory.slice(1)} LED & LCD</a>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadAllLedLcdProducts()" class="breadcrumb-link">LED & LCD</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${ledLcdCategory.charAt(0).toUpperCase() + ledLcdCategory.slice(1)} LED & LCD</span>
+        `;
+      }
+    } else if (brand === 'led-lcd') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">LED & LCD</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">LED & LCD</span>
         `;
       }
     } else {
@@ -918,11 +1042,23 @@ function handleHashFallback(hash) {
       window.loadAllMaterialProducts();
     } else {
       loadAllProducts();
-    }
-  } else if (hash.startsWith('material-')) {
+    }  } else if (hash.startsWith('material-')) {
     const materialCategory = hash.replace('material-', '');
     if (window.loadMaterialProducts) {
       window.loadMaterialProducts(materialCategory);
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'led-lcd') {
+    if (window.loadAllLedLcdProducts) {
+      window.loadAllLedLcdProducts();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash.startsWith('led-lcd-')) {
+    const ledLcdCategory = hash.replace('led-lcd-', '');
+    if (window.loadLedLcdProducts) {
+      window.loadLedLcdProducts(ledLcdCategory);
     } else {
       loadAllProducts();
     }

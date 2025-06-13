@@ -429,6 +429,21 @@ window.handleMaterialClick = function(materialCategory) {
   }
 };
 
+// Helper function to handle LED & LCD clicks from subheader
+window.handleLedLcdClick = function(ledLcdCategory) {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadLedLcdProducts && typeof window.loadLedLcdProducts === 'function') {
+    // We're on the index page - load products directly
+    window.loadLedLcdProducts(ledLcdCategory);
+    
+    // Update URL hash for proper navigation
+    window.location.hash = `led-lcd-${ledLcdCategory}`;
+  } else {
+    // We're on a different page (like detail.html) - navigate to index page with hash
+    UrlUtils.navigateToIndex(`#led-lcd-${ledLcdCategory}`);
+  }
+};
+
 // Function to initialize sub-header navigation after shared content is loaded
 function initializeSubHeaderAfterLoad() {
   // Wait a bit to ensure DOM is fully updated

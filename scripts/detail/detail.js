@@ -4,6 +4,7 @@ import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { materialProducts } from '../../data/material-products.js';
+import { ledAndLcdProducts } from '../../data/ledAndLcd-products.js';
 // Temporarily commented out cart imports - preserved for future reuse
 // import { cart, addToCart } from '../../data/cart.js';
 // import { updateCartQuantity } from '../shared/cart-quantity.js';
@@ -41,6 +42,17 @@ function findUpgradingKitById(id) {
 function findMaterialById(id) {
   for (const category in materialProducts) {
     const product = materialProducts[category].find(item => item.id === id);
+    if (product) {
+      return { ...product, category };
+    }
+  }
+  return null;
+}
+
+// Helper function to find LED & LCD product by ID across all categories
+function findLedLcdById(id) {
+  for (const category in ledAndLcdProducts) {
+    const product = ledAndLcdProducts[category].find(item => item.id === id);
     if (product) {
       return { ...product, category };
     }
@@ -114,6 +126,11 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
   if (product) {
     productBrand = product.category;
   }
+} else if (productType === 'ledlcd' || productType === 'led-lcd') {
+  product = findLedLcdById(productId);
+  if (product) {
+    productBrand = product.category;
+  }
 } else {
   // Search in regular products or auto-detect if no productType specified
   product = products.find(product => product.id === productId);
@@ -177,12 +194,20 @@ if (!product && !urlProductType) {
       productBrand = product.brand;
     }
   }
-  
-  // If not found in upgrading kit products, search in material products
+    // If not found in upgrading kit products, search in material products
   if (!product) {
     product = findMaterialById(productId);
     if (product) {
       productType = 'material';
+      productBrand = product.category;
+    }
+  }
+  
+  // If not found in material products, search in LED & LCD products
+  if (!product) {
+    product = findLedLcdById(productId);
+    if (product) {
+      productType = 'ledlcd';
       productBrand = product.category;
     }
   }
@@ -270,9 +295,10 @@ if (product) {
   } else if (productType === 'printsparepart' || productType === 'print-spare-parts') {
     setupPrintSparePartContent(product);  
   } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
-    setupUpgradingKitContent(product);
-  } else if (productType === 'material') {
+    setupUpgradingKitContent(product);  } else if (productType === 'material') {
     setupMaterialProductContent(product);
+  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
+    setupLedLcdProductContent(product);
   } else if (productType === 'printer') {
     setupPrinterProductContent(product);
   } else {
@@ -1287,6 +1313,79 @@ function setupFallbackMaterialContent(product) {
   `;
   
   // Hide sections since we don't have detailed data
+  document.querySelector('.product-compatibility-section').style.display = 'none';  document.querySelector('.product-specifications-section').style.display = 'none';
+}
+
+/**
+ * Set up content for LED & LCD products
+ */
+async function setupLedLcdProductContent(product) {
+  try {
+    // Extract the path to the markdown file from the image path
+    const imagePath = product.image;
+    // Get the category folder and product folder from the image path
+    // Format: products/ledAndLcd/Category/Product Name/image/...
+    const pathParts = imagePath.split('/');
+    const categoryFolder = pathParts[2]; // Category folder
+    const productFolder = pathParts[3]; // Product name folder
+    
+    // Construct path to MD file
+    const mdFilePath = `products/ledAndLcd/${categoryFolder}/${productFolder}/${productFolder}.md`;
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      console.log(`Markdown file not found for ${product.name}: ${mdFilePath}`);
+      // Fallback to hardcoded content if markdown file is not found
+      setupFallbackLedLcdContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Update product description and content with the markdown content
+    // For LED & LCD, we'll use the entire markdown content as the main content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    console.log(`Successfully loaded markdown content for ${product.name}`);
+    
+    // Hide compatibility and specifications sections since LED & LCD typically don't have structured sections
+    document.querySelector('.product-compatibility-section').style.display = 'none';
+    document.querySelector('.product-specifications-section').style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading LED & LCD details:', error);
+    // Fallback to hardcoded content if there's an error
+    setupFallbackLedLcdContent(product);
+  }
+}
+
+/**
+ * Fallback function for LED & LCD content when markdown loading fails
+ */
+function setupFallbackLedLcdContent(product) {
+  // Set minimal fallback content
+  const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+  
+  document.querySelector('.js-product-details-content').innerHTML = `
+    <h3>${product.name}</h3>
+    <p>${categoryName} LED & LCD display for professional applications. Product information is currently being updated. Please contact us for detailed specifications.</p>
+    <div class="product-specifications">
+      <h4>Product Category</h4>
+      <p>${categoryName} LED & LCD</p>
+      
+      <h4>Applications</h4>
+      <p>Suitable for various display and signage applications.</p>
+      
+      <p><strong>Need More Information?</strong></p>
+      <p>For detailed specifications, compatibility information, and application guidelines, please contact our technical team.</p>
+    </div>
+  `;
+  
+  // Hide sections since we don't have detailed data
   document.querySelector('.product-compatibility-section').style.display = 'none';
   document.querySelector('.product-specifications-section').style.display = 'none';
 }
@@ -1743,8 +1842,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#upgrading-kit-${product.brand}" class="breadcrumb-link">${brandName} Products</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
-    `;
-  } else if (productType === 'material') {
+    `;  } else if (productType === 'material') {
     // For material products, show proper breadcrumb navigation based on category
     const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
     breadcrumbElement.innerHTML = `
@@ -1753,6 +1851,18 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       <a href="index.html#material" class="breadcrumb-link">Material</a>
       <span class="breadcrumb-separator">&gt;</span>
       <a href="index.html#material-${product.category}" class="breadcrumb-link">${categoryName} Materials</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">${product.name}</span>
+    `;
+  } else if (productType === 'ledlcd' || productType === 'led-lcd') {
+    // For LED & LCD products, show proper breadcrumb navigation based on category
+    const categoryName = product.category.charAt(0).toUpperCase() + product.category.slice(1);
+    breadcrumbElement.innerHTML = `
+      <a href="index.html" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#led-lcd" class="breadcrumb-link">LED & LCD</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <a href="index.html#led-lcd-${product.category}" class="breadcrumb-link">${categoryName} LED & LCD</a>
       <span class="breadcrumb-separator">&gt;</span>
       <span class="breadcrumb-current">${product.name}</span>
     `;
