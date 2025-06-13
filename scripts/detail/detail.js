@@ -1758,13 +1758,11 @@ function setupImageMagnifier() {
       if (availableSpaceRight >= resultSize + 20) {
         // Position to the right of the image
         resultX = imageRightEdge + 15;
-        // Keep magnifier at the same vertical level as the image center
-        resultY = imageRect.top + (imageRect.height / 2) - (resultSize / 2);
+        resultY = imageRect.top + (y - resultSize / 2);
       } else {
         // Position to the left of the image
         resultX = imageRect.left - resultSize - 15;
-        // Keep magnifier at the same vertical level as the image center
-        resultY = imageRect.top + (imageRect.height / 2) - (resultSize / 2);
+        resultY = imageRect.top + (y - resultSize / 2);
       }
       
       // Ensure result window stays within viewport
@@ -1775,21 +1773,20 @@ function setupImageMagnifier() {
     result.style.top = resultY + 'px';
     result.style.display = 'block';
     
-    // Calculate magnified image position - correct calculation
-    // The magnification factor is the ratio of result window size to lens size
-    const magnifyFactorX = resultSize / lensWidth;
-    const magnifyFactorY = resultSize / lensHeight;
-
+    // Calculate magnified image position - improved calculation
+    const magnifyFactor = 3.0; // Higher magnification level for better detail viewing
+    
+    // Calculate the position of the lens relative to the actual mouse position
+    const actualLensX = lensX + lensWidth / 2;
+    const actualLensY = lensY + lensHeight / 2;
+    
     result.style.backgroundImage = `url('${productImage.src}')`;
-    result.style.backgroundSize = (imageRect.width * magnifyFactorX) + 'px ' + (imageRect.height * magnifyFactorY) + 'px';
-
-    // Position the background so the area under the lens is centered in the result window
-    let bgX = -lensX * magnifyFactorX + (resultSize / 2);
-    let bgY = -lensY * magnifyFactorY + (resultSize / 2);
-    // Prevent white space on the left/top by clamping to 0
-    bgX = Math.min(0, bgX);
-    bgY = Math.min(0, bgY);
-    result.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
+    result.style.backgroundSize = (imageRect.width * magnifyFactor) + 'px ' + (imageRect.height * magnifyFactor) + 'px';
+    
+    // Position the background to show the magnified area
+    const bgX = -(actualLensX * magnifyFactor) + (resultSize / 2);
+    const bgY = -(actualLensY * magnifyFactor) + (resultSize / 2);
+      result.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
   }
 }
 
