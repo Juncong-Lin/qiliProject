@@ -64,18 +64,22 @@
   border: 1px solid white;
 }
 
+/* Desktop Logo Styles */
 .qili-logo {
   margin-top: 5px;
-  width: 40px;
+  width: 332px;
   height: auto;
+  display: block;
 }
 
+/* Mobile Logo Styles */
 .qili-mobile-logo {
   display: none;
   width: 40px;
   height: auto;
 }
 
+/* Logo Display Toggle */
 @media (max-width: 575px) {
   .qili-logo {
     display: none;
@@ -83,30 +87,16 @@
 
   .qili-mobile-logo {
     display: block;
-    height: 35px;
+    width: 35px;
+    height: auto;
     margin-top: 5px;
   }
 }
 
-/* Mobile logo sizing adjustments */
-@media (max-width: 768px) {
-  .qili-logo,
-  .qili-mobile-logo {
-    width: 32px;
-    height: auto;
-    margin-top: 2px;
-  }
-  
-  .header-link {
-    padding: 3px; /* Reduce padding for mobile */
-  }
-}
-
+/* Mobile Responsive Adjustments */
 @media (max-width: 480px) {
-  .qili-logo,
   .qili-mobile-logo {
     width: 28px;
-    height: auto;
     margin-top: 1px;
   }
   
@@ -116,10 +106,8 @@
 }
 
 @media (max-width: 360px) {
-  .qili-logo,
   .qili-mobile-logo {
     width: 24px;
-    height: auto;
     margin-top: 1px;
   }
   
@@ -129,10 +117,8 @@
 }
 
 @media (max-width: 320px) {
-  .qili-logo,
   .qili-mobile-logo {
     width: 20px;
-    height: auto;
     margin-top: 0;
   }
   
