@@ -1,6 +1,6 @@
 # Spectra Polaris PQ512 35pl
 
-Price: USD:1600-1700
+Price: USD:1700-1700
 
 Product Details:
 
@@ -22,3 +22,5 @@ Teckwin TeckUV 3200SR / TeckStorm TS600 / TeckStorm TS300, CET Color X-Press X50
 Truepress Jet W3200UV,
 Wit-Color Ultra 4000-3304 / Ultra 4000-3308
 Compatible Ink for this head: Solvent ink,UV ink,
+Photo about the packing and the detail of this printhead from our Delivery records:
+This printhead have this packing sometimes:

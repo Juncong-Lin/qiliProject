@@ -11,3 +11,6 @@ VJ-1204, VJ-1304, VJ-1604, VJ-1604W, VJ-1608, VJ-1614.
 Compatible Ink for this head:  Eco-Solvent ink or water based ink
 Description:
 Original DX5 original of Mutoh with green connector
+Photo about the packing and the detail of this printhead from our Delivery records:
+The old Packing in 2018:
+The new Packing now:

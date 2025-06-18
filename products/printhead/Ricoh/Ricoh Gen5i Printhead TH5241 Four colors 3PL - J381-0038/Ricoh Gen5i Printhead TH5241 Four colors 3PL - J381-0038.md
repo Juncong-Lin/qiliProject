@@ -1,6 +1,6 @@
 # Ricoh Gen5i Printhead TH5241 Four colors 3PL - J381-0038
 
-Price: USD:1960-2010
+Price: USD:2010-2010
 
 Product Details:
 

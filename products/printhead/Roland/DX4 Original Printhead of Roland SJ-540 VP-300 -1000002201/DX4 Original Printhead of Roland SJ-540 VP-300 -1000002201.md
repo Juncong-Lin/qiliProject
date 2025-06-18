@@ -20,3 +20,4 @@ mimaki jv3(jv3-130, JV3-130sp, JV3-160, JV3-160sp, JV3-250, JV3-250sp etc.)
 Mutoh RH-II(Falcon2), RH-3, Mutoh RJ-8000, Spitfire 65, Spitfire 90, Blizzard 65, Blizzard 90, MY-44743.
 Note:Original  and New Roland Printhead with Original packing of Roland
 Part No.: 1000002201
+Photo about the packing and the detail of this printhead from our Delivery records:

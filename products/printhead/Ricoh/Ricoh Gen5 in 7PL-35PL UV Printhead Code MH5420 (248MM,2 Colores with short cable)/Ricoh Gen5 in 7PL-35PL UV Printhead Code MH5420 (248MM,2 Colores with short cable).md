@@ -1,6 +1,6 @@
 # Ricoh Gen5 in 7PL-35PL UV Printhead Code MH5420 (248MM,2 Colores with short cable)
 
-Price: USD:1860-1920
+Price: USD:1920-1920
 
 Product Details:
 
@@ -17,4 +17,5 @@ Handtop HT1600UV HR4, HT1610UV FR4, HT2500UV HR8, HT2512UV-D FR8, HT3116UV FR8, 
 Durst Alpha 190, 330
 Quantum Matan 5m
 Efi Vutek H3, H5, 5R, 5r+
-Compatible Ink for this head: Solvent ink,UV ink,
+Compatible Ink for this head: Solvent ink,UV ink.
+Photo about the packing and the detail of this printhead from our Delivery records:

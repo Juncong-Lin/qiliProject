@@ -1,6 +1,6 @@
 # Konica Minolta KM1024i MAE 13PL
 
-Price: USD:2460-2670
+Price: USD:2460-2460
 
 Product Details:
 

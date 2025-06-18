@@ -1,10 +1,11 @@
 # Ricoh Gen6 Printhead MH5340  Four Colores 5PL
 
-Price: Not available
+Price: USD:2010-2010
 
 Product Details:
 
 Printhead Model Name:Ricoh Gen6 Printhead MH5340  Four Colores 5PL
+（Price is subjected to final confirmation as it's price is not stable )
 Application: work for all Chinese printers like below:
 M5000
 SG6 2030

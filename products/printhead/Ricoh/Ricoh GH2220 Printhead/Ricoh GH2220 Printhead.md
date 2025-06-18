@@ -1,6 +1,6 @@
 # Ricoh GH2220 Printhead
 
-Price: USD:410-430
+Price: USD:430-430
 
 Product Details:
 

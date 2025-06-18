@@ -1,6 +1,6 @@
 # Ricoh Gen6 Printhead MH5320 Two Colors 5PL- J376-03
 
-Price: USD:1960-2010
+Price: USD:2010-2010
 
 Product Details:
 

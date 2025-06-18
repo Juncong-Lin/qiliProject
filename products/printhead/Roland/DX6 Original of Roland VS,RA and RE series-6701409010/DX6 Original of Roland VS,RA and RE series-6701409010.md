@@ -8,3 +8,4 @@ Printhead  Name:DX6 Original of Roland VS,RA and RE series-6701409010 (Note,DX6
 Application: For Roland VS-420 / VS-300 / VS-540 / VS-640 / VS-300i / VS-540i / VS-640i / BN-20 / FH740 / RA-640 / RE-640 / RF-640 / RF-640a / EJ-640 / XT-640 / RT-640 / XR-640 / XF-640.
 Note:Original  and New Roland Printhead with Original packing of Roland
 Part No.:6701409010
+Photo about the packing and the detail of this printhead from our Delivery records:

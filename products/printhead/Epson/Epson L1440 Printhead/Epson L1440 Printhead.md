@@ -1,6 +1,6 @@
 # Epson L1440 Printhead
 
-Price: USD:1600-1640
+Price: USD:1600-1600
 
 Product Details:
 

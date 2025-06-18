@@ -1,6 +1,6 @@
 # Ricoh G5S MH5220 UV Printhead - J35000
 
-Price: Not available
+Price: USD:3040-3040
 
 Product Details:
 

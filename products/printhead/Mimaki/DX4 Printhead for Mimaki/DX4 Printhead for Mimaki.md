@@ -10,3 +10,4 @@ Mimaki TX2-1600
 Compatible Ink for this head:  Eco-Solvent ink or water based ink
 Description:
 Original DX4 of Mimaki
+Photo about the packing and the detail of this printhead from our Delivery records:

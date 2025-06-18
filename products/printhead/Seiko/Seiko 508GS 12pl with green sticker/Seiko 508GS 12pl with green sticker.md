@@ -1,11 +1,21 @@
 # Seiko 508GS 12pl with green sticker
 
-Price: USD:1130-1160
+Price: USD:1160-1160
 
 Product Details:
 
 Printhead Model Name: Seiko 508GS 12pl with green sticker
-Application: work for all Chinese printers like Sid triton Gongzheng  ZHONGYE:ZY3200,ZY2500,ZY1800,ZY5300,ZY-UVB,ZY-UVC,ZY-UVA (ZY-SK3206,SK3204,SK3208,SK3212,SK2504,SK2506,SK2508,SK2512 etc) sereis con cabezales spt510/35PL
-Infiniti/Challenger/Pheaton Serie: FY-3208R ,FY-3208H,FY-3208HA,FY-3206HF,UD3208 UD3206 etc
-Crystaljet 3000 ,Crystaljet 4000,Crystaljet 5000,Crystaljet 6000,Crystaljet 9000 ,Crystaljet UV,Iconteck,Meitu,Wer,etc
+Application: work for all Chinese printers like
+Infiniti challenger FY-3266T / FY-306T / FY-3208T / FY-3286T / FY-3286J / FY-3208GS
+Crystek X5300
+CrystalJet 6000 series
+Kerajet K700
+Leyenda 1800T3 / 3200F3
+Nuocai NC-SPT2531
+Forni HS1804
+Icontek TW-1800J3 / TW-3308HG / TW-3200F3 / TW-3308MG
+OraJet J18
+and also work for some model of  following inkjet pinters :
+Sid triton Gongzheng ,Meitu,Wer,etc
 Compatible Ink for this head: Solvent ink,UV ink,
+Photo about the packing and the detail of this printhead from our Delivery records:

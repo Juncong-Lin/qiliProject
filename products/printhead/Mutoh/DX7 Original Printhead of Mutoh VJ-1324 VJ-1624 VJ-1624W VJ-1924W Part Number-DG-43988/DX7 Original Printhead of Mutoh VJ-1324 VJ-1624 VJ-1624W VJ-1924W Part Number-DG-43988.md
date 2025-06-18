@@ -11,3 +11,6 @@ Mutoh VJ-1324,  VJ-1624  ,VJ-1624W ,VJ-1924W , 426UF, 1617H
 Compatible Ink for this head:  Eco-Solvent ink or water based ink
 Description:
 Original DX7 original for Mutoh Valuejet 1624 ,part number is DG-43988 which is compatible with Mutoh ValueJet 1324, 1624, 426UF, 1617H .The part Number DG-43988 could also replace part number DG-42271, DG-43345, DG-45279 and DG-42987.
+Photo about the packing and the detail of this printhead from our Delivery records:
+The old Packing in 2019:
+The new Packing now:

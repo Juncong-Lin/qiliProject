@@ -1,6 +1,6 @@
 # Mimaki UJF-3042MkII  UJV-160 Printhead Part Number M018821
 
-Price: USD:1860-1960
+Price: USD:2000-2000
 
 Product Details:
 

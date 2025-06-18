@@ -1,11 +1,14 @@
 # Seiko SPT1020 35PL
 
-Price: USD:1400-1480
+Price: USD:1450-1450
 
 Product Details:
 
 Printhead Model Name: Seiko SPT1020 35PL
-Application: work for all Chinese printers like Sid triton Gongzheng  ZHONGYE:ZY3200,ZY2500,ZY1800,ZY5300,ZY-UVB,ZY-UVC,ZY-UVA (ZY-SK3206,SK3204,SK3208,SK3212,SK2504,SK2506,SK2508,SK2512 etc) sereis con cabezales spt510/35PL
-Infiniti/Challenger/Pheaton Serie: FY-3208R ,FY-3208H,FY-3208HA,FY-3206HF,UD3208 UD3206 etc
-Crystaljet 3000 ,Crystaljet 4000,Crystaljet 5000,Crystaljet 6000,Crystaljet 9000 ,Crystaljet UV,Iconteck,Meitu,Wer,etc
+Application: work for all Chinese printers below:
+Infiniti FY-3266K, Infiniti FY-3266H, Infiniti FY-3266J, Infiniti FY-3266R, Phoaeton UD-3266E, Phoaeton UD-3266G
+Icontek TW-3306FD, Icontek TW-3308FD, Icontek TW-1800F3, Icontek TW-2500F3, Icontek TW-3306FZ, Icontek TW-3308FZ, Icontek M5, Icontek M7, SID XC II, Crstaljet CJ-FB2506UV, Crstaljet S6306SPT1020_35PL, Crstaljet F6308SPT1020_35PL,
+and other model of Sid triton Gongzheng
+Crystaljet 3000 ,Iconteck,Meitu,Wer,etc
 Compatible Ink for this head: Solvent ink,UV ink,
+Photo about the packing and the detail of this printhead from our Delivery records:
