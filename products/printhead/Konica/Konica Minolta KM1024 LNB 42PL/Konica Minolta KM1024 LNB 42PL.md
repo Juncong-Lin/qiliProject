@@ -9,4 +9,3 @@ Work for the following Inkjet Printers:
 Agfa :Anapurna M2540 FB Anapurna M2050 Anapurna M1600
 Allwin S16 / C8 / C12
 Dilli Neo Titan FB2513-06DW
-Photo about the packing and the detail of this printhead from our Delivery records:

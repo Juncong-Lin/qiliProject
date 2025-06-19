@@ -11,4 +11,3 @@ Mutoh Valujet VJ-1618
 Compatible Ink for this head:  Eco-Solvent ink or water based ink
 Description:
 Original DX7 original for Mutoh Valuejet 1618
-Photo about the packing and the detail of this printhead from our Delivery records:

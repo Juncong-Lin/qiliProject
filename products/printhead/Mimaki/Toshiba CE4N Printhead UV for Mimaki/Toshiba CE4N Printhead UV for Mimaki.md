@@ -12,4 +12,3 @@ Mimaki JFX-1615   Mimaki JFX-1615Plus   Mimaki JFX-1631 Mimaki JFX-1631Plus�
 UJV-160/JFX
 Description:
 Original Printhead of Mimaki
-Photo about the packing and the detail of this printhead :

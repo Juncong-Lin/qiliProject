@@ -18,4 +18,3 @@ OraJet J18
 and also work for some model of  following inkjet pinters :
 Sid triton Gongzheng ,Meitu,Wer,etc
 Compatible Ink for this head: Solvent ink,UV ink,
-Photo about the packing and the detail of this printhead from our Delivery records:

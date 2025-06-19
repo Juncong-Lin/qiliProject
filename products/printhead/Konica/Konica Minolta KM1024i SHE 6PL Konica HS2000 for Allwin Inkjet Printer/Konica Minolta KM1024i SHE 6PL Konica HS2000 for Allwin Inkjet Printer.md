@@ -20,4 +20,3 @@ Optimum Digital KR Hybrid UV
 Skyjet (FT2512i, FT3020i)
 Taimes T50UV
 Yicong YD2512-KD
-Photo about the packing and the detail of this printhead from our Delivery records:

@@ -10,4 +10,3 @@ Anapurna M1600 Anapurna M² Anapurna M2050 Anapurna M2540 FB
 Allwin C8
 DGI VE-3206
 Dilli Neo Titan FB2513-06DW / Neo Titan UVT-1604D
-Photo about the packing and the detail of this printhead from our Delivery records:

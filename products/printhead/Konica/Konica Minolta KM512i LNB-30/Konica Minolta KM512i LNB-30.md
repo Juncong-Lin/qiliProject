@@ -5,4 +5,3 @@ Price: USD:1170-1170
 Product Details:
 
 Konica Minolta KM512i LNB-30
-Photo about the packing and the detail of this printhead from our Delivery records:

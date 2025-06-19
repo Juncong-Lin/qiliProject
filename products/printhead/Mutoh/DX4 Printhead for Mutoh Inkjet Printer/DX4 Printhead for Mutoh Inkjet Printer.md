@@ -15,4 +15,3 @@ Mutoh Valuejet 2606
 Compatible Ink for this head:  Eco-Solvent ink or water based ink
 Description:
 dx4 for Mutoh
-Photo about the packing and the detail of this printhead from our Delivery records:

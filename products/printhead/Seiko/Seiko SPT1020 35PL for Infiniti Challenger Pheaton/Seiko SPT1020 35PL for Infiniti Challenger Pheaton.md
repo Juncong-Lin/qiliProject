@@ -11,4 +11,3 @@ Icontek TW-3306FD, Icontek TW-3308FD, Icontek TW-1800F3, Icontek TW-2500F3, Icon
 and other model of Sid triton Gongzheng
 Crystaljet 3000 ,Iconteck,Meitu,Wer,etc
 Compatible Ink for this head: Solvent ink,UV ink,
-Photo about the packing and the detail of this printhead from our Delivery records:

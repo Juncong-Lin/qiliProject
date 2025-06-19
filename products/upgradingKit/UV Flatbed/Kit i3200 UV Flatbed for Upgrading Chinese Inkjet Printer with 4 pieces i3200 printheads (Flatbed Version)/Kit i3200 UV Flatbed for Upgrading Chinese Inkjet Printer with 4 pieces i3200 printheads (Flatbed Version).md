@@ -14,6 +14,3 @@ Parte of this kit:
 Parte of this kit:
 The KIT i3200 UV for Flatbed now with the boards version like below:
 The KIT i3200 UV for Flatbed now with the boards version like below:
-The KIT i3200 UV Printhead packing:
-The KIT i3200 UV Printhead packing:
-The KIT i3200 UV Printhead packing:

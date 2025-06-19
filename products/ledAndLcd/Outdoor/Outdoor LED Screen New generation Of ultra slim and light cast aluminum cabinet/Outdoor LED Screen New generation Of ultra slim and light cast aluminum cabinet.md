@@ -100,6 +100,5 @@ Remarks:
 One sending card can load 1280 x 1024 pixels
 If we calculate 1 cabinet as 48×48 pixels, then one sending card can load 520 cabinets (26x20)
 One lan cable can load 260cabinet
-Packaging
 One flight case can load 10 cabinets；
 Flight case specification：P10‐1190*572*770 (mm) :141kg

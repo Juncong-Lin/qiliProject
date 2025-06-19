@@ -6,6 +6,4 @@ Product Details:
 
 Printhead  Name:DX7 Original Printhead of Roland  BN-20 XR-640 XF-640 -6701409010
 Application:Roland BN-20 / FH-740 / RA-640 / RE-640 / RF-640 / VS-300 / VS-300i / VS-420 / VS-540 / VS-540i / VS-640 / VS-640i/ XF-640 / XR-640.
-Note:Original  and New Roland Printhead with Original packing of Roland
 Part No.:6701409010
-Photo about the packing and the detail of this printhead from our Delivery records:

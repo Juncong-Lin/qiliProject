@@ -8,4 +8,3 @@ Printhead Model Name:Ricoh Gen5 in 7PL-35PL UV 2 Colores Printhead code N221414L
 Application: work for all Chinese printers like below:
 Xenons,Flora,Handtop, Docan Flatbed UV Printers
 Compatible Ink for this head: UV Ink
-Photo about the packing and the detail of this printhead from our Delivery records:

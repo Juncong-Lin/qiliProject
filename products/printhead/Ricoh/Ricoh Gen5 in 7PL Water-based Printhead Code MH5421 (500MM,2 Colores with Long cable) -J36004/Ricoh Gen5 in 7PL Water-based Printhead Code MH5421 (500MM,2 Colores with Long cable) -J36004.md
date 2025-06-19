@@ -12,4 +12,3 @@ DIP J4
 Hollanders ColorBooster 230, 250
 MTEX Turbo Sub
 Compatible Ink for this head: Water-based ink
-Photo about the packing and the detail of this printhead from our Delivery records:

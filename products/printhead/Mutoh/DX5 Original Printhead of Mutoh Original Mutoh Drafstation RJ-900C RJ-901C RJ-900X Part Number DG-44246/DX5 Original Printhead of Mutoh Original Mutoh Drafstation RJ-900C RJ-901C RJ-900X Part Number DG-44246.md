@@ -11,4 +11,3 @@ Mutoh MUTOH RJ-900  RJ-900C (Drafstation)   RJ-901C (Drafstation Pro)  RJ-90
 Compatible Ink for this head:   water based ink or Sublimation Ink
 Description:
 Original DX5 original for Mutoh RJ900 series
-Photo about the packing and the detail of this printhead from our Delivery records:
