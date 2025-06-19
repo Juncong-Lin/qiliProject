@@ -240,11 +240,10 @@ export function renderOrderSummary() {
               if (matchingProduct.getPrice) {
                 return matchingProduct.getPrice();
               } else if (matchingProduct.lower_price !== undefined || matchingProduct.higher_price !== undefined) {
-                return formatPriceRange(matchingProduct.lower_price, matchingProduct.higher_price);
-              } else if (matchingProduct.priceCents || matchingProduct.price) {
+                return formatPriceRange(matchingProduct.lower_price, matchingProduct.higher_price);              } else if (matchingProduct.priceCents || matchingProduct.price) {
                 return '$' + formatCurrency(matchingProduct.priceCents || matchingProduct.price);
               } else {
-                return 'Price not available';
+                return 'USD: #NA';
               }
             })()}
           </div>

@@ -5,7 +5,7 @@ export function formatCurrency(priceCents) {
 // New function to format price ranges from lower_price and higher_price
 export function formatPriceRange(lowerPrice, higherPrice) {
   if (!lowerPrice && !higherPrice) {
-    return 'Price not available';
+    return 'USD: #NA';
   }
   
   const lower = formatCurrency(lowerPrice || 0);

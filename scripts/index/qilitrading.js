@@ -55,9 +55,9 @@ function renderProducts(productList, type = 'regular') {
             } else if (product.price) {
               return 'USD:$' + formatCurrency(product.price);
             } else {
-              return 'Price not available';
+              return 'USD: #NA';
             }
-          })()}        </div>
+          })()}</div>
         <!-- Temporarily commented out quantity section - not needed for View Details -->
         <!--
         <div class="product-quantity-section">
