@@ -108,9 +108,8 @@ window.loadPrintheadProducts = function(brand) {
       productsGrid.classList.remove('showing-coming-soon');
       
       // Re-attach event listeners for the new add to cart buttons
-      attachAddToCartListeners();
-        // Update page title or add a header to show which brand is selected
-      updatePageHeader(`${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads`);
+      attachAddToCartListeners();        // Update page title or add a header to show which brand is selected
+      updatePageHeader(`${brand.charAt(0).toUpperCase() + brand.slice(1)} Printheads`, brandProducts.length);
           // Update breadcrumb navigation
     updateBreadcrumb(brand);
       
@@ -149,11 +148,9 @@ window.loadAllPrintheadProducts = function() {
     const productsGrid = document.querySelector('.js-prodcts-grid');
     productsGrid.innerHTML = productsHTML;
     productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners for the new add to cart buttons
-    attachAddToCartListeners();
-      // Update page title or add a header to show print heads category
-    updatePageHeader('Print Heads');
+      // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();      // Update page title or add a header to show print heads category
+    updatePageHeader('Print Heads', allPrintheadProducts.length);
       // Update breadcrumb navigation
     updateBreadcrumb('printHeads');
     
@@ -225,12 +222,11 @@ window.loadXP600Printers = function() {
     const productsGrid = document.querySelector('.js-prodcts-grid');
     productsGrid.innerHTML = productsHTML;
     productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners for the new add to cart buttons
+      // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
     
     // Update page title
-    updatePageHeader('XP600 Inkjet Printers');
+    updatePageHeader('XP600 Inkjet Printers', xp600Printers.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('xp600-printers');
@@ -261,12 +257,11 @@ window.loadI1600Printers = function() {
     const productsGrid = document.querySelector('.js-prodcts-grid');
     productsGrid.innerHTML = productsHTML;
     productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners for the new add to cart buttons
+      // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
     
     // Update page title
-    updatePageHeader('I1600 Inkjet Printers');
+    updatePageHeader('I1600 Inkjet Printers', i1600Printers.length);
       // Update breadcrumb navigation
     updateBreadcrumb('i1600-printers');
     
@@ -296,12 +291,11 @@ window.loadI3200Printers = function() {
     const productsGrid = document.querySelector('.js-prodcts-grid');
     productsGrid.innerHTML = productsHTML;
     productsGrid.classList.remove('showing-coming-soon');
-    
-    // Re-attach event listeners for the new add to cart buttons
+      // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
     
     // Update page title
-    updatePageHeader('I3200 Inkjet Printers');
+    updatePageHeader('I3200 Inkjet Printers', i3200Printers.length);
       // Update breadcrumb navigation
     updateBreadcrumb('i3200-printers');
     
@@ -335,9 +329,8 @@ window.loadUpgradingKitProducts = function(brand) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page title or add a header to show which brand is selected
-      updatePageHeader(`${brand.charAt(0).toUpperCase() + brand.slice(1)} Upgrading Kit`);
+        // Update page title or add a header to show which brand is selected
+      updatePageHeader(`${brand.charAt(0).toUpperCase() + brand.slice(1)} Upgrading Kit`, brandProducts.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb(brand, 'upgradingkit');
@@ -382,9 +375,8 @@ window.loadAllUpgradingKitProducts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show upgrading kit category
-    updatePageHeader('Upgrading Kit');
+      // Update page title or add a header to show upgrading kit category
+    updatePageHeader('Upgrading Kit', allUpgradingKitProducts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('upgradingKit');
@@ -425,9 +417,8 @@ window.loadLedLcdProducts = function(category) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page title or add a header to show which category is selected
-      updatePageHeader(`${category.charAt(0).toUpperCase() + category.slice(1)} LED & LCD`);
+        // Update page title or add a header to show which category is selected
+      updatePageHeader(`${category.charAt(0).toUpperCase() + category.slice(1)} LED & LCD`, categoryProducts.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb(`led-lcd-${category}`);
@@ -472,9 +463,8 @@ window.loadAllLedLcdProducts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show LED & LCD category
-    updatePageHeader('LED & LCD');
+      // Update page title or add a header to show LED & LCD category
+    updatePageHeader('LED & LCD', allLedLcdProducts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('led-lcd');
@@ -562,8 +552,8 @@ function scrollToProducts() {
   }
 }
 
-// Function to update page header
-function updatePageHeader(title) {
+// Function to update page header with optional product count
+function updatePageHeader(title, productCount = null) {
   let headerElement = document.querySelector('.page-header');
   if (!headerElement) {
     // Create header if it doesn't exist
@@ -577,7 +567,13 @@ function updatePageHeader(title) {
     const mainElement = document.querySelector('.main');
     mainElement.insertBefore(headerElement, mainElement.firstChild);
   }
-  headerElement.textContent = title;
+  
+  // Format title with product count if provided
+  if (productCount !== null && productCount !== undefined) {
+    headerElement.textContent = `${title} (Total: ${productCount})`;
+  } else {
+    headerElement.textContent = title;
+  }
 }
 
 // Function to update breadcrumb navigation
@@ -1379,9 +1375,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Inkjet Printers');
+        // Update page header
+      updatePageHeader('Inkjet Printers', allPrinters.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1406,9 +1401,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('XP600 Eco-Solvent Inkjet Printers');
+        // Update page header
+      updatePageHeader('XP600 Eco-Solvent Inkjet Printers', xp600Printers.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1437,9 +1431,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('I1600 Eco-Solvent Inkjet Printers');
+        // Update page header
+      updatePageHeader('I1600 Eco-Solvent Inkjet Printers', i1600Printers.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1467,9 +1460,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('I3200 Eco-Solvent Inkjet Printers');
+        // Update page header
+      updatePageHeader('I3200 Eco-Solvent Inkjet Printers', i3200Printers.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1501,9 +1493,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Eco-Solvent Inkjet Printers');
+        // Update page header
+      updatePageHeader('Eco-Solvent Inkjet Printers', allEcoSolventPrinters.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1535,7 +1526,7 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('Print Spare Parts');
+      updatePageHeader('Print Spare Parts', allPrintSpareParts.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1561,9 +1552,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Epson Printer Spare Parts');
+        // Update page header
+      updatePageHeader('Epson Printer Spare Parts', epsonSpareParts.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1590,9 +1580,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Roland Printer Spare Parts');
+        // Update page header
+      updatePageHeader('Roland Printer Spare Parts', rolandSpareParts.length);
       
       // Update breadcrumb      let breadcrumbElement = document.querySelector('.breadcrumb-nav');
       if (!breadcrumbElement) {
@@ -1619,9 +1608,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Canon Printer Spare Parts');
+        // Update page header
+      updatePageHeader('Canon Printer Spare Parts', canonSpareParts.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1648,9 +1636,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Ricoh Printer Spare Parts');
+        // Update page header
+      updatePageHeader('Ricoh Printer Spare Parts', ricohSpareParts.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1681,9 +1668,8 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page header
-      updatePageHeader('Upgrading Kit');
+        // Update page header
+      updatePageHeader('Upgrading Kit', allUpgradingKitProducts.length);
       
       // Update breadcrumb
       let breadcrumbElement = document.querySelector('.breadcrumb-nav');
@@ -1777,9 +1763,8 @@ window.loadAllPrintSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show print spare parts category
-    updatePageHeader('Print Spare Parts');
+      // Update page title or add a header to show print spare parts category
+    updatePageHeader('Print Spare Parts', allPrintSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('printSpareParts');
@@ -1825,9 +1810,8 @@ window.loadEpsonPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Epson printer spare parts category
-    updatePageHeader('Epson Printer Spare Parts');
+      // Update page title or add a header to show Epson printer spare parts category
+    updatePageHeader('Epson Printer Spare Parts', epsonSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('epsonPrinterSpareParts');
@@ -1873,9 +1857,8 @@ window.loadRolandPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Roland printer spare parts category
-    updatePageHeader('Roland Printer Spare Parts');
+      // Update page title or add a header to show Roland printer spare parts category
+    updatePageHeader('Roland Printer Spare Parts', rolandSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('rolandPrinterSpareParts');
@@ -1921,9 +1904,8 @@ window.loadCanonPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Canon printer spare parts category
-    updatePageHeader('Canon Printer Spare Parts');
+      // Update page title or add a header to show Canon printer spare parts category
+    updatePageHeader('Canon Printer Spare Parts', canonSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('canonPrinterSpareParts');
@@ -1969,9 +1951,8 @@ window.loadRicohPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Ricoh printer spare parts category
-    updatePageHeader('Ricoh Printer Spare Parts');
+      // Update page title or add a header to show Ricoh printer spare parts category
+    updatePageHeader('Ricoh Printer Spare Parts', ricohSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('ricohPrinterSpareParts');
@@ -2018,9 +1999,8 @@ window.loadInfinitiChallengerPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Infiniti/Challenger printer spare parts category
-    updatePageHeader('Infiniti / Challenger Printer Spare Parts');
+      // Update page title or add a header to show Infiniti/Challenger printer spare parts category
+    updatePageHeader('Infiniti / Challenger Printer Spare Parts', infinitiChallengerSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('infinitiChallengerPrinterSpareParts');
@@ -2067,9 +2047,8 @@ window.loadFloraPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Flora printer spare parts category
-    updatePageHeader('Flora Printer Spare Parts');
+      // Update page title or add a header to show Flora printer spare parts category
+    updatePageHeader('Flora Printer Spare Parts', floraSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('floraPrinterSpareParts');
@@ -2117,9 +2096,8 @@ window.loadGalaxyPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Galaxy printer spare parts category
-    updatePageHeader('Galaxy Printer Spare Parts');
+      // Update page title or add a header to show Galaxy printer spare parts category
+    updatePageHeader('Galaxy Printer Spare Parts', galaxySpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('galaxyPrinterSpareParts');
@@ -2166,9 +2144,8 @@ window.loadMimakiPrinterSpareParts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show Mimaki printer spare parts category
-    updatePageHeader('Mimaki Printer Spare Parts');
+      // Update page title or add a header to show Mimaki printer spare parts category
+    updatePageHeader('Mimaki Printer Spare Parts', mimakiSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('mimakiPrinterSpareParts');
@@ -2217,7 +2194,7 @@ window.loadMutohPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Mutoh printer spare parts category
-    updatePageHeader('Mutoh Printer Spare Parts');
+    updatePageHeader('Mutoh Printer Spare Parts', mutohSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('mutohPrinterSpareParts');
@@ -2266,7 +2243,7 @@ window.loadWitColorPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Wit-color printer spare parts category
-    updatePageHeader('Wit-color Printer Spare Parts');
+    updatePageHeader('Wit-color Printer Spare Parts', witColorSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('witColorPrinterSpareParts');
@@ -2315,7 +2292,7 @@ window.loadGongzhengPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Gongzheng printer spare parts category
-    updatePageHeader('Gongzheng Printer Spare Parts');
+    updatePageHeader('Gongzheng Printer Spare Parts', gongzhengSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('gongzhengPrinterSpareParts');
@@ -2364,7 +2341,7 @@ window.loadHumanPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Human printer spare parts category
-    updatePageHeader('Human Printer Spare Parts');
+    updatePageHeader('Human Printer Spare Parts', humanSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('humanPrinterSpareParts');
@@ -2413,7 +2390,7 @@ window.loadTeflonPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Teflon printer spare parts category
-    updatePageHeader('Teflon Printer Spare Parts');
+    updatePageHeader('Teflon Printer Spare Parts', teflonSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('teflonPrinterSpareParts');
@@ -2462,7 +2439,7 @@ window.loadWiperPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Wiper printer spare parts category
-    updatePageHeader('Wiper Printer Spare Parts');
+    updatePageHeader('Wiper Printer Spare Parts', wiperSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('wiperPrinterSpareParts');
@@ -2511,7 +2488,7 @@ window.loadXaarPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Xaar printer spare parts category
-    updatePageHeader('Xaar Printer Spare Parts');
+    updatePageHeader('Xaar Printer Spare Parts', xaarSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('xaarPrinterSpareParts');
@@ -2560,7 +2537,7 @@ window.loadToshibaPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Toshiba printer spare parts category
-    updatePageHeader('Toshiba Printer Spare Parts');
+    updatePageHeader('Toshiba Printer Spare Parts', toshibaSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('toshibaPrinterSpareParts');
@@ -2732,9 +2709,8 @@ window.loadMaterialProducts = function(category) {
       
       // Re-attach event listeners for the new add to cart buttons
       attachAddToCartListeners();
-      
-      // Update page title or add a header to show which category is selected
-      updatePageHeader(`${category.charAt(0).toUpperCase() + category.slice(1)} Materials`);
+        // Update page title or add a header to show which category is selected
+      updatePageHeader(`${category.charAt(0).toUpperCase() + category.slice(1)} Materials`, categoryProducts.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb(`material-${category}`);
@@ -2779,9 +2755,8 @@ window.loadAllMaterialProducts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show material category
-    updatePageHeader('Material');
+      // Update page title or add a header to show material category
+    updatePageHeader('Material', allMaterialProducts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('material');
@@ -2826,10 +2801,9 @@ window.loadChannelLetterProducts = function(category) {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title
+      // Update page title
     const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
-    updatePageHeader(`${categoryName} Channel Letter`);
+    updatePageHeader(`${categoryName} Channel Letter`, productsToShow.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('channel-letter', category);
@@ -2880,9 +2854,8 @@ window.loadAllChannelLetterProducts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show channel letter category
-    updatePageHeader('Channel Letter');
+      // Update page title or add a header to show channel letter category
+    updatePageHeader('Channel Letter', allChannelLetterProducts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('channel-letter');
@@ -2927,10 +2900,9 @@ window.loadOtherProducts = function(category) {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title
+      // Update page title
     const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
-    updatePageHeader(`${categoryName} Other Products`);
+    updatePageHeader(`${categoryName} Other Products`, productsToShow.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('other', category);
@@ -2981,9 +2953,8 @@ window.loadAllOtherProducts = function() {
     
     // Re-attach event listeners for the new add to cart buttons
     attachAddToCartListeners();
-    
-    // Update page title or add a header to show other category
-    updatePageHeader('Other Products');
+      // Update page title or add a header to show other category
+    updatePageHeader('Other Products', allOtherProducts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('other');
