@@ -374,13 +374,6 @@ export const printheadProducts = {
       higher_price: 190000
     },
     {
-      id: 'Konica-Minolta-KM1024i-LHE-30PL-UV-HS1000-for-Flora-Inkjet-Printers',
-      name: 'Konica Minolta KM1024i LHE 30PL UV (HS1000) for Flora Inkjet Printers',
-      image: 'products/printhead/Konica/Konica Minolta KM1024i LHE 30PL UV (HS1000) for Flora Inkjet Printers/image/Konica Minolta KM1024i LHE 30PL UV (HS1000) for Flora Inkjet Printers.jpg',
-      lower_price: 236000,
-      higher_price: 236000
-    },
-    {
       id: 'Konica-Minolta-KM1024i-LHE-30PL-UV-also-with-model-name-HS1000-for-Allwin-Inkjet-Printer',
       name: 'Konica Minolta KM1024i LHE 30PL UV ( also with model name HS1000) for Allwin Inkjet Printer',
       image: 'products/printhead/Konica/Konica Minolta KM1024i LHE 30PL UV ( also with model name HS1000) for Allwin Inkjet Printer/image/Konica Minolta KM1024i LHE 30PL UV ( also with model name HS1000) for Allwin Inkjet Printer.jpg',
@@ -449,13 +442,6 @@ export const printheadProducts = {
       image: 'products/printhead/Konica/Konica Minolta KM512LN 42PL/image/Konica Minolta KM512LN 42PL.jpg',
       lower_price: 78000,
       higher_price: 78000
-    },
-    {
-      id: 'Konica-Minolta-KM512-MH-14PL-UV',
-      name: 'Konica Minolta KM512 MH 14PL UV',
-      image: 'products/printhead/Konica/Konica Minolta KM512 MH 14PL UV/image/Konica Minolta KM512 MH 14PL UV.jpg',
-      lower_price: 106000,
-      higher_price: 106000
     },
     {
       id: 'Konica-Minolta-KM512-LNX-35PL',
@@ -1095,13 +1081,6 @@ export const printheadProducts = {
       id: 'StarFire-SG1024-MA2C-25pl',
       name: 'StarFire SG1024 MA2C 25pl',
       image: 'products/printhead/StarFire/StarFire SG1024 MA2C 25pl/image/StarFire SG1024 MA2C 25pl.jpg',
-      lower_price: 315000,
-      higher_price: 315000
-    },
-    {
-      id: 'StarFire-SG1024-SA-10pl',
-      name: 'StarFire SG1024 SA 10pl',
-      image: 'products/printhead/StarFire/StarFire SG1024 SA 10pl/image/StarFire SG1024 SA 10pl.jpg',
       lower_price: 315000,
       higher_price: 315000
     },

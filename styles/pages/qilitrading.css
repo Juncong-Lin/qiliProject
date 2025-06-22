@@ -126,12 +126,11 @@ body.has-sidebar .main {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Wider minimum width for small screens */
   }  .product-container {
     padding: 15px; /* Slightly reduce padding on very small screens */
-    height: 400px; /* Increased for full visibility of add to cart button */
-    min-height: 400px;
+    height: 400px; /* Increased for full visibility of add to cart button */    min-height: 400px;
     width: 100%;
     box-sizing: border-box;
   }.product-name {
-    height: 68px; /* Adjust name container height for mobile - 3 lines */
+    height: 90px; /* Adjust name container height for mobile - 4 lines */
   }
 }
 
@@ -187,7 +186,7 @@ body.has-sidebar .main {
 }
 
 .product-name {
-  height: 75px; /* Increased height to accommodate 3 lines */
+  height: 100px; /* Increased height to accommodate 4 lines */
   margin-bottom: 5px;
   /* Ensure consistent text display */
   display: flex;
