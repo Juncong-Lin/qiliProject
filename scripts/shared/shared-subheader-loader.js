@@ -371,6 +371,11 @@ function fixPrintSparePartsSubmenuItems() {
 }
 
 window.handlePrintheadClick = function(brand) {
+  // Hide any active submenus first
+  document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+    submenu.classList.remove('active');
+  });
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadPrintheadProducts && typeof window.loadPrintheadProducts === 'function') {
     // We're on index page - use existing function
@@ -383,6 +388,11 @@ window.handlePrintheadClick = function(brand) {
 
 // Helper function to handle upgrading kit clicks from subheader
 window.handleUpgradingKitClick = function(kitType) {
+  // Hide any active submenus first
+  document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+    submenu.classList.remove('active');
+  });
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadUpgradingKitProducts && typeof window.loadUpgradingKitProducts === 'function') {
     // We're on the index page - load products directly
@@ -416,6 +426,11 @@ window.handleUpgradingKitClick = function(kitType) {
 
 // Helper function to handle material clicks from subheader
 window.handleMaterialClick = function(materialCategory) {
+  // Hide any active submenus first
+  document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+    submenu.classList.remove('active');
+  });
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadMaterialProducts && typeof window.loadMaterialProducts === 'function') {
     // We're on the index page - load products directly
@@ -431,6 +446,11 @@ window.handleMaterialClick = function(materialCategory) {
 
 // Helper function to handle LED & LCD clicks from subheader
 window.handleLedLcdClick = function(ledLcdCategory) {
+  // Hide any active submenus first
+  document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+    submenu.classList.remove('active');
+  });
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadLedLcdProducts && typeof window.loadLedLcdProducts === 'function') {
     // We're on the index page - load products directly
@@ -446,6 +466,11 @@ window.handleLedLcdClick = function(ledLcdCategory) {
 
 // Helper function to handle Channel Letter clicks from subheader
 window.handleChannelLetterClick = function(channelLetterCategory) {
+  // Hide any active submenus first
+  document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+    submenu.classList.remove('active');
+  });
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadChannelLetterProducts && typeof window.loadChannelLetterProducts === 'function') {
     // We're on the index page - load products directly
@@ -461,6 +486,11 @@ window.handleChannelLetterClick = function(channelLetterCategory) {
 
 // Helper function to handle Other clicks from subheader
 window.handleOtherClick = function(otherCategory) {
+  // Hide any active submenus first
+  document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+    submenu.classList.remove('active');
+  });
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadOtherProducts && typeof window.loadOtherProducts === 'function') {
     // We're on the index page - load products directly

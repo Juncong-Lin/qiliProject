@@ -1,8 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Load shared sidebar component
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebarPlaceholder = document.getElementById('shared-sidebar-placeholder');
+  
+  if (sidebarPlaceholder) {
+    fetch('components/shared-sidebar.html')
+      .then(response => response.text())
+      .then(html => {
+        sidebarPlaceholder.innerHTML = html;
+        
+        // Initialize sidebar functionality after HTML is loaded
+        setTimeout(() => {
+          initializeSidebar();
+        }, 100);
+      })
+      .catch(error => {
+        console.error('Error loading sidebar:', error);
+      });
+  }
+});
+
+// Sidebar initialization function
+function initializeSidebar() {
   const expandableLinks = document.querySelectorAll('.expandable');
-  let currentActiveGroup = null; // Replacing currentActiveGroups with a single variable
+  let currentActiveGroup = null;
   let mouseInSubmenu = false;
-    // Helper function to close submenu with delay
+
+  // Helper function to close submenu with delay
   const closeSubmenuWithDelay = (group) => {
     if (!mouseInSubmenu) {
       setTimeout(() => {
@@ -53,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         const related = document.elementFromPoint(e.clientX, e.clientY);
         // Only close if not hovering a related submenu or parent
-        if (!related || (!submenu.contains(related) && related !== link)) {
+        if (!related || (!submenu || !submenu.contains(related)) && related !== link) {
           link.classList.remove('active');
           if (submenu) submenu.classList.remove('active');
         }
@@ -84,13 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentActiveGroup && currentActiveGroup !== group) {
           const prevSubmenu = currentActiveGroup.querySelector('.submenu');
           const prevLink = currentActiveGroup.querySelector('.expandable');
-          prevSubmenu.classList.remove('active');
-          prevLink.classList.remove('active');
+          if (prevSubmenu) prevSubmenu.classList.remove('active');
+          if (prevLink) prevLink.classList.remove('active');
         }
         
-        submenu.classList.toggle('active');
-        link.classList.toggle('active');
-        currentActiveGroup = submenu.classList.contains('active') ? group : null;
+        if (submenu) {
+          submenu.classList.toggle('active');
+          link.classList.toggle('active');
+          currentActiveGroup = submenu.classList.contains('active') ? group : null;
+        }
       }
     });
   });
@@ -100,9 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!e.target.closest('.department-group') && currentActiveGroup) {
       const submenu = currentActiveGroup.querySelector('.submenu');
       const link = currentActiveGroup.querySelector('.expandable');
-      submenu.classList.remove('active');
-      link.classList.remove('active');
+      if (submenu) submenu.classList.remove('active');
+      if (link) link.classList.remove('active');
       currentActiveGroup = null;
     }
   });
-});
+}

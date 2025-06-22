@@ -23,7 +23,18 @@ class SubHeaderNavigation {
       });      // Click event for both submenu toggle and navigation
       link.addEventListener('click', (event) => {
         const submenuId = link.getAttribute('data-submenu');
-        const linkText = link.textContent.trim();        // Check if we're on the index page by looking for product grid or if load functions exist
+        const linkText = link.textContent.trim();
+        
+        // Check if submenu is currently active and hide it if clicked again
+        if (submenuId) {
+          const submenu = document.getElementById(`submenu-${submenuId}`);
+          if (submenu && submenu.classList.contains('active')) {
+            this.hideAllSubmenus();
+            return; // Don't proceed with navigation if we're just hiding the menu
+          }
+        }
+        
+        // Check if we're on the index page by looking for product grid or if load functions exist
         const isIndexPage = window.loadSpecificCategory && window.loadAllPrintheadProducts && window.loadAllMaterialProducts && window.loadAllLedLcdProducts;// Handle navigation based on the category
         let hash = '';
         if (linkText === 'Inkjet Printers') {
@@ -131,12 +142,11 @@ class SubHeaderNavigation {
           if (hash) {
             UrlUtils.navigateToIndex(hash);
             return;
-          }
-        }
+          }        }
         
-        // For mobile: toggle submenu display
+        // Show submenu for this link if it has one
         if (submenuId) {
-          this.toggleSubmenu(event.target);
+          this.showSubmenu(event.target);
         }
         
         // Don't prevent default to allow any additional onclick handlers
