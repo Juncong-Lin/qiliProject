@@ -1,4 +1,4 @@
-// Total products: 35, New products scraped: 0, Date: 2025-06-13 18:31:19
+// Total products: 35, New products scraped: 0, Date: 2025-06-23 23:12:57
 export const upgradingKitProducts = {
   allwin: [
   ],
@@ -123,7 +123,7 @@ export const upgradingKitProducts = {
   ],
   human: [
   ],
-  infiniti challenger: [
+  infiniti_challenger: [
   ],
   jhf: [
   ],
@@ -182,7 +182,7 @@ export const upgradingKitProducts = {
   ],
   roland: [
   ],
-  roll to roll style: [
+  roll_to_roll_style: [
     {
       id: 'Kit-i3200-UV-for-Upgrading-Chinese-Inkjet-Printer-with-4-pieces-i3200-printheads-roll-to-roll-style',
       name: 'Kit i3200 UV for Upgrading Chinese Inkjet Printer with 4 pieces i3200 printheads (roll to roll style)',
@@ -271,7 +271,7 @@ export const upgradingKitProducts = {
   ],
   titanjet: [
   ],
-  uv flatbed: [
+  uv_flatbed: [
     {
       id: 'Kit-i3200-UV-Flatbed-for-Upgrading-Chinese-Inkjet-Printer-with-4-pieces-i3200-printheads-Flatbed-Version',
       name: 'Kit i3200 UV Flatbed for Upgrading Chinese Inkjet Printer with 4 pieces i3200 printheads (Flatbed Version)',
@@ -289,7 +289,7 @@ export const upgradingKitProducts = {
   ],
   witcolor: [
   ],
-  without cable work: [
+  without_cable_work: [
     {
       id: 'W-XP600-boards-kit-without-cable-work-for-3-pieces-XP600-Printheads',
       name: 'W XP600 boards kit without cable work for 3 pieces XP600 Printheads',
