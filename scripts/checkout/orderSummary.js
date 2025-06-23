@@ -1,7 +1,7 @@
 import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';   
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
-import {printerProducts} from '../../data/printer-products.js';
+import {inkjetPrinterProducts, getInkjetPrinterById} from '../../data/inkjetPrinter-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {formatCurrency, formatPriceRange} from '../shared/money.js';
@@ -38,20 +38,12 @@ cart.forEach((cartItem) => {
         matchingProduct = found;
         break;
       }
-    }
-  }
-  // If not found in printhead products, search in printer products
+    }  }
+  // If not found in printhead products, search in inkjet printer products
   if (!matchingProduct) {
-    for (const category in printerProducts) {
-      const categoryProducts = printerProducts[category];
-      const found = categoryProducts.find(product => product.id === productId);
-      if (found) {
-        matchingProduct = found;
-        break;
-      }
-    }
+    matchingProduct = getInkjetPrinterById(productId);
   }
-    // If not found in printer products, search in print spare part products
+    // If not found in inkjet printer products, search in print spare part products
   if (!matchingProduct) {
     for (const category in printSparePartProducts) {
       const categoryProducts = printSparePartProducts[category];
@@ -258,7 +250,7 @@ function deleveryOptionsHTML(matchingProduct, cartItem) {
 }
 
 // Expose product data globally for search system
-window.printerProducts = printerProducts;
+window.inkjetPrinterProducts = inkjetPrinterProducts;
 window.printheadProducts = printheadProducts;
 window.printSparePartProducts = printSparePartProducts;
 window.upgradingKitProducts = upgradingKitProducts;

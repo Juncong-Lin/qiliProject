@@ -2,7 +2,7 @@ import {cart, cleanInvalidItems} from '../../data/cart.js';
 import {formatCurrency, formatPriceRange} from '../shared/money.js';
 import {getProduct,products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
-import {printerProducts} from '../../data/printer-products.js';
+import {inkjetPrinterProducts, getInkjetPrinterById} from '../../data/inkjetPrinter-products.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {removeFromCart, updateDeliveryOption} from '../../data/cart.js';
@@ -16,11 +16,10 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
   products.forEach(p => allValidProductIds.push(p.id));
   
   for (const brand in printheadProducts) {
-    printheadProducts[brand].forEach(p => allValidProductIds.push(p.id));
-  }
+    printheadProducts[brand].forEach(p => allValidProductIds.push(p.id));  }
   
-  for (const category in printerProducts) {
-    printerProducts[category].forEach(p => allValidProductIds.push(p.id));
+  for (const category in inkjetPrinterProducts) {
+    inkjetPrinterProducts[category].forEach(p => allValidProductIds.push(p.id));
   }
     for (const category in printSparePartProducts) {
     printSparePartProducts[category].forEach(p => allValidProductIds.push(p.id));
@@ -62,19 +61,11 @@ export function renderPaymentSummary() {  // First, clean invalid items from car
         if (found) {
           product = found;
           break;
-        }
-      }
+        }      }
     }
-      // If not found in printhead products, search in printer products
+      // If not found in printhead products, search in inkjet printer products
     if (!product) {
-      for (const category in printerProducts) {
-        const categoryProducts = printerProducts[category];
-        const found = categoryProducts.find(p => p.id === cartItem.productId);
-        if (found) {
-          product = found;
-          break;
-        }
-      }
+      product = getInkjetPrinterById(cartItem.productId);
     }
       // If not found in printer products, search in print spare part products
     if (!product) {
@@ -195,20 +186,12 @@ export function renderOrderSummary() {
           break;
         }
       }
-    }
-      // If not found in printhead products, search in printer products
+    }      // If not found in printhead products, search in inkjet printer products
     if (!matchingProduct) {
-      for (const category in printerProducts) {
-        const categoryProducts = printerProducts[category];
-        const found = categoryProducts.find(product => product.id === cartItem.productId);
-        if (found) {
-          matchingProduct = found;
-          break;
-        }
-      }
+      matchingProduct = getInkjetPrinterById(cartItem.productId);
     }
     
-    // If not found in printer products, search in print spare part products
+    // If not found in inkjet printer products, search in print spare part products
     if (!matchingProduct) {
       for (const category in printSparePartProducts) {
         const categoryProducts = printSparePartProducts[category];

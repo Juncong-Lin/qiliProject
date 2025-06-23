@@ -262,11 +262,9 @@ class SearchSystem {  constructor() {
     this.searchProducts(searchTerm);
   }  searchProducts(searchTerm) {
     const searchTermLower = searchTerm.toLowerCase();
-    let searchResults = [];
-
-    try {
+    let searchResults = [];    try {
       // Check if product data is available, if not wait for it to load
-      const hasProducts = window.printerProducts || window.printheadProducts || 
+      const hasProducts = window.inkjetPrinterProducts || window.printheadProducts || 
                          window.printSparePartProducts || window.upgradingKitProducts;
       
       if (!hasProducts) {
@@ -275,10 +273,10 @@ class SearchSystem {  constructor() {
         return;
       }
 
-      // Search in all product datasets      // Search printer products
-      if (window.printerProducts) {
-        for (const category in window.printerProducts) {
-          const products = window.printerProducts[category];
+      // Search in all product datasets      // Search inkjet printer products
+      if (window.inkjetPrinterProducts) {
+        for (const category in window.inkjetPrinterProducts) {
+          const products = window.inkjetPrinterProducts[category];
           const matches = products.filter(product => 
             this.productMatchesSearch(product, searchTermLower, {
               category: category,
@@ -607,15 +605,15 @@ class SearchSystem {  constructor() {
   isIndexPage() {
     return window.location.pathname.includes('index.html') || 
            window.location.pathname === '/' || 
-           window.location.pathname.endsWith('/');
-  }
+           window.location.pathname.endsWith('/');  }
+
   waitForProductData(callback) {
     // Show loading message
     this.showSearchMessage('Products are loading. Please wait...');
     
     // Check for product data availability every 100ms
     const checkInterval = setInterval(() => {
-      const hasProducts = window.printerProducts || window.printheadProducts || 
+      const hasProducts = window.inkjetPrinterProducts || window.printheadProducts || 
                          window.printSparePartProducts || window.upgradingKitProducts;
       
       if (hasProducts) {
@@ -627,7 +625,7 @@ class SearchSystem {  constructor() {
     // Stop checking after 10 seconds to avoid infinite loop
     setTimeout(() => {
       clearInterval(checkInterval);
-      if (!(window.printerProducts || window.printheadProducts || 
+      if (!(window.inkjetPrinterProducts || window.printheadProducts || 
             window.printSparePartProducts || window.upgradingKitProducts)) {
         this.showSearchMessage('Unable to load product data. Please refresh the page and try again.');
       }

@@ -1,6 +1,6 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
-import { printerProducts, getI1600Printers, getI3200Printers } from '../../data/printer-products.js';
+import { inkjetPrinterProducts, getEcoSolventI1600Printers, getEcoSolventI3200Printers, getInkjetPrinterById, getAllEcoSolventPrinters } from '../../data/inkjetPrinter-products.js';
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { materialProducts } from '../../data/material-products.js';
@@ -131,14 +131,11 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
     }
   }
 } else if (productType === 'printer') {
-  // Search in printer products
-  for (const category in printerProducts) {
-    const categoryProducts = printerProducts[category];
-    product = categoryProducts.find(p => p.id === productId);
-    if (product) {
-      productBrand = category;
-      break;
-    }
+  // Search in eco-solvent inkjet printer products
+  product = getInkjetPrinterById(productId);
+  if (product) {
+    // Determine the brand/category from the product
+    productBrand = product.category || 'eco-solvent';
   }
 } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
   product = findUpgradingKitById(productId);
@@ -184,17 +181,13 @@ if (!product && !urlProductType) {
   }
 
   // If not found in printhead products, search in printer products
-  if (!product) {
-    for (const category in printerProducts) {
-      const categoryProducts = printerProducts[category];
-      product = categoryProducts.find(p => p.id === productId);
-      if (product) {
-        productType = 'printer';
-        productBrand = category;
-        break;
-      }
+  if (!product) {    // Search in eco-solvent inkjet printer products
+    product = getInkjetPrinterById(productId);
+    if (product) {
+      productType = 'printer';
+      productBrand = product.category || 'eco-solvent';
     }
-  }  // If not found in printer products, search in print spare parts
+  }// If not found in printer products, search in print spare parts
   if (!product) {
     product = findPrintSparePartById(productId);
     if (product) {
@@ -1587,7 +1580,7 @@ function setupFallbackOtherContent(product) {
 }
 
 // Expose product data globally for search system
-window.printerProducts = printerProducts;
+window.inkjetPrinterProducts = inkjetPrinterProducts;
 window.printheadProducts = printheadProducts;
 window.printSparePartProducts = printSparePartProducts;
 window.upgradingKitProducts = upgradingKitProducts;
@@ -1721,17 +1714,35 @@ function addDocumentViewerForAllPrinters(product, productId) {
   const productTitleElement = document.querySelector('.product-title-container');
   if (productTitleElement) {
     productTitleElement.style.display = 'none';
-  }// Extract information from the product image path to determine the document path
-  const imagePath = product.image;
-  
-  // Extract folder path components
-  const pathSegments = imagePath.split('/');
-  const basePath = pathSegments.slice(0, -1).join('/');
-  const productFolder = pathSegments[pathSegments.length - 2];
-  
-  // Direct approach: scan the folder and find relevant PDF or DOCX files
+  }
+
+  // Direct approach: use the pdfPath if available, otherwise scan for documents
   (async () => {
     try {
+      let documentFound = false;
+      
+      // First, try the direct PDF path if available (new feature)
+      if (product.pdfPath) {
+        try {
+          const response = await fetch(product.pdfPath, { method: 'HEAD' });
+          if (response.ok) {
+            console.log('Using direct PDF path:', product.pdfPath);
+            displayDocumentContent(productId, product.pdfPath);
+            documentFound = true;
+            return;
+          }
+        } catch (error) {
+          console.log('Direct PDF path failed, falling back to search:', error);
+        }
+      }      // If direct path fails or doesn't exist, fall back to original scanning method
+      // Extract information from the product image path to determine the document path
+      const imagePath = product.image;
+      
+      // Extract folder path components
+      const pathSegments = imagePath.split('/');
+      const basePath = pathSegments.slice(0, -1).join('/');
+      const productFolder = pathSegments[pathSegments.length - 2];
+      
       // Try to load the product folder content (this won't work in browser due to CORS,
       // but we'll fall back to predefined patterns)
       
@@ -1826,26 +1837,27 @@ function addDocumentViewerForAllPrinters(product, productId) {
         possibleFolderPaths.forEach(path => {
           documentFiles.push(`${path}/${productId}*.pdf`);
           documentFiles.push(`${path}/${productId}*.docx`);
-          documentFiles.push(`${path}/${productId}*.doc`);
-        });
-      }      
-      console.log('Searching for documents with these patterns:', documentFiles);
+          documentFiles.push(`${path}/${productId}*.doc`);        });
+      }
+        console.log('Searching for documents with these patterns:', documentFiles);
       
       // Temporary timeout to ensure this doesn't block indefinitely
-      let documentFound = false;
       const maxWaitTime = 5000;
       const startTime = Date.now();
       
       // Try each possible document path and use the first one that exists
-      for (const path of documentFiles) {        try {
+      for (const path of documentFiles) {
+        try {
           // Check if we've spent too long looking
           if (Date.now() - startTime > maxWaitTime) {
             break;
           }
           
-          // Skip wildcard paths (they won't work with fetch directly)            if (path.includes('*')) continue;
+          // Skip wildcard paths (they won't work with fetch directly)
+          if (path.includes('*')) continue;
             
-            const response = await fetch(path, { method: 'HEAD' });          if (response.ok) {
+          const response = await fetch(path, { method: 'HEAD' });
+          if (response.ok) {
             // Extract and display the document content directly in product details
             displayDocumentContent(productId, path);
             documentFound = true;
@@ -1857,7 +1869,8 @@ function addDocumentViewerForAllPrinters(product, productId) {
       }
       
       // FALLBACK: If no document is found through the patterns, try direct known file paths
-      if (!documentFound) {        // These are specific to the printer models observed in the screenshots
+      if (!documentFound) {
+        // These are specific to the printer models observed in the screenshots
         const knownDocuments = {
           // XP600 printhead model documents
           'AM1802XP': `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`,
@@ -1879,7 +1892,8 @@ function addDocumentViewerForAllPrinters(product, productId) {
         if (productId === 'AM1802XP') {
           knownDocuments['AM1802XP'] = `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`;
         }
-          // Try the known path for this product
+        
+        // Try the known path for this product
         if (knownDocuments[productId]) {
           try {
             const response = await fetch(knownDocuments[productId], { method: 'HEAD' });
@@ -1892,7 +1906,8 @@ function addDocumentViewerForAllPrinters(product, productId) {
             // Continue to alternative casing attempt
           }
         }
-          // Try with alternative casing for the filename (some files have inconsistent casing)
+        
+        // Try with alternative casing for the filename (some files have inconsistent casing)
         if (!documentFound && knownDocuments[productId]) {
           // Try multiple casing variations
           const altCasings = [
@@ -1911,7 +1926,8 @@ function addDocumentViewerForAllPrinters(product, productId) {
             // Change "with" to "With"
             knownDocuments[productId].replace(' with ', ' With ')
           ];
-            for (const altPath of altCasings) {
+          
+          for (const altPath of altCasings) {
             try {
               const response = await fetch(altPath, { method: 'HEAD' });
               if (response.ok) {
@@ -1925,7 +1941,8 @@ function addDocumentViewerForAllPrinters(product, productId) {
           }
         }
       }
-        // If we reach here, no document was found
+      
+      // If we reach here, no document was found
       if (!documentFound) {
         console.error('No document found for product:', productId);
         const detailsContainer = document.querySelector('.js-product-details-content');
@@ -1947,6 +1964,8 @@ function addDocumentViewerForAllPrinters(product, productId) {
       }
     } catch (error) {
       console.error('Error searching for document:', error);
+      // Fallback to basic content if everything fails
+      setupBasicPrinterContent(product);
     }
   })();
 }
