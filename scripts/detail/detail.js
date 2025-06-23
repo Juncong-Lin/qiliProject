@@ -861,11 +861,10 @@ async function setupRegularProductContent(product) {
   try {
     // Extract the path to the markdown file from the image path
     const imagePath = product.image;
-    
-    // Get the path components from the image path
-    // Expected format: products/Inkjet Printers/.../Product Name/Product Name.md
+      // Get the path components from the image path
+    // Expected format: products/inkjetPrinter/inkjet printer with/.../Product Name/Product Name.md
     const pathParts = imagePath.split('/');
-    if (pathParts.length >= 5 && pathParts[2] === 'Inkjet' && pathParts[3] === 'Printers') {
+    if (pathParts.length >= 6 && pathParts[2] === 'inkjetPrinter' && pathParts[3] === 'inkjet' && pathParts[4] === 'printer' && pathParts[5] === 'with') {
       // Find the product folder (usually the second-to-last folder before the image file)
       const productFolder = pathParts[pathParts.length - 2]; // Folder containing the image
       const pathUpToProduct = pathParts.slice(0, -1).join('/'); // Path up to the product folder
