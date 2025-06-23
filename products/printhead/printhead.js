@@ -1,4 +1,4 @@
-// Total products: 166, New products scraped: 166, Date: 2025-06-18 18:07:43
+// Total products: 166, New products scraped: 0, Date: 2025-06-23 23:27:41
 export const printheadProducts = {
   audley: [
     {

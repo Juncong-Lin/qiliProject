@@ -32,7 +32,7 @@ def get_script_name():
 
 def sanitize_filename(name):
     """Removes invalid characters for a valid folder or file name."""
-    sanitized = re.sub(r'[\\/*?:"<>|]', "", name)
+    sanitized = re.sub(r'[\\/*?:"<>|_]', "", name)
     return " ".join(sanitized.split()).strip()
 
 def process_and_save_image(image_bytes, output_path, target_size=1000):
@@ -66,7 +66,8 @@ def format_price(price_str):
 def get_brand(product_name, brands_list):
     """Determines the brand from the product name, adding new brands dynamically."""
     for brand in brands_list:
-        if brand.lower() in product_name.lower():
+        search_term = brand.replace('_', ' ')
+        if search_term.lower() in product_name.lower():
             return brand
     potential_brand = product_name.split()[0]
     if potential_brand:
@@ -111,6 +112,8 @@ def load_previous_products(md_path):
 
 def rename_brand_folders(output_dir, script_name):
     """Renames brand folders from 'Brand xxxx' to 'Brand'."""
+    if not os.path.isdir(output_dir):
+        return
     for folder_name in os.listdir(output_dir):
         if os.path.isdir(os.path.join(output_dir, folder_name)):
             # Check if folder ends with script_name
@@ -369,7 +372,8 @@ def main():
         f.write(f"// Total products: {total_products_overall}, New products scraped: {new_products_scraped}, Date: {current_time}\n")
         f.write(f"export const {root_folder_name}Products = {{\n")
         for brand_key in sorted(products_by_brand.keys()):
-            f.write(f"  {brand_key}: [\n")
+            js_brand_key = brand_key.replace(' ', '_')
+            f.write(f"  {js_brand_key}: [\n")
             for product in products_by_brand[brand_key]:
                 lower_price = 'null' if product['lower_price'] is None else product['lower_price']
                 higher_price = 'null' if product['higher_price'] is None else product['higher_price']
