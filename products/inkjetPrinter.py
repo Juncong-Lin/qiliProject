@@ -13,24 +13,23 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from PIL import Image
-from weasyprint import HTML
 
 # --- Configuration ---
 BASE_URL = "https://signchinasign.com"
 URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/12/price/index.php"
-TOTAL_PAGES = 8
+TOTAL_PAGES = 9
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 BRANDS = [
     'dtf printer',
     'uv-dtf',
-    'inkjet printer with',
+    'the economic version',
     'solvent',
-    'uv inkjet',
+    'amo uv inkjet',
     'uv flatbed',
     'hybrid uv',
-    'sublimation printers',
+    'sublimation',
     'double side printers'
 ]
 
@@ -128,6 +127,7 @@ def rename_brand_folders(output_dir, script_name):
         return
     for folder_name in os.listdir(output_dir):
         if os.path.isdir(os.path.join(output_dir, folder_name)):
+            # Check if folder ends with script_name
             if folder_name.endswith(f" {script_name}"):
                 brand_name = folder_name[:-len(f" {script_name}")]
                 old_path = os.path.join(output_dir, folder_name)
@@ -135,6 +135,7 @@ def rename_brand_folders(output_dir, script_name):
                 try:
                     if os.path.exists(new_path):
                         print(f"    - WARNING: Folder '{new_path}' already exists. Merging contents.")
+                        # Move contents of old folder to new folder
                         for item in os.listdir(old_path):
                             shutil.move(os.path.join(old_path, item), os.path.join(new_path, item))
                         shutil.rmtree(old_path)
@@ -149,21 +150,13 @@ def update_image_paths(products_by_brand, script_name):
     for brand_key, products in products_by_brand.items():
         for product in products:
             old_image = product['image']
+            # Replace 'Brand xxxx' with 'Brand' in the image path
             parts = old_image.split('/')
             if len(parts) > 3 and parts[2].endswith(f" {script_name}"):
                 parts[2] = parts[2][:-len(f" {script_name}")]
                 new_image = '/'.join(parts)
                 product['image'] = new_image
     return products_by_brand
-
-def generate_pdf_from_html(html_content, pdf_path):
-    """Generates a PDF from the given HTML content and saves it to pdf_path."""
-    try:
-        html = HTML(string=html_content, base_url=BASE_URL)
-        html.write_pdf(pdf_path)
-        print(f"    - PDF saved to: {os.path.basename(pdf_path)}")
-    except Exception as e:
-        print(f"    - ERROR: Failed to generate PDF. Reason: {e}")
 
 # --- Core Scraping Functions ---
 
@@ -196,68 +189,11 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         price_tag = product_container.select_one('span.sp_price')
         product_price = price_tag.get_text(strip=True) if price_tag else "Price not found"
 
-        # Extract product details HTML
-        details_card = product_container.select_one('div.sp_collapse_block div.card')
-        if details_card:
-            details_clone = BeautifulSoup(str(details_card), 'html.parser')
-            if details_clone.select_one('div.card-header'):
-                details_clone.select_one('div.card-header').decompose()
-            for elem in details_clone.find_all(class_='collapse'):
-                if 'class' in elem.attrs:
-                    elem['class'] = [c for c in elem['class'] if c != 'collapse'] + ['show']
-                else:
-                    elem['class'] = ['show']
-            full_html = f"""
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-                <title>{product_name}</title>
-                <style>
-                    img {{
-                        width: 100%;
-                        height: auto;
-                    }}
-                </style>
-            </head>
-            <body>
-                {details_clone.prettify()}
-            </body>
-            </html>
-            """
-        else:
-            full_html = f"""
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>{product_name}</title>
-                <style>
-                    img {{
-                        width: 100%;
-                        height: auto;
-                    }}
-                </style>
-            </head>
-            <body>
-                <p>No details found.</p>
-            </body>
-            </html>
-            """
-
-        brand_folder = os.path.join(output_dir, brand)
+        brand_folder = os.path.join(output_dir, brand)  # Use brand name directly
         os.makedirs(brand_folder, exist_ok=True)
 
         product_folder = os.path.join(brand_folder, sanitized_name)
         os.makedirs(product_folder, exist_ok=True)
-
-        # Save PDF
-        pdf_filename = f"{sanitized_name}.pdf"
-        pdf_path = os.path.join(product_folder, pdf_filename)
-        generate_pdf_from_html(full_html, pdf_path)
 
         image_folder = os.path.join(product_folder, 'image')
         os.makedirs(image_folder, exist_ok=True)
@@ -279,13 +215,50 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         else:
             print("    - WARNING: No product image found.")
 
+        product_details = ""
+        details_card = product_container.select_one('div.sp_collapse_block div.card')
+        if not details_card:
+            details_card = product_container.select_one('div.card')
+
+        if details_card:
+            details_clone = BeautifulSoup(str(details_card), 'html.parser')
+
+            # Download additional images from details
+            additional_image_tags = details_clone.select('img')
+            for i, img in enumerate(additional_image_tags):
+                if img.get('src'):
+                    add_img_url = urljoin(BASE_URL, img['src'])
+                    base_name, ext = os.path.splitext(image_filename)
+                    add_img_filename = f"{base_name}.img_{i+1}{ext}" if ext else f"{base_name}.img_{i+1}"
+                    add_img_path = os.path.join(image_folder, add_img_filename)
+                    try:
+                        img_response = session.get(add_img_url, stream=True, headers=HEADERS, timeout=20)
+                        img_response.raise_for_status()
+                        if process_and_save_image(img_response.content, add_img_path):
+                            print(f"    - Additional image saved to: {os.path.basename(add_img_path)}")
+                        else:
+                            print(f"    - FAILED to process additional image for {product_name}")
+                    except requests.RequestException as e:
+                        print(f"    - ERROR: Additional image download failed {add_img_url}. Reason: {e}")
+                img.decompose()
+
+            if details_clone.select_one('div.card-header'):
+                details_clone.select_one('div.card-header').decompose()
+
+            product_details = details_clone.get_text(separator='\n', strip=True)
+
+        if not product_details:
+            product_details = "No details found."
+
+
         md_filename = f"{sanitized_name}.md"
         md_path = os.path.join(product_folder, md_filename)
         formatted_price = format_price(product_price)
         md_content = (
             f"# {product_name}\n\n"
             f"{formatted_price}\n\n"
-            f"Product Details: See {pdf_filename}"
+            f"Product Details:\n\n"
+            f"{product_details}"
         )
         with open(md_path, 'w', encoding='utf-8') as f:
             f.write(md_content)
@@ -331,10 +304,11 @@ def main():
         input("Press Enter to start scraping...")
 
     print(f"\nScraper started. Data will be saved in '{root_folder_name}' folder.")
-    print("Ensure you have run 'pip install Pillow requests beautifulsoup4 weasyprint'.")
+    print("Ensure you have run 'pip install Pillow requests beautifulsoup4'.")
 
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    # Load and update existing product data if available
     if os.path.exists(products_data_path):
         with open(products_data_path, 'r', encoding='utf-8') as f:
             products_by_brand = json.load(f)
@@ -345,6 +319,7 @@ def main():
     else:
         products_by_brand = {brand.lower(): [] for brand in BRANDS}
 
+    # Rename existing brand folders
     rename_brand_folders(output_dir, root_folder_name)
 
     # Phase 1: Collect all product URLs

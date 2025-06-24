@@ -6,12 +6,108 @@
 import { parseMarkdown } from './markdown-parser.js';
 
 /**
+ * Product metadata mapping for inkjet printers
+ * Contains category and pdfPath information extracted from product data
+ */
+const INKJET_PRINTER_METADATA = {
+  // XP600 Series Printers - eco-solvent
+  'AM1601XP': {
+    category: 'eco-solvent-xp600',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version)/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).pdf'
+  },
+  'AM1802XP': {
+    category: 'eco-solvent-xp600',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf'
+  },
+  'AM1901XP': {
+    category: 'eco-solvent-xp600',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version)/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).pdf'
+  },
+  
+  // I1600 Series Printers - eco-solvent
+  'AM1601i16': {
+    category: 'eco-solvent-i1600',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).pdf'
+  },
+  'AM1802i16': {
+    category: 'eco-solvent-i1600',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version)/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).pdf'
+  },
+  'AM1901i16': {
+    category: 'eco-solvent-i1600',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).pdf'
+  },
+  
+  // I3200 Series Printers - eco-solvent
+  'AM1601i32': {
+    category: 'eco-solvent-i3200',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).pdf'
+  },
+  'AM1802i32': {
+    category: 'eco-solvent-i3200',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).pdf'
+  },
+  'AM1901i32': {
+    category: 'eco-solvent-i3200',
+    pdfPath: 'products/inkjetPrinter/inkjet printer with/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).pdf'
+  }
+};
+
+/**
+ * Get product metadata by product ID
+ * @param {string} productId - ID of the product
+ * @returns {Object|null} - Product metadata object or null if not found
+ */
+export function getProductMetadata(productId) {
+  return INKJET_PRINTER_METADATA[productId] || null;
+}
+
+/**
+ * Get PDF path for a product
+ * @param {string} productId - ID of the product
+ * @returns {string|null} - PDF path or null if not found
+ */
+export function getProductPdfPath(productId) {
+  const metadata = getProductMetadata(productId);
+  return metadata ? metadata.pdfPath : null;
+}
+
+/**
+ * Get category for a product
+ * @param {string} productId - ID of the product
+ * @returns {string|null} - Category or null if not found
+ */
+export function getProductCategory(productId) {
+  const metadata = getProductMetadata(productId);
+  return metadata ? metadata.category : null;
+}
+
+/**
+ * Get all products by category
+ * @param {string} category - Category to filter by
+ * @returns {Array} - Array of product IDs in the specified category
+ */
+export function getProductsByCategory(category) {
+  return Object.keys(INKJET_PRINTER_METADATA).filter(
+    productId => INKJET_PRINTER_METADATA[productId].category === category
+  );
+}
+
+/**
  * Extract and display document content directly in the product details
  * @param {string} productId - ID of the product
- * @param {string} documentPath - Path to the document file (PDF, DOC, DOCX)
+ * @param {string} documentPath - Path to the document file (PDF, DOC, DOCX) - optional, will use metadata if not provided
  */
-export async function displayDocumentContent(productId, documentPath) {
+export async function displayDocumentContent(productId, documentPath = null) {
   try {
+    // If no document path provided, try to get it from metadata
+    if (!documentPath) {
+      documentPath = getProductPdfPath(productId);
+      if (!documentPath) {
+        throw new Error(`No document path found for product: ${productId}`);
+      }
+    }
+    
     const fileExtension = documentPath.split('.').pop().toLowerCase();
     const detailsContainer = document.querySelector('.js-product-details-content');
     
@@ -25,14 +121,7 @@ export async function displayDocumentContent(productId, documentPath) {
     // Hide the product description (red box)
     const productDescriptionElement = document.querySelector('.js-product-description');
     if (productDescriptionElement) {
-      productDescriptionElement.style.display = 'none';
-    }
-      
-    // Hide the product title as requested
-    const productTitleContainer = document.querySelector('.product-title-container');
-    if (productTitleContainer) {
-      productTitleContainer.style.display = 'none';
-    }
+      productDescriptionElement.style.display = 'none';    }
     
     // Also hide compatibility and specifications tabs/sections
     const compatibilitySection = document.querySelector('.product-compatibility-section');

@@ -11,7 +11,7 @@ import { otherProducts } from '../../data/other-products.js';
 // import { cart, addToCart } from '../../data/cart.js';
 // import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
-import { displayDocumentContent } from '../shared/document-content-extractor.js';
+import { displayDocumentContent, getProductPdfPath } from '../shared/document-content-extractor.js';
 import { formatPriceRange } from '../shared/money.js';
 
 let productId;
@@ -1709,31 +1709,41 @@ function addDocumentViewerForAllPrinters(product, productId) {
   // This function should only be called for printer products
   // The calling function should ensure this is a printer product
   
-  // Hide product title for printer products per user request
-  const productTitleElement = document.querySelector('.product-title-container');
-  if (productTitleElement) {
-    productTitleElement.style.display = 'none';
-  }
-
   // Direct approach: use the pdfPath if available, otherwise scan for documents
   (async () => {
     try {
       let documentFound = false;
       
-      // First, try the direct PDF path if available (new feature)
-      if (product.pdfPath) {
+      // First, try the direct PDF path if available (using metadata)
+      const directPdfPath = getProductPdfPath(productId);
+      if (directPdfPath) {
         try {
-          const response = await fetch(product.pdfPath, { method: 'HEAD' });
+          const response = await fetch(directPdfPath, { method: 'HEAD' });
           if (response.ok) {
-            console.log('Using direct PDF path:', product.pdfPath);
-            displayDocumentContent(productId, product.pdfPath);
+            console.log('Using direct PDF path from metadata:', directPdfPath);
+            displayDocumentContent(productId, directPdfPath);
             documentFound = true;
             return;
           }
         } catch (error) {
           console.log('Direct PDF path failed, falling back to search:', error);
         }
-      }      // If direct path fails or doesn't exist, fall back to original scanning method
+      }
+      
+      // Fallback: check for pdfPath property on product object (legacy support)
+      if (product.pdfPath) {
+        try {
+          const response = await fetch(product.pdfPath, { method: 'HEAD' });
+          if (response.ok) {
+            console.log('Using legacy pdfPath property:', product.pdfPath);
+            displayDocumentContent(productId, product.pdfPath);
+            documentFound = true;
+            return;
+          }
+        } catch (error) {
+          console.log('Legacy pdfPath failed, falling back to search:', error);
+        }
+      }// If direct path fails or doesn't exist, fall back to original scanning method
       // Extract information from the product image path to determine the document path
       const imagePath = product.image;
       
