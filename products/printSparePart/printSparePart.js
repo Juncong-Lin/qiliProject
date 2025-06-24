@@ -1,4 +1,4 @@
-// Total products: 157, New products scraped: 0, Date: 2025-06-23 23:22:29
+// Total products: 157, New products scraped: 0, Date: 2025-06-13 18:27:56
 export const printSparePartProducts = {
   allwin: [
   ],
@@ -555,7 +555,7 @@ export const printSparePartProducts = {
       higher_price: 1200
     },
   ],
-  infiniti_challenger: [
+  infiniti challenger: [
     {
       id: 'Convert-Board-of-Infiniti-Challenger-FY-320BR-FY3208H-FY3208HA-FY3206HF-UD3208-UD3206-ETC',
       name: 'Convert Board of Infiniti Challenger FY-320BR FY3208H FY3208HA FY3206HF UD3208 UD3206 ETC',

@@ -1,5 +1,14 @@
 // Total products: 62, New products scraped: 0, Date: 2025-06-23 23:04:20
 export const inkjetPrinterProducts = {
+  amo: [
+    {
+      id: 'AMO-A3-Size-UV-DTF-AMO-3003-with-3-pieces-of-XP600-Printheads',
+      name: 'AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads',
+      image: 'products/inkjetPrinter 6/AMO/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads/image/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads.jpg',
+      lower_price: 495000,
+      higher_price: 495000
+    },
+  ],
   double_side_printers: [
   ],
   dtf_printer: [
@@ -443,13 +452,6 @@ export const inkjetPrinterProducts = {
       image: 'products/inkjetPrinter 6/uv-dtf/AMO UV-DTF Inkjet Printer AM603i32-UVDTF with 3 i1600 printheads/image/AMO UV-DTF Inkjet Printer AM603i32-UVDTF with 3 i1600 printheads.jpg',
       lower_price: 750000,
       higher_price: 750000
-    },
-    {
-      id: 'AMO-A3-Size-UV-DTF-AMO-3003-with-3-pieces-of-XP600-Printheads',
-      name: 'AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads',
-      image: 'products/inkjetPrinter 6/AMO/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads/image/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads.jpg',
-      lower_price: 495000,
-      higher_price: 495000
     },
   ],
 };
