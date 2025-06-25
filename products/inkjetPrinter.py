@@ -24,13 +24,13 @@ HEADERS = {
 BRANDS = [
     'dtf printer',
     'uv-dtf',
-    'the economic version',
+    'economic version',
     'solvent',
     'amo uv inkjet',
     'uv flatbed',
     'hybrid uv',
     'sublimation',
-    'double side printers'
+    'double side'
 ]
 
 MAX_RETRIES = 6  # Maximum number of retries for any task

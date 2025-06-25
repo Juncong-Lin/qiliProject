@@ -1,8 +1,8 @@
 # Scraped Products
 
-Last updated: 2025-06-23 23:04:20
+Last updated: 2025-06-25 20:18:06
 
-Total products: 62
+Total products: 70
 
 - AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version)
 - AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)
@@ -36,6 +36,10 @@ Total products: 62
 - AMO Solvent Inkjet Printer AM3208K12i 3.2meters with 8 Konica 512i Printhead
 - AMO Solvent Inkjet Printer AM3208K24 i 3.2meters with 8 Konica 1024i Printhead
 - AMO Solvent Inkjet Printer AM3212K12i 3.2meters with 12 Konica 512i Printhead
+- AMO Sublimation Inkjet Printer AM1802i16S with 2 i1600 Printheads
+- AMO Sublimation Inkjet Printer AM1802i32S with 2 i3200 Printheads
+- AMO Sublimation Inkjet Printer AM1804i32SH with 4 i3200 Printheads
+- AMO Sublimation Inkjet Printer AM1808i32SH with 8 i3200 Printheads
 - AMO UV Flatbed Inkjet Printer AM2412UVB3G5 with 3 pieces Ricoh Gen5 Printheads
 - AMO UV Flatbed Inkjet Printer AM2412UVB3G6 with 3 pieces Ricoh Gen6 Printheads
 - AMO UV Flatbed Inkjet Printer AM2412UVB8G5 with 8 pieces Ricoh Gen5 Printheads
@@ -50,6 +54,9 @@ Total products: 62
 - AMO UV Flatbed Inkjet Printer AM3020UVB8G5 with 8 pieces Ricoh Gen5 Printheads
 - AMO UV Flatbed Inkjet Printer AM3020UVB8G6 with 8 pieces Ricoh Gen6 Printheads
 - AMO UV Flatbed Inkjet Printer AM3020UVB8K24i with 8 pieces  Konica KM1024i Printheads
+- AMO UV Flatbed Printer AM9060UVB3XP with 3 heads XP600 heads
+- AMO UV Flatbed Printer AM9060UVB4i32 with 4 heads i3200 heads
+- AMO UV Flatbed Printer AM9060UVB4i32-AI with 4 heads i3200 heads and AI Visual system
 - AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads
 - AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads
 - AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads
@@ -66,3 +73,4 @@ Total products: 62
 - DTF Printer AM602i32DTF with 3 epson i3200 printhead
 - DTF Printer AM604i16DTF with 4 epson i1600 printhead
 - DTF Printer AM604i32DTF with 4 epson i3200 printhead
+- Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200
