@@ -67,7 +67,7 @@
 /* Desktop Logo Styles */
 .qili-logo {
   margin-top: 5px;
-  width: 332px;
+  width: 50px; /* Change here, importance */
   height: auto;
   display: block;
 }
@@ -75,7 +75,7 @@
 /* Mobile Logo Styles */
 .qili-mobile-logo {
   display: none;
-  width: 40px;
+  width: 20px;
   height: auto;
 }
 
