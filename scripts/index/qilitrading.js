@@ -603,6 +603,20 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">Print Heads</span>
         `;
       }
+    } else if (brand === 'inkjetPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Inkjet Printers</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Inkjet Printers</span>
+        `;
+      }
     } else if (brand === 'printSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -622,13 +636,17 @@ function updateBreadcrumb(brand) {
         breadcrumbElement.innerHTML = `
           <a href="index.html" class="breadcrumb-link">Home</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">Economic Version Inkjet Printers</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
         `;
       } else {
         breadcrumbElement.innerHTML = `
           <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">Economic Version Inkjet Printers</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
         `;
       }
     } else if (brand === 'epsonPrinterSpareParts') {
@@ -2932,7 +2950,7 @@ window.loadAllEconomicVersionPrinters = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show economic version printers category
-    updatePageHeader('Economic Version Inkjet Printers', allEconomicPrinters.length);
+    updatePageHeader('Eco-Solvent Inkjet Printers', allEconomicPrinters.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('economicVersionPrinters');
@@ -2980,7 +2998,7 @@ export function getInkjetPrinterById(productId) {
     const products = inkjetPrinterProducts[category];
     const product = products.find(p => p.id === productId);
     if (product) {
-      return product;
+      return { ...product, category };
     }
   }
   return null;
