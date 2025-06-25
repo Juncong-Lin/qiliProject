@@ -1,6 +1,7 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
-import { inkjetPrinterProducts, getEcoSolventI1600Printers, getEcoSolventI3200Printers, getInkjetPrinterById, getAllEcoSolventPrinters } from '../../data/inkjetPrinter-products.js';
+import { inkjetPrinterProducts } from '../../data/inkjetPrinter-products.js';
+import { getEcoSolventI1600Printers, getEcoSolventI3200Printers, getInkjetPrinterById, getAllEcoSolventPrinters } from '../index/qilitrading.js';
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { materialProducts } from '../../data/material-products.js';

@@ -1,7 +1,8 @@
 import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';   
 import {products} from '../../data/products.js';
 import {printheadProducts} from '../../data/printhead-products.js';
-import {inkjetPrinterProducts, getInkjetPrinterById} from '../../data/inkjetPrinter-products.js';
+import {inkjetPrinterProducts} from '../../data/inkjetPrinter-products.js';
+import {getInkjetPrinterById} from '../index/qilitrading.js';
 import {printSparePartProducts} from '../../data/printsparepart-products.js';
 import {upgradingKitProducts} from '../../data/upgradingkit-products.js';
 import {formatCurrency, formatPriceRange} from '../shared/money.js';
