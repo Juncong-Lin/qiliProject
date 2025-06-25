@@ -197,6 +197,19 @@ window.handleCategoryClick = function(categoryName) {
   }
 };
 
+// New handler for Economic Version Printers grid view
+window.handleEconomicVersionClick = function() {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadAllEconomicVersionPrinters && typeof window.loadAllEconomicVersionPrinters === 'function') {
+    // We're on index page - use the new economic version function
+    window.loadAllEconomicVersionPrinters();
+    window.location.hash = 'eco-solvent-inkjet-printers';
+  } else {
+    // We're on a different page - navigate to index with hash
+    UrlUtils.navigateToIndex('#eco-solvent-inkjet-printers');
+  }
+};
+
 // Helper function to fix Eco-Solvent submenu items click behavior
 function fixEcoSolventSubmenuItems() {
   // We specifically want to ensure these problematic submenu items work on first click

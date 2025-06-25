@@ -18,20 +18,20 @@ from weasyprint import HTML
 # --- Configuration ---
 BASE_URL = "https://signchinasign.com"
 URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/12/price/index.php"
-TOTAL_PAGES = 8
+TOTAL_PAGES = 10
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 BRANDS = [
-    'dtf printer',
+  'dtf printer',
     'uv-dtf',
-    'inkjet printer with',
+    'economic version',
     'solvent',
-    'uv inkjet',
+    'amo uv inkjet',
     'uv flatbed',
     'hybrid uv',
-    'sublimation printers',
-    'double side printers'
+    'sublimation',
+    'double side'
 ]
 
 MAX_RETRIES = 6  # Maximum number of retries for any task

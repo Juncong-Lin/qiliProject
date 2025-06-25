@@ -11,7 +11,6 @@ import { otherProducts } from '../../data/other-products.js';
 // import { cart, addToCart } from '../../data/cart.js';
 // import { updateCartQuantity } from '../shared/cart-quantity.js';
 import { parseMarkdown } from '../shared/markdown-parser.js';
-import { displayDocumentContent, getProductPdfPath } from '../shared/document-content-extractor.js';
 import { formatPriceRange } from '../shared/money.js';
 
 let productId;
@@ -832,6 +831,80 @@ async function loadPrintheadDetails(product) {
 }
 
 /**
+ * Load markdown content for printer products (similar to print heads)
+ */
+async function loadPrinterMarkdownContent(product) {
+  try {
+    const imagePath = product.image;
+    const pathParts = imagePath.split('/');
+    
+    let mdFilePath = '';
+    
+    // Handle different path structures for printer products
+    if (pathParts.length >= 6 && pathParts[1] === 'inkjetPrinter' && pathParts[2] === 'economic version') {
+      // Economic version format: products/inkjetPrinter/economic version/Product Name/image/Product Name.jpg
+      const productFolder = pathParts[3]; // Product folder is at index 3
+      mdFilePath = `products/inkjetPrinter/economic version/${productFolder}/${productFolder}.md`;
+    } else if (pathParts.length >= 6 && pathParts[1] === 'inkjetPrinter' && pathParts[2] === 'inkjet' && pathParts[3] === 'printer' && pathParts[4] === 'with') {
+      // Old format: products/inkjetPrinter/inkjet printer with/.../Product Name/Product Name.md
+      const productFolder = pathParts[pathParts.length - 2]; // Folder containing the image
+      const pathUpToProduct = pathParts.slice(0, -1).join('/'); // Path up to the product folder
+      
+      // Try to find markdown file with same name as product folder
+      mdFilePath = `${pathUpToProduct}/${productFolder}.md`;
+      
+      // If image has a special suffix, try that for the MD file too
+      const imageName = pathParts[pathParts.length - 1];
+      const baseImageName = imageName.split('.')[0];
+      if (baseImageName !== productFolder) {
+        mdFilePath = `${pathUpToProduct}/${baseImageName}.md`;
+      }
+    } else if (pathParts.length >= 5 && pathParts[1] === 'inkjetPrinter') {
+      // Standard printer format: products/inkjetPrinter/category/Product Name/image/Product Name.jpg
+      const productFolder = pathParts[3]; // Product folder is at index 3
+      const category = pathParts[2]; // Category like 'solvent', 'double side', 'uv flatbed', etc.
+      
+      // Construct path: products/inkjetPrinter/category/Product Name/Product Name.md
+      mdFilePath = `products/inkjetPrinter/${category}/${productFolder}/${productFolder}.md`;
+    } else {
+      // Fallback to basic content if path doesn't match expected format
+      console.warn('Unknown printer product path structure:', imagePath);
+      setupBasicPrinterContent(product);
+      return;
+    }
+    
+    // Fetch the markdown file content
+    const response = await fetch(mdFilePath);
+    if (!response.ok) {
+      console.warn(`Markdown file not found: ${mdFilePath}`);
+      // Fallback to basic content if markdown file is not found
+      setupBasicPrinterContent(product);
+      return;
+    }
+    
+    const mdContent = await response.text();
+    
+    // Parse and display the markdown content
+    const parsedContent = parseMarkdown(mdContent);
+    
+    // Update the product details tab content with the full markdown content
+    document.querySelector('.js-product-details-content').innerHTML = parsedContent || '';
+    
+    // Hide compatibility and specifications sections since we're loading everything from markdown
+    const compatibilitySection = document.querySelector('.product-compatibility-section');
+    const specificationsSection = document.querySelector('.product-specifications-section');
+    
+    if (compatibilitySection) compatibilitySection.style.display = 'none';
+    if (specificationsSection) specificationsSection.style.display = 'none';
+    
+  } catch (error) {
+    console.error('Error loading printer markdown content:', error);
+    // Fallback to basic content if there's an error
+    setupBasicPrinterContent(product);
+  }
+}
+
+/**
  * Set up the product information tabs
  */
 function setupProductTabs() {
@@ -861,10 +934,18 @@ async function setupRegularProductContent(product) {
   try {
     // Extract the path to the markdown file from the image path
     const imagePath = product.image;
-      // Get the path components from the image path
-    // Expected format: products/inkjetPrinter/inkjet printer with/.../Product Name/Product Name.md
     const pathParts = imagePath.split('/');
-    if (pathParts.length >= 6 && pathParts[2] === 'inkjetPrinter' && pathParts[3] === 'inkjet' && pathParts[4] === 'printer' && pathParts[5] === 'with') {
+    
+    // Check if this is an inkjet printer product
+    if (pathParts.length >= 5 && pathParts[2] === 'inkjetPrinter') {
+      // This is a printer product, use the same logic as dedicated printer content loader
+      await loadPrinterMarkdownContent(product);
+      return;
+    }
+    
+    // For non-printer products, use the existing logic
+    if (pathParts.length >= 6 && pathParts[3] === 'inkjet' && pathParts[4] === 'printer' && pathParts[5] === 'with') {
+      // Handle old format: products/inkjetPrinter/inkjet printer with/...
       // Find the product folder (usually the second-to-last folder before the image file)
       const productFolder = pathParts[pathParts.length - 2]; // Folder containing the image
       const pathUpToProduct = pathParts.slice(0, -1).join('/'); // Path up to the product folder
@@ -899,7 +980,6 @@ async function setupRegularProductContent(product) {
       // Hide compatibility and specifications sections since we're loading everything from markdown
       document.querySelector('.product-compatibility-section').style.display = 'none';
       document.querySelector('.product-specifications-section').style.display = 'none';
-      
     } else {
       // If path doesn't match expected format, use fallback
       setupFallbackRegularProductContent(product);
@@ -943,18 +1023,18 @@ function setupFallbackPrintheadContent(product) {
 }
 
 /**
- * Set up content for printer products (now uses unified PDF/document logic for all printers)
+ * Set up content for printer products (now uses markdown loading like print heads)
  */
-function setupPrinterProductContent(product) {
+async function setupPrinterProductContent(product) {
   // Set basic product description
   document.querySelector('.js-product-description').innerHTML = product.description || 'High-quality inkjet printer designed for professional printing applications.';
   
-  // Try to use the PDF/document viewer functionality for printer products
+  // Try to load markdown content for printer products
   try {
-    addDocumentViewerForAllPrinters(product, productId);
+    await loadPrinterMarkdownContent(product);
   } catch (error) {
-    console.error('Error loading document viewer for printer:', error);
-    // Fallback to basic content if document viewer fails
+    console.error('Error loading markdown content for printer:', error);
+    // Fallback to basic content if markdown loading fails
     setupBasicPrinterContent(product);
   }
 }
@@ -965,16 +1045,16 @@ function setupPrinterProductContent(product) {
 function setupBasicPrinterContent(product) {
   // Set basic content for printers that don't have documents or when document loading fails
   document.querySelector('.js-product-details-content').innerHTML = `
-    <h3>Product Overview</h3>
-    <p>This professional inkjet printer offers high-quality printing capabilities suitable for various applications.</p>
-    <p>For detailed specifications and documentation, please contact our support team.</p>
+    <h3>${product.name}</h3>
+    <p>Product specifications and detailed information are being updated. Please contact our support team for the latest details and technical specifications.</p>
   `;
   
   // Hide sections that aren't relevant for basic printer display
   const compatibilitySection = document.querySelector('.product-compatibility-section');
   const specificationsSection = document.querySelector('.product-specifications-section');
   
-  if (compatibilitySection) compatibilitySection.style.display = 'none';  if (specificationsSection) specificationsSection.style.display = 'none';
+  if (compatibilitySection) compatibilitySection.style.display = 'none';
+  if (specificationsSection) specificationsSection.style.display = 'none';
 }
 
 /**
@@ -1705,280 +1785,6 @@ function setupMobileArrowScrolling(leftArrow, rightArrow, thumbnailsContainer) {
 }
 
 // Function to extract and display document content directly for all printer products
-function addDocumentViewerForAllPrinters(product, productId) {
-  // This function should only be called for printer products
-  // The calling function should ensure this is a printer product
-  
-  // Direct approach: use the pdfPath if available, otherwise scan for documents
-  (async () => {
-    try {
-      let documentFound = false;
-      
-      // First, try the direct PDF path if available (using metadata)
-      const directPdfPath = getProductPdfPath(productId);
-      if (directPdfPath) {
-        try {
-          const response = await fetch(directPdfPath, { method: 'HEAD' });
-          if (response.ok) {
-            console.log('Using direct PDF path from metadata:', directPdfPath);
-            displayDocumentContent(productId, directPdfPath);
-            documentFound = true;
-            return;
-          }
-        } catch (error) {
-          console.log('Direct PDF path failed, falling back to search:', error);
-        }
-      }
-      
-      // Fallback: check for pdfPath property on product object (legacy support)
-      if (product.pdfPath) {
-        try {
-          const response = await fetch(product.pdfPath, { method: 'HEAD' });
-          if (response.ok) {
-            console.log('Using legacy pdfPath property:', product.pdfPath);
-            displayDocumentContent(productId, product.pdfPath);
-            documentFound = true;
-            return;
-          }
-        } catch (error) {
-          console.log('Legacy pdfPath failed, falling back to search:', error);
-        }
-      }// If direct path fails or doesn't exist, fall back to original scanning method
-      // Extract information from the product image path to determine the document path
-      const imagePath = product.image;
-      
-      // Extract folder path components
-      const pathSegments = imagePath.split('/');
-      const basePath = pathSegments.slice(0, -1).join('/');
-      const productFolder = pathSegments[pathSegments.length - 2];
-      
-      // Try to load the product folder content (this won't work in browser due to CORS,
-      // but we'll fall back to predefined patterns)
-      
-      // Prepare a list of possible document filenames
-      const documentFiles = [];
-        // Extract different name variations from the product data
-      const variations = [];
-      
-      // 1. Get filename from image path (most common case)
-      const fullImageFilename = pathSegments[pathSegments.length - 1];
-      const filenameWithoutExt = fullImageFilename.substring(0, fullImageFilename.lastIndexOf('.'));
-      variations.push(filenameWithoutExt);
-      
-      // 2. Use product name
-      variations.push(product.name);
-      
-      // 3. Use product model ID
-      variations.push(productId);
-      
-      // 4. Handle XP600 filename inconsistencies specifically
-      if (productId === 'AM1802XP') {
-        variations.push('AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)');
-        variations.push('AM1802XP 1.8meter Inkjet Printer With 2XP600 Print Head(The Economic Version)');
-        variations.push('AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (The Economic Version)');
-        variations.push('AM1802XP 1.8meter Inkjet Printer With 2 XP600 Print Head (the economic version)');
-      }
-      
-      // 4. Some products have capitalization differences
-      if (filenameWithoutExt.includes('(')) {
-        const baseName = filenameWithoutExt.substring(0, filenameWithoutExt.lastIndexOf('(') - 1);
-        const suffix = filenameWithoutExt.substring(filenameWithoutExt.lastIndexOf('('));
-        
-        // Add variation with different casing in suffix
-        variations.push(`${baseName} ${suffix.toLowerCase()}`);
-        variations.push(`${baseName} ${suffix.toUpperCase()}`);
-        
-        // Add variations with different spacing
-        variations.push(`${baseName}${suffix}`);
-        
-        // Add truncated name variations
-        variations.push(baseName);
-        variations.push(`${baseName}(t`);  // Special case observed
-      }
-      
-      // Generate all possible document paths
-      variations.forEach(name => {
-        // Standard extensions
-        documentFiles.push(`${basePath}/${name}.pdf`);
-        documentFiles.push(`${basePath}/${name}.docx`);
-        documentFiles.push(`${basePath}/${name}.doc`);
-        
-        // Try with normalized casing for extensions
-        const normalizedName = name.charAt(0).toUpperCase() + name.slice(1);
-        documentFiles.push(`${basePath}/${normalizedName}.pdf`);
-        documentFiles.push(`${basePath}/${normalizedName}.docx`);
-        documentFiles.push(`${basePath}/${normalizedName}.doc`);
-      });
-        // Extra check - look for documents with similar model IDs
-      // For example, "AM1802XP" might match "AM1802XP 1.8meter Inkjet Printer With 2XP600 Print Head(The Economic Version).pdf"
-      const productIdVariations = [
-        productId,
-        productId.toLowerCase(),
-        productId.toUpperCase(),
-        `${productId} `,
-        `${productId}-`
-      ];
-      
-      productIdVariations.forEach(idVar => {
-        documentFiles.push(`${basePath}/*${idVar}*.pdf`);
-        documentFiles.push(`${basePath}/*${idVar}*.docx`);
-        documentFiles.push(`${basePath}/*${idVar}*.doc`);
-      });
-      
-      // Try different folder structures/naming conventions
-      let folderName = '';
-      for (const segment of pathSegments) {
-        if (segment.includes(productId)) {
-          folderName = segment;
-          break;
-        }
-      }
-      
-      if (folderName) {
-        // Extract possible subpaths where documents might be located
-        const possibleFolderPaths = [
-          `${basePath}`,
-          `${pathSegments.slice(0, -2).join('/')}/${folderName}`,
-          `${pathSegments.slice(0, -3).join('/')}/${folderName}`
-        ];
-        
-        // Check all possible paths for documents
-        possibleFolderPaths.forEach(path => {
-          documentFiles.push(`${path}/${productId}*.pdf`);
-          documentFiles.push(`${path}/${productId}*.docx`);
-          documentFiles.push(`${path}/${productId}*.doc`);        });
-      }
-        console.log('Searching for documents with these patterns:', documentFiles);
-      
-      // Temporary timeout to ensure this doesn't block indefinitely
-      const maxWaitTime = 5000;
-      const startTime = Date.now();
-      
-      // Try each possible document path and use the first one that exists
-      for (const path of documentFiles) {
-        try {
-          // Check if we've spent too long looking
-          if (Date.now() - startTime > maxWaitTime) {
-            break;
-          }
-          
-          // Skip wildcard paths (they won't work with fetch directly)
-          if (path.includes('*')) continue;
-            
-          const response = await fetch(path, { method: 'HEAD' });
-          if (response.ok) {
-            // Extract and display the document content directly in product details
-            displayDocumentContent(productId, path);
-            documentFound = true;
-            return; // Exit after finding the first valid document
-          }
-        } catch (error) {
-          // Continue trying other paths
-        }
-      }
-      
-      // FALLBACK: If no document is found through the patterns, try direct known file paths
-      if (!documentFound) {
-        // These are specific to the printer models observed in the screenshots
-        const knownDocuments = {
-          // XP600 printhead model documents
-          'AM1802XP': `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`,
-          'AM1601XP': `${pathSegments.slice(0, -1).join('/')}/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).pdf`,
-          'AM1901XP': `${pathSegments.slice(0, -1).join('/')}/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).pdf`,
-          
-          // i1600 printhead model documents
-          'AM1601i16': `${pathSegments.slice(0, -2).join('/')}/with I1600 Printhead/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).pdf`,
-          'AM1802i16': `${pathSegments.slice(0, -2).join('/')}/with I1600 Printhead/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).pdf`,
-          'AM1901i16': `${pathSegments.slice(0, -2).join('/')}/with I1600 Printhead/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).pdf`,
-          
-          // i3200 printhead model documents
-          'AM1601i32': `${pathSegments.slice(0, -2).join('/')}/with I3200 Printhead/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).pdf`,
-          'AM1802i32': `${pathSegments.slice(0, -2).join('/')}/with I3200 Printhead/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).pdf`,
-          'AM1901i32': `${pathSegments.slice(0, -2).join('/')}/with I3200 Printhead/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).pdf`,
-        };
-        
-        // Add an additional AM1802XP specific check due to observed naming inconsistencies
-        if (productId === 'AM1802XP') {
-          knownDocuments['AM1802XP'] = `${pathSegments.slice(0, -1).join('/')}/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).pdf`;
-        }
-        
-        // Try the known path for this product
-        if (knownDocuments[productId]) {
-          try {
-            const response = await fetch(knownDocuments[productId], { method: 'HEAD' });
-            if (response.ok) {
-              displayDocumentContent(productId, knownDocuments[productId]);
-              documentFound = true;
-              return;
-            }
-          } catch (error) {
-            // Continue to alternative casing attempt
-          }
-        }
-        
-        // Try with alternative casing for the filename (some files have inconsistent casing)
-        if (!documentFound && knownDocuments[productId]) {
-          // Try multiple casing variations
-          const altCasings = [
-            // Original path
-            knownDocuments[productId],
-            // Economic Version capitalized
-            knownDocuments[productId].replace('economic version', 'Economic Version'),
-            // Change "Print head" to "Printhead"
-            knownDocuments[productId].replace('Print head', 'Printhead'),
-            // Change "Printhead" to "Print head"
-            knownDocuments[productId].replace('Printhead', 'Print head'),
-            // Change spacing around parentheses
-            knownDocuments[productId].replace(' (', '('),
-            // Change "printer" to "Printer"
-            knownDocuments[productId].replace('printer', 'Printer'),
-            // Change "with" to "With"
-            knownDocuments[productId].replace(' with ', ' With ')
-          ];
-          
-          for (const altPath of altCasings) {
-            try {
-              const response = await fetch(altPath, { method: 'HEAD' });
-              if (response.ok) {
-                displayDocumentContent(productId, altPath);
-                documentFound = true;
-                return;
-              }
-            } catch (error) {
-              // Continue to next alternative casing
-            }
-          }
-        }
-      }
-      
-      // If we reach here, no document was found
-      if (!documentFound) {
-        console.error('No document found for product:', productId);
-        const detailsContainer = document.querySelector('.js-product-details-content');
-        if (detailsContainer) {
-          // Display a more helpful error with debug info
-          detailsContainer.innerHTML = `
-            <div class="document-error">
-              <p>Product documentation could not be loaded.</p>
-              <p>Please check the browser console for detailed error messages.</p>
-              <div class="debug-info" style="margin-top: 20px; color: #777; font-size: 0.8em;">
-                <p>Debug Information (for developers):</p>
-                <p>Product ID: ${productId}</p>
-                <p>Image Path: ${imagePath}</p>
-                <p>Base Path: ${basePath}</p>
-              </div>
-            </div>
-          `;
-        }
-      }
-    } catch (error) {
-      console.error('Error searching for document:', error);
-      // Fallback to basic content if everything fails
-      setupBasicPrinterContent(product);
-    }
-  })();
-}
-
 function updateBreadcrumbDetail(product, productType, productBrand) {
   let breadcrumbElement = document.querySelector('.breadcrumb-nav');
   if (!breadcrumbElement) {

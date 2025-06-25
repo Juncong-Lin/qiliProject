@@ -17,12 +17,12 @@ from PIL import Image
 # --- Configuration ---
 BASE_URL = "https://signchinasign.com"
 URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/12/price/index.php"
-TOTAL_PAGES = 9
+TOTAL_PAGES = 10
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 BRANDS = [
-    'dtf printer',
+  'dtf printer',
     'uv-dtf',
     'economic version',
     'solvent',

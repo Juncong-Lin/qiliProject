@@ -1,6 +1,71 @@
-// Total products: 62, New products scraped: 62, Date: 2025-06-23 02:15:13
+// Total products: 70, New products scraped: 70, Date: 2025-06-25 22:02:57
 export const inkjetPrinterProducts = {
-  double_side_printers: [
+  amo_uv_inkjet: [
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV4G6-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-4-Ricoh-GEN6-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads.jpg',
+      lower_price: 1930000,
+      higher_price: 1930000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV8G6-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-8-Ricoh-GEN6-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV8G6-EL for 3.2meters Soft and Elastic Fiml with 8 Ricoh GEN6 Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV8G6-EL for 3.2meters Soft and Elastic Fiml with 8 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV8G6-EL for 3.2meters Soft and Elastic Fiml with 8 Ricoh GEN6 Printheads.jpg',
+      lower_price: 2730000,
+      higher_price: 2730000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV4G6-ES-3-2meters-with-4-Ricoh-GEN6-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads.jpg',
+      lower_price: 1800000,
+      higher_price: 1800000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV8G6-ES-3-2meters-with-8-Ricoh-GEN6-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV8G6-ES 3.2meters with 8 Ricoh GEN6 Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV8G6-ES 3.2meters with 8 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV8G6-ES 3.2meters with 8 Ricoh GEN6 Printheads.jpg',
+      lower_price: 2600000,
+      higher_price: 2600000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV4k24i-ES-3-2meters-with-4-Konica-1024i-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV4k24i-ES 3.2meters with 4 Konica 1024i Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV4k24i-ES 3.2meters with 4 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV4k24i-ES 3.2meters with 4 Konica 1024i Printheads.jpg',
+      lower_price: 1600000,
+      higher_price: 1600000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV8k24i-ES-3-2meters-with-8-Konica-1024i-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV8k24i-ES 3.2meters with 8 Konica 1024i Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV8k24i-ES 3.2meters with 8 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV8k24i-ES 3.2meters with 8 Konica 1024i Printheads.jpg',
+      lower_price: 2250000,
+      higher_price: 2250000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV4k24i-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-4-Konica-1024i-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads.jpg',
+      lower_price: 1760000,
+      higher_price: 1760000
+    },
+    {
+      id: 'AMO-UV-Inkjet-Printer-AM3200UV8k24i-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-8-Konica-1024i-Printheads',
+      name: 'AMO UV Inkjet Printer AM3200UV8k24i-EL for 3.2meters Soft and Elastic Fiml with 8 Konica 1024i Printheads',
+      image: 'products/inkjetPrinter/amo uv inkjet/AMO UV Inkjet Printer AM3200UV8k24i-EL for 3.2meters Soft and Elastic Fiml with 8 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV8k24i-EL for 3.2meters Soft and Elastic Fiml with 8 Konica 1024i Printheads.jpg',
+      lower_price: 2390000,
+      higher_price: 2390000
+    },
+  ],
+  double_side: [
+    {
+      id: 'Double-Side-Print-Inkjet-Printer-AM208I32DP-for-Textile-Flag-Material-with-8-heads-i3200',
+      name: 'Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200',
+      image: 'products/inkjetPrinter/double side/Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200/image/Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200.jpg',
+      lower_price: 4600000,
+      higher_price: 4600000
+    },
   ],
   dtf_printer: [
     {
@@ -46,72 +111,198 @@ export const inkjetPrinterProducts = {
       higher_price: 740000
     },
   ],
-  hybrid_uv: [  ],
-  inkjet_printer_with: [
-    // XP600 Series Printers
+  economic_version: [
     {
-      id: 'AM1601XP',
+      id: 'AM1802XP-1-8meter-Inkjet-printer-with-2-XP600-Print-head-the-economic-version',
+      name: 'AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)',
+      image: 'products/inkjetPrinter/economic version/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)/image/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).jpg',
+      lower_price: 330000,
+      higher_price: 430000
+    },
+    {
+      id: 'AM1601XP-1-6meter-Inkjet-printer-with-1-XP600-Printhead-the-economic-version',
       name: 'AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version)/image/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
+      image: 'products/inkjetPrinter/economic version/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version)/image/AM1601XP 1.6meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
       lower_price: 195000,
       higher_price: 295000
     },
     {
-      id: 'AM1802XP',
-      name: 'AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version)/image/AM1802XP 1.8meter Inkjet printer with 2 XP600 Print head (the economic version).jpg',
-      lower_price: 330000,
-      higher_price: 430000
-    },    {
-      id: 'AM1901XP',
+      id: 'AM1901XP-1-9meter-Inkjet-printer-with-1-XP600-Printhead-the-economic-version',
       name: 'AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version)/image/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
-      lower_price: 200000,      higher_price: 300000
+      image: 'products/inkjetPrinter/economic version/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version)/image/AM1901XP 1.9meter Inkjet printer with 1 XP600 Printhead (the economic version).jpg',
+      lower_price: 200000,
+      higher_price: 300000
     },
-
-    // I1600 Series Printers
     {
-      id: 'AM1601i16',
+      id: 'AM1601i16-1-6meter-Inkjet-printer-with-1-i1600-Printhead-the-economic-version',
       name: 'AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)/image/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
+      image: 'products/inkjetPrinter/economic version/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version)/image/AM1601i16 1.6meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
       lower_price: 235000,
       higher_price: 335000
     },
     {
-      id: 'AM1802i16',
-      name: 'AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version)/image/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).jpg',
-      lower_price: 580000,
-      higher_price: 780000
-    },    {
-      id: 'AM1901i16',
+      id: 'AM1901i16-1-9meter-Inkjet-printer-with-1-i1600-Printhead-the-economic-version',
       name: 'AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)/image/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',      lower_price: 240000,
+      image: 'products/inkjetPrinter/economic version/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)/image/AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version).jpg',
+      lower_price: 240000,
       higher_price: 340000
     },
-
-    // I3200 Series Printers
     {
-      id: 'AM1601i32',
-      name: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)/image/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
-      lower_price: 275000,
-      higher_price: 375000
-    },
-    {
-      id: 'AM1802i32',
+      id: 'AM1802i32-1-8meter-Inkjet-printer-with-2-i3200-Printhead-the-economic-version',
       name: 'AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)/image/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).jpg',
+      image: 'products/inkjetPrinter/economic version/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version)/image/AM1802i32 1.8meter Inkjet printer with 2 i3200 Printhead (the economic version).jpg',
       lower_price: 490000,
       higher_price: 590000
     },
     {
-      id: 'AM1901i32',
+      id: 'AM1901i32-1-9meter-Inkjet-printer-with-1-i3200-Printhead-the-economic-version',
       name: 'AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)',
-      image: 'products/inkjetPrinter/inkjet printer with/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)/image/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
+      image: 'products/inkjetPrinter/economic version/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)/image/AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
       lower_price: 280000,
-      higher_price: 380000,
-    }
+      higher_price: 380000
+    },
+    {
+      id: 'AM1601i32-1-6meter-Inkjet-printer-with-1-i3200-Printhead-the-economic-version',
+      name: 'AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)',
+      image: 'products/inkjetPrinter/economic version/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version)/image/AM1601i32 1.6meter Inkjet printer with 1 i3200 Printhead (the economic version).jpg',
+      lower_price: 275000,
+      higher_price: 375000
+    },
+    {
+      id: 'AM1802i16-1-8meter-Inkjet-printer-with-2-i1600-Printhead-the-economic-version',
+      name: 'AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version)',
+      image: 'products/inkjetPrinter/economic version/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version)/image/AM1802i16 1.8meter Inkjet printer with 2 i1600 Printhead (the economic version).jpg',
+      lower_price: 410000,
+      higher_price: 510000
+    },
+  ],
+  hybrid_uv: [
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH4G6-with-4-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
+      lower_price: 2430000,
+      higher_price: 2430000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH4k24i-with-4-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead..jpg',
+      lower_price: 2260000,
+      higher_price: 2260000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH8G6-with-8-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
+      lower_price: 3230000,
+      higher_price: 3230000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH8k24i-with-8-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead..jpg',
+      lower_price: 2890000,
+      higher_price: 2890000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH12G6-with-12-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
+      lower_price: 4040000,
+      higher_price: 4040000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12k24i  with 12 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
+      lower_price: 3520000,
+      higher_price: 3520000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH4G6-with-4-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
+      lower_price: 2900000,
+      higher_price: 2900000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH4k24i-with-4-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead..jpg',
+      lower_price: 2720000,
+      higher_price: 2720000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH8G6-with-8-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
+      lower_price: 3690000,
+      higher_price: 3690000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH8k24i-with-8-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead..jpg',
+      lower_price: 3350000,
+      higher_price: 3350000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12G6-with-12-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
+      lower_price: 4490000,
+      higher_price: 4490000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
+      lower_price: null,
+      higher_price: null
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4G6-with-4-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
+      lower_price: 3030000,
+      higher_price: 3030000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4k24i-with-4-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead..jpg',
+      lower_price: 3330000,
+      higher_price: 3330000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH8G6-with-8-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
+      lower_price: 3830000,
+      higher_price: 3830000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH8k24i-with-8-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead..jpg',
+      lower_price: 4000000,
+      higher_price: 4000000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH12G6-with-12-Ricoh-Gen6-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
+      lower_price: 4630000,
+      higher_price: 4630000
+    },
+    {
+      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead.',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
+      lower_price: 4590000,
+      higher_price: 4590000
+    },
   ],
   solvent: [
     {
@@ -143,9 +334,51 @@ export const inkjetPrinterProducts = {
       higher_price: 2060000
     },
   ],
-  sublimation_printers: [
+  sublimation: [
+    {
+      id: 'AMO-Sublimation-Inkjet-Printer-AM1802i16S-with-2-i1600-Printheads',
+      name: 'AMO Sublimation Inkjet Printer AM1802i16S with 2 i1600 Printheads',
+      image: 'products/inkjetPrinter/sublimation/AMO Sublimation Inkjet Printer AM1802i16S with 2 i1600 Printheads/image/AMO Sublimation Inkjet Printer AM1802i16S with 2 i1600 Printheads.jpg',
+      lower_price: 440000,
+      higher_price: 440000
+    },
+    {
+      id: 'AMO-Sublimation-Inkjet-Printer-AM1802i32S-with-2-i3200-Printheads',
+      name: 'AMO Sublimation Inkjet Printer AM1802i32S with 2 i3200 Printheads',
+      image: 'products/inkjetPrinter/sublimation/AMO Sublimation Inkjet Printer AM1802i32S with 2 i3200 Printheads/image/AMO Sublimation Inkjet Printer AM1802i32S with 2 i3200 Printheads.jpg',
+      lower_price: 500000,
+      higher_price: 500000
+    },
+    {
+      id: 'AMO-Sublimation-Inkjet-Printer-AM1804i32SH-with-4-i3200-Printheads',
+      name: 'AMO Sublimation Inkjet Printer AM1804i32SH with 4 i3200 Printheads',
+      image: 'products/inkjetPrinter/sublimation/AMO Sublimation Inkjet Printer AM1804i32SH with 4 i3200 Printheads/image/AMO Sublimation Inkjet Printer AM1804i32SH with 4 i3200 Printheads.jpg',
+      lower_price: 980000,
+      higher_price: 980000
+    },
+    {
+      id: 'AMO-Sublimation-Inkjet-Printer-AM1808i32SH-with-8-i3200-Printheads',
+      name: 'AMO Sublimation Inkjet Printer AM1808i32SH with 8 i3200 Printheads',
+      image: 'products/inkjetPrinter/sublimation/AMO Sublimation Inkjet Printer AM1808i32SH with 8 i3200 Printheads/image/AMO Sublimation Inkjet Printer AM1808i32SH with 8 i3200 Printheads.jpg',
+      lower_price: 1560000,
+      higher_price: 1560000
+    },
   ],
   uv_flatbed: [
+    {
+      id: 'AMO-UV-Flatbed-Printer-AM9060UVB3XP-with-3-heads-XP600-heads',
+      name: 'AMO UV Flatbed Printer AM9060UVB3XP with 3 heads XP600 heads',
+      image: 'products/inkjetPrinter/uv flatbed/AMO UV Flatbed Printer AM9060UVB3XP with 3 heads XP600 heads/image/AMO UV Flatbed Printer AM9060UVB3XP with 3 heads XP600 heads.jpg',
+      lower_price: 730000,
+      higher_price: 730000
+    },
+    {
+      id: 'AMO-UV-Flatbed-Printer-AM9060UVB4i32-AI-with-4-heads-i3200-heads-and-AI-Visual-system',
+      name: 'AMO UV Flatbed Printer AM9060UVB4i32-AI with 4 heads i3200 heads and AI Visual system',
+      image: 'products/inkjetPrinter/uv flatbed/AMO UV Flatbed Printer AM9060UVB4i32-AI with 4 heads i3200 heads and AI Visual system/image/AMO UV Flatbed Printer AM9060UVB4i32-AI with 4 heads i3200 heads and AI Visual system.jpg',
+      lower_price: 1260000,
+      higher_price: 1260000
+    },
     {
       id: 'AMO-UV-Flatbed-Inkjet-Printer-AM2513UVB4K24i-with-4-pieces-Konica-KM1024i-Printheads',
       name: 'AMO UV Flatbed Inkjet Printer AM2513UVB4K24i with 4 pieces Konica KM1024i Printheads',
@@ -166,6 +399,13 @@ export const inkjetPrinterProducts = {
       image: 'products/inkjetPrinter/uv flatbed/AMO UV Flatbed Inkjet Printer AM2412UVB3G5 with 3 pieces Ricoh Gen5 Printheads/image/AMO UV Flatbed Inkjet Printer AM2412UVB3G5 with 3 pieces Ricoh Gen5 Printheads.jpg',
       lower_price: 1820000,
       higher_price: 1820000
+    },
+    {
+      id: 'AMO-UV-Flatbed-Printer-AM9060UVB4i32-with-4-heads-i3200-heads',
+      name: 'AMO UV Flatbed Printer AM9060UVB4i32 with 4 heads i3200 heads',
+      image: 'products/inkjetPrinter/uv flatbed/AMO UV Flatbed Printer AM9060UVB4i32 with 4 heads i3200 heads/image/AMO UV Flatbed Printer AM9060UVB4i32 with 4 heads i3200 heads.jpg',
+      lower_price: 1100000,
+      higher_price: 1100000
     },
     {
       id: 'AMO-UV-Flatbed-Inkjet-Printer-AM2513UVB8K24i-with-8-pieces-Konica-KM1024i-Printheads',
@@ -245,275 +485,65 @@ export const inkjetPrinterProducts = {
       higher_price: 4450000
     },
   ],
-  uv_inkjet: [
+  uv_dtf: [
     {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH4G6-with-4-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
-      lower_price: 2430000,
-      higher_price: 2430000
+      id: 'AMO-UV-DTF-Inkjet-Printer-AM604XP-UVDTF-with-4-XP600-Printheads',
+      name: 'AMO UV-DTF Inkjet Printer AM604XP-UVDTF with 4 XP600 Printheads',
+      image: 'products/inkjetPrinter/uv-dtf/AMO UV-DTF Inkjet Printer AM604XP-UVDTF with 4 XP600 Printheads/image/AMO UV-DTF Inkjet Printer AM604XP-UVDTF with 4 XP600 Printheads.jpg',
+      lower_price: 520000,
+      higher_price: 520000
     },
     {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH4k24i-with-4-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead..jpg',
-      lower_price: 2260000,
-      higher_price: 2260000
+      id: 'AMO-UV-DTF-Inkjet-Printer-AM603i32-UVDTF-with-3-i1600-printheads',
+      name: 'AMO UV-DTF Inkjet Printer AM603i32-UVDTF with 3 i1600 printheads',
+      image: 'products/inkjetPrinter/uv-dtf/AMO UV-DTF Inkjet Printer AM603i32-UVDTF with 3 i1600 printheads/image/AMO UV-DTF Inkjet Printer AM603i32-UVDTF with 3 i1600 printheads.jpg',
+      lower_price: 750000,
+      higher_price: 750000
     },
     {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH8G6-with-8-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
-      lower_price: 3230000,
-      higher_price: 3230000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH8k24i-with-8-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead..jpg',
-      lower_price: 2890000,
-      higher_price: 2890000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH12G6-with-12-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
-      lower_price: 4040000,
-      higher_price: 4040000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12k24i  with 12 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
-      lower_price: 3520000,
-      higher_price: 3520000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH4G6-with-4-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
-      lower_price: 2900000,
-      higher_price: 2900000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH4k24i-with-4-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead..jpg',
-      lower_price: 2720000,
-      higher_price: 2720000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH8G6-with-8-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
-      lower_price: 3690000,
-      higher_price: 3690000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH8k24i-with-8-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead..jpg',
-      lower_price: 3350000,
-      higher_price: 3350000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12G6-with-12-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
-      lower_price: 4490000,
-      higher_price: 4490000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
-      lower_price: null,
-      higher_price: null
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4G6-with-4-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
-      lower_price: 3030000,
-      higher_price: 3030000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4k24i-with-4-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead..jpg',
-      lower_price: 3330000,
-      higher_price: 3330000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH8G6-with-8-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
-      lower_price: 3830000,
-      higher_price: 3830000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH8k24i-with-8-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead..jpg',
-      lower_price: 4000000,
-      higher_price: 4000000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH12G6-with-12-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
-      lower_price: 4630000,
-      higher_price: 4630000
-    },
-    {
-      id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/uv inkjet/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
-      lower_price: 4590000,
-      higher_price: 4590000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV4G6-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-4-Ricoh-GEN6-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV4G6-EL for 3.2meters Soft and Elastic Fiml with 4 Ricoh GEN6 Printheads.jpg',
-      lower_price: 1930000,
-      higher_price: 1930000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV8G6-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-8-Ricoh-GEN6-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV8G6-EL for 3.2meters Soft and Elastic Fiml with 8 Ricoh GEN6 Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV8G6-EL for 3.2meters Soft and Elastic Fiml with 8 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV8G6-EL for 3.2meters Soft and Elastic Fiml with 8 Ricoh GEN6 Printheads.jpg',
-      lower_price: 2730000,
-      higher_price: 2730000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV4G6-ES-3-2meters-with-4-Ricoh-GEN6-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV4G6-ES 3.2meters with 4 Ricoh GEN6 Printheads.jpg',
-      lower_price: 180000,
-      higher_price: 180000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV8G6-ES-3-2meters-with-8-Ricoh-GEN6-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV8G6-ES 3.2meters with 8 Ricoh GEN6 Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV8G6-ES 3.2meters with 8 Ricoh GEN6 Printheads/image/AMO UV Inkjet Printer AM3200UV8G6-ES 3.2meters with 8 Ricoh GEN6 Printheads.jpg',
-      lower_price: 2600000,
-      higher_price: 2600000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV4k24i-ES-3-2meters-with-4-Konica-1024i-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV4k24i-ES 3.2meters with 4 Konica 1024i Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV4k24i-ES 3.2meters with 4 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV4k24i-ES 3.2meters with 4 Konica 1024i Printheads.jpg',
-      lower_price: 1600000,
-      higher_price: 1600000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV8k24i-ES-3-2meters-with-8-Konica-1024i-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV8k24i-ES 3.2meters with 8 Konica 1024i Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV8k24i-ES 3.2meters with 8 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV8k24i-ES 3.2meters with 8 Konica 1024i Printheads.jpg',
-      lower_price: 2250000,
-      higher_price: 2250000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV4k24i-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-4-Konica-1024i-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV4k24i-EL for 3.2meters Soft and Elastic Fiml with 4 Konica 1024i Printheads.jpg',
-      lower_price: 1760000,
-      higher_price: 1760000
-    },
-    {
-      id: 'AMO-UV-Inkjet-Printer-AM3200UV8k24i-EL-for-3-2meters-Soft-and-Elastic-Fiml-with-8-Konica-1024i-Printheads',
-      name: 'AMO UV Inkjet Printer AM3200UV8k24i-EL for 3.2meters Soft and Elastic Fiml with 8 Konica 1024i Printheads',
-      image: 'products/inkjetPrinter/uv inkjet/AMO UV Inkjet Printer AM3200UV8k24i-EL for 3.2meters Soft and Elastic Fiml with 8 Konica 1024i Printheads/image/AMO UV Inkjet Printer AM3200UV8k24i-EL for 3.2meters Soft and Elastic Fiml with 8 Konica 1024i Printheads.jpg',
-      lower_price: 2390000,
-      higher_price: 2390000
+      id: 'AMO-A3-Size-UV-DTF-AMO-3003-with-3-pieces-of-XP600-Printheads',
+      name: 'AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads',
+      image: 'products/inkjetPrinter/AMO/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads/image/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads.jpg',
+      lower_price: 495000,
+      higher_price: 495000
     },
   ],
 };
 
-// Helper functions for eco-solvent inkjet printers
-
-import { getProductCategory, getProductsByCategory, getProductPdfPath } from '../scripts/shared/document-content-extractor.js';
-
-// Helper function to get XP600 eco-solvent printers
-export function getEcoSolventXP600Printers() {
-  const xp600ProductIds = getProductsByCategory('eco-solvent-xp600');
-  return inkjetPrinterProducts['inkjet_printer_with'].filter(p => xp600ProductIds.includes(p.id));
-}
-
-// Helper function to get I1600 eco-solvent printers
-export function getEcoSolventI1600Printers() {
-  const i1600ProductIds = getProductsByCategory('eco-solvent-i1600');
-  return inkjetPrinterProducts['inkjet_printer_with'].filter(p => i1600ProductIds.includes(p.id));
-}
-
-// Helper function to get I3200 eco-solvent printers
-export function getEcoSolventI3200Printers() {
-  const i3200ProductIds = getProductsByCategory('eco-solvent-i3200');
-  return inkjetPrinterProducts['inkjet_printer_with'].filter(p => i3200ProductIds.includes(p.id));
-}
-
-// Helper function to get all eco-solvent printers
+// Helper function to get all eco-solvent printer products
 export function getAllEcoSolventPrinters() {
-  return inkjetPrinterProducts['inkjet_printer_with'].filter(p => {
-    const category = getProductCategory(p.id);
-    return category && category.startsWith('eco-solvent');
-  });
+  return inkjetPrinterProducts.economic_version || [];
 }
 
-// Helper function to get inkjet printer by ID from any category
-export function getInkjetPrinterById(id) {
-  for (const category in inkjetPrinterProducts) {
-    const printer = inkjetPrinterProducts[category].find(p => p.id === id);
-    if (printer) return printer;
-  }
-  return null;
-}
-
-// Helper function to get all inkjet printers from all categories
-export function getAllInkjetPrinters() {
-  const allPrinters = [];
-  for (const category in inkjetPrinterProducts) {
-    allPrinters.push(...inkjetPrinterProducts[category]);
-  }
-  return allPrinters;
-}
-
-// Helper function to get printers by category
-export function getInkjetPrintersByCategory(categoryName) {
-  return inkjetPrinterProducts[categoryName] || [];
-}
-
-// Helper function to get printer specifications formatted for display
-export function getFormattedSpecifications(printer) {
-  if (!printer.specifications) return null;
-  
-  const formatted = {};
-  for (const [key, value] of Object.entries(printer.specifications)) {
-    // Convert camelCase to readable format
-    const readable = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-    formatted[readable] = value;
-  }
-  return formatted;
-}
-
-// Helper function to search printers by name or model
-export function searchInkjetPrinters(searchTerm) {
-  const allPrinters = getAllInkjetPrinters();
-  const term = searchTerm.toLowerCase();
-  return allPrinters.filter(printer => 
-    printer.name.toLowerCase().includes(term) || 
-    printer.model?.toLowerCase().includes(term) ||
-    printer.id.toLowerCase().includes(term)
+// Helper function to get eco-solvent printers with XP600 printhead
+export function getEcoSolventXP600Printers() {
+  return (inkjetPrinterProducts.economic_version || []).filter(printer => 
+    printer.name.toLowerCase().includes('xp600')
   );
 }
 
-// Helper function to get printers within price range
-export function getInkjetPrintersByPriceRange(minPrice, maxPrice) {
-  const allPrinters = getAllInkjetPrinters();
-  return allPrinters.filter(printer => {
-    const printerMinPrice = printer.lower_price || 0;
-    const printerMaxPrice = printer.higher_price || printer.lower_price || 0;
-    return printerMaxPrice >= minPrice && printerMinPrice <= maxPrice;
-  });
+// Helper function to get eco-solvent printers with I1600 printhead  
+export function getEcoSolventI1600Printers() {
+  return (inkjetPrinterProducts.economic_version || []).filter(printer => 
+    printer.name.toLowerCase().includes('i1600') || printer.name.toLowerCase().includes('i16')
+  );
+}
+
+// Helper function to get eco-solvent printers with I3200 printhead
+export function getEcoSolventI3200Printers() {
+  return (inkjetPrinterProducts.economic_version || []).filter(printer => 
+    printer.name.toLowerCase().includes('i3200') || printer.name.toLowerCase().includes('i32')
+  );
+}
+
+// Helper function to get a specific printer by ID
+export function getInkjetPrinterById(productId) {
+  for (const category in inkjetPrinterProducts) {
+    const products = inkjetPrinterProducts[category];
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      return product;
+    }
+  }
+  return null;
 }
