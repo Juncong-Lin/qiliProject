@@ -1810,7 +1810,79 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
       `;
     }  } else if (productType === 'printer') {
     // For printer products, show proper breadcrumb navigation
-    if (productBrand === 'eco-solvent-xp600') {
+    if (productBrand === 'dtf_printer') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#dtf-printers" class="breadcrumb-link">DTF Printer</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'sublimation') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'solvent') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#solvent-printers" class="breadcrumb-link">Solvent Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'double_side') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#double-side-printers" class="breadcrumb-link">Double Side Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'hybrid_uv') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#hybrid-uv-printers" class="breadcrumb-link">Hybrid UV Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'amo_uv_inkjet') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#amo-uv-inkjet-printers" class="breadcrumb-link">AMO UV Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'economic_version') {
+      breadcrumbElement.innerHTML = `
+        <a href="index.html" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#economic-version-printers" class="breadcrumb-link">Economic Version Printers</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">${product.name}</span>
+      `;
+    } else if (productBrand === 'eco-solvent-xp600') {
       breadcrumbElement.innerHTML = `
         <a href="index.html" class="breadcrumb-link">Home</a>
         <span class="breadcrumb-separator">&gt;</span>

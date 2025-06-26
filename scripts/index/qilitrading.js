@@ -649,6 +649,46 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
         `;
       }
+    } else if (brand === 'directToFabricFilm') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Direct to Fabric & Film</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Direct to Fabric & Film</span>
+        `;
+      }
+    } else if (brand === 'dtfPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadDirectToFabricFilmPrinters()" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">DTF Printer</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadDirectToFabricFilmPrinters()" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">DTF Printer</span>
+        `;
+      }
     } else if (brand === 'epsonPrinterSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1632,6 +1672,40 @@ window.loadSpecificCategory = function(categoryName) {
         <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">Upgrading Kit</span>
       `;
+    } else if (categoryName === 'DTF Printer') {
+      // Load DTF printer products specifically
+      const dtfPrinters = getAllDTFPrinters();
+      
+      const productsHTML = renderProducts(dtfPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('DTF Printers', dtfPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('dtfPrinters');
+    } else if (categoryName === 'Direct to Fabric & Film') {
+      // Load all Direct to Fabric & Film printers (currently DTF printers)
+      const dtfPrinters = getAllDTFPrinters();
+      
+      const productsHTML = renderProducts(dtfPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Direct to Fabric & Film Printers', dtfPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('directToFabricFilm');
     } else {
       // For other categories, show placeholder content
       const message = `<div class="coming-soon">
@@ -1730,6 +1804,7 @@ window.loadAllPrintSpareParts = function() {
 // Function to load Epson Printer Spare Parts specifically
 window.loadEpsonPrinterSpareParts = function() {
   // Hide the submenu after selection
+
   hideActiveSubmenus();
   
   // Hide hero banner for specific category views
@@ -2761,7 +2836,6 @@ window.loadChannelLetterProducts = function(category) {
     
     // Scroll to top of products only if not skipping
     if (!skipScroll) {
-      // Scroll to top of products
       scrollToProducts();
     }
   }, 200);
@@ -2968,7 +3042,9 @@ window.loadAllEconomicVersionPrinters = function() {
 
 // Helper function to get all eco-solvent printer products
 export function getAllEcoSolventPrinters() {
-  return inkjetPrinterProducts.economic_version || [];
+  const economicPrinters = inkjetPrinterProducts.economic_version || [];
+  const dtfPrinters = inkjetPrinterProducts.dtf_printer || [];
+  return [...economicPrinters, ...dtfPrinters];
 }
 
 // Helper function to get eco-solvent printers with XP600 printhead
@@ -3003,4 +3079,81 @@ export function getInkjetPrinterById(productId) {
   }
   return null;
 }
+
+// Function to get all DTF printers
+function getAllDTFPrinters() {
+  return inkjetPrinterProducts.dtf_printer || [];
+}
+
+// Function to load DTF printer products
+window.loadDTFPrinters = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item
+  highlightSelectedMenuItem('dtf-printers');
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const dtfPrinters = getAllDTFPrinters();
+    const productsHTML = renderProducts(dtfPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    updatePageHeader('DTF Printers', dtfPrinters.length);
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('dtfPrinters');
+    
+    // Scroll to top of products
+    scrollToProducts();
+  }, 200);
+};
+
+// Function to load all Direct to Fabric & Film printers (currently only DTF)
+window.loadDirectToFabricFilmPrinters = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item
+  highlightSelectedMenuItem('direct-to-fabric-film');
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const dtfPrinters = getAllDTFPrinters();
+    const productsHTML = renderProducts(dtfPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    updatePageHeader('Direct to Fabric & Film Printers', dtfPrinters.length);
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('directToFabricFilm');
+    
+    // Scroll to top of products
+    scrollToProducts();
+  }, 200);
+};
 
