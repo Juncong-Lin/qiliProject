@@ -92,6 +92,10 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#xaar-printer-spare-parts';
     } else if (categoryName === 'Toshiba Printer Spare Parts') {
       hashValue = '#toshiba-printer-spare-parts';
+    } else if (categoryName === 'DTF Printer') {
+      hashValue = '#dtf-printer';
+    } else if (categoryName === 'UV DTF Printer') {
+      hashValue = '#uv-dtf-printer';
     } else {
       // Default hash conversion for other categories
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -138,6 +142,10 @@ window.handleCategoryClick = function(categoryName) {
       window.loadXaarPrinterSpareParts();
     } else if (categoryName === 'Toshiba Printer Spare Parts' && window.loadToshibaPrinterSpareParts) {
       window.loadToshibaPrinterSpareParts();
+    } else if (categoryName === 'DTF Printer' && window.loadDTFPrinters) {
+      window.loadDTFPrinters();
+    } else if (categoryName === 'UV DTF Printer' && window.loadUVDTFPrinters) {
+      window.loadUVDTFPrinters();
     } else {
       // For other categories, use the generic loader
       window.loadSpecificCategory(categoryName);
@@ -186,6 +194,10 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#xaar-printer-spare-parts';
     } else if (categoryName === 'Toshiba Printer Spare Parts') {
       hashValue = '#toshiba-printer-spare-parts';
+    } else if (categoryName === 'DTF Printer') {
+      hashValue = '#dtf-printer';
+    } else if (categoryName === 'UV DTF Printer') {
+      hashValue = '#uv-dtf-printer';
     } else {
       // Default hash conversion - for other pages, no category prefix is needed since the above covers all Print Spare Parts
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');

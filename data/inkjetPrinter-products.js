@@ -503,7 +503,7 @@ export const inkjetPrinterProducts = {
     {
       id: 'AMO-A3-Size-UV-DTF-AMO-3003-with-3-pieces-of-XP600-Printheads',
       name: 'AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads',
-      image: 'products/inkjetPrinter/AMO/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads/image/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads.jpg',
+      image: 'products/inkjetPrinter/uv-dtf/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads/image/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads.jpg',
       lower_price: 495000,
       higher_price: 495000
     },

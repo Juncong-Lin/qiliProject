@@ -649,6 +649,72 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">Eco-Solvent Inkjet Printers</span>
         `;
       }
+    } else if (brand === 'xp600-printers' || brand === 'xp600Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjetprinters-ecosolvent" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With XP600 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With XP600 Printhead</span>
+        `;
+      }
+    } else if (brand === 'i1600-printers' || brand === 'i1600Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjetprinters-ecosolvent" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I1600 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I1600 Printhead</span>
+        `;
+      }
+    } else if (brand === 'i3200-printers' || brand === 'i3200Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjetprinters-ecosolvent" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I3200 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Eco-Solvent Inkjet Printers')" class="breadcrumb-link">Eco-Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I3200 Printhead</span>
+        `;
+      }
     } else if (brand === 'directToFabricFilm') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -687,6 +753,28 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadDirectToFabricFilmPrinters()" class="breadcrumb-link">Direct to Fabric & Film</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">DTF Printer</span>
+        `;
+      }
+    } else if (brand === 'uvDtfPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadDirectToFabricFilmPrinters()" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">UV DTF Printer</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadDirectToFabricFilmPrinters()" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">UV DTF Printer</span>
         `;
       }
     } else if (brand === 'epsonPrinterSpareParts') {
@@ -1689,11 +1777,11 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('dtfPrinters');
-    } else if (categoryName === 'Direct to Fabric & Film') {
-      // Load all Direct to Fabric & Film printers (currently DTF printers)
-      const dtfPrinters = getAllDTFPrinters();
+    } else if (categoryName === 'UV DTF Printer') {
+      // Load UV DTF printer products specifically
+      const uvDtfPrinters = getAllUVDTFPrinters();
       
-      const productsHTML = renderProducts(dtfPrinters, 'printer');
+      const productsHTML = renderProducts(uvDtfPrinters, 'printer');
       const productsGrid = document.querySelector('.js-prodcts-grid');
       productsGrid.innerHTML = productsHTML;
       productsGrid.classList.remove('showing-coming-soon');
@@ -1702,7 +1790,26 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('Direct to Fabric & Film Printers', dtfPrinters.length);
+      updatePageHeader('UV DTF Printers', uvDtfPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('uvDtfPrinters');
+    } else if (categoryName === 'Direct to Fabric & Film') {
+      // Load all Direct to Fabric & Film printers (DTF + UV DTF)
+      const dtfPrinters = getAllDTFPrinters();
+      const uvDtfPrinters = getAllUVDTFPrinters();
+      const allDirectToFabricFilmPrinters = [...dtfPrinters, ...uvDtfPrinters];
+      
+      const productsHTML = renderProducts(allDirectToFabricFilmPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Direct to Fabric & Film Printers', allDirectToFabricFilmPrinters.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb('directToFabricFilm');
@@ -3044,7 +3151,8 @@ window.loadAllEconomicVersionPrinters = function() {
 export function getAllEcoSolventPrinters() {
   const economicPrinters = inkjetPrinterProducts.economic_version || [];
   const dtfPrinters = inkjetPrinterProducts.dtf_printer || [];
-  return [...economicPrinters, ...dtfPrinters];
+  const uvDtfPrinters = inkjetPrinterProducts.uv_dtf || [];
+  return [...economicPrinters, ...dtfPrinters, ...uvDtfPrinters];
 }
 
 // Helper function to get eco-solvent printers with XP600 printhead
@@ -3138,7 +3246,10 @@ window.loadDirectToFabricFilmPrinters = function() {
   // Small delay for smooth transition
   setTimeout(() => {
     const dtfPrinters = getAllDTFPrinters();
-    const productsHTML = renderProducts(dtfPrinters, 'printer');
+    const uvDtfPrinters = getAllUVDTFPrinters();
+    const allDirectToFabricFilmPrinters = [...dtfPrinters, ...uvDtfPrinters];
+    
+    const productsHTML = renderProducts(allDirectToFabricFilmPrinters, 'printer');
     const productsGrid = document.querySelector('.js-prodcts-grid');
     productsGrid.innerHTML = productsHTML;
     productsGrid.classList.remove('showing-coming-soon');
@@ -3147,10 +3258,51 @@ window.loadDirectToFabricFilmPrinters = function() {
     attachAddToCartListeners();
     
     // Update page title
-    updatePageHeader('Direct to Fabric & Film Printers', dtfPrinters.length);
+    updatePageHeader('Direct to Fabric & Film Printers', allDirectToFabricFilmPrinters.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('directToFabricFilm');
+    
+    // Scroll to top of products
+    scrollToProducts();
+  }, 200);
+};
+
+// Function to get all UV DTF printers
+function getAllUVDTFPrinters() {
+  return inkjetPrinterProducts.uv_dtf || [];
+}
+
+// Function to load UV DTF printer products
+window.loadUVDTFPrinters = function() {
+  // Hide the submenu after selection
+  hideActiveSubmenus();
+  
+  // Hide hero banner for specific category views
+  hideHeroBanner();
+  
+  // Highlight selected menu item
+  highlightSelectedMenuItem('uv-dtf-printers');
+  
+  // Add loading animation
+  showLoadingState();
+  
+  // Small delay for smooth transition
+  setTimeout(() => {
+    const uvDtfPrinters = getAllUVDTFPrinters();
+    const productsHTML = renderProducts(uvDtfPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    // Re-attach event listeners for the new add to cart buttons
+    attachAddToCartListeners();
+    
+    // Update page title
+    updatePageHeader('UV DTF Printers', uvDtfPrinters.length);
+    
+    // Update breadcrumb navigation
+    updateBreadcrumb('uvDtfPrinters');
     
     // Scroll to top of products
     scrollToProducts();

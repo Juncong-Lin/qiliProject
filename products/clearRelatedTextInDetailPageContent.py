@@ -2,13 +2,39 @@ import os
 import re
 import glob
 
-def is_delivery_or_packing_sentence(line):
+def is_delivery_or_packing_sentence(line, is_printer_product=False):
     """
     Check if a line contains delivery or packing related content.
     Returns True if the line should be removed.
     """
     line_lower = line.strip().lower()
     line_stripped = line.strip()
+    
+    # For printer products, skip all packing-related filtering since packing dimensions are product specs
+    if is_printer_product:
+        # Only check for non-packing unwanted sentences
+        unwanted_sentences = [
+            'ink supply system',
+            'print head maintenance station(print head cleaning station)',
+            'print head maintenance station (print head cleaning station)',
+            'media pinch roller',
+            'new style in 2025:',
+            'machine photo:',
+            'applications:',
+            'printer new style reference:',
+            'detail:'
+        ]
+        
+        for sentence in unwanted_sentences:
+            if line_lower == sentence or line_lower == sentence + ':':
+                return True
+        
+        # Check for lines that are just colons (often follow delivery statements)
+        if line_stripped == ':':
+            return True
+            
+        return False
+      
       # Patterns to match delivery and packing related sentences
     delivery_patterns = [
         r'delivery\s+in\s+\d{2}\s+\w+\s+\d{4}',  # "Delivery in 02 Jun 2025"
@@ -26,7 +52,6 @@ def is_delivery_or_packing_sentence(line):
         r'photo\s+about.*packing.*detail.*printhead:?', # "Photo about the packing and the detail of this printhead :"
         r'note:.*original.*packing.*', # "Note:Original and New Roland Printhead with Original packing of Roland"
         r'the\s+kit.*printhead\s+packing:?', # "The KIT i3200 UV Printhead packing:"
-        r'packing\s+size:', # "Packing Size: L2,600mm X W600mm X H400mm"
         r'with\s+original\s+packing', # "with Original packing of Roland"
         r'original.*packing\s+of\s+\w+', # "Original packing of Roland"
         r'this\s+printhead\s+have\s+this\s+packing\s+sometimes:?', # "This printhead have this packing sometimes:"
@@ -48,7 +73,7 @@ def is_delivery_or_packing_sentence(line):
     
     # Check if line starts with delivery/packing keywords and seems to be about delivery/packing
     for keyword in delivery_keywords:
-        if line_lower.startswith(keyword) and any(word in line_lower for word in ['in', 'before', 'after', 'normally', 'box', 'record', 'size', ':', 'detail']):
+        if line_lower.startswith(keyword) and any(word in line_lower for word in ['in', 'before', 'after', 'normally', 'box', 'record', 'detail']):
             return True
       # Check for lines that contain packing/delivery context phrases
     context_phrases = [
@@ -75,14 +100,34 @@ def is_delivery_or_packing_sentence(line):
     # Check for lines that are just colons (often follow delivery statements)
     if line_stripped == ':':
         return True
+    
+    # Check for specific unwanted content sentences
+    unwanted_sentences = [
+        'ink supply system',
+        'print head maintenance station(print head cleaning station)',
+        'print head maintenance station (print head cleaning station)',
+        'media pinch roller',
+        'new style in 2025:',
+        'machine photo:',
+        'applications:',
+        'printer new style reference:',
+    ]
+    
+    for sentence in unwanted_sentences:
+        if line_lower == sentence or line_lower == sentence + ':':
+            return True
         
     return False
 
 def clean_delivery_packing_content(file_path):
     """
     Remove delivery and packing related sentences from a markdown file.
-    Returns True if file was modified, False otherwise.
+    Returns tuple: (was_modified, removed_lines_list)
     """
+    # Check if this is a printer product file
+    is_printer_product = 'inkjetprinter' in file_path.lower() or 'printer' in file_path.lower()
+    removed_lines = []  # Track what was removed
+    
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
@@ -92,10 +137,10 @@ def clean_delivery_packing_content(file_path):
                 lines = file.readlines()
         except Exception as e:
             print(f"Error reading {file_path}: {e}")
-            return False
+            return False, []
     except Exception as e:
         print(f"Error reading {file_path}: {e}")
-        return False
+        return False, [], []
     
     original_lines = lines.copy()
     cleaned_lines = []
@@ -105,8 +150,10 @@ def clean_delivery_packing_content(file_path):
         line = lines[i]
         
         # Check if current line should be removed
-        if is_delivery_or_packing_sentence(line):
-            print(f"  Removing: {line.strip()}")
+        if is_delivery_or_packing_sentence(line, is_printer_product):
+            removed_content = line.strip()
+            removed_lines.append(removed_content)
+            print(f"  Removing: {removed_content}")
             # Skip this line
             i += 1
             continue
@@ -119,12 +166,12 @@ def clean_delivery_packing_content(file_path):
         try:
             with open(file_path, 'w', encoding='utf-8') as file:
                 file.writelines(cleaned_lines)
-            return True
+            return True, removed_lines
         except Exception as e:
             print(f"Error writing to {file_path}: {e}")
-            return False
+            return False, []
     
-    return False
+    return False, []
 
 def find_all_md_files(products_dir):
     """
@@ -163,14 +210,19 @@ def main():
     
     modified_count = 0
     total_processed = 0
+    modified_files = []  # Track modified file names
+    files_with_removed_content = {}  # Track what was removed from each file
     
     for md_file in md_files:
         total_processed += 1
         relative_path = os.path.relpath(md_file, products_dir)
         print(f"\nProcessing ({total_processed}/{len(md_files)}): {relative_path}")
         
-        if clean_delivery_packing_content(md_file):
+        was_modified, removed_lines = clean_delivery_packing_content(md_file)
+        if was_modified:
             modified_count += 1
+            modified_files.append(relative_path)  # Add to modified files list
+            files_with_removed_content[relative_path] = removed_lines  # Track removed content
             print(f"  ✓ Modified: {relative_path}")
         else:
             print(f"  - No changes needed: {relative_path}")
@@ -180,6 +232,22 @@ def main():
     print(f"Total files processed: {total_processed}")
     print(f"Files modified: {modified_count}")
     print(f"Files unchanged: {total_processed - modified_count}")
+    
+    # Display modified files list with removed content
+    if modified_files:
+        print(f"\n{'='*60}")
+        print(f"Modified Files ({modified_count}):")
+        print(f"{'='*60}")
+        for i, file_path in enumerate(modified_files, 1):
+            print(f"{i:3d}. {file_path}")
+            removed_content = files_with_removed_content.get(file_path, [])
+            if removed_content:
+                print(f"     Removed content:")
+                for j, content in enumerate(removed_content, 1):
+                    print(f"       {j}. \"{content}\"")
+            print()  # Add blank line between files
+    else:
+        print(f"\nNo files were modified during this run.")
 
 if __name__ == "__main__":
     main()

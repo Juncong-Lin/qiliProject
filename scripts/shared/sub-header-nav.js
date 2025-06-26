@@ -558,12 +558,23 @@ class SubHeaderNavigation {
       return;
     }
 
+    if (hash === 'uv-dtf-printer' || hash === 'uv-dtf-printers') {
+      if (window.loadUVDTFPrinters) {
+        window.loadUVDTFPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+
 // Handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',
       'direct-to-fabric-film': 'Direct to Fabric & Film',
       'dtf-printers': 'DTF Printers',
+      'uv-dtf-printer': 'UV DTF Printer',
+      'uv-dtf-printers': 'UV DTF Printers',
       'eco-solvent-xp600-printers': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'eco-solvent-i1600-printers': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
       'eco-solvent-i3200-printers': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
