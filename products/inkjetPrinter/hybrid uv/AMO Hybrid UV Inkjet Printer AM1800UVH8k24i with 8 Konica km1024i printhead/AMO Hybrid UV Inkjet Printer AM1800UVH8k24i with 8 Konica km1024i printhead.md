@@ -1,12 +1,12 @@
-# AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.
+# AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead
 
-Price: USD:32300-32300
+Price: USD:28900-28900
 
 Product Details:
 
-AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.
+AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead.
 Hybrid printer is combined the UV flatbed with uv roll-to-roll printer together as one machine, which means it can print on roll-to-roll soft material and also hard flatbed board material.
-1. Print width 1.8 meters; with Ricoh Gen6 high-speed inkjet Printhead, variable ink drop technology;
+1. Print width 1.8 meters; with KONICA1024i high-speed inkjet Printhead, variable ink drop technology;
 2. Double linear high precision guide rail & slider + double servo AC motor;
 3. Professional Color management software, with Printhead aging color function, ink saving/intelligent typesetting function, color restoration higher (four colors can highly restore the "gold/ silver" color);
 4.Patented design of highly sensitive sprinkler head anti-collision system; LED water cooling UV curing lamp;
@@ -14,7 +14,7 @@ Hybrid printer is combined the UV flatbed with uv roll-to-roll printer together 
 6.High-power electrostatic eliminator can effectively eliminate problems such as flying ink and blur caused by static electricity of materials;
 7. The printing platform has the function of segmented independent adsorption and independent adjustment of adsorption size. With the strong silent turbine blower, it can adapt to the adsorption of various materials with different thickness and work for different complex materials.
 Maximum Print Width:	1800 mm
-Printhead:	8 pieces Ricoh Gen6 Printheads
+Printhead:	8 pieces konica1024i Printheads
 Printing speed of four row printhead
 External light:35-260m²/h
 Internal light:190-135m²/h

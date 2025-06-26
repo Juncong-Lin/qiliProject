@@ -27,3 +27,4 @@ Power:	AC220±10.50HZ60HZP4500W
 Printer PackingSize:	L5300*W1180*H1700/L5600*W1250*H2100
 Net /Gloss Weight:
 2500kg/2800kg
+Applications:

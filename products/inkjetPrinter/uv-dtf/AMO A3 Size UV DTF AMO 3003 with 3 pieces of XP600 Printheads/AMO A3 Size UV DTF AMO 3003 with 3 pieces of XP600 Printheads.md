@@ -42,3 +42,6 @@ Package Weight:100kg
 Size of whole machine:1525*725*755mm (packing size) 1200*500*1166mm (equipment size)
 Recommended computer configuration:
 Operating System Win7/win10 Gigabit Network Card Standalone Graphics Card 8g - Memory 500g Hard Drive tnel(r)CORE(tm)i5/i7cpu
+Detail:
+Printer new style reference:
+Applications:

@@ -175,6 +175,7 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
 
         name_tag = product_container.select_one('h1.text-capitalize')
         product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
+        product_name = product_name.rstrip('.')
         sanitized_name = sanitize_filename(product_name)
         if not sanitized_name:
             print(f"  - WARNING: Invalid product name '{product_name}'.")
@@ -353,6 +354,7 @@ def main():
                         temp_soup = BeautifulSoup(temp_response.content, 'html.parser')
                         name_tag = temp_soup.select_one('h1.text-capitalize')
                         product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
+                        product_name = product_name.rstrip('.')
                         if product_name not in previous_products:
                             product_urls.append(product_url)
                         else:

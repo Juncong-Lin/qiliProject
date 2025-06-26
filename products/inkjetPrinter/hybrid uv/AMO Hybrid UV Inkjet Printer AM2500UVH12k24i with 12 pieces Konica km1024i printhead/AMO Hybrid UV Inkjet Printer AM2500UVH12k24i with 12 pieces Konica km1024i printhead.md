@@ -1,10 +1,10 @@
-# AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.
+# AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead
 
-Price: USD:33500-33500
+Price: Not available
 
 Product Details:
 
-AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.
+AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.
 Hybrid printer is combined the UV flatbed with uv roll-to-roll printer together as one machine, which means it can print on roll-to-roll soft material and also hard flatbed board material.
 1. Print width 2.5 meters; with KONICA1024i high-speed inkjet Printhead, variable ink drop technology;
 2. Double linear high precision guide rail & slider + double servo AC motor;
@@ -14,7 +14,7 @@ Hybrid printer is combined the UV flatbed with uv roll-to-roll printer together 
 6.High-power electrostatic eliminator can effectively eliminate problems such as flying ink and blur caused by static electricity of materials;
 7. The printing platform has the function of segmented independent adsorption and independent adjustment of adsorption size. With the strong silent turbine blower, it can adapt to the adsorption of various materials with different thickness and work for different complex materials.
 Maximum Print Width:	2500 mm
-Printhead:	8 pieces konica1024i Printheads
+Printhead:	12 pieces konica1024i Printheads
 Printing speed of four row printhead
 External light:35-260m²/h
 Internal light:190-135m²/h

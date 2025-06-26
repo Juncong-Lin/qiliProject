@@ -1,4 +1,4 @@
-// Total products: 70, New products scraped: 70, Date: 2025-06-25 22:02:57
+// Total products: 70, New products scraped: 70, Date: 2025-06-26 17:20:39
 export const inkjetPrinterProducts = {
   amo_uv_inkjet: [
     {
@@ -179,127 +179,127 @@ export const inkjetPrinterProducts = {
   hybrid_uv: [
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH4G6-with-4-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead.jpg',
       lower_price: 2430000,
       higher_price: 2430000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH4k24i-with-4-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead.jpg',
       lower_price: 2260000,
       higher_price: 2260000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH8G6-with-8-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.jpg',
       lower_price: 3230000,
       higher_price: 3230000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH8k24i-with-8-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM1800UVH8k24i with 8 Konica km1024i printhead.jpg',
       lower_price: 2890000,
       higher_price: 2890000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH12G6-with-12-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead.jpg',
       lower_price: 4040000,
       higher_price: 4040000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM1800UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12k24i  with 12 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM1800UVH12k24i  with 12 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM1800UVH12k24i with 12 pieces Konica km1024i printhead.jpg',
       lower_price: 3520000,
       higher_price: 3520000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH4G6-with-4-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead.jpg',
       lower_price: 2900000,
       higher_price: 2900000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH4k24i-with-4-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead.jpg',
       lower_price: 2720000,
       higher_price: 2720000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH8G6-with-8-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead.jpg',
       lower_price: 3690000,
       higher_price: 3690000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH8k24i-with-8-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.jpg',
       lower_price: 3350000,
       higher_price: 3350000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12G6-with-12-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead.jpg',
       lower_price: 4490000,
       higher_price: 4490000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.jpg',
       lower_price: null,
       higher_price: null
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4G6-with-4-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead.jpg',
       lower_price: 3030000,
       higher_price: 3030000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4k24i-with-4-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead.jpg',
       lower_price: 3330000,
       higher_price: 3330000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH8G6-with-8-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead.jpg',
       lower_price: 3830000,
       higher_price: 3830000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH8k24i-with-8-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead.jpg',
       lower_price: 4000000,
       higher_price: 4000000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH12G6-with-12-Ricoh-Gen6-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead/image/AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead.jpg',
       lower_price: 4630000,
       higher_price: 4630000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
-      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead.',
-      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead./image/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead..jpg',
+      name: 'AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead',
+      image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead.jpg',
       lower_price: 4590000,
       higher_price: 4590000
     },
@@ -500,7 +500,7 @@ export const inkjetPrinterProducts = {
       lower_price: 750000,
       higher_price: 750000
     },
-    {
+{
       id: 'AMO-A3-Size-UV-DTF-AMO-3003-with-3-pieces-of-XP600-Printheads',
       name: 'AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads',
       image: 'products/inkjetPrinter/uv-dtf/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads/image/AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads.jpg',

@@ -1,6 +1,6 @@
 # Scraped Products
 
-Last updated: 2025-06-25 22:02:57
+Last updated: 2025-06-26 17:33:40
 
 Total products: 70
 
@@ -14,24 +14,24 @@ Total products: 70
 - AM1901i16 1.9meter Inkjet printer with 1 i1600 Printhead (the economic version)
 - AM1901i32 1.9meter Inkjet printer with 1 i3200 Printhead (the economic version)
 - AMO A3 Size UV DTF AMO 3003 with 3 pieces of XP600 Printheads
-- AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM1800UVH12k24i  with 12 pieces Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead.
-- AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead.
-- AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead.
+- AMO Hybrid UV Inkjet Printer AM1800UVH12G6 with 12 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM1800UVH12k24i  with 12 pieces Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM1800UVH4G6 with 4 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM1800UVH4k24i with 4 Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM1800UVH8G6 with 8 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM1800UVH8k24i  with 8 Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM2500UVH12G6 with 12 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM2500UVH4G6 with 4 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM2500UVH4k24i with 4 pieces Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM2500UVH8G6 with 8 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM2500UVH8k24i with 8 pieces Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM3200UVH12G6 with 12 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM3200UVH12k24i with 12 pieces Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM3200UVH4G6 with 4 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM3200UVH4k24i with 4 pieces Konica km1024i printhead
+- AMO Hybrid UV Inkjet Printer AM3200UVH8G6 with 8 Ricoh Gen6 printhead
+- AMO Hybrid UV Inkjet Printer AM3200UVH8k24i with 8 pieces Konica km1024i printhead
 - AMO Solvent Inkjet Printer AM3204K12i 3.2meters with 4 Konica 512i Printhead
 - AMO Solvent Inkjet Printer AM3208K12i 3.2meters with 8 Konica 512i Printhead
 - AMO Solvent Inkjet Printer AM3208K24 i 3.2meters with 8 Konica 1024i Printhead
