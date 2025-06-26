@@ -777,6 +777,68 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">UV DTF Printer</span>
         `;
       }
+    } else if (brand === 'solventPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Solvent Inkjet Printers</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Solvent Inkjet Printers</span>
+        `;
+      }
+    } else if (brand === 'solventKM512iPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllSolventPrinters && window.loadAllSolventPrinters()" class="breadcrumb-link">Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM512i Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllSolventPrinters && window.loadAllSolventPrinters()" class="breadcrumb-link">Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM512i Printhead</span>
+        `;
+      }
+    } else if (brand === 'solventKM1024iPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllSolventPrinters && window.loadAllSolventPrinters()" class="breadcrumb-link">Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllSolventPrinters && window.loadAllSolventPrinters()" class="breadcrumb-link">Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
+        `;
+      }
     } else if (brand === 'epsonPrinterSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1324,6 +1386,11 @@ function handleHashFallback(hash) {
       'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'eco-solvent-inkjet-printers---with-i1600-printhead': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
       'eco-solvent-inkjet-printers---with-i3200-printhead': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
+      'solvent-inkjet-printers': 'Solvent Inkjet Printers',
+      'solvent-km512i-printers': 'Solvent Inket Printers - With Konica KM512i Printhead',
+      'solvent-km1024i-printers': 'Solvent Inket Printers - With Konica KM1024i Printhead',
+      'solvent-ricoh-gen5-printers': 'Solvent Inket Printers - With Ricoh Gen5 Printhead',
+      'solvent-ricoh-gen6-printers': 'Solvent Inket Printers - With Ricoh Gen6 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
       'material': 'Material',
@@ -1494,7 +1561,11 @@ window.loadSpecificCategory = function(categoryName) {
   // --- Highlight the corresponding nav item (including special sidebar categories) ---
   const subHeaderMap = {
     'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
-    'Solvent Inket Printers': 'Inkjet Printers',
+    'Solvent Inkjet Printers': 'Inkjet Printers',
+    'Solvent Inket Printers - With Konica KM512i Printhead': 'Inkjet Printers',
+    'Solvent Inket Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
+    'Solvent Inket Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
+    'Solvent Inket Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Inkjet Printers': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
@@ -1535,8 +1606,28 @@ window.loadSpecificCategory = function(categoryName) {
     
     // Special handling for printer categories
     if (categoryName === 'Inkjet Printers') {
-      // Load all eco-solvent printer products
-      const allPrinters = getAllEcoSolventPrinters();
+      // Load all inkjet printer products (eco-solvent + solvent + others)
+      const ecoSolventPrinters = getAllEcoSolventPrinters();
+      const solventPrinters = getAllSolventPrinters();
+      const dtfPrinters = inkjetPrinterProducts.dtf_printer || [];
+      const uvDtfPrinters = inkjetPrinterProducts.uv_dtf || [];
+      const sublimationPrinters = inkjetPrinterProducts.sublimation || [];
+      const uvInkjetPrinters = inkjetPrinterProducts.amo_uv_inkjet || [];
+      const uvFlatbedPrinters = inkjetPrinterProducts.uv_flatbed || [];
+      const hybridUvPrinters = inkjetPrinterProducts.hybrid_uv || [];
+      const doubleSidePrinters = inkjetPrinterProducts.double_side || [];
+      
+      const allPrinters = [
+        ...ecoSolventPrinters,
+        ...solventPrinters,
+        ...dtfPrinters,
+        ...uvDtfPrinters,
+        ...sublimationPrinters,
+        ...uvInkjetPrinters,
+        ...uvFlatbedPrinters,
+        ...hybridUvPrinters,
+        ...doubleSidePrinters
+      ];
       
       const productsHTML = renderProducts(allPrinters, 'printer');
       const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -1597,6 +1688,55 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('i3200Printers');
+    } else if (categoryName === 'Solvent Inkjet Printers') {
+      // Load all solvent printer products
+      const allSolventPrinters = getAllSolventPrinters();
+      
+      const productsHTML = renderProducts(allSolventPrinters, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers', allSolventPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventPrinters');
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM512i Printhead') {
+      // Load KM512i solvent printers
+      const km512iPrinters = getSolventKM512iPrinters();
+      const productsHTML = renderProducts(km512iPrinters, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers - With Konica KM512i Printhead', km512iPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventKM512iPrinters');
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM1024i Printhead') {
+      // Load KM1024i solvent printers
+      const km1024iPrinters = getSolventKM1024iPrinters();
+      const productsHTML = renderProducts(km1024iPrinters, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers - With Konica KM1024i Printhead', km1024iPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventKM1024iPrinters');
     } else if (categoryName === 'Print Spare Parts') {
       // Load all print spare parts
       let allPrintSpareParts = [];
@@ -1653,7 +1793,7 @@ window.loadSpecificCategory = function(categoryName) {
       productsGrid.innerHTML = productsHTML;
       productsGrid.classList.remove('showing-coming-soon');
       
-      // Re-attach event listeners for the new add to cart buttons
+      // Re-attach event listeners for the
       attachAddToCartListeners();
         // Update page header
       updatePageHeader('Roland Printer Spare Parts', rolandSpareParts.length);
@@ -2813,6 +2953,13 @@ window.renderProducts = renderProducts;
 window.attachAddToCartListeners = attachAddToCartListeners;
 window.scrollToProducts = scrollToProducts;
 
+// Expose solvent printer functions globally
+window.getAllSolventPrinters = getAllSolventPrinters;
+window.getSolventKM512iPrinters = getSolventKM512iPrinters;
+window.getSolventKM1024iPrinters = getSolventKM1024iPrinters;
+window.getSolventRicohGen5Printers = getSolventRicohGen5Printers;
+window.getSolventRicohGen6Printers = getSolventRicohGen6Printers;
+
 // Function to load material products for a specific category
 window.loadMaterialProducts = function(category) {
   const categoryProducts = materialProducts[category];
@@ -3149,10 +3296,10 @@ window.loadAllEconomicVersionPrinters = function() {
 
 // Helper function to get all eco-solvent printer products
 export function getAllEcoSolventPrinters() {
+  // Eco-solvent printers should only come from economic_version category
+  // DTF and UV DTF are Direct to Fabric & Film printers, not eco-solvent
   const economicPrinters = inkjetPrinterProducts.economic_version || [];
-  const dtfPrinters = inkjetPrinterProducts.dtf_printer || [];
-  const uvDtfPrinters = inkjetPrinterProducts.uv_dtf || [];
-  return [...economicPrinters, ...dtfPrinters, ...uvDtfPrinters];
+  return economicPrinters;
 }
 
 // Helper function to get eco-solvent printers with XP600 printhead
@@ -3173,6 +3320,39 @@ export function getEcoSolventI1600Printers() {
 export function getEcoSolventI3200Printers() {
   return (inkjetPrinterProducts.economic_version || []).filter(printer => 
     printer.name.toLowerCase().includes('i3200') || printer.name.toLowerCase().includes('i32')
+  );
+}
+
+// Helper function to get all solvent printer products
+export function getAllSolventPrinters() {
+  return inkjetPrinterProducts.solvent || [];
+}
+
+// Helper function to get solvent printers with KM512i printhead
+export function getSolventKM512iPrinters() {
+  return (inkjetPrinterProducts.solvent || []).filter(printer => 
+    printer.name.toLowerCase().includes('512i') || printer.name.toLowerCase().includes('km512i')
+  );
+}
+
+// Helper function to get solvent printers with KM1024i printhead  
+export function getSolventKM1024iPrinters() {
+  return (inkjetPrinterProducts.solvent || []).filter(printer => 
+    printer.name.toLowerCase().includes('1024i') || printer.name.toLowerCase().includes('km1024i')
+  );
+}
+
+// Helper function to get solvent printers with Ricoh Gen5 printhead
+export function getSolventRicohGen5Printers() {
+  return (inkjetPrinterProducts.solvent || []).filter(printer => 
+    printer.name.toLowerCase().includes('gen5') || printer.name.toLowerCase().includes('ricoh gen5')
+  );
+}
+
+// Helper function to get solvent printers with Ricoh Gen6 printhead
+export function getSolventRicohGen6Printers() {
+  return (inkjetPrinterProducts.solvent || []).filter(printer => 
+    printer.name.toLowerCase().includes('gen6') || printer.name.toLowerCase().includes('ricoh gen6')
   );
 }
 
@@ -3306,6 +3486,108 @@ window.loadUVDTFPrinters = function() {
     
     // Scroll to top of products
     scrollToProducts();
+  }, 200);
+};
+
+// Function to load all solvent inkjet printers
+window.loadAllSolventPrinters = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    const allSolventPrinters = getAllSolventPrinters();
+    const productsHTML = renderProducts(allSolventPrinters, 'solventprinter');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('Solvent Inkjet Printers', allSolventPrinters.length);
+    updateBreadcrumb('solventPrinters');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load solvent printers with KM512i printhead
+window.loadSolventKM512iPrinters = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    const km512iPrinters = getSolventKM512iPrinters();
+    const productsHTML = renderProducts(km512iPrinters, 'solventprinter');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('Solvent Inkjet Printers - With Konica KM512i Printhead', km512iPrinters.length);
+    updateBreadcrumb('solventKM512iPrinters');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load solvent printers with KM1024i printhead
+window.loadSolventKM1024iPrinters = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    const km1024iPrinters = getSolventKM1024iPrinters();
+    const productsHTML = renderProducts(km1024iPrinters, 'solventprinter');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('Solvent Inkjet Printers - With Konica KM1024i Printhead', km1024iPrinters.length);
+    updateBreadcrumb('solventKM1024iPrinters');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
   }, 200);
 };
 

@@ -96,6 +96,16 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#dtf-printer';
     } else if (categoryName === 'UV DTF Printer') {
       hashValue = '#uv-dtf-printer';
+    } else if (categoryName === 'Solvent Inkjet Printers') {
+      hashValue = '#solvent-inkjet-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM512i Printhead') {
+      hashValue = '#solvent-km512i-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM1024i Printhead') {
+      hashValue = '#solvent-km1024i-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Ricoh Gen5 Printhead') {
+      hashValue = '#solvent-ricoh-gen5-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Ricoh Gen6 Printhead') {
+      hashValue = '#solvent-ricoh-gen6-printers';
     } else {
       // Default hash conversion for other categories
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -146,6 +156,12 @@ window.handleCategoryClick = function(categoryName) {
       window.loadDTFPrinters();
     } else if (categoryName === 'UV DTF Printer' && window.loadUVDTFPrinters) {
       window.loadUVDTFPrinters();
+    } else if (categoryName === 'Solvent Inkjet Printers' && window.loadAllSolventPrinters) {
+      window.loadAllSolventPrinters();
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM512i Printhead' && window.loadSolventKM512iPrinters) {
+      window.loadSolventKM512iPrinters();
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM1024i Printhead' && window.loadSolventKM1024iPrinters) {
+      window.loadSolventKM1024iPrinters();
     } else {
       // For other categories, use the generic loader
       window.loadSpecificCategory(categoryName);
@@ -198,6 +214,16 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#dtf-printer';
     } else if (categoryName === 'UV DTF Printer') {
       hashValue = '#uv-dtf-printer';
+    } else if (categoryName === 'Solvent Inkjet Printers') {
+      hashValue = '#solvent-inkjet-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM512i Printhead') {
+      hashValue = '#solvent-km512i-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Konica KM1024i Printhead') {
+      hashValue = '#solvent-km1024i-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Ricoh Gen5 Printhead') {
+      hashValue = '#solvent-ricoh-gen5-printers';
+    } else if (categoryName === 'Solvent Inket Printers - With Ricoh Gen6 Printhead') {
+      hashValue = '#solvent-ricoh-gen6-printers';
     } else {
       // Default hash conversion - for other pages, no category prefix is needed since the above covers all Print Spare Parts
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');

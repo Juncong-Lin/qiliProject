@@ -1,7 +1,7 @@
 import { products } from '../../data/products.js';
 import { printheadProducts } from '../../data/printhead-products.js';
 import { inkjetPrinterProducts } from '../../data/inkjetPrinter-products.js';
-import { getEcoSolventI1600Printers, getEcoSolventI3200Printers, getInkjetPrinterById, getAllEcoSolventPrinters } from '../index/qilitrading.js';
+import { getEcoSolventI1600Printers, getEcoSolventI3200Printers, getInkjetPrinterById, getAllEcoSolventPrinters, getAllSolventPrinters, getSolventKM512iPrinters, getSolventKM1024iPrinters } from '../index/qilitrading.js';
 import { printSparePartProducts } from '../../data/printsparepart-products.js';
 import { upgradingKitProducts } from '../../data/upgradingkit-products.js';
 import { materialProducts } from '../../data/material-products.js';
@@ -136,6 +136,20 @@ if (productType === 'printsparepart' || productType === 'print-spare-parts') {
   if (product) {
     // Determine the brand/category from the product
     productBrand = product.category || 'eco-solvent';
+  }
+} else if (productType === 'solventprinter') {
+  // Search in solvent inkjet printer products
+  product = getInkjetPrinterById(productId);
+  if (product) {
+    // Determine the brand/category from the product
+    productBrand = product.category || 'solvent';
+  }
+} else if (productType === 'economicprinter') {
+  // Search in economic/eco-solvent inkjet printer products
+  product = getInkjetPrinterById(productId);
+  if (product) {
+    // Determine the brand/category from the product
+    productBrand = product.category || 'economic_version';
   }
 } else if (productType === 'upgradingkit' || productType === 'upgrading-kit') {
   product = findUpgradingKitById(productId);
@@ -1845,15 +1859,47 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-current">${product.name}</span>
       `;
     } else if (productBrand === 'solvent') {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#solvent-printers" class="breadcrumb-link">Solvent Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${product.name}</span>
-      `;
+      // Determine specific printhead type for breadcrumb
+      let printheadLink = 'index.html#solvent-inkjet-printers';
+      let printheadText = 'Solvent Inkjet Printers';
+      
+      if (product.name.toLowerCase().includes('512i') || product.name.toLowerCase().includes('km512i')) {
+        printheadLink = 'index.html#solvent-km512i-printers';
+        printheadText = 'With Konica KM512i Printhead';
+      } else if (product.name.toLowerCase().includes('1024i') || product.name.toLowerCase().includes('km1024i')) {
+        printheadLink = 'index.html#solvent-km1024i-printers';
+        printheadText = 'With Konica KM1024i Printhead';
+      } else if (product.name.toLowerCase().includes('gen5') || product.name.toLowerCase().includes('ricoh gen5')) {
+        printheadLink = 'index.html#solvent-ricoh-gen5-printers';
+        printheadText = 'With Ricoh Gen5 Printhead';
+      } else if (product.name.toLowerCase().includes('gen6') || product.name.toLowerCase().includes('ricoh gen6')) {
+        printheadLink = 'index.html#solvent-ricoh-gen6-printers';
+        printheadText = 'With Ricoh Gen6 Printhead';
+      }
+      
+      if (printheadText === 'Solvent Inkjet Printers') {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#solvent-inkjet-printers" class="breadcrumb-link">Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#solvent-inkjet-printers" class="breadcrumb-link">Solvent Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="${printheadLink}" class="breadcrumb-link">${printheadText}</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      }
     } else if (productBrand === 'double_side') {
       breadcrumbElement.innerHTML = `
         <a href="index.html" class="breadcrumb-link">Home</a>
