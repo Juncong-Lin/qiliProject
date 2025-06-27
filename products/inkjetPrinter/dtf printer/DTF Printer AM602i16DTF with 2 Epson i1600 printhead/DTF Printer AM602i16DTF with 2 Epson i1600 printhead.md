@@ -25,4 +25,3 @@ humidity:40%-60%
 Machine size	L1720MM W830MM H1600MM
 Packing dimensions
 2000MM(L)810MM(W)640MM(H)
-New Style in 2025:

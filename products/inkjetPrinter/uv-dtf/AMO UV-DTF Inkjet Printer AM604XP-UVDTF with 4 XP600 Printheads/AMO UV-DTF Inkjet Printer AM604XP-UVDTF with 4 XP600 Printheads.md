@@ -32,6 +32,3 @@ Normal working temperature: 22-28℃humidity:40%-60%
 Machine size	L1780MM W900MM H1320MM
 Packing dimensions
 2300MM(L)880MM(W)960MM(H)
-Machine photo:
-Detail:
-Applications:

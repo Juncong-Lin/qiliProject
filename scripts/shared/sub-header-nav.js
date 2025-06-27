@@ -397,6 +397,34 @@ class SubHeaderNavigation {
       return;
     }
     
+    // Direct handling for solvent printer categories
+    if (hash === 'solvent-inkjet-printers') {
+      if (window.loadAllSolventPrinters) {
+        window.loadAllSolventPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'solvent-km512i-printers') {
+      if (window.loadSolventKM512iPrinters) {
+        window.loadSolventKM512iPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'solvent-km1024i-printers') {
+      if (window.loadSolventKM1024iPrinters) {
+        window.loadSolventKM1024iPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
     // Handle print spare parts specific hashes
     if (hash === 'print-spare-parts') {
       if (window.loadAllPrintSpareParts) {
@@ -585,6 +613,9 @@ class SubHeaderNavigation {
       'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'eco-solvent-inkjet-printers---with-i1600-printhead': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
       'eco-solvent-inkjet-printers---with-i3200-printhead': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
+      'solvent-inkjet-printers': 'Solvent Inkjet Printers',
+      'solvent-km512i-printers': 'Solvent Inket Printers - With Konica KM512i Printhead',
+      'solvent-km1024i-printers': 'Solvent Inket Printers - With Konica KM1024i Printhead',
       'sublimation-printers': 'Sublimation Printers',
       'sublimation-xp600-printers': 'Sublimation Printers - With XP600 Printhead',
       'sublimation-i1600-printers': 'Sublimation Printers - With I1600 Printhead',

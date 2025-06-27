@@ -1397,6 +1397,24 @@ function handleHashFallback(hash) {
     } else {
       loadAllProducts();
     }
+  } else if (hash === 'solvent-inkjet-printers') {
+    if (window.loadAllSolventPrinters) {
+      window.loadAllSolventPrinters();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'solvent-km512i-printers') {
+    if (window.loadSolventKM512iPrinters) {
+      window.loadSolventKM512iPrinters();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'solvent-km1024i-printers') {
+    if (window.loadSolventKM1024iPrinters) {
+      window.loadSolventKM1024iPrinters();
+    } else {
+      loadAllProducts();
+    }
   } else if (hash.startsWith('printheads-')) {
     const brand = hash.replace('printheads-', '');
     if (window.loadPrintheadProducts) {
@@ -1659,9 +1677,14 @@ window.loadSpecificCategory = function(categoryName) {
   const subHeaderMap = {
     'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
     'Solvent Inkjet Printers': 'Inkjet Printers',
+    'Solvent Inket Printers': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Konica KM512i Printhead': 'Inkjet Printers',
     'Solvent Inket Printers - With Konica KM512i Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'Solvent Inket Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
     'Solvent Inket Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'Solvent Inket Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Inkjet Printers': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
@@ -1810,6 +1833,23 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('solventPrinters');
+    } else if (categoryName === 'Solvent Inket Printers') {
+      // Load all solvent printer products (handle the typo from sidebar)
+      const allSolventPrinters = getAllSolventPrinters();
+      
+      const productsHTML = renderProducts(allSolventPrinters, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers', allSolventPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventPrinters');
     } else if (categoryName === 'Solvent Inket Printers - With Konica KM512i Printhead') {
       // Load KM512i solvent printers
       const km512iPrinters = getSolventKM512iPrinters();
@@ -1842,6 +1882,70 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('solventKM1024iPrinters');
+    } else if (categoryName === 'Solvent Inkjet Printers - With Konica KM512i Printhead') {
+      // Load KM512i solvent printers (corrected spelling)
+      const km512iPrinters = getSolventKM512iPrinters();
+      const productsHTML = renderProducts(km512iPrinters, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers - With Konica KM512i Printhead', km512iPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventKM512iPrinters');
+    } else if (categoryName === 'Solvent Inkjet Printers - With Konica KM1024i Printhead') {
+      // Load KM1024i solvent printers (corrected spelling)
+      const km1024iPrinters = getSolventKM1024iPrinters();
+      const productsHTML = renderProducts(km1024iPrinters, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers - With Konica KM1024i Printhead', km1024iPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventKM1024iPrinters');
+    } else if (categoryName === 'Solvent Inkjet Printers - With Ricoh Gen5 Printhead') {
+      // Load Ricoh Gen5 solvent printers (corrected spelling)
+      const ricohGen5Printers = getSolventRicohGen5Printers();
+      const productsHTML = renderProducts(ricohGen5Printers, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers - With Ricoh Gen5 Printhead', ricohGen5Printers.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventRicohGen5Printers');
+    } else if (categoryName === 'Solvent Inkjet Printers - With Ricoh Gen6 Printhead') {
+      // Load Ricoh Gen6 solvent printers (corrected spelling)
+      const ricohGen6Printers = getSolventRicohGen6Printers();
+      const productsHTML = renderProducts(ricohGen6Printers, 'solventprinter');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Solvent Inkjet Printers - With Ricoh Gen6 Printhead', ricohGen6Printers.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('solventRicohGen6Printers');
     } else if (categoryName === 'Print Spare Parts') {
       // Load all print spare parts
       let allPrintSpareParts = [];
@@ -2697,7 +2801,7 @@ window.loadWitColorPrinterSpareParts = function() {
     attachAddToCartListeners();
     
     // Update page title or add a header to show Wit-color printer spare parts category
-    updatePageHeader('Wit-color Printer Spare Parts', witColorSpareParts.length);
+    updatePageHeader('Wit-color Printer Spare Parts', witcolorSpareParts.length);
     
     // Update breadcrumb navigation
     updateBreadcrumb('witColorPrinterSpareParts');
