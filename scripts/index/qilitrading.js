@@ -259,7 +259,7 @@ window.loadI1600Printers = function() {
     attachAddToCartListeners();
     
     // Update page title
-    updatePageHeader('I1600 Inkjet Printers', i1600Printers.length);
+    updatePageHeader('Printers with I1600 Printhead', i1600Printers.length);
       // Update breadcrumb navigation
     updateBreadcrumb('i1600-printers');
     
@@ -292,7 +292,7 @@ window.loadI3200Printers = function() {
     attachAddToCartListeners();
     
     // Update page title
-    updatePageHeader('I3200 Inkjet Printers', i3200Printers.length);
+    updatePageHeader('Printers with I3200 Printhead', i3200Printers.length);
       // Update breadcrumb navigation
     updateBreadcrumb('i3200-printers');
     
@@ -839,6 +839,90 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
       }
+    } else if (brand === 'sublimationPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Sublimation Printers</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Sublimation Printers</span>
+        `;
+      }
+    } else if (brand === 'sublimationXP600Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With XP600 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Sublimation Printers')" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With XP600 Printhead</span>
+        `;
+      }
+    } else if (brand === 'sublimationI1600Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I1600 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Sublimation Printers')" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I1600 Printhead</span>
+        `;
+      }
+    } else if (brand === 'sublimationI3200Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I3200 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadSpecificCategory && window.loadSpecificCategory('Sublimation Printers')" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I3200 Printhead</span>
+        `;
+      }
     } else if (brand === 'epsonPrinterSpareParts') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1375,7 +1459,13 @@ function handleHashFallback(hash) {
     } else {
       loadAllProducts();
     }
-  } else if (window.loadSpecificCategory) {// Try to handle other category hashes
+  } else if (window.loadSpecificCategory) {
+    // Check if hash is being updated by category loading to prevent conflicts
+    if (window.updatingHashFromCategory) {
+      return;
+    }
+    
+    // Try to handle other category hashes
     const categoryMap = {
       'inkjet-printers': 'Inkjet Printers',
       'inkjetprinters-ecosolvent': 'Eco-Solvent Inkjet Printers',
@@ -1391,6 +1481,13 @@ function handleHashFallback(hash) {
       'solvent-km1024i-printers': 'Solvent Inket Printers - With Konica KM1024i Printhead',
       'solvent-ricoh-gen5-printers': 'Solvent Inket Printers - With Ricoh Gen5 Printhead',
       'solvent-ricoh-gen6-printers': 'Solvent Inket Printers - With Ricoh Gen6 Printhead',
+      'sublimation-printers': 'Sublimation Printers',
+      'sublimation-xp600-printers': 'Sublimation Printers - With XP600 Printhead',
+      'sublimation-i1600-printers': 'Sublimation Printers - With I1600 Printhead',
+      'sublimation-i3200-printers': 'Sublimation Printers - With I3200 Printhead',
+      'sublimation-printers---with-xp600-printhead': 'Sublimation Printers - With XP600 Printhead',
+      'sublimation-printers---with-i1600-printhead': 'Sublimation Printers - With I1600 Printhead',
+      'sublimation-printers---with-i3200-printhead': 'Sublimation Printers - With I3200 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
       'material': 'Material',
@@ -1587,11 +1684,19 @@ window.loadSpecificCategory = function(categoryName) {
   // Convert category for use in hash navigation
   const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
 
-  // Update URL hash without triggering a navigation
-  if (history.pushState) {
-    history.pushState(null, null, `#${categorySlug}`);
-  } else {
-    location.hash = `#${categorySlug}`;
+  // Update URL hash without triggering a navigation (unless prevented by flag)
+  if (!window.preventHashUpdate) {
+    // Add a flag to prevent recursive navigation
+    window.updatingHashFromCategory = true;
+    if (history.pushState) {
+      history.pushState(null, null, `#${categorySlug}`);
+    } else {
+      location.hash = `#${categorySlug}`;
+    }
+    // Clear the flag after a short delay
+    setTimeout(() => {
+      window.updatingHashFromCategory = false;
+    }, 100);
   }
   // Small delay for smooth transition
   setTimeout(() => {    
@@ -1669,7 +1774,7 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('I1600 Eco-Solvent Inkjet Printers', i1600Printers.length);
+      updatePageHeader('Printers with I1600 Printhead', i1600Printers.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb('i1600Printers');    } else if (categoryName === 'Eco-Solvent Inkjet Printers - With I3200 Printhead') {
@@ -1684,7 +1789,7 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('I3200 Eco-Solvent Inkjet Printers', i3200Printers.length);
+      updatePageHeader('Printers with I3200 Printhead', i3200Printers.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb('i3200Printers');
@@ -1953,6 +2058,86 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('directToFabricFilm');
+    } else if (categoryName === 'Sublimation Printers') {
+      // Load sublimation printer products specifically
+      const sublimationPrinters = inkjetPrinterProducts.sublimation || [];
+      
+      const productsHTML = renderProducts(sublimationPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Sublimation Printers', sublimationPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('sublimationPrinters');
+    } else if (categoryName === 'Sublimation Printers - With XP600 Printhead') {
+      // Filter sublimation printers with XP600 printhead
+      const allSublimationPrinters = inkjetPrinterProducts.sublimation || [];
+      const xp600SublimationPrinters = allSublimationPrinters.filter(printer => 
+        printer.name.toLowerCase().includes('xp600') || 
+        printer.name.toLowerCase().includes('xp-600')
+      );
+      
+      const productsHTML = renderProducts(xp600SublimationPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Sublimation Printers - With XP600 Printhead', xp600SublimationPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('sublimationXP600Printers');
+    } else if (categoryName === 'Sublimation Printers - With I1600 Printhead') {
+      // Filter sublimation printers with I1600 printhead
+      const allSublimationPrinters = inkjetPrinterProducts.sublimation || [];
+      const i1600SublimationPrinters = allSublimationPrinters.filter(printer => 
+        printer.name.toLowerCase().includes('i1600') || 
+        printer.name.toLowerCase().includes('i-1600')
+      );
+      
+      const productsHTML = renderProducts(i1600SublimationPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Sublimation Printers - With I1600 Printhead', i1600SublimationPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('sublimationI1600Printers');
+    } else if (categoryName === 'Sublimation Printers - With I3200 Printhead') {
+      // Filter sublimation printers with I3200 printhead
+      const allSublimationPrinters = inkjetPrinterProducts.sublimation || [];
+      const i3200SublimationPrinters = allSublimationPrinters.filter(printer => 
+        printer.name.toLowerCase().includes('i3200') || 
+        printer.name.toLowerCase().includes('i-3200')
+      );
+      
+      const productsHTML = renderProducts(i3200SublimationPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('Sublimation Printers - With I3200 Printhead', i3200SublimationPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('sublimationI3200Printers');
     } else {
       // For other categories, show placeholder content
       const message = `<div class="coming-soon">
@@ -3309,18 +3494,22 @@ export function getEcoSolventXP600Printers() {
   );
 }
 
-// Helper function to get eco-solvent printers with I1600 printhead  
+// Helper function to get all printers with I1600 printhead (eco-solvent and sublimation)  
 export function getEcoSolventI1600Printers() {
-  return (inkjetPrinterProducts.economic_version || []).filter(printer => 
+  // Only return eco-solvent printers (from economic_version), not sublimation printers
+  const economicI1600 = (inkjetPrinterProducts.economic_version || []).filter(printer => 
     printer.name.toLowerCase().includes('i1600') || printer.name.toLowerCase().includes('i16')
   );
+  return economicI1600;
 }
 
-// Helper function to get eco-solvent printers with I3200 printhead
+// Helper function to get all printers with I3200 printhead (eco-solvent and sublimation)
 export function getEcoSolventI3200Printers() {
-  return (inkjetPrinterProducts.economic_version || []).filter(printer => 
+  // Only return eco-solvent printers (from economic_version), not sublimation printers
+  const economicI3200 = (inkjetPrinterProducts.economic_version || []).filter(printer => 
     printer.name.toLowerCase().includes('i3200') || printer.name.toLowerCase().includes('i32')
   );
+  return economicI3200;
 }
 
 // Helper function to get all solvent printer products
@@ -3589,5 +3778,15 @@ window.loadSolventKM1024iPrinters = function() {
       scrollToProducts();
     }
   }, 200);
+};
+
+// Function to get all sublimation printers
+function getAllSublimationPrinters() {
+  return inkjetPrinterProducts.sublimation || [];
+}
+
+// Function to load sublimation printer products
+window.loadSublimationPrinters = function() {
+  window.loadSpecificCategory('Sublimation Printers');
 };
 

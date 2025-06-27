@@ -385,6 +385,10 @@ class SubHeaderNavigation {
     }
     
     if (hash === 'eco-solvent-i3200-printers') {
+      // Make sure we're not in the middle of loading sublimation printers
+      if (window.updatingHashFromCategory) {
+        return;
+      }
       if (window.loadSpecificCategory) {
         window.loadSpecificCategory('Eco-Solvent Inkjet Printers - With I3200 Printhead');
         this.setActiveCategory('Inkjet Printers');
@@ -581,6 +585,13 @@ class SubHeaderNavigation {
       'eco-solvent-inkjet-printers---with-xp600-printhead': 'Eco-Solvent Inkjet Printers - With XP600 Printhead',
       'eco-solvent-inkjet-printers---with-i1600-printhead': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
       'eco-solvent-inkjet-printers---with-i3200-printhead': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
+      'sublimation-printers': 'Sublimation Printers',
+      'sublimation-xp600-printers': 'Sublimation Printers - With XP600 Printhead',
+      'sublimation-i1600-printers': 'Sublimation Printers - With I1600 Printhead',
+      'sublimation-i3200-printers': 'Sublimation Printers - With I3200 Printhead',
+      'sublimation-printers---with-xp600-printhead': 'Sublimation Printers - With XP600 Printhead',
+      'sublimation-printers---with-i1600-printhead': 'Sublimation Printers - With I1600 Printhead',
+      'sublimation-printers---with-i3200-printhead': 'Sublimation Printers - With I3200 Printhead',
       'print-spare-parts': 'Print Spare Parts',
       'upgrading-kit': 'Upgrading Kit',
       'material': 'Material',
@@ -597,7 +608,7 @@ class SubHeaderNavigation {
     if (categoryName && window.loadSpecificCategory) {
       window.loadSpecificCategory(categoryName);
       this.setActiveCategory(categoryName);        // Expand appropriate sidebar menu
-      if (categoryName === 'Inkjet Printers') {
+      if (categoryName === 'Inkjet Printers' || categoryName.startsWith('Sublimation Printers')) {
         this.expandInkjetPrintersMenu();
       } else if (categoryName === 'Print Spare Parts') {
         this.expandPrintSparePartsMenu();
@@ -660,11 +671,22 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Always listen for hash changes while on the page
   window.addEventListener('hashchange', function() {
+    // Check if hash is being updated by category loading to prevent conflicts
+    if (window.updatingHashFromCategory) {
+      return;
+    }
+    
     let newHash = window.location.hash.substring(1);
     
     // Clean up the hash by removing any parameters
     if (newHash.includes('?')) {
       newHash = newHash.split('?')[0];
+    }
+    
+    // Prevent conflicting navigation for sublimation printer subcategories
+    if (newHash.startsWith('sublimation-')) {
+      // Let the sublimation navigation handle this
+      return;
     }
     
     if (newHash && window.subHeaderNav && window.subHeaderNav.handleHashNavigation) {

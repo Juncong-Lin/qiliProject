@@ -106,6 +106,14 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#solvent-ricoh-gen5-printers';
     } else if (categoryName === 'Solvent Inket Printers - With Ricoh Gen6 Printhead') {
       hashValue = '#solvent-ricoh-gen6-printers';
+    } else if (categoryName === 'Sublimation Printers') {
+      hashValue = '#sublimation-printers';
+    } else if (categoryName === 'Sublimation Printers - With XP600 Printhead') {
+      hashValue = '#sublimation-xp600-printers';
+    } else if (categoryName === 'Sublimation Printers - With I1600 Printhead') {
+      hashValue = '#sublimation-i1600-printers';
+    } else if (categoryName === 'Sublimation Printers - With I3200 Printhead') {
+      hashValue = '#sublimation-printers---with-i3200-printhead';
     } else {
       // Default hash conversion for other categories
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -162,6 +170,44 @@ window.handleCategoryClick = function(categoryName) {
       window.loadSolventKM512iPrinters();
     } else if (categoryName === 'Solvent Inket Printers - With Konica KM1024i Printhead' && window.loadSolventKM1024iPrinters) {
       window.loadSolventKM1024iPrinters();
+    } else if (categoryName === 'Sublimation Printers' && window.loadSpecificCategory) {
+      window.loadSpecificCategory(categoryName);
+    } else if (categoryName === 'Sublimation Printers - With XP600 Printhead' && window.loadSpecificCategory) {
+      // Set flag to prevent hash regeneration
+      window.preventHashUpdate = true;
+      window.loadSpecificCategory(categoryName);
+      // Clear flag after a short delay
+      setTimeout(() => { window.preventHashUpdate = false; }, 100);
+    } else if (categoryName === 'Sublimation Printers - With I1600 Printhead' && window.loadSpecificCategory) {
+      // Set flag to prevent hash regeneration
+      window.preventHashUpdate = true;
+      window.loadSpecificCategory(categoryName);
+      // Clear flag after a short delay
+      setTimeout(() => { window.preventHashUpdate = false; }, 100);
+    } else if (categoryName === 'Sublimation Printers - With I3200 Printhead' && window.loadSpecificCategory) {
+      // Set flag to prevent hash regeneration
+      window.preventHashUpdate = true;
+      window.loadSpecificCategory(categoryName);
+      // Clear flag after a short delay
+      setTimeout(() => { window.preventHashUpdate = false; }, 100);
+    } else if (categoryName === 'Eco-Solvent Inkjet Printers - With XP600 Printhead' && window.loadSpecificCategory) {
+      // Set flag to prevent hash regeneration
+      window.preventHashUpdate = true;
+      window.loadSpecificCategory(categoryName);
+      // Clear flag after a short delay
+      setTimeout(() => { window.preventHashUpdate = false; }, 100);
+    } else if (categoryName === 'Eco-Solvent Inkjet Printers - With I1600 Printhead' && window.loadSpecificCategory) {
+      // Set flag to prevent hash regeneration
+      window.preventHashUpdate = true;
+      window.loadSpecificCategory(categoryName);
+      // Clear flag after a short delay
+      setTimeout(() => { window.preventHashUpdate = false; }, 100);
+    } else if (categoryName === 'Eco-Solvent Inkjet Printers - With I3200 Printhead' && window.loadSpecificCategory) {
+      // Set flag to prevent hash regeneration
+      window.preventHashUpdate = true;
+      window.loadSpecificCategory(categoryName);
+      // Clear flag after a short delay
+      setTimeout(() => { window.preventHashUpdate = false; }, 100);
     } else {
       // For other categories, use the generic loader
       window.loadSpecificCategory(categoryName);
@@ -224,6 +270,14 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#solvent-ricoh-gen5-printers';
     } else if (categoryName === 'Solvent Inket Printers - With Ricoh Gen6 Printhead') {
       hashValue = '#solvent-ricoh-gen6-printers';
+    } else if (categoryName === 'Sublimation Printers') {
+      hashValue = '#sublimation-printers';
+    } else if (categoryName === 'Sublimation Printers - With XP600 Printhead') {
+      hashValue = '#sublimation-xp600-printers';
+    } else if (categoryName === 'Sublimation Printers - With I1600 Printhead') {
+      hashValue = '#sublimation-i1600-printers';
+    } else if (categoryName === 'Sublimation Printers - With I3200 Printhead') {
+      hashValue = '#sublimation-printers---with-i3200-printhead';
     } else {
       // Default hash conversion - for other pages, no category prefix is needed since the above covers all Print Spare Parts
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -252,62 +306,62 @@ window.handleEconomicVersionClick = function() {
 function fixEcoSolventSubmenuItems() {
   // We specifically want to ensure these problematic submenu items work on first click
   setTimeout(() => {
-    // Find and fix the eco-solvent submenu items
+    // Find and fix the eco-solvent and sublimation submenu items
     const ecosolventItems = document.querySelectorAll('.sub-header-submenu-item');
     
     ecosolventItems.forEach(item => {
       // Target only the problematic items
-      if (item.textContent.includes('With XP600 Printhead') ||
-          item.textContent.includes('With I1600 Printhead') ||
-          item.textContent.includes('With I3200 Printhead')) {
-            
-        // Determine which category to load based on text content
-        let categoryName = "";
-        let hashValue = "";
-        
-        if (item.textContent.includes('With XP600 Printhead')) {
+      let categoryName = "";
+      let hashValue = "";
+      if (item.textContent.includes('With XP600 Printhead')) {
+        if (item.closest('.sub-header-submenu-column') && item.closest('.sub-header-submenu-column').textContent.includes('Sublimation Printers')) {
+          categoryName = 'Sublimation Printers - With XP600 Printhead';
+          hashValue = 'sublimation-xp600-printers';
+        } else {
           categoryName = 'Eco-Solvent Inkjet Printers - With XP600 Printhead';
           hashValue = 'eco-solvent-xp600-printers';
-        } else if (item.textContent.includes('With I1600 Printhead')) {
+        }
+      } else if (item.textContent.includes('With I1600 Printhead')) {
+        if (item.closest('.sub-header-submenu-column') && item.closest('.sub-header-submenu-column').textContent.includes('Sublimation Printers')) {
+          categoryName = 'Sublimation Printers - With I1600 Printhead';
+          hashValue = 'sublimation-i1600-printers';
+        } else {
           categoryName = 'Eco-Solvent Inkjet Printers - With I1600 Printhead';
           hashValue = 'eco-solvent-i1600-printers';
-        } else if (item.textContent.includes('With I3200 Printhead')) {
+        }
+      } else if (item.textContent.includes('With I3200 Printhead')) {
+        if (item.closest('.sub-header-submenu-column') && item.closest('.sub-header-submenu-column').textContent.includes('Sublimation Printers')) {
+          categoryName = 'Sublimation Printers - With I3200 Printhead';
+          hashValue = 'sublimation-printers---with-i3200-printhead';
+        } else {
           categoryName = 'Eco-Solvent Inkjet Printers - With I3200 Printhead';
           hashValue = 'eco-solvent-i3200-printers';
         }
-        
-        // Only continue if we found a match
-        if (categoryName && hashValue) {
-          // Clone and replace the element to override any existing click handlers
-          const newItem = item.cloneNode(true);
-          item.parentNode.replaceChild(newItem, item);
-          
-          // Add a direct click event handler that will work on any page
-          newItem.addEventListener('click', function(event) {
-            event.preventDefault();
-            
-            // Hide any active submenus
-            document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
-              submenu.classList.remove('active');
-            });
-            
-            // Check if we're on the index page or another page
-            if (UrlUtils.isIndexPage() && window.loadSpecificCategory) {
-              // We're on the index page - update hash and load content directly
-              if (history.pushState) {
-                history.pushState(null, null, `#${hashValue}`);
-              } else {
-                window.location.hash = `#${hashValue}`;
-              }
-              
-              // Then load the category content
-              window.loadSpecificCategory(categoryName);
-            } else {
-              // We're on a different page (like detail.html) - navigate to index page with hash
-              UrlUtils.navigateToIndex(`#${hashValue}`);
-            }
+      }
+      // Only continue if we found a match
+      if (categoryName && hashValue) {
+        // Clone and replace the element to override any existing click handlers
+        const newItem = item.cloneNode(true);
+        item.parentNode.replaceChild(newItem, item);
+        // Add a direct click event handler that will work on any page
+        newItem.addEventListener('click', function(event) {
+          event.preventDefault();
+          // Hide any active submenus
+          document.querySelectorAll('.sub-header-submenu.active').forEach(submenu => {
+            submenu.classList.remove('active');
           });
-        }
+          // Check if we're on the index page or another page
+          if (UrlUtils.isIndexPage() && window.loadSpecificCategory) {
+            if (history.pushState) {
+              history.pushState(null, null, `#${hashValue}`);
+            } else {
+              window.location.hash = `#${hashValue}`;
+            }
+            window.loadSpecificCategory(categoryName);
+          } else {
+            UrlUtils.navigateToIndex(`#${hashValue}`);
+          }
+        });
       }
     });
   }, 300); // Small delay to ensure shared subheader is fully loaded

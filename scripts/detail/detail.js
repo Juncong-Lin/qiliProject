@@ -1825,39 +1825,137 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
     }  } else if (productType === 'printer') {
     // For printer products, show proper breadcrumb navigation
     if (productBrand === 'dtf_printer') {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#dtf-printers" class="breadcrumb-link">DTF Printer</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${product.name}</span>
-      `;
+      // Check for printhead type in DTF printers
+      let printheadType = '';
+      let printheadLink = '';
+      
+      if (product.name.toLowerCase().includes('i3200')) {
+        printheadType = 'With I3200 Printhead';
+        printheadLink = 'index.html#dtf-i3200-printers';
+      } else if (product.name.toLowerCase().includes('i1600')) {
+        printheadType = 'With I1600 Printhead';
+        printheadLink = 'index.html#dtf-i1600-printers';
+      } else if (product.name.toLowerCase().includes('xp600')) {
+        printheadType = 'With XP600 Printhead';
+        printheadLink = 'index.html#dtf-xp600-printers';
+      }
+      
+      if (printheadType) {
+        // 6-level breadcrumb with printhead specification
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#dtf-printers" class="breadcrumb-link">DTF Printer</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="${printheadLink}" class="breadcrumb-link">${printheadType}</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else {
+        // 5-level breadcrumb without printhead specification
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#dtf-printers" class="breadcrumb-link">DTF Printer</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      }
     } else if (productBrand === 'uv_dtf') {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#uv-dtf-printer" class="breadcrumb-link">UV DTF Printer</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${product.name}</span>
-      `;
+      // Check for printhead type in UV DTF printers
+      let printheadType = '';
+      let printheadLink = '';
+      
+      if (product.name.toLowerCase().includes('i3200')) {
+        printheadType = 'With I3200 Printhead';
+        printheadLink = 'index.html#uv-dtf-i3200-printers';
+      } else if (product.name.toLowerCase().includes('i1600')) {
+        printheadType = 'With I1600 Printhead';
+        printheadLink = 'index.html#uv-dtf-i1600-printers';
+      } else if (product.name.toLowerCase().includes('xp600')) {
+        printheadType = 'With XP600 Printhead';
+        printheadLink = 'index.html#uv-dtf-xp600-printers';
+      }
+      
+      if (printheadType) {
+        // 6-level breadcrumb with printhead specification
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-dtf-printer" class="breadcrumb-link">UV DTF Printer</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="${printheadLink}" class="breadcrumb-link">${printheadType}</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else {
+        // 5-level breadcrumb without printhead specification
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#direct-to-fabric-film" class="breadcrumb-link">Direct to Fabric & Film</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-dtf-printer" class="breadcrumb-link">UV DTF Printer</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      }
     } else if (productBrand === 'sublimation') {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${product.name}</span>
-      `;
+      // Check for printhead type in sublimation printers
+      let printheadType = '';
+      let printheadLink = '';
+      let sublimationCategory = 'Sublimation Printers';
+      
+      if (product.name.toLowerCase().includes('i3200')) {
+        printheadType = 'With I3200 Printhead';
+        printheadLink = 'index.html#sublimation-i3200-printers';
+      } else if (product.name.toLowerCase().includes('i1600')) {
+        printheadType = 'With I1600 Printhead';
+        printheadLink = 'index.html#sublimation-i1600-printers';
+      } else if (product.name.toLowerCase().includes('xp600')) {
+        printheadType = 'With XP600 Printhead';
+        printheadLink = 'index.html#sublimation-xp600-printers';
+      }
+      
+      if (printheadType) {
+        // 5-level breadcrumb with printhead specification
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="${printheadLink}" class="breadcrumb-link">${printheadType}</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else {
+        // 4-level breadcrumb without printhead specification
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#sublimation-printers" class="breadcrumb-link">Sublimation Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      }
     } else if (productBrand === 'solvent') {
       // Determine specific printhead type for breadcrumb
       let printheadLink = 'index.html#solvent-inkjet-printers';
