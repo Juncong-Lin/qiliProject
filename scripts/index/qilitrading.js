@@ -1204,6 +1204,24 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
       }
+    } else if (brand === 'uvFlatbedPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">UV Flatbed Printers</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">UV Flatbed Printers</span>
+        `;
+      }
     } else if (brand === 'led-lcd') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1499,6 +1517,12 @@ function handleHashFallback(hash) {
     } else {
       loadAllProducts();
     }
+  } else if (hash === 'uv-flatbed-printers') {
+    if (window.loadUvFlatbedPrinters) {
+      window.loadUvFlatbedPrinters();
+    } else {
+      loadAllProducts();
+    }
   } else if (hash.startsWith('printheads-')) {
     const brand = hash.replace('printheads-', '');
     if (window.loadPrintheadProducts) {
@@ -1586,6 +1610,7 @@ function handleHashFallback(hash) {
       'uv-inkjet-printers': 'UV Inkjet Printers',
       'uv-inkjet-printers---with-ricoh-gen6-printhead': 'UV Inkjet Printers - With Ricoh Gen6 Printhead',
       'uv-konica-km1024i-printers': 'UV Inkjet Printers - With Konica KM1024i Printhead',
+      'uv-flatbed-printers': 'UV Flatbed Printers',
       'sublimation-printers': 'Sublimation Printers',
       'sublimation-xp600-printers': 'Sublimation Printers - With XP600 Printhead',
       'sublimation-i1600-printers': 'Sublimation Printers - With I1600 Printhead',
@@ -1776,6 +1801,7 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Inkjet Printers': 'Inkjet Printers',
     'UV Inkjet Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Inkjet Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
+    'UV Flatbed Printers': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
     'Epson Printer Spare Parts': 'Print Spare Parts',
@@ -2083,6 +2109,22 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('uvKonica1024iPrinters');
+    } else if (categoryName === 'UV Flatbed Printers') {
+      // Load UV flatbed printers
+      const uvFlatbedPrinters = getUvFlatbedPrinters();
+      const productsHTML = renderProducts(uvFlatbedPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Flatbed Printers', uvFlatbedPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('uvFlatbedPrinters');
     } else if (categoryName === 'Print Spare Parts') {
       // Load all print spare parts
       let allPrintSpareParts = [];
@@ -4055,6 +4097,11 @@ export function getUvKonica1024iPrinters() {
   );
 }
 
+// Function to get UV Flatbed Printers
+export function getUvFlatbedPrinters() {
+  return inkjetPrinterProducts.uv_flatbed || [];
+}
+
 // Function to load all UV inkjet printers
 window.loadAllUvInkjetPrinters = function() {
   hideActiveSubmenus();
@@ -4159,8 +4206,43 @@ window.loadUvKonica1024iPrinters = function() {
   }, 200);
 };
 
+// Function to load UV Flatbed Printers
+window.loadUvFlatbedPrinters = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    const uvFlatbedPrinters = getUvFlatbedPrinters();
+    const productsHTML = renderProducts(uvFlatbedPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('UV Flatbed Printers', uvFlatbedPrinters.length);
+    updateBreadcrumb('uvFlatbedPrinters');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
 // Export functions for global access
 window.getAllUvInkjetPrinters = getAllUvInkjetPrinters;
 window.getUvRicohGen6Printers = getUvRicohGen6Printers;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
+window.getUvFlatbedPrinters = getUvFlatbedPrinters;
 
