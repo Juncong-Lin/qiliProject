@@ -1483,12 +1483,16 @@ function handleHashFallback(hash) {
     } else {
       loadAllProducts();
     }
-  } else if (hash === 'uv-ricoh-gen6-printers') {
+  } else if (hash === 'uv-inkjet-printers---with-ricoh-gen6-printhead') {
     if (window.loadUvRicohGen6Printers) {
       window.loadUvRicohGen6Printers();
     } else {
       loadAllProducts();
     }
+  } else if (hash === 'uv-ricoh-gen6-printers') {
+    // Backward compatibility - redirect to new hash
+    window.location.hash = 'uv-inkjet-printers---with-ricoh-gen6-printhead';
+    return;
   } else if (hash === 'uv-konica-km1024i-printers') {
     if (window.loadUvKonica1024iPrinters) {
       window.loadUvKonica1024iPrinters();
@@ -1580,7 +1584,7 @@ function handleHashFallback(hash) {
       'solvent-ricoh-gen5-printers': 'Solvent Inket Printers - With Ricoh Gen5 Printhead',
       'solvent-ricoh-gen6-printers': 'Solvent Inket Printers - With Ricoh Gen6 Printhead',
       'uv-inkjet-printers': 'UV Inkjet Printers',
-      'uv-ricoh-gen6-printers': 'UV Inkjet Printers - With Ricoh Gen6 Printhead',
+      'uv-inkjet-printers---with-ricoh-gen6-printhead': 'UV Inkjet Printers - With Ricoh Gen6 Printhead',
       'uv-konica-km1024i-printers': 'UV Inkjet Printers - With Konica KM1024i Printhead',
       'sublimation-printers': 'Sublimation Printers',
       'sublimation-xp600-printers': 'Sublimation Printers - With XP600 Printhead',
@@ -4103,8 +4107,10 @@ window.loadUvRicohGen6Printers = function() {
     const ricohGen6Printers = getUvRicohGen6Printers();
     const productsHTML = renderProducts(ricohGen6Printers, 'printer');
     const productsGrid = document.querySelector('.js-prodcts-grid');
-    productsGrid.innerHTML = productsHTML;
-    productsGrid.classList.remove('showing-coming-soon');
+    if (productsGrid) {
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+    }
     
     attachAddToCartListeners();
     updatePageHeader('UV Inkjet Printers - With Ricoh Gen6 Printhead', ricohGen6Printers.length);

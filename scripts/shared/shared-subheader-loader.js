@@ -114,6 +114,12 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#sublimation-i1600-printers';
     } else if (categoryName === 'Sublimation Printers - With I3200 Printhead') {
       hashValue = '#sublimation-printers---with-i3200-printhead';
+    } else if (categoryName === 'UV Inkjet Printers') {
+      hashValue = '#uv-inkjet-printers';
+    } else if (categoryName === 'UV Inkjet Printers - With Ricoh Gen6 Printhead') {
+      hashValue = '#uv-inkjet-printers---with-ricoh-gen6-printhead';
+    } else if (categoryName === 'UV Inkjet Printers - With Konica KM1024i Printhead') {
+      hashValue = '#uv-konica-km1024i-printers';
     } else {
       // Default hash conversion for other categories
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');
@@ -278,6 +284,12 @@ window.handleCategoryClick = function(categoryName) {
       hashValue = '#sublimation-i1600-printers';
     } else if (categoryName === 'Sublimation Printers - With I3200 Printhead') {
       hashValue = '#sublimation-printers---with-i3200-printhead';
+    } else if (categoryName === 'UV Inkjet Printers') {
+      hashValue = '#uv-inkjet-printers';
+    } else if (categoryName === 'UV Inkjet Printers - With Ricoh Gen6 Printhead') {
+      hashValue = '#uv-inkjet-printers---with-ricoh-gen6-printhead';
+    } else if (categoryName === 'UV Inkjet Printers - With Konica KM1024i Printhead') {
+      hashValue = '#uv-konica-km1024i-printers';
     } else {
       // Default hash conversion - for other pages, no category prefix is needed since the above covers all Print Spare Parts
       const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/'/g, '').replace(/\//g, '-');

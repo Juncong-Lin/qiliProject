@@ -2028,7 +2028,7 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="index.html#uv-inkjet-printers" class="breadcrumb-link">UV Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <a href="index.html#uv-ricoh-gen6-printers" class="breadcrumb-link">With Ricoh Gen6 Printhead</a>
+          <a href="index.html#uv-inkjet-printers---with-ricoh-gen6-printhead" class="breadcrumb-link">With Ricoh Gen6 Printhead</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">${product.name}</span>
         `;

@@ -425,6 +425,34 @@ class SubHeaderNavigation {
       return;
     }
     
+    // Direct handling for UV printer categories
+    if (hash === 'uv-inkjet-printers') {
+      if (window.loadAllUvInkjetPrinters) {
+        window.loadAllUvInkjetPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'uv-inkjet-printers---with-ricoh-gen6-printhead') {
+      if (window.loadUvRicohGen6Printers) {
+        window.loadUvRicohGen6Printers();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'uv-konica-km1024i-printers') {
+      if (window.loadUvKonica1024iPrinters) {
+        window.loadUvKonica1024iPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
     // Handle print spare parts specific hashes
     if (hash === 'print-spare-parts') {
       if (window.loadAllPrintSpareParts) {
@@ -616,6 +644,9 @@ class SubHeaderNavigation {
       'solvent-inkjet-printers': 'Solvent Inkjet Printers',
       'solvent-km512i-printers': 'Solvent Inket Printers - With Konica KM512i Printhead',
       'solvent-km1024i-printers': 'Solvent Inket Printers - With Konica KM1024i Printhead',
+      'uv-inkjet-printers': 'UV Inkjet Printers',
+      'uv-inkjet-printers---with-ricoh-gen6-printhead': 'UV Inkjet Printers - With Ricoh Gen6 Printhead',
+      'uv-konica-km1024i-printers': 'UV Inkjet Printers - With Konica KM1024i Printhead',
       'sublimation-printers': 'Sublimation Printers',
       'sublimation-xp600-printers': 'Sublimation Printers - With XP600 Printhead',
       'sublimation-i1600-printers': 'Sublimation Printers - With I1600 Printhead',
