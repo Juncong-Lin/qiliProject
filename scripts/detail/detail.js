@@ -2019,15 +2019,42 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-current">${product.name}</span>
       `;
     } else if (productBrand === 'amo_uv_inkjet') {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#amo-uv-inkjet-printers" class="breadcrumb-link">AMO UV Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${product.name}</span>
-      `;
+      // Check if the product has Ricoh GEN6 printhead
+      if (product.name.toLowerCase().includes('ricoh gen6') || product.name.toLowerCase().includes('gen6')) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-inkjet-printers" class="breadcrumb-link">UV Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-ricoh-gen6-printers" class="breadcrumb-link">With Ricoh Gen6 Printhead</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else if (product.name.toLowerCase().includes('konica 1024i') || product.name.toLowerCase().includes('km1024i') || product.name.toLowerCase().includes('k24i')) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-inkjet-printers" class="breadcrumb-link">UV Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-konica-km1024i-printers" class="breadcrumb-link">With Konica KM1024i Printhead</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-inkjet-printers" class="breadcrumb-link">UV Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      }
     } else if (productBrand === 'economic_version') {
       // Check the printhead type from the product name to show correct breadcrumb
       let printheadType = '';
