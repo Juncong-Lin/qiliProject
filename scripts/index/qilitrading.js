@@ -1354,6 +1354,28 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
       }
+    } else if (brand === 'uvHybridRicohGen6Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllUvHybridPrinters && window.loadAllUvHybridPrinters()" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
+        `;
+      }
     } else if (brand === 'led-lcd') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1942,6 +1964,8 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Flatbed Printers - With Konica KM1024i Printheads': 'Inkjet Printers',
     'UV Hybrid Inkjet Printer - With Konica KM1024i Printheads': 'Inkjet Printers',
     'UV Hybrid Inkjet Printer - With Konica KM1024i Printhead': 'Inkjet Printers',
+    'UV Hybrid Inkjet Printer - With Ricoh Gen6 Printheads': 'Inkjet Printers',
+    'UV Hybrid Inkjet Printer - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
     'Epson Printer Spare Parts': 'Print Spare Parts',
@@ -2361,6 +2385,22 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation (UV Hybrid path)
       updateBreadcrumb('uvHybridKonica1024iPrinters');
+    } else if (categoryName === 'UV Hybrid Inkjet Printer - With Ricoh Gen6 Printheads' || categoryName === 'UV Hybrid Inkjet Printer - With Ricoh Gen6 Printhead') {
+      // Load UV hybrid inkjet printers with Ricoh Gen6 printhead
+      const uvHybridRicohGen6Printers = getUvHybridRicohGen6Printers();
+      const productsHTML = renderProducts(uvHybridRicohGen6Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Hybrid Inkjet Printer - With Ricoh Gen6 Printhead', uvHybridRicohGen6Printers.length);
+      
+      // Update breadcrumb navigation (UV Hybrid path)
+      updateBreadcrumb('uvHybridRicohGen6Printers');
     } else if (categoryName === 'Print Spare Parts') {
       // Load all print spare parts
       let allPrintSpareParts = [];
@@ -4399,6 +4439,17 @@ export function getUvHybridKonica1024iPrinters() {
   );
 }
 
+// Function to get UV hybrid inkjet printers with Ricoh Gen6 printhead
+export function getUvHybridRicohGen6Printers() {
+  const uvHybridPrinters = inkjetPrinterProducts.hybrid_uv || [];
+  return uvHybridPrinters.filter(printer => 
+    printer.name.toLowerCase().includes('ricoh') && 
+    (printer.name.toLowerCase().includes('gen6') || 
+     printer.name.toLowerCase().includes('gen 6') ||
+     printer.name.toLowerCase().includes('ricoh gen6'))
+  );
+}
+
 // Function to load all UV inkjet printers
 window.loadAllUvInkjetPrinters = function() {
   hideActiveSubmenus();
@@ -4546,6 +4597,7 @@ window.getUvFlatbedRicohGen5Printers = getUvFlatbedRicohGen5Printers;
 window.getUvFlatbedI3200Printers = getUvFlatbedI3200Printers;
 window.getUvFlatbedXP600Printers = getUvFlatbedXP600Printers;
 window.getUvHybridKonica1024iPrinters = getUvHybridKonica1024iPrinters;
+window.getUvHybridRicohGen6Printers = getUvHybridRicohGen6Printers;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
 window.getUvFlatbedPrinters = getUvFlatbedPrinters;
 
