@@ -477,10 +477,28 @@ class SubHeaderNavigation {
         window.loadSpecificCategory('UV Hybrid Inkjet Printer - With Ricoh Gen6 Printhead');
         this.setActiveCategory('Inkjet Printers');
         this.expandInkjetPrintersMenu();
+      }      return;
+    }
+    
+    // Direct handling for double side printer categories
+    if (hash === 'double-side-printers') {
+      if (window.loadAllDoubleSidePrinters) {
+        window.loadAllDoubleSidePrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
       }
       return;
     }
     
+    if (hash === 'double-side-printers---direct-printing') {
+      if (window.loadDoubleSideDirectPrinting) {
+        window.loadDoubleSideDirectPrinting();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+
     // Handle print spare parts specific hashes
     if (hash === 'print-spare-parts') {
       if (window.loadAllPrintSpareParts) {

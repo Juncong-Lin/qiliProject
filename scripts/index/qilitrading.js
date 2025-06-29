@@ -1394,6 +1394,46 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">Hybrid UV Printers</span>
         `;
       }
+    } else if (brand === 'doubleSidePrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Double Side Printers</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Double Side Printers</span>
+        `;
+      }
+    } else if (brand === 'doubleSideDirectPrinting') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#double-side-printers" class="breadcrumb-link">Double Side Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Direct Printing</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllDoubleSidePrinters && window.loadAllDoubleSidePrinters()" class="breadcrumb-link">Double Side Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">Direct Printing</span>
+        `;
+      }
     } else if (brand === 'led-lcd') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1692,6 +1732,18 @@ function handleHashFallback(hash) {
   } else if (hash === 'uv-flatbed-printers') {
     if (window.loadUvFlatbedPrinters) {
       window.loadUvFlatbedPrinters();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'double-side-printers') {
+    if (window.loadAllDoubleSidePrinters) {
+      window.loadAllDoubleSidePrinters();
+    } else {
+      loadAllProducts();
+    }
+  } else if (hash === 'double-side-printers---direct-printing') {
+    if (window.loadDoubleSideDirectPrinting) {
+      window.loadDoubleSideDirectPrinting();
     } else {
       loadAllProducts();
     }
@@ -4675,4 +4727,82 @@ window.getUvHybridKonica1024iPrinters = getUvHybridKonica1024iPrinters;
 window.getUvHybridRicohGen6Printers = getUvHybridRicohGen6Printers;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
 window.getUvFlatbedPrinters = getUvFlatbedPrinters;
+
+// Function to get all double side printers
+function getAllDoubleSidePrinters() {
+  return inkjetPrinterProducts.double_side || [];
+}
+
+// Function to load all double side printers
+window.loadAllDoubleSidePrinters = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    const doubleSidePrinters = getAllDoubleSidePrinters();
+    const productsHTML = renderProducts(doubleSidePrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('Double Side Printers', doubleSidePrinters.length);
+    updateBreadcrumb('doubleSidePrinters');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load double side direct printing printers
+window.loadDoubleSideDirectPrinting = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    // For now, direct printing includes all double side printers
+    // This can be expanded later to filter specific types
+    const directPrintingPrinters = getAllDoubleSidePrinters();
+    const productsHTML = renderProducts(directPrintingPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('Double Side Printers - Direct Printing', directPrintingPrinters.length);
+    updateBreadcrumb('doubleSideDirectPrinting');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Export double side printer functions for global access
+window.getAllDoubleSidePrinters = getAllDoubleSidePrinters;
 

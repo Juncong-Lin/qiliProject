@@ -508,4 +508,13 @@ export const inkjetPrinterProducts = {
       higher_price: 495000
     },
   ],
+  double_side: [
+    {
+      id: 'Double-Side-Print-Inkjet-Printer-AM208I32DP-for-Textile-Flag-Material-with-8-heads-i3200',
+      name: 'Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200',
+      image: 'products/inkjetPrinter/double side/Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200/image/Double Side Print Inkjet Printer AM208I32DP for Textile Flag Material with 8 heads i3200.jpg',
+      lower_price: 4600000,
+      higher_price: 4600000
+    }
+  ]
 };
