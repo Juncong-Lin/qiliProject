@@ -1182,7 +1182,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
         `;
       }
-    } else if (brand === 'uvKonica1024iPrinters') {
+    } else if (brand === 'uvInkjetKonica1024iPrinters') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
           <a href="index.html" class="breadcrumb-link">Home</a>
@@ -1200,6 +1200,28 @@ function updateBreadcrumb(brand) {
           <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="window.loadAllUvInkjetPrinters && window.loadAllUvInkjetPrinters()" class="breadcrumb-link">UV Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
+        `;
+      }
+    } else if (brand === 'uvKonica1024iPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-flatbed-printers" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllUvFlatbedPrinters && window.loadAllUvFlatbedPrinters()" class="breadcrumb-link">UV Flatbed Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
@@ -1603,10 +1625,10 @@ function handleHashFallback(hash) {
       'eco-solvent-inkjet-printers---with-i1600-printhead': 'Eco-Solvent Inkjet Printers - With I1600 Printhead',
       'eco-solvent-inkjet-printers---with-i3200-printhead': 'Eco-Solvent Inkjet Printers - With I3200 Printhead',
       'solvent-inkjet-printers': 'Solvent Inkjet Printers',
-      'solvent-km512i-printers': 'Solvent Inket Printers - With Konica KM512i Printhead',
-      'solvent-km1024i-printers': 'Solvent Inket Printers - With Konica KM1024i Printhead',
-      'solvent-ricoh-gen5-printers': 'Solvent Inket Printers - With Ricoh Gen5 Printhead',
-      'solvent-ricoh-gen6-printers': 'Solvent Inket Printers - With Ricoh Gen6 Printhead',
+      'solvent-km512i-printers': 'Solvent Inkjet Printers - With Konica KM512i Printhead',
+      'solvent-km1024i-printers': 'Solvent Inkjet Printers - With Konica KM1024i Printhead',
+      'solvent-ricoh-gen5-printers': 'Solvent Inkjet Printers - With Ricoh Gen5 Printhead',
+      'solvent-ricoh-gen6-printers': 'Solvent Inkjet Printers - With Ricoh Gen6 Printhead',
       'uv-inkjet-printers': 'UV Inkjet Printers',
       'uv-inkjet-printers---with-ricoh-gen6-printhead': 'UV Inkjet Printers - With Ricoh Gen6 Printhead',
       'uv-konica-km1024i-printers': 'UV Inkjet Printers - With Konica KM1024i Printhead',
@@ -1789,19 +1811,21 @@ window.loadSpecificCategory = function(categoryName) {
   const subHeaderMap = {
     'Eco-Solvent Inkjet Printers': 'Inkjet Printers',
     'Solvent Inkjet Printers': 'Inkjet Printers',
-    'Solvent Inket Printers': 'Inkjet Printers',
+    'Solvent Inkjet Printers': 'Inkjet Printers',
     'Solvent Inkjet Printers - With Konica KM512i Printhead': 'Inkjet Printers',
-    'Solvent Inket Printers - With Konica KM512i Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Konica KM512i Printhead': 'Inkjet Printers',
     'Solvent Inkjet Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
-    'Solvent Inket Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'Solvent Inkjet Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
-    'Solvent Inket Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
     'Solvent Inkjet Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
-    'Solvent Inket Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
+    'Solvent Inkjet Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Inkjet Printers': 'Inkjet Printers',
     'UV Inkjet Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Inkjet Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Flatbed Printers': 'Inkjet Printers',
+    'UV Flatbed Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
+    'UV Flatbed Printers - With Konica KM1024i Printheads': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
     'Epson Printer Spare Parts': 'Print Spare Parts',
@@ -1948,7 +1972,7 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('solventPrinters');
-    } else if (categoryName === 'Solvent Inket Printers') {
+    } else if (categoryName === 'Solvent Inkjet Printers') {
       // Load all solvent printer products (handle the typo from sidebar)
       const allSolventPrinters = getAllSolventPrinters();
       
@@ -1965,7 +1989,7 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('solventPrinters');
-    } else if (categoryName === 'Solvent Inket Printers - With Konica KM512i Printhead') {
+    } else if (categoryName === 'Solvent Inkjet Printers - With Konica KM512i Printhead') {
       // Load KM512i solvent printers
       const km512iPrinters = getSolventKM512iPrinters();
       const productsHTML = renderProducts(km512iPrinters, 'solventprinter');
@@ -1981,7 +2005,7 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('solventKM512iPrinters');
-    } else if (categoryName === 'Solvent Inket Printers - With Konica KM1024i Printhead') {
+    } else if (categoryName === 'Solvent Inkjet Printers - With Konica KM1024i Printhead') {
       // Load KM1024i solvent printers
       const km1024iPrinters = getSolventKM1024iPrinters();
       const productsHTML = renderProducts(km1024iPrinters, 'solventprinter');
@@ -2095,6 +2119,22 @@ window.loadSpecificCategory = function(categoryName) {
       updateBreadcrumb('uvRicohGen6Printers');
     } else if (categoryName === 'UV Inkjet Printers - With Konica KM1024i Printhead') {
       // Load UV inkjet printers with Konica KM1024i printhead
+      const uvInkjetKonica1024iPrinters = getUvInkjetKonica1024iPrinters();
+      const productsHTML = renderProducts(uvInkjetKonica1024iPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Inkjet Printers - With Konica KM1024i Printhead', uvInkjetKonica1024iPrinters.length);
+      
+      // Update breadcrumb navigation (UV Inkjet path)
+      updateBreadcrumb('uvInkjetKonica1024iPrinters');
+    } else if (categoryName === 'UV Flatbed Printers - With Konica KM1024i Printhead' || categoryName === 'UV Flatbed Printers - With Konica KM1024i Printheads') {
+      // Load UV flatbed printers with Konica KM1024i printhead
       const uvKonica1024iPrinters = getUvKonica1024iPrinters();
       const productsHTML = renderProducts(uvKonica1024iPrinters, 'printer');
       const productsGrid = document.querySelector('.js-prodcts-grid');
@@ -2105,9 +2145,9 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('UV Inkjet Printers - With Konica KM1024i Printhead', uvKonica1024iPrinters.length);
+      updatePageHeader('UV Flatbed Printers - With Konica KM1024i Printhead', uvKonica1024iPrinters.length);
       
-      // Update breadcrumb navigation
+      // Update breadcrumb navigation (UV Flatbed path)
       updateBreadcrumb('uvKonica1024iPrinters');
     } else if (categoryName === 'UV Flatbed Printers') {
       // Load UV flatbed printers
@@ -4088,9 +4128,19 @@ export function getUvRicohGen6Printers() {
 }
 
 // Function to get UV inkjet printers with Konica KM1024i printhead
-export function getUvKonica1024iPrinters() {
+export function getUvInkjetKonica1024iPrinters() {
   const uvPrinters = inkjetPrinterProducts.amo_uv_inkjet || [];
   return uvPrinters.filter(printer => 
+    printer.name.toLowerCase().includes('konica 1024i') || 
+    printer.name.toLowerCase().includes('km1024i') ||
+    printer.name.toLowerCase().includes('k24i')
+  );
+}
+
+// Function to get UV flatbed printers with Konica KM1024i printhead
+export function getUvKonica1024iPrinters() {
+  const uvFlatbedPrinters = inkjetPrinterProducts.uv_flatbed || [];
+  return uvFlatbedPrinters.filter(printer => 
     printer.name.toLowerCase().includes('konica 1024i') || 
     printer.name.toLowerCase().includes('km1024i') ||
     printer.name.toLowerCase().includes('k24i')
@@ -4172,7 +4222,7 @@ window.loadUvRicohGen6Printers = function() {
   }, 200);
 };
 
-// Function to load UV inkjet printers with Konica KM1024i printhead
+// Function to load UV flatbed printers with Konica KM1024i printhead
 window.loadUvKonica1024iPrinters = function() {
   hideActiveSubmenus();
   hideHeroBanner();
@@ -4194,7 +4244,7 @@ window.loadUvKonica1024iPrinters = function() {
     productsGrid.classList.remove('showing-coming-soon');
     
     attachAddToCartListeners();
-    updatePageHeader('UV Inkjet Printers - With Konica KM1024i Printhead', konica1024iPrinters.length);
+    updatePageHeader('UV Flatbed Printers - With Konica KM1024i Printhead', konica1024iPrinters.length);
     updateBreadcrumb('uvKonica1024iPrinters');
     
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -4243,6 +4293,7 @@ window.loadUvFlatbedPrinters = function() {
 // Export functions for global access
 window.getAllUvInkjetPrinters = getAllUvInkjetPrinters;
 window.getUvRicohGen6Printers = getUvRicohGen6Printers;
+window.getUvInkjetKonica1024iPrinters = getUvInkjetKonica1024iPrinters;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
 window.getUvFlatbedPrinters = getUvFlatbedPrinters;
 
