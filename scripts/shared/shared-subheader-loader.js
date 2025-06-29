@@ -609,6 +609,32 @@ window.handleOtherClick = function(otherCategory) {
   }
 };
 
+// Handler for Double Side Printers
+window.handleDoubleSidePrintersClick = function() {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadAllDoubleSidePrinters && typeof window.loadAllDoubleSidePrinters === 'function') {
+    // We're on index page - load double side printers directly
+    window.loadAllDoubleSidePrinters();
+    window.location.hash = 'double-side-printers';
+  } else {
+    // We're on a different page - navigate to index with hash
+    UrlUtils.navigateToIndex('#double-side-printers');
+  }
+};
+
+// Handler for Double Side Direct Printing
+window.handleDoubleSideDirectPrintingClick = function() {
+  // Check if we're on the index page
+  if (UrlUtils.isIndexPage() && window.loadDoubleSideDirectPrinting && typeof window.loadDoubleSideDirectPrinting === 'function') {
+    // We're on index page - load double side direct printing directly
+    window.loadDoubleSideDirectPrinting();
+    window.location.hash = 'double-side-printers---direct-printing';
+  } else {
+    // We're on a different page - navigate to index with hash
+    UrlUtils.navigateToIndex('#double-side-printers---direct-printing');
+  }
+};
+
 // Function to initialize sub-header navigation after shared content is loaded
 function initializeSubHeaderAfterLoad() {
   // Wait a bit to ensure DOM is fully updated

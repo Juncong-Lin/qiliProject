@@ -2006,6 +2006,8 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-separator">&gt;</span>
         <a href="index.html#double-side-printers" class="breadcrumb-link">Double Side Printers</a>
         <span class="breadcrumb-separator">&gt;</span>
+        <a href="index.html#double-side-printers---direct-printing" class="breadcrumb-link">Direct Printing</a>
+        <span class="breadcrumb-separator">&gt;</span>
         <span class="breadcrumb-current">${product.name}</span>
       `;
     } else if (productBrand === 'hybrid_uv') {
