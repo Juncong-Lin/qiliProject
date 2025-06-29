@@ -1204,6 +1204,28 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
       }
+    } else if (brand === 'uvFlatbedRicohGen6Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-flatbed-printers" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllUvFlatbedPrinters && window.loadAllUvFlatbedPrinters()" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
+        `;
+      }
     } else if (brand === 'uvKonica1024iPrinters') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1824,6 +1846,7 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Inkjet Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Inkjet Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Flatbed Printers': 'Inkjet Printers',
+    'UV Flatbed Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printheads': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
@@ -2149,6 +2172,22 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation (UV Flatbed path)
       updateBreadcrumb('uvKonica1024iPrinters');
+    } else if (categoryName === 'UV Flatbed Printers - With Ricoh Gen6 Printhead') {
+      // Load UV flatbed printers with Ricoh Gen6 printhead
+      const uvFlatbedRicohGen6Printers = getUvFlatbedRicohGen6Printers();
+      const productsHTML = renderProducts(uvFlatbedRicohGen6Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Flatbed Printers - With Ricoh Gen6 Printhead', uvFlatbedRicohGen6Printers.length);
+      
+      // Update breadcrumb navigation (UV Flatbed path)
+      updateBreadcrumb('uvFlatbedRicohGen6Printers');
     } else if (categoryName === 'UV Flatbed Printers') {
       // Load UV flatbed printers
       const uvFlatbedPrinters = getUvFlatbedPrinters();
@@ -4147,6 +4186,16 @@ export function getUvKonica1024iPrinters() {
   );
 }
 
+// Function to get UV flatbed printers with Ricoh Gen6 printhead
+export function getUvFlatbedRicohGen6Printers() {
+  const uvFlatbedPrinters = inkjetPrinterProducts.uv_flatbed || [];
+  return uvFlatbedPrinters.filter(printer => 
+    printer.name.toLowerCase().includes('ricoh gen6') || 
+    printer.name.toLowerCase().includes('ricoh gen 6') ||
+    printer.name.toLowerCase().includes('ricohgen6')
+  );
+}
+
 // Function to get UV Flatbed Printers
 export function getUvFlatbedPrinters() {
   return inkjetPrinterProducts.uv_flatbed || [];
@@ -4294,6 +4343,7 @@ window.loadUvFlatbedPrinters = function() {
 window.getAllUvInkjetPrinters = getAllUvInkjetPrinters;
 window.getUvRicohGen6Printers = getUvRicohGen6Printers;
 window.getUvInkjetKonica1024iPrinters = getUvInkjetKonica1024iPrinters;
+window.getUvFlatbedRicohGen6Printers = getUvFlatbedRicohGen6Printers;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
 window.getUvFlatbedPrinters = getUvFlatbedPrinters;
 
