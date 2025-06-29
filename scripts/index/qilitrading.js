@@ -1248,6 +1248,50 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Ricoh Gen5 Printhead</span>
         `;
       }
+    } else if (brand === 'uvFlatbedI3200Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-flatbed-printers" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I3200 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllUvFlatbedPrinters && window.loadAllUvFlatbedPrinters()" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With I3200 Printhead</span>
+        `;
+      }
+    } else if (brand === 'uvFlatbedXP600Printers') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-flatbed-printers" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With XP600 Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllUvFlatbedPrinters && window.loadAllUvFlatbedPrinters()" class="breadcrumb-link">UV Flatbed Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With XP600 Printhead</span>
+        `;
+      }
     } else if (brand === 'uvKonica1024iPrinters') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1870,6 +1914,8 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Flatbed Printers': 'Inkjet Printers',
     'UV Flatbed Printers - With Ricoh Gen6 Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Ricoh Gen5 Printhead': 'Inkjet Printers',
+    'UV Flatbed Printers - With I3200 Printhead': 'Inkjet Printers',
+    'UV Flatbed Printers - With XP600 Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printheads': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
@@ -2227,6 +2273,38 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation (UV Flatbed path)
       updateBreadcrumb('uvFlatbedRicohGen5Printers');
+    } else if (categoryName === 'UV Flatbed Printers - With I3200 Printhead') {
+      // Load UV flatbed printers with I3200 printhead
+      const uvFlatbedI3200Printers = getUvFlatbedI3200Printers();
+      const productsHTML = renderProducts(uvFlatbedI3200Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Flatbed Printers - With I3200 Printhead', uvFlatbedI3200Printers.length);
+      
+      // Update breadcrumb navigation (UV Flatbed path)
+      updateBreadcrumb('uvFlatbedI3200Printers');
+    } else if (categoryName === 'UV Flatbed Printers - With XP600 Printhead') {
+      // Load UV flatbed printers with XP600 printhead
+      const uvFlatbedXP600Printers = getUvFlatbedXP600Printers();
+      const productsHTML = renderProducts(uvFlatbedXP600Printers, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Flatbed Printers - With XP600 Printhead', uvFlatbedXP600Printers.length);
+      
+      // Update breadcrumb navigation (UV Flatbed path)
+      updateBreadcrumb('uvFlatbedXP600Printers');
     } else if (categoryName === 'UV Flatbed Printers') {
       // Load UV flatbed printers
       const uvFlatbedPrinters = getUvFlatbedPrinters();
@@ -4245,6 +4323,26 @@ export function getUvFlatbedRicohGen5Printers() {
   );
 }
 
+// Function to get UV flatbed printers with I3200 printhead
+export function getUvFlatbedI3200Printers() {
+  const uvFlatbedPrinters = inkjetPrinterProducts.uv_flatbed || [];
+  return uvFlatbedPrinters.filter(printer => 
+    printer.name.toLowerCase().includes('i3200') || 
+    printer.name.toLowerCase().includes('i-3200') ||
+    printer.name.toLowerCase().includes('i 3200')
+  );
+}
+
+// Function to get UV flatbed printers with XP600 printhead
+export function getUvFlatbedXP600Printers() {
+  const uvFlatbedPrinters = inkjetPrinterProducts.uv_flatbed || [];
+  return uvFlatbedPrinters.filter(printer => 
+    printer.name.toLowerCase().includes('xp600') || 
+    printer.name.toLowerCase().includes('xp-600') ||
+    printer.name.toLowerCase().includes('xp 600')
+  );
+}
+
 // Function to get UV Flatbed Printers
 export function getUvFlatbedPrinters() {
   return inkjetPrinterProducts.uv_flatbed || [];
@@ -4394,6 +4492,8 @@ window.getUvRicohGen6Printers = getUvRicohGen6Printers;
 window.getUvInkjetKonica1024iPrinters = getUvInkjetKonica1024iPrinters;
 window.getUvFlatbedRicohGen6Printers = getUvFlatbedRicohGen6Printers;
 window.getUvFlatbedRicohGen5Printers = getUvFlatbedRicohGen5Printers;
+window.getUvFlatbedI3200Printers = getUvFlatbedI3200Printers;
+window.getUvFlatbedXP600Printers = getUvFlatbedXP600Printers;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
 window.getUvFlatbedPrinters = getUvFlatbedPrinters;
 
