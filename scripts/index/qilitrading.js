@@ -1339,7 +1339,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">Hybrid UV Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
@@ -1349,7 +1349,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <a href="javascript:void(0)" onclick="window.loadAllUvHybridPrinters && window.loadAllUvHybridPrinters()" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <a href="javascript:void(0)" onclick="window.loadAllUvHybridPrinters && window.loadAllUvHybridPrinters()" class="breadcrumb-link">Hybrid UV Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
         `;
@@ -1361,7 +1361,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">Hybrid UV Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
         `;
@@ -1371,7 +1371,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <a href="javascript:void(0)" onclick="window.loadAllUvHybridPrinters && window.loadAllUvHybridPrinters()" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <a href="javascript:void(0)" onclick="window.loadAllUvHybridPrinters && window.loadAllUvHybridPrinters()" class="breadcrumb-link">Hybrid UV Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
           <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
         `;
@@ -1383,7 +1383,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">UV Hybrid Inkjet Printers</span>
+          <span class="breadcrumb-current">Hybrid UV Printers</span>
         `;
       } else {
         breadcrumbElement.innerHTML = `
@@ -1391,7 +1391,7 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-separator">&gt;</span>
           <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
           <span class="breadcrumb-separator">&gt;</span>
-          <span class="breadcrumb-current">UV Hybrid Inkjet Printers</span>
+          <span class="breadcrumb-current">Hybrid UV Printers</span>
         `;
       }
     } else if (brand === 'led-lcd') {
@@ -2400,7 +2400,7 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('UV Hybrid Inkjet Printers', uvHybridPrinters.length);
+      updatePageHeader('Hybrid UV Printers', uvHybridPrinters.length);
       
       // Update breadcrumb navigation
       updateBreadcrumb('uvHybridPrinters');
@@ -2416,7 +2416,7 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('UV Hybrid Inkjet Printer - With Konica KM1024i Printhead', uvHybridKonica1024iPrinters.length);
+      updatePageHeader('Hybrid UV Printers - With Konica KM1024i Printhead', uvHybridKonica1024iPrinters.length);
       
       // Update breadcrumb navigation (UV Hybrid path)
       updateBreadcrumb('uvHybridKonica1024iPrinters');
@@ -2432,7 +2432,7 @@ window.loadSpecificCategory = function(categoryName) {
       attachAddToCartListeners();
       
       // Update page header
-      updatePageHeader('UV Hybrid Inkjet Printer - With Ricoh Gen6 Printhead', uvHybridRicohGen6Printers.length);
+      updatePageHeader('Hybrid UV Printers - With Ricoh Gen6 Printhead', uvHybridRicohGen6Printers.length);
       
       // Update breadcrumb navigation (UV Hybrid path)
       updateBreadcrumb('uvHybridRicohGen6Printers');
@@ -4546,7 +4546,7 @@ window.loadAllUvHybridPrinters = function() {
     productsGrid.classList.remove('showing-coming-soon');
     
     attachAddToCartListeners();
-    updatePageHeader('UV Hybrid Inkjet Printers', uvHybridPrinters.length);
+    updatePageHeader('Hybrid UV Printers', uvHybridPrinters.length);
     updateBreadcrumb('uvHybridPrinters');
     
     const urlSearchParams = new URLSearchParams(window.location.search);

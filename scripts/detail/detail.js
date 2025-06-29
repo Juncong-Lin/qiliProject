@@ -2009,15 +2009,47 @@ function updateBreadcrumbDetail(product, productType, productBrand) {
         <span class="breadcrumb-current">${product.name}</span>
       `;
     } else if (productBrand === 'hybrid_uv') {
-      breadcrumbElement.innerHTML = `
-        <a href="index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <a href="index.html#hybrid-uv-printers" class="breadcrumb-link">Hybrid UV Printers</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">${product.name}</span>
-      `;
+      // Check if the product has specific printhead
+      if (product.name.toLowerCase().includes('konica') && 
+          (product.name.toLowerCase().includes('km1024i') || 
+           product.name.toLowerCase().includes('k24i') ||
+           product.name.toLowerCase().includes('1024i'))) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">Hybrid UV Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-konica-km1024i-printers" class="breadcrumb-link">With Konica KM1024i Printhead</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else if (product.name.toLowerCase().includes('ricoh') && 
+                 (product.name.toLowerCase().includes('gen6') || product.name.toLowerCase().includes('g6'))) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">Hybrid UV Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-ricoh-gen6-printers" class="breadcrumb-link">With Ricoh Gen6 Printhead</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      } else {
+        // Default hybrid UV breadcrumb
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">Hybrid UV Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">${product.name}</span>
+        `;
+      }
     } else if (productBrand === 'uv_flatbed') {
       // Check if the product has XP600 printhead
       if (product.name.toLowerCase().includes('xp600')) {

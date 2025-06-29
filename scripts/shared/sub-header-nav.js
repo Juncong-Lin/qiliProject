@@ -453,6 +453,34 @@ class SubHeaderNavigation {
       return;
     }
     
+    // Direct handling for UV Hybrid printer categories
+    if (hash === 'uv-hybrid-inkjet-printers') {
+      if (window.loadAllUvHybridPrinters) {
+        window.loadAllUvHybridPrinters();
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'uv-hybrid-konica-km1024i-printers') {
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory('UV Hybrid Inkjet Printer - With Konica KM1024i Printhead');
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
+    if (hash === 'uv-hybrid-ricoh-gen6-printers') {
+      if (window.loadSpecificCategory) {
+        window.loadSpecificCategory('UV Hybrid Inkjet Printer - With Ricoh Gen6 Printhead');
+        this.setActiveCategory('Inkjet Printers');
+        this.expandInkjetPrintersMenu();
+      }
+      return;
+    }
+    
     // Handle print spare parts specific hashes
     if (hash === 'print-spare-parts') {
       if (window.loadAllPrintSpareParts) {
