@@ -1332,6 +1332,28 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">UV Flatbed Printers</span>
         `;
       }
+    } else if (brand === 'uvHybridKonica1024iPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#uv-hybrid-inkjet-printers" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="window.loadAllUvHybridPrinters && window.loadAllUvHybridPrinters()" class="breadcrumb-link">UV Hybrid Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">With Konica KM1024i Printhead</span>
+        `;
+      }
     } else if (brand === 'led-lcd') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1918,6 +1940,8 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Flatbed Printers - With XP600 Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printheads': 'Inkjet Printers',
+    'UV Hybrid Inkjet Printer - With Konica KM1024i Printheads': 'Inkjet Printers',
+    'UV Hybrid Inkjet Printer - With Konica KM1024i Printhead': 'Inkjet Printers',
     'Sublimation Printers': 'Inkjet Printers',
     'Double Side Printers': 'Inkjet Printers',
     'Epson Printer Spare Parts': 'Print Spare Parts',
@@ -2321,6 +2345,22 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('uvFlatbedPrinters');
+    } else if (categoryName === 'UV Hybrid Inkjet Printer - With Konica KM1024i Printheads' || categoryName === 'UV Hybrid Inkjet Printer - With Konica KM1024i Printhead') {
+      // Load UV hybrid inkjet printers with Konica KM1024i printhead
+      const uvHybridKonica1024iPrinters = getUvHybridKonica1024iPrinters();
+      const productsHTML = renderProducts(uvHybridKonica1024iPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Hybrid Inkjet Printer - With Konica KM1024i Printhead', uvHybridKonica1024iPrinters.length);
+      
+      // Update breadcrumb navigation (UV Hybrid path)
+      updateBreadcrumb('uvHybridKonica1024iPrinters');
     } else if (categoryName === 'Print Spare Parts') {
       // Load all print spare parts
       let allPrintSpareParts = [];
@@ -4348,6 +4388,17 @@ export function getUvFlatbedPrinters() {
   return inkjetPrinterProducts.uv_flatbed || [];
 }
 
+// Function to get UV hybrid inkjet printers with Konica KM1024i printhead
+export function getUvHybridKonica1024iPrinters() {
+  const uvHybridPrinters = inkjetPrinterProducts.hybrid_uv || [];
+  return uvHybridPrinters.filter(printer => 
+    printer.name.toLowerCase().includes('konica') && 
+    (printer.name.toLowerCase().includes('km1024i') || 
+     printer.name.toLowerCase().includes('k24i') ||
+     printer.name.toLowerCase().includes('1024i'))
+  );
+}
+
 // Function to load all UV inkjet printers
 window.loadAllUvInkjetPrinters = function() {
   hideActiveSubmenus();
@@ -4494,6 +4545,7 @@ window.getUvFlatbedRicohGen6Printers = getUvFlatbedRicohGen6Printers;
 window.getUvFlatbedRicohGen5Printers = getUvFlatbedRicohGen5Printers;
 window.getUvFlatbedI3200Printers = getUvFlatbedI3200Printers;
 window.getUvFlatbedXP600Printers = getUvFlatbedXP600Printers;
+window.getUvHybridKonica1024iPrinters = getUvHybridKonica1024iPrinters;
 window.getUvKonica1024iPrinters = getUvKonica1024iPrinters;
 window.getUvFlatbedPrinters = getUvFlatbedPrinters;
 
