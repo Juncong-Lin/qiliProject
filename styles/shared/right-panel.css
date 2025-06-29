@@ -57,8 +57,10 @@
   text-align: center;
   line-height: 1.1;
   font-weight: 600;
-  display: block;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 /* Phone button specific styling with hover expansion */
@@ -86,9 +88,11 @@
 }
 
 .phone-btn::after {
-  content: '+86 13631292010';
+display: none;
+}
+.phone-btn-popup {
   position: absolute;
-  left: -150px;
+  left: -190px;
   top: 50%;
   transform: translateY(-50%);
   background: #232F3E;
@@ -104,8 +108,32 @@
   visibility: hidden;
   transition: all 0.25s ease;
   z-index: 1001;
-  min-width: 140px;
+  min-width: 180px;
+  min-height: 75px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-btn:hover .phone-btn-popup {
+  opacity: 1;
+  visibility: visible;
+}
+
+.phone-number-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.phone-number-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
 }
 
 .phone-btn:hover::after {
@@ -132,13 +160,13 @@
 
 .whatsapp-qrcode-container {
   position: absolute;
-  left: -230px;
+  left: -190px;
   top: 50%;
   transform: translateY(-50%);
   width: auto;
   height: auto;
-  max-width: 250px;
-  max-height: 250px;
+  min-width: 180px;
+  min-height: 75px;
   background: white;
   border-radius: 16px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
