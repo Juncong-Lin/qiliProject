@@ -1376,6 +1376,24 @@ function updateBreadcrumb(brand) {
           <span class="breadcrumb-current">With Ricoh Gen6 Printhead</span>
         `;
       }
+    } else if (brand === 'uvHybridPrinters') {
+      if (isDetailPage) {
+        breadcrumbElement.innerHTML = `
+          <a href="index.html" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="index.html#inkjet-printers" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">UV Hybrid Inkjet Printers</span>
+        `;
+      } else {
+        breadcrumbElement.innerHTML = `
+          <a href="javascript:void(0)" onclick="loadAllProducts()" class="breadcrumb-link">Home</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <a href="javascript:void(0)" onclick="loadInkjetPrinters()" class="breadcrumb-link">Inkjet Printers</a>
+          <span class="breadcrumb-separator">&gt;</span>
+          <span class="breadcrumb-current">UV Hybrid Inkjet Printers</span>
+        `;
+      }
     } else if (brand === 'led-lcd') {
       if (isDetailPage) {
         breadcrumbElement.innerHTML = `
@@ -1962,6 +1980,7 @@ window.loadSpecificCategory = function(categoryName) {
     'UV Flatbed Printers - With XP600 Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Flatbed Printers - With Konica KM1024i Printheads': 'Inkjet Printers',
+    'UV Hybrid Inkjet Printer': 'Inkjet Printers',
     'UV Hybrid Inkjet Printer - With Konica KM1024i Printheads': 'Inkjet Printers',
     'UV Hybrid Inkjet Printer - With Konica KM1024i Printhead': 'Inkjet Printers',
     'UV Hybrid Inkjet Printer - With Ricoh Gen6 Printheads': 'Inkjet Printers',
@@ -2369,6 +2388,22 @@ window.loadSpecificCategory = function(categoryName) {
       
       // Update breadcrumb navigation
       updateBreadcrumb('uvFlatbedPrinters');
+    } else if (categoryName === 'UV Hybrid Inkjet Printer') {
+      // Load all UV hybrid inkjet printers
+      const uvHybridPrinters = getAllUvHybridPrinters();
+      const productsHTML = renderProducts(uvHybridPrinters, 'printer');
+      const productsGrid = document.querySelector('.js-prodcts-grid');
+      productsGrid.innerHTML = productsHTML;
+      productsGrid.classList.remove('showing-coming-soon');
+      
+      // Re-attach event listeners for the new add to cart buttons
+      attachAddToCartListeners();
+      
+      // Update page header
+      updatePageHeader('UV Hybrid Inkjet Printers', uvHybridPrinters.length);
+      
+      // Update breadcrumb navigation
+      updateBreadcrumb('uvHybridPrinters');
     } else if (categoryName === 'UV Hybrid Inkjet Printer - With Konica KM1024i Printheads' || categoryName === 'UV Hybrid Inkjet Printer - With Konica KM1024i Printhead') {
       // Load UV hybrid inkjet printers with Konica KM1024i printhead
       const uvHybridKonica1024iPrinters = getUvHybridKonica1024iPrinters();
@@ -4428,6 +4463,11 @@ export function getUvFlatbedPrinters() {
   return inkjetPrinterProducts.uv_flatbed || [];
 }
 
+// Function to get all UV hybrid inkjet printers
+export function getAllUvHybridPrinters() {
+  return inkjetPrinterProducts.hybrid_uv || [];
+}
+
 // Function to get UV hybrid inkjet printers with Konica KM1024i printhead
 export function getUvHybridKonica1024iPrinters() {
   const uvHybridPrinters = inkjetPrinterProducts.hybrid_uv || [];
@@ -4474,6 +4514,40 @@ window.loadAllUvInkjetPrinters = function() {
     attachAddToCartListeners();
     updatePageHeader('UV Inkjet Printers', uvPrinters.length);
     updateBreadcrumb('uvInkjetPrinters');
+    
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const skipScroll = urlSearchParams.get('noscroll') === 'true';
+    
+    if (!skipScroll) {
+      scrollToProducts();
+    }
+  }, 200);
+};
+
+// Function to load all UV hybrid inkjet printers
+window.loadAllUvHybridPrinters = function() {
+  hideActiveSubmenus();
+  hideHeroBanner();
+  
+  document.querySelectorAll('.sub-header-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.trim() === 'Inkjet Printers') {
+      link.classList.add('active');
+    }
+  });
+  
+  showLoadingState();
+  
+  setTimeout(() => {
+    const uvHybridPrinters = getAllUvHybridPrinters();
+    const productsHTML = renderProducts(uvHybridPrinters, 'printer');
+    const productsGrid = document.querySelector('.js-prodcts-grid');
+    productsGrid.innerHTML = productsHTML;
+    productsGrid.classList.remove('showing-coming-soon');
+    
+    attachAddToCartListeners();
+    updatePageHeader('UV Hybrid Inkjet Printers', uvHybridPrinters.length);
+    updateBreadcrumb('uvHybridPrinters');
     
     const urlSearchParams = new URLSearchParams(window.location.search);
     const skipScroll = urlSearchParams.get('noscroll') === 'true';
@@ -4590,6 +4664,7 @@ window.loadUvFlatbedPrinters = function() {
 
 // Export functions for global access
 window.getAllUvInkjetPrinters = getAllUvInkjetPrinters;
+window.getAllUvHybridPrinters = getAllUvHybridPrinters;
 window.getUvRicohGen6Printers = getUvRicohGen6Printers;
 window.getUvInkjetKonica1024iPrinters = getUvInkjetKonica1024iPrinters;
 window.getUvFlatbedRicohGen6Printers = getUvFlatbedRicohGen6Printers;
