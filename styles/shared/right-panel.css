@@ -1,0 +1,244 @@
+/* Right Panel Fixed Styles */
+.right-panel-fixed {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.right-panel-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.right-panel-btn {
+  background: #232F3E;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 15px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: visible;
+}
+
+.right-panel-btn:hover {
+  background: #1A252F;
+  transform: translateX(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.right-panel-btn .btn-icon {
+  font-size: 18px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.right-panel-btn .btn-text {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.1;
+  font-weight: 600;
+  display: block;
+  text-align: center;
+}
+
+/* Phone button specific styling with hover expansion */
+.phone-btn {
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+}
+
+.phone-btn .btn-text {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.phone-btn .btn-icon {
+  color: white !important;
+  font-size: 18px;
+}
+
+.phone-btn:hover {
+  background: #1A252F;
+  transform: translateX(-3px);
+}
+
+.phone-btn::after {
+  content: '+86 13631292010';
+  position: absolute;
+  left: -150px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #232F3E;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 1001;
+  min-width: 140px;
+  text-align: center;
+}
+
+.phone-btn:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* WhatsApp button specific styling with QR code hover */
+.whatsapp-btn .whatsapp-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}
+
+.whatsapp-btn {
+  position: relative;
+  overflow: visible;
+}
+
+.whatsapp-btn:hover {
+  background: #1A252F;
+  transform: translateX(-3px);
+}
+
+.whatsapp-qrcode-container {
+  position: absolute;
+  left: -230px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  height: auto;
+  max-width: 250px;
+  max-height: 250px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  border: 2px solid #232F3E;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  padding: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.whatsapp-qrcode {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.whatsapp-btn:hover .whatsapp-qrcode-container {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Go Top button specific styling */
+.go-top-btn .btn-icon {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+/* Contact button specific styling */
+.contact-btn .btn-icon {
+  font-size: 18px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .right-panel-fixed {
+    right: 10px;
+    top: 45%;
+  }
+  
+  .right-panel-btn {
+    width: 65px;
+    height: 65px;
+    padding: 10px 8px;
+    font-size: 10px;
+  }
+  
+  .right-panel-btn .btn-text {
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  .phone-btn::after {
+    left: -135px;
+    font-size: 12px;
+    padding: 10px 15px;
+    min-width: 120px;
+  }
+  
+
+}
+
+@media (max-width: 480px) {
+  .right-panel-fixed {
+    right: 5px;
+    top: 40%;
+  }
+  
+  .right-panel-btn {
+    width: 60px;
+    height: 60px;
+    padding: 8px 6px;
+  }
+  
+  .right-panel-btn .btn-text {
+    font-size: 12px;
+    text-align: center;
+
+  }
+  
+  .phone-btn::after {
+    left: -125px;
+    font-size: 11px;
+    padding: 8px 12px;
+    min-width: 110px;
+  }
+  
+
+}
+
+/* Hide on very small screens to avoid interference */
+@media (max-width: 320px) {
+  .right-panel-fixed {
+    display: none;
+  }
+}
