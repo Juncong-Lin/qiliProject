@@ -331,8 +331,8 @@ display: none;
 
   .whatsapp-qrcode-container {
     right: 65px;
-    min-width: 110px;
-    min-height: 110px;
+    min-width: 130px;
+    min-height: 130px;
   }
 
   .phone-number-label {
