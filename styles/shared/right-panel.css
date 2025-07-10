@@ -42,6 +42,7 @@
 /* Ensure all specific buttons use the same size as .right-panel-btn */
 .go-top-btn,
 .phone-btn,
+.wechat-btn,
 .whatsapp-btn,
 .contact-btn {
   width: 75px !important;
@@ -213,6 +214,60 @@ display: none;
   visibility: visible;
 }
 
+/* WeChat button specific styling with QR code hover */
+.wechat-btn .wechat-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}
+
+.wechat-btn {
+  position: relative;
+  overflow: visible;
+}
+
+.wechat-btn:hover {
+  background: #1A252F;
+  transform: translateX(-3px);
+}
+
+.wechat-qrcode-container {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  height: auto;
+  min-width: 180px;
+  min-height: 180px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  border: 2px solid #232F3E;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  padding: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wechat-qrcode {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.wechat-btn:hover .wechat-qrcode-container {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Go Top button specific styling */
 .go-top-btn .btn-icon {
   font-size: 20px;
@@ -234,6 +289,7 @@ display: none;
   .right-panel-btn,
   .go-top-btn,
   .phone-btn,
+  .wechat-btn,
   .whatsapp-btn,
   .contact-btn {
     width: 75px !important;
@@ -275,6 +331,12 @@ display: none;
     min-height: 130px;
   }
 
+  .wechat-qrcode-container {
+    right: 80px;
+    min-width: 130px;
+    min-height: 130px;
+  }
+
   .phone-number-label {
     font-size: 11px;
     font-weight: 500;
@@ -295,6 +357,7 @@ display: none;
   .right-panel-btn,
   .go-top-btn,
   .phone-btn,
+  .wechat-btn,
   .whatsapp-btn,
   .contact-btn {
     width: 60px !important;
@@ -330,6 +393,12 @@ display: none;
   }
 
   .whatsapp-qrcode-container {
+    right: 65px;
+    min-width: 130px;
+    min-height: 130px;
+  }
+
+  .wechat-qrcode-container {
     right: 65px;
     min-width: 130px;
     min-height: 130px;
