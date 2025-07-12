@@ -10,11 +10,9 @@ class SearchSystem {  constructor() {
   init() {
     // Prevent double initialization
     if (this.isInitialized) {
-      console.log('SearchSystem already initialized, skipping...');
       return;
     }
     
-    console.log('Initializing SearchSystem...');
     // Wait for the header to be loaded
     this.waitForHeader();
   }
@@ -104,14 +102,12 @@ class SearchSystem {  constructor() {
       if (searchContainer) {
         searchContainer.appendChild(this.searchHistoryDropdown);
         this.updateSearchHistoryDisplay();
-        console.log('Search history dropdown created successfully');
-      } else {
-        console.error('Search container not found');
       }
     } catch (error) {
-      console.error('Error setting up search history:', error);
+      // Silent error handling
     }
   }
+
   loadSearchHistory() {
     try {
       const stored = localStorage.getItem('qili_search_history');
@@ -129,7 +125,6 @@ class SearchSystem {  constructor() {
       
       return history;
     } catch (e) {
-      console.error('Error loading search history:', e);
       return [];
     }
   }
@@ -138,7 +133,7 @@ class SearchSystem {  constructor() {
     try {
       localStorage.setItem('qili_search_history', JSON.stringify(this.searchHistory));
     } catch (e) {
-      console.error('Error saving search history:', e);
+      // Silent error handling
     }
   }
 
@@ -335,7 +330,6 @@ class SearchSystem {  constructor() {
       this.displaySearchResults(searchResults, searchTerm);
 
     } catch (error) {
-      console.error('Search error:', error);
       this.showSearchMessage('Search temporarily unavailable. Please try again.');
     }
   }  productMatchesSearch(product, searchTerm, context = {}) {

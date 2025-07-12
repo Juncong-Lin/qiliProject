@@ -176,11 +176,8 @@ window.loadAllProducts = function() {
   showHeroBanner();
     // Initialize hero carousel
   if (!heroCarousel) {
-    console.log('Creating new HeroCarousel instance');
     heroCarousel = new HeroCarousel();
     window.heroCarousel = heroCarousel;
-  } else {
-    console.log('HeroCarousel already exists');
   }
   
   // Clear products grid for homepage - just show hero banner
@@ -3656,24 +3653,18 @@ window.loadToshibaPrinterSpareParts = function() {
 // Hero Carousel functionality
 class HeroCarousel {
   constructor() {
-    console.log('HeroCarousel constructor called');
     this.currentSlide = 0;
     this.slides = document.querySelectorAll('.hero-slide');
     this.indicators = document.querySelectorAll('.hero-indicator');
     this.autoPlayInterval = null;
     this.autoPlayDelay = 5000; // 5 seconds
     
-    console.log(`Found ${this.slides.length} slides and ${this.indicators.length} indicators`);
-    
     if (this.slides.length > 0) {
       this.init();
-    } else {
-      console.warn('No hero slides found!');
     }
   }
   
   init() {
-    console.log('Initializing hero carousel');
     // Show first slide
     this.showSlide(0);
     
@@ -3684,7 +3675,6 @@ class HeroCarousel {
     this.addEventListeners();
   }
     showSlide(index) {
-    console.log(`Showing slide ${index}`);
     // Hide all slides
     this.slides.forEach((slide, i) => {
       slide.style.opacity = '0';
@@ -3699,7 +3689,6 @@ class HeroCarousel {
       this.slides[index].style.transform = 'translateX(0)';
       this.slides[index].style.zIndex = '2';
       this.slides[index].classList.add('active');
-      console.log(`Slide ${index} is now active`);
     }
     
     // Update indicators

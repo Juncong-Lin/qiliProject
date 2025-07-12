@@ -45,6 +45,48 @@ window.handleNavigationClick = function(hash) {  // Check if we're on the index 
 };
 
 window.handleCategoryClick = function(categoryName) {
+  // Hide the dropdown menu for all inkjet printer subcategories
+  const inkjetCategories = [
+    'DTF Printer',
+    'UV DTF Printer',
+    'Direct to Fabric & Film',
+    'Eco-Solvent Printers',
+    'Eco-Solvent Inkjet Printers - With XP600 Printhead',
+    'Eco-Solvent Inkjet Printers - With I1600 Printhead',
+    'Eco-Solvent Inkjet Printers - With I3200 Printhead',
+    'Solvent Inkjet Printers',
+    'Solvent Inket Printers - With Ricoh Gen5 Printhead',
+    'Solvent Inket Printers - With Ricoh Gen6 Printhead',
+    'Solvent Inket Printers - With Konica KM512i Printhead',
+    'Solvent Inket Printers - With Konica KM1024i Printhead',
+    'Sublimation Printers',
+    'Sublimation Printers - With XP600 Printhead',
+    'Sublimation Printers - With I1600 Printhead',
+    'Sublimation Printers - With I3200 Printhead',
+    'UV Inkjet Printers',
+    'UV Inkjet Printers - With XP600 Printhead',
+    'UV Inkjet Printers - With I1600 Printhead',
+    'UV Inkjet Printers - With I3200 Printhead',
+    'UV Inkjet Printers - With Ricoh Gen5 Printhead',
+    'UV Inkjet Printers - With Ricoh Gen6 Printhead',
+    'UV Inkjet Printers - With Konica KM1024i Printhead',
+    'UV Flatbed Printers',
+    'UV Flatbed Printers - With XP600 Printhead',
+    'UV Flatbed Printers - With I3200 Printhead',
+    'UV Flatbed Printers - With Ricoh Gen5 Printhead',
+    'UV Flatbed Printers - With Ricoh Gen6 Printhead',
+    'UV Flatbed Printers - With Konica KM1024i Printheads',
+    'UV Hybrid Inkjet Printer',
+    'UV Hybrid Inkjet Printer - With Ricoh Gen6 Printheads',
+    'UV Hybrid Inkjet Printer - With Konica KM1024i Printheads',
+    'Double Side Printers',
+    'Direct Printing'
+  ];
+  
+  if (inkjetCategories.includes(categoryName) && window.subHeaderNav && window.subHeaderNav.hideAllSubmenus) {
+    window.subHeaderNav.hideAllSubmenus();
+  }
+
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadSpecificCategory && typeof window.loadSpecificCategory === 'function') {
     // We're on index page - use existing function
@@ -291,6 +333,11 @@ window.handleCategoryClick = function(categoryName) {
 
 // New handler for Economic Version Printers grid view
 window.handleEconomicVersionClick = function() {
+  // Hide the dropdown menu
+  if (window.subHeaderNav && window.subHeaderNav.hideAllSubmenus) {
+    window.subHeaderNav.hideAllSubmenus();
+  }
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadAllEconomicVersionPrinters && typeof window.loadAllEconomicVersionPrinters === 'function') {
     // We're on index page - use the new economic version function
@@ -611,6 +658,11 @@ window.handleOtherClick = function(otherCategory) {
 
 // Handler for Double Side Printers
 window.handleDoubleSidePrintersClick = function() {
+  // Hide the dropdown menu
+  if (window.subHeaderNav && window.subHeaderNav.hideAllSubmenus) {
+    window.subHeaderNav.hideAllSubmenus();
+  }
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadAllDoubleSidePrinters && typeof window.loadAllDoubleSidePrinters === 'function') {
     // We're on index page - load double side printers directly
@@ -624,6 +676,11 @@ window.handleDoubleSidePrintersClick = function() {
 
 // Handler for Double Side Direct Printing
 window.handleDoubleSideDirectPrintingClick = function() {
+  // Hide the dropdown menu
+  if (window.subHeaderNav && window.subHeaderNav.hideAllSubmenus) {
+    window.subHeaderNav.hideAllSubmenus();
+  }
+  
   // Check if we're on the index page
   if (UrlUtils.isIndexPage() && window.loadDoubleSideDirectPrinting && typeof window.loadDoubleSideDirectPrinting === 'function') {
     // We're on index page - load double side direct printing directly
