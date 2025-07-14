@@ -55,6 +55,33 @@ function handleRightPanelVisibility() {
   }
 }
 
+// Function to handle mobile link prevention for WeChat and WhatsApp
+function handleMobileLinkPrevention() {
+  const isMobile = window.innerWidth <= 768;
+  const wechatBtn = document.querySelector('.wechat-btn');
+  const whatsappBtn = document.querySelector('.whatsapp-btn');
+  
+  if (wechatBtn && whatsappBtn) {
+    // Remove any existing event listeners
+    wechatBtn.removeEventListener('click', preventClick);
+    whatsappBtn.removeEventListener('click', preventClick);
+    
+    if (isMobile) {
+      // On mobile: prevent link navigation
+      wechatBtn.addEventListener('click', preventClick);
+      whatsappBtn.addEventListener('click', preventClick);
+    }
+    // On desktop: links work normally (no event listeners added)
+  }
+}
+
+// Function to prevent click navigation
+function preventClick(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
+}
+
 // Load the right panel and initialize functionality when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
   loadRightPanel();
@@ -62,6 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', handleRightPanelVisibility);
   // Initial visibility check
   handleRightPanelVisibility();
+  
+  // Set up mobile link prevention after a small delay to ensure DOM is loaded
+  setTimeout(handleMobileLinkPrevention, 100);
+  
+  // Re-run on window resize in case device orientation changes
+  window.addEventListener('resize', handleMobileLinkPrevention);
 });
 
 // Export functions for global use

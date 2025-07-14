@@ -48,7 +48,7 @@
   background: white;
   background-repeat: no-repeat;
   display: none;
-  z-index: 1000;
+  z-index: 10002; /* Higher than header z-index (10000) and any other elements */
   box-shadow: 
     0 4px 20px rgba(0, 0, 0, 0.15),
     0 2px 8px rgba(0, 0, 0, 0.1);
@@ -155,10 +155,11 @@
     width: 280px !important;
     height: 280px !important;
     position: fixed;
-    top: 20px;
+    /* JavaScript will handle top positioning to avoid covering original image */
     right: 20px;
     border-width: 1px;
     border-radius: 4px;
+    z-index: 10002; /* Ensure it appears above header and all other elements */
   }
 }
 
@@ -186,6 +187,10 @@
     height: 400px !important;
   }
 }
+
+@media (max-width: 320px) {
+  .magnifier-lens {
+    width: 80px !important;
     height: 80px !important;
   }
   

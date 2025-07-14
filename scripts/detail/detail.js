@@ -2500,25 +2500,74 @@ function setupImageMagnifier() {
     let resultX, resultY;
     
     if (isMobile) {
-      // Fixed position for mobile (top-right corner)
+      // Smart positioning for mobile - avoid covering the original image
       resultX = viewportWidth - resultSize - 15;
-      resultY = 15;
+      
+      // Determine if we should place magnifier at top or bottom based on image position
+      const imageTop = imageRect.top;
+      const imageBottom = imageRect.bottom;
+      const imageCenterY = imageTop + (imageRect.height / 2);
+      const viewportCenter = viewportHeight / 2;
+      
+      if (imageCenterY < viewportCenter) {
+        // Image is in upper half - place magnifier at bottom
+        resultY = viewportHeight - resultSize - 15;
+      } else {
+        // Image is in lower half - place magnifier at top
+        resultY = 15; // Small margin from top
+      }
+      
+      // Ensure the magnifier doesn't overlap with the image vertically
+      if (resultY < imageBottom && resultY + resultSize > imageTop) {
+        // If there's overlap, prefer bottom placement if there's more space
+        const spaceAbove = imageTop;
+        const spaceBelow = viewportHeight - imageBottom;
+        
+        if (spaceBelow >= resultSize + 30) {
+          resultY = imageBottom + 15; // Place below image
+        } else if (spaceAbove >= resultSize + 30) {
+          resultY = imageTop - resultSize - 15; // Place above image
+        } else {
+          // Not enough space on either side, use bottom of screen
+          resultY = viewportHeight - resultSize - 15;
+        }
+      }
     } else {
-      // Smart positioning for desktop - always to the right of the image if possible
+      // Smart positioning for desktop - always avoid covering the original image
       const imageRightEdge = imageRect.right;
+      const imageLeftEdge = imageRect.left;
       const availableSpaceRight = viewportWidth - imageRightEdge;
+      const availableSpaceLeft = imageLeftEdge;
       
       if (availableSpaceRight >= resultSize + 20) {
         // Position to the right of the image
         resultX = imageRightEdge + 15;
         resultY = imageRect.top + (y - resultSize / 2);
-      } else {
+      } else if (availableSpaceLeft >= resultSize + 20) {
         // Position to the left of the image
-        resultX = imageRect.left - resultSize - 15;
+        resultX = imageLeftEdge - resultSize - 15;
         resultY = imageRect.top + (y - resultSize / 2);
+      } else {
+        // Not enough horizontal space, try vertical positioning
+        const spaceAbove = imageRect.top;
+        const spaceBelow = viewportHeight - imageRect.bottom;
+        
+        if (spaceBelow >= resultSize + 20) {
+          // Position below the image
+          resultX = Math.max(10, Math.min(viewportWidth - resultSize - 10, imageRect.left + (imageRect.width / 2) - (resultSize / 2)));
+          resultY = imageRect.bottom + 15;
+        } else if (spaceAbove >= resultSize + 20) {
+          // Position above the image
+          resultX = Math.max(10, Math.min(viewportWidth - resultSize - 10, imageRect.left + (imageRect.width / 2) - (resultSize / 2)));
+          resultY = imageRect.top - resultSize - 15;
+        } else {
+          // Fallback: position to the right with overlap if necessary
+          resultX = imageRightEdge + 15;
+          resultY = imageRect.top + (y - resultSize / 2);
+        }
       }
       
-      // Ensure result window stays within viewport
+      // Final boundary checks to ensure result window stays within viewport
       resultX = Math.max(10, Math.min(resultX, viewportWidth - resultSize - 10));
       resultY = Math.max(10, Math.min(resultY, viewportHeight - resultSize - 10));
     }    

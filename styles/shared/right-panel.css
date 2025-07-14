@@ -37,6 +37,7 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: visible;
+  opacity: 0.7;
 }
 
 /* Ensure all specific buttons use the same size as .right-panel-btn */
@@ -59,6 +60,7 @@
   transform: translateX(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.3);
+  opacity: 1;
 }
 
 .right-panel-btn .btn-icon {
@@ -281,6 +283,12 @@ display: none;
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
+  /* On mobile, allow hover but we'll prevent navigation with JavaScript */
+  .wechat-btn,
+  .whatsapp-btn {
+    cursor: default;
+  }
+  
   .right-panel-fixed {
     right: 10px;
     top: 45%;
