@@ -13,11 +13,13 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from PIL import Image
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
 
 # --- Configuration ---
 BASE_URL = "https://signchinasign.com"
 URL_TEMPLATE = "https://signchinasign.com/index.php/Product/index/p/{page_num}/classid/12/price/index.php"
-TOTAL_PAGES = 10
+TOTAL_PAGES = 11
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
@@ -34,8 +36,55 @@ BRANDS = [
 ]
 
 MAX_RETRIES = 6  # Maximum number of retries for any task
+MAX_WORKERS = 8  # Maximum number of concurrent threads
+REQUEST_DELAY = 0.1  # Reduced delay between requests
+
+# Thread-safe lock for shared data structures
+_lock = threading.Lock()
 
 # --- Utility Functions ---
+
+def collect_listing_page_urls(page_num, session, previous_products):
+    """Efficiently collect product URLs from a single listing page."""
+    try:
+        listing_url = URL_TEMPLATE.format(page_num=page_num)
+        print(f"Processing listing page {page_num}")
+        
+        response = session.get(listing_url, headers=HEADERS, timeout=15)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        product_list = soup.select_one('div#con_1.list_bigpic')
+        if not product_list:
+            print(f"WARNING: No product container on page {page_num}")
+            return []
+            
+        product_boxes = product_list.select('div.product_box')
+        if not product_boxes:
+            print(f"NOTE: No products on page {page_num}")
+            return []
+            
+        product_urls = []
+        for box in product_boxes:
+            link_tag = box.select_one('h3 > a')
+            if link_tag and link_tag.get('href'):
+                product_url = urljoin(BASE_URL, link_tag['href'])
+                
+                # Get product name from the listing page itself to avoid extra requests
+                title_tag = box.select_one('h3 > a')
+                if title_tag:
+                    product_name = title_tag.get_text(strip=True).rstrip('.')
+                    if product_name and product_name not in previous_products:
+                        product_urls.append(product_url)
+                    elif product_name:
+                        print(f"  - Skipping previously scraped: {product_name}")
+        
+        print(f"Found {len(product_urls)} new products on page {page_num}")
+        return product_urls
+        
+    except Exception as e:
+        print(f"ERROR: Failed to process listing page {page_num}. Reason: {e}")
+        return []
 
 def get_script_name():
     """Returns the script name without the .py extension."""
@@ -250,89 +299,127 @@ def check_and_update_prices():
     print("Starting price update check...")
     print(f"Checking prices for products in: {js_path}")
     
+    # Create a mapping of product names to their data for faster lookup
+    name_to_product = {}
+    for brand_key, products in products_by_brand.items():
+        for product in products:
+            name_to_product[product['name']] = product
+    
     updated_products = []
-    total_products = sum(len(products) for products in products_by_brand.values())
+    total_products = len(name_to_product)
     current_product = 0
     
+    print(f"Building product URL mapping from listing pages...")
+    product_name_to_url = {}
+    
+    # First, build a mapping of product names to URLs by scanning listing pages
     with requests.Session() as session:
-        for brand_key, products in products_by_brand.items():
-            for product in products:
-                current_product += 1
-                print(f"\nChecking product ({current_product}/{total_products}): {product['name']}")
-                
-                # Find the product URL by searching through listing pages
-                product_url = None
-                for page_num in range(1, TOTAL_PAGES + 1):
-                    try:
-                        listing_url = URL_TEMPLATE.format(page_num=page_num)
-                        response = session.get(listing_url, headers=HEADERS, timeout=15)
-                        response.raise_for_status()
-                        soup = BeautifulSoup(response.content, 'html.parser')
-                        
-                        product_list = soup.select_one('div#con_1.list_bigpic')
-                        if not product_list:
-                            continue
-                            
-                        product_boxes = product_list.select('div.product_box')
-                        for box in product_boxes:
-                            link_tag = box.select_one('h3 > a')
-                            if link_tag and link_tag.get('href'):
-                                temp_url = urljoin(BASE_URL, link_tag['href'])
-                                temp_response = session.get(temp_url, headers=HEADERS, timeout=10)
-                                temp_soup = BeautifulSoup(temp_response.content, 'html.parser')
-                                name_tag = temp_soup.select_one('h1.text-capitalize')
-                                if name_tag:
-                                    temp_name = name_tag.get_text(strip=True).rstrip('.')
-                                    if temp_name == product['name']:
-                                        product_url = temp_url
-                                        break
-                        
-                        if product_url:
-                            break
-                            
-                    except Exception as e:
-                        print(f"  - Error searching for product: {e}")
-                        continue
-                
-                if not product_url:
-                    print(f"  - Product URL not found for: {product['name']}")
-                    continue
-                
-                # Get current price from the product page
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            def scan_listing_page(page_num):
+                """Scan a listing page to build name-to-URL mapping."""
                 try:
-                    response = session.get(product_url, headers=HEADERS, timeout=20)
+                    listing_url = URL_TEMPLATE.format(page_num=page_num)
+                    response = session.get(listing_url, headers=HEADERS, timeout=15)
                     response.raise_for_status()
                     soup = BeautifulSoup(response.content, 'html.parser')
                     
-                    product_container = soup.select_one('div.row.sh_page.bg-white')
-                    if not product_container:
-                        print(f"  - Could not find product container")
-                        continue
-                    
-                    price_tag = product_container.select_one('span.sp_price')
-                    current_price_str = price_tag.get_text(strip=True) if price_tag else "Price not found"
-                    
-                    lower_price, higher_price = parse_price(current_price_str)
-                    
-                    # Compare with stored prices
-                    if (lower_price != product['lower_price'] or higher_price != product['higher_price']):
-                        print(f"  - Price changed!")
-                        print(f"    Old: {product['lower_price']} - {product['higher_price']}")
-                        print(f"    New: {lower_price} - {higher_price}")
+                    product_list = soup.select_one('div#con_1.list_bigpic')
+                    if not product_list:
+                        return {}
                         
-                        # Update the product data
-                        product['lower_price'] = lower_price
-                        product['higher_price'] = higher_price
-                        updated_products.append(product.copy())
-                    else:
-                        print(f"  - Price unchanged: {lower_price} - {higher_price}")
-                        
+                    product_boxes = product_list.select('div.product_box')
+                    page_mapping = {}
+                    
+                    for box in product_boxes:
+                        link_tag = box.select_one('h3 > a')
+                        if link_tag and link_tag.get('href'):
+                            product_url = urljoin(BASE_URL, link_tag['href'])
+                            product_name = link_tag.get_text(strip=True).rstrip('.')
+                            if product_name in name_to_product:
+                                page_mapping[product_name] = product_url
+                    
+                    return page_mapping
+                    
                 except Exception as e:
-                    print(f"  - Error checking price: {e}")
-                    continue
+                    print(f"  - Error scanning listing page {page_num}: {e}")
+                    return {}
+            
+            # Submit all listing page scanning tasks
+            future_to_page = {
+                executor.submit(scan_listing_page, page_num): page_num 
+                for page_num in range(1, TOTAL_PAGES + 1)
+            }
+            
+            # Collect results
+            for future in as_completed(future_to_page):
+                try:
+                    page_mapping = future.result()
+                    product_name_to_url.update(page_mapping)
+                except Exception as e:
+                    print(f"Error processing listing page result: {e}")
+    
+    print(f"Found URLs for {len(product_name_to_url)} products")
+    
+    # Now check prices for products we found URLs for
+    def check_product_price(product_name, product_url):
+        """Check price for a single product."""
+        try:
+            session = requests.Session()
+            product = name_to_product[product_name]
+            
+            response = session.get(product_url, headers=HEADERS, timeout=20)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            product_container = soup.select_one('div.row.sh_page.bg-white')
+            if not product_container:
+                return None
+            
+            price_tag = product_container.select_one('span.sp_price')
+            current_price_str = price_tag.get_text(strip=True) if price_tag else "Price not found"
+            
+            lower_price, higher_price = parse_price(current_price_str)
+            
+            # Compare with stored prices
+            if (lower_price != product['lower_price'] or higher_price != product['higher_price']):
+                print(f"  - Price changed for {product_name}!")
+                print(f"    Old: {product['lower_price']} - {product['higher_price']}")
+                print(f"    New: {lower_price} - {higher_price}")
                 
-                # Add small delay to avoid overwhelming the server
-                time.sleep(1)
+                # Update the product data
+                with _lock:
+                    product['lower_price'] = lower_price
+                    product['higher_price'] = higher_price
+                return product.copy()
+            else:
+                print(f"  - Price unchanged for {product_name}: {lower_price} - {higher_price}")
+                return None
+                
+        except Exception as e:
+            print(f"  - Error checking price for {product_name}: {e}")
+            return None
+        finally:
+            session.close()
+    
+    # Check prices concurrently
+    print(f"\nChecking prices for {len(product_name_to_url)} products...")
+    
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        # Submit price checking tasks
+        future_to_name = {
+            executor.submit(check_product_price, name, url): name 
+            for name, url in product_name_to_url.items()
+        }
+        
+        # Collect results
+        for future in as_completed(future_to_name):
+            product_name = future_to_name[future]
+            try:
+                updated_product = future.result()
+                if updated_product:
+                    updated_products.append(updated_product)
+            except Exception as e:
+                print(f"Error processing price check result for {product_name}: {e}")
     
     if updated_products:
         print(f"\nFound {len(updated_products)} products with price changes")
@@ -370,20 +457,33 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
 
         name_tag = product_container.select_one('h1.text-capitalize')
         product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
-        product_name = product_name.rstrip('.')
         sanitized_name = sanitize_filename(product_name)
         if not sanitized_name:
             print(f"  - WARNING: Invalid product name '{product_name}'.")
             return None, retry_count + 1
         print(f"    - Found Product: {product_name}")
 
-        brand = get_brand(product_name, brands_list)
+        # Thread-safe brand detection
+        with _lock:
+            brand = get_brand(product_name, brands_list)
         if not brand:
             print(f"    - WARNING: Could not determine brand for '{product_name}'.")
             return None, retry_count + 1
 
         price_tag = product_container.select_one('span.sp_price')
         product_price = price_tag.get_text(strip=True) if price_tag else "Price not found"
+
+        product_details = ""
+        details_card = product_container.select_one('div.sp_collapse_block div.card')
+        if details_card:
+            details_clone = BeautifulSoup(str(details_card), 'html.parser')
+            if details_clone.select_one('div.card-header'):
+                details_clone.select_one('div.card-header').decompose()
+            if details_clone.select_one('div.card-body'):
+                details_clone.select_one('div.card-body').decompose()
+            product_details = details_clone.get_text(separator='\n', strip=True)
+        if not product_details:
+            product_details = "No details found."
 
         brand_folder = os.path.join(output_dir, brand)  # Use brand name directly
         os.makedirs(brand_folder, exist_ok=True)
@@ -411,42 +511,6 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         else:
             print("    - WARNING: No product image found.")
 
-        product_details = ""
-        details_card = product_container.select_one('div.sp_collapse_block div.card')
-        if not details_card:
-            details_card = product_container.select_one('div.card')
-
-        if details_card:
-            details_clone = BeautifulSoup(str(details_card), 'html.parser')
-
-            # Download additional images from details
-            additional_image_tags = details_clone.select('img')
-            for i, img in enumerate(additional_image_tags):
-                if img.get('src'):
-                    add_img_url = urljoin(BASE_URL, img['src'])
-                    base_name, ext = os.path.splitext(image_filename)
-                    add_img_filename = f"{base_name}.img_{i+1}{ext}" if ext else f"{base_name}.img_{i+1}"
-                    add_img_path = os.path.join(image_folder, add_img_filename)
-                    try:
-                        img_response = session.get(add_img_url, stream=True, headers=HEADERS, timeout=20)
-                        img_response.raise_for_status()
-                        if process_and_save_image(img_response.content, add_img_path):
-                            print(f"    - Additional image saved to: {os.path.basename(add_img_path)}")
-                        else:
-                            print(f"    - FAILED to process additional image for {product_name}")
-                    except requests.RequestException as e:
-                        print(f"    - ERROR: Additional image download failed {add_img_url}. Reason: {e}")
-                img.decompose()
-
-            if details_clone.select_one('div.card-header'):
-                details_clone.select_one('div.card-header').decompose()
-
-            product_details = details_clone.get_text(separator='\n', strip=True)
-
-        if not product_details:
-            product_details = "No details found."
-
-
         md_filename = f"{sanitized_name}.md"
         md_path = os.path.join(product_folder, md_filename)
         formatted_price = format_price(product_price)
@@ -463,6 +527,9 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         lower_price, higher_price = parse_price(product_price)
         product_id = generate_id(product_name)
         image_rel_path = f"products/{script_name}/{brand}/{sanitized_name}/image/{sanitized_name}.jpg"
+
+        # Small delay to avoid overwhelming the server
+        time.sleep(REQUEST_DELAY)
 
         return {
             'id': product_id,
@@ -539,77 +606,113 @@ def main():
     # Rename existing brand folders
     rename_brand_folders(output_dir, root_folder_name)
 
-    # Phase 1: Collect all product URLs
-    listing_tasks = [('listing', URL_TEMPLATE.format(page_num=page_num), 0) for page_num in range(1, TOTAL_PAGES + 1)]
-    product_urls = []
-    with requests.Session() as session:
-        while listing_tasks:
-            task_type, url, retry_count = listing_tasks.pop(0)
-            if retry_count >= MAX_RETRIES:
-                print(f"ERROR: Max retries ({MAX_RETRIES}) reached for listing page {url}. Skipping.")
-                continue
-            print(f"\n--- Scraping Listing Page: {url} (Attempt {retry_count + 1}/{MAX_RETRIES}) ---")
-            try:
-                response = session.get(url, headers=HEADERS, timeout=15)
-                response.raise_for_status()
-                soup = BeautifulSoup(response.content, 'html.parser')
-                product_list = soup.select_one('div#con_1.list_bigpic')
-                if not product_list:
-                    print(f"WARNING: No product container on {url}.")
-                    continue
-                product_boxes = product_list.select('div.product_box')
-                if not product_boxes:
-                    print(f"NOTE: No products on {url}.")
-                    continue
-                print(f"Found {len(product_boxes)} products on {url}.")
-                for box in product_boxes:
-                    link_tag = box.select_one('h3 > a')
-                    if link_tag and link_tag.get('href'):
-                        product_url = urljoin(BASE_URL, link_tag['href'])
-                        temp_response = session.get(product_url, headers=HEADERS, timeout=20)
-                        temp_soup = BeautifulSoup(temp_response.content, 'html.parser')
-                        name_tag = temp_soup.select_one('h1.text-capitalize')
-                        product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
-                        product_name = product_name.rstrip('.')
-                        if product_name not in previous_products:
-                            product_urls.append(product_url)
-                        else:
-                            print(f"  - Skipping previously scraped product: {product_name}")
-                    else:
-                        print("  - WARNING: Product box missing link.")
-            except requests.RequestException as e:
-                print(f"ERROR: Failed to access {url}. Reason: {e}. Retrying later.")
-                listing_tasks.append((task_type, url, retry_count + 1))
-                time.sleep(5)
+    # Phase 1: Collect all product URLs efficiently using concurrent requests
+    print(f"\nPhase 1: Collecting product URLs from {TOTAL_PAGES} listing pages...")
+    
+    all_product_urls = []
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        with requests.Session() as session:
+            # Submit all listing page tasks
+            future_to_page = {
+                executor.submit(collect_listing_page_urls, page_num, session, previous_products): page_num 
+                for page_num in range(1, TOTAL_PAGES + 1)
+            }
+            
+            # Collect results as they complete
+            for future in as_completed(future_to_page):
+                page_num = future_to_page[future]
+                try:
+                    product_urls = future.result()
+                    all_product_urls.extend(product_urls)
+                except Exception as e:
+                    print(f"ERROR: Failed to process listing page {page_num}: {e}")
 
-    total_products_found = len(product_urls)
+    total_products_found = len(all_product_urls)
+    print(f"Phase 1 complete: Found {total_products_found} new products to scrape")
+    
+    if total_products_found == 0:
+        print("No new products found. Exiting.")
+        return
+
+    # Phase 2: Process product URLs with concurrent scraping
+    print(f"\nPhase 2: Scraping {total_products_found} product details...")
+    
     new_products_scraped = 0
     current_products = set()
-
-    # Phase 2: Process product URLs
-    product_tasks = [('product', url, 0) for url in product_urls]
-    current_product_number = 0
-
-    with requests.Session() as session:
-        while product_tasks:
-            task_type, url, retry_count = product_tasks.pop(0)
-            current_product_number += 1
-            if retry_count >= MAX_RETRIES:
-                print(f"ERROR: Max retries ({MAX_RETRIES}) reached for product page {url}. Skipping.")
-                continue
-            product_data, new_retry_count = scrape_product_details(url, session, output_dir, root_folder_name, BRANDS, current_product_number, total_products_found, retry_count)
-            if product_data:
-                brand_key = product_data['brand'].lower()
-                if brand_key not in products_by_brand:
-                    products_by_brand[brand_key] = []
-                product_ids = {p['id'] for p in products_by_brand[brand_key]}
-                if product_data['id'] not in product_ids:
-                    products_by_brand[brand_key].append(product_data)
-                    new_products_scraped += 1
-                    current_products.add(product_data['name'])
-            else:
-                product_tasks.append((task_type, url, new_retry_count))
-                time.sleep(5)
+    failed_urls = []
+    
+    def process_single_product(args):
+        """Helper function for concurrent product processing."""
+        product_url, product_index = args
+        session = requests.Session()  # Each thread gets its own session
+        try:
+            product_data, retry_count = scrape_product_details(
+                product_url, session, output_dir, root_folder_name, 
+                BRANDS, product_index, total_products_found, 0
+            )
+            return product_data, product_url, retry_count
+        except Exception as e:
+            print(f"ERROR: Unexpected error processing {product_url}: {e}")
+            return None, product_url, MAX_RETRIES
+        finally:
+            session.close()
+    
+    # Process products in batches to avoid overwhelming the server
+    batch_size = MAX_WORKERS * 2
+    for i in range(0, len(all_product_urls), batch_size):
+        batch_urls = all_product_urls[i:i + batch_size]
+        print(f"\nProcessing batch {i//batch_size + 1}/{(len(all_product_urls) + batch_size - 1)//batch_size}")
+        
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            # Prepare arguments for each product
+            batch_args = [(url, i + idx + 1) for idx, url in enumerate(batch_urls)]
+            
+            # Submit batch tasks
+            future_to_url = {executor.submit(process_single_product, args): args[0] for args in batch_args}
+            
+            # Collect results
+            for future in as_completed(future_to_url):
+                product_url = future_to_url[future]
+                try:
+                    product_data, url, retry_count = future.result()
+                    if product_data:
+                        brand_key = product_data['brand'].lower()
+                        with _lock:  # Thread-safe access to shared data
+                            if brand_key not in products_by_brand:
+                                products_by_brand[brand_key] = []
+                            product_ids = {p['id'] for p in products_by_brand[brand_key]}
+                            if product_data['id'] not in product_ids:
+                                products_by_brand[brand_key].append(product_data)
+                                new_products_scraped += 1
+                                current_products.add(product_data['name'])
+                    elif retry_count < MAX_RETRIES:
+                        failed_urls.append(product_url)
+                except Exception as e:
+                    print(f"ERROR: Failed to process result for {product_url}: {e}")
+                    failed_urls.append(product_url)
+        
+        # Small delay between batches
+        if i + batch_size < len(all_product_urls):
+            time.sleep(REQUEST_DELAY * 2)
+    
+    # Retry failed URLs once more sequentially
+    if failed_urls:
+        print(f"\nRetrying {len(failed_urls)} failed products...")
+        with requests.Session() as session:
+            for idx, product_url in enumerate(failed_urls):
+                product_data, retry_count = scrape_product_details(
+                    product_url, session, output_dir, root_folder_name, 
+                    BRANDS, idx + 1, len(failed_urls), 0
+                )
+                if product_data:
+                    brand_key = product_data['brand'].lower()
+                    if brand_key not in products_by_brand:
+                        products_by_brand[brand_key] = []
+                    product_ids = {p['id'] for p in products_by_brand[brand_key]}
+                    if product_data['id'] not in product_ids:
+                        products_by_brand[brand_key].append(product_data)
+                        new_products_scraped += 1
+                        current_products.add(product_data['name'])
 
     # Save updated products_by_brand to products_data.json
     with open(products_data_path, 'w', encoding='utf-8') as f:
