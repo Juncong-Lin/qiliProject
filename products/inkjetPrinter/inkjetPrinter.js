@@ -258,8 +258,8 @@ export const inkjetPrinterProducts = {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM2500UVH12k24i-with-12-pieces-Konica-km1024i-printhead',
       name: 'AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead',
       image: 'products/inkjetPrinter/hybrid uv/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead/image/AMO Hybrid UV Inkjet Printer AM2500UVH12k24i with 12 pieces Konica km1024i printhead.jpg',
-      lower_price: null,
-      higher_price: null
+      lower_price: 4000000,
+      higher_price: 4000000
     },
     {
       id: 'AMO-Hybrid-UV-Inkjet-Printer-AM3200UVH4G6-with-4-Ricoh-Gen6-printhead',
@@ -490,8 +490,8 @@ export const inkjetPrinterProducts = {
       id: 'AMO-UV-DTF-Inkjet-Printer-AM604XP-UVDTF-with-4-XP600-Printheads',
       name: 'AMO UV-DTF Inkjet Printer AM604XP-UVDTF with 4 XP600 Printheads',
       image: 'products/inkjetPrinter/uv-dtf/AMO UV-DTF Inkjet Printer AM604XP-UVDTF with 4 XP600 Printheads/image/AMO UV-DTF Inkjet Printer AM604XP-UVDTF with 4 XP600 Printheads.jpg',
-      lower_price: 520000,
-      higher_price: 520000
+      lower_price: 620000,
+      higher_price: 620000
     },
     {
       id: 'AMO-UV-DTF-Inkjet-Printer-AM603i32-UVDTF-with-3-i1600-printheads',
