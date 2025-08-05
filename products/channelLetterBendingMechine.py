@@ -33,7 +33,7 @@ def get_script_name():
 
 def sanitize_filename(name):
     """Removes invalid characters for a valid folder or file name."""
-    sanitized = re.sub(r'[\\/*?:"<>|]', "", name)
+    sanitized = re.sub(r'[\\/*?:"<>|_]', "", name)
     return " ".join(sanitized.split()).strip()
 
 def process_and_save_image(image_bytes, output_path, target_size=1000):
@@ -67,7 +67,8 @@ def format_price(price_str):
 def get_brand(product_name, brands_list):
     """Determines the brand from the product name, adding new brands dynamically."""
     for brand in brands_list:
-        if brand.lower() in product_name.lower():
+        search_term = brand.replace('_', ' ')
+        if search_term.lower() in product_name.lower():
             return brand
     potential_brand = product_name.split()[0]
     if potential_brand:
@@ -112,6 +113,8 @@ def load_previous_products(md_path):
 
 def rename_brand_folders(output_dir, script_name):
     """Renames brand folders from 'Brand xxxx' to 'Brand'."""
+    if not os.path.isdir(output_dir):
+        return
     for folder_name in os.listdir(output_dir):
         if os.path.isdir(os.path.join(output_dir, folder_name)):
             # Check if folder ends with script_name
@@ -145,6 +148,201 @@ def update_image_paths(products_by_brand, script_name):
                 product['image'] = new_image
     return products_by_brand
 
+# --- Price Update Functions ---
+
+def update_prices_in_js_file(js_path, updated_products):
+    """Updates prices in the JavaScript file for products that have changed."""
+    if not os.path.exists(js_path):
+        print(f"JavaScript file not found: {js_path}")
+        return False
+    
+    try:
+        with open(js_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        updated_count = 0
+        for product in updated_products:
+            # Create pattern to match the specific product entry - more flexible pattern
+            old_id = re.escape(product['id'])
+            # Pattern matches: id, name, image, lower_price, higher_price
+            pattern = rf"(\s+{{\s*\n\s*id:\s*'{old_id}',\s*\n\s*name:\s*'[^']*',\s*\n\s*image:\s*'[^']*',\s*\n\s*lower_price:\s*)[^,\n]*(\s*,\s*\n\s*higher_price:\s*)[^,\n]*(\s*\n\s*}})"
+            
+            lower_price = 'null' if product['lower_price'] is None else str(product['lower_price'])
+            higher_price = 'null' if product['higher_price'] is None else str(product['higher_price'])
+            
+            replacement = rf"\g<1>{lower_price}\g<2>{higher_price}\g<3>"
+            new_content = re.sub(pattern, replacement, content, flags=re.MULTILINE)
+            
+            if new_content != content:
+                content = new_content
+                updated_count += 1
+                print(f"    - Updated prices for: {product['name']}")
+            else:
+                # Try a simpler approach - find the product block and replace line by line
+                lines = content.split('\n')
+                found_product = False
+                for i, line in enumerate(lines):
+                    if f"id: '{product['id']}'" in line:
+                        found_product = True
+                        # Look for lower_price and higher_price in the next few lines
+                        for j in range(i, min(i+10, len(lines))):
+                            if 'lower_price:' in lines[j]:
+                                old_lower = lines[j]
+                                lines[j] = re.sub(r'lower_price:\s*\d+', f'lower_price: {lower_price}', lines[j])
+                                if lines[j] != old_lower:
+                                    print(f"    - Updated lower_price for: {product['name']}")
+                            elif 'higher_price:' in lines[j]:
+                                old_higher = lines[j]
+                                lines[j] = re.sub(r'higher_price:\s*\d+', f'higher_price: {higher_price}', lines[j])
+                                if lines[j] != old_higher:
+                                    print(f"    - Updated higher_price for: {product['name']}")
+                        break
+                
+                if found_product:
+                    content = '\n'.join(lines)
+                    updated_count += 1
+        
+        if updated_count > 0:
+            with open(js_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print(f"Successfully updated {updated_count} products in {js_path}")
+            return True
+        else:
+            print("No price updates needed in JavaScript file")
+            return False
+            
+    except Exception as e:
+        print(f"Error updating JavaScript file: {e}")
+        return False
+
+def check_and_update_prices():
+    """Main function to check prices and update the JavaScript file."""
+    root_folder_name = get_script_name()
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_dir = os.path.join(script_dir, root_folder_name)
+    js_path = os.path.join(output_dir, f"{root_folder_name}.js")
+    
+    if not os.path.exists(js_path):
+        print(f"JavaScript file not found: {js_path}")
+        print("Please run the main scraper first to generate the initial data.")
+        return
+    
+    # Load existing products from JSON
+    products_data_path = os.path.join(output_dir, 'products_data.json')
+    if not os.path.exists(products_data_path):
+        print(f"Products data file not found: {products_data_path}")
+        print("Please run the main scraper first to generate the initial data.")
+        return
+    
+    with open(products_data_path, 'r', encoding='utf-8') as f:
+        products_by_brand = json.load(f)
+    
+    print("Starting price update check...")
+    print(f"Checking prices for products in: {js_path}")
+    
+    updated_products = []
+    total_products = sum(len(products) for products in products_by_brand.values())
+    current_product = 0
+    
+    with requests.Session() as session:
+        for brand_key, products in products_by_brand.items():
+            for product in products:
+                current_product += 1
+                print(f"\nChecking product ({current_product}/{total_products}): {product['name']}")
+                
+                # Find the product URL by searching through listing pages
+                product_url = None
+                for page_num in range(1, TOTAL_PAGES + 1):
+                    try:
+                        listing_url = URL_TEMPLATE.format(page_num=page_num)
+                        response = session.get(listing_url, headers=HEADERS, timeout=15)
+                        response.raise_for_status()
+                        soup = BeautifulSoup(response.content, 'html.parser')
+                        
+                        product_list = soup.select_one('div#con_1.list_bigpic')
+                        if not product_list:
+                            continue
+                            
+                        product_boxes = product_list.select('div.product_box')
+                        for box in product_boxes:
+                            link_tag = box.select_one('h3 > a')
+                            if link_tag and link_tag.get('href'):
+                                temp_url = urljoin(BASE_URL, link_tag['href'])
+                                temp_response = session.get(temp_url, headers=HEADERS, timeout=10)
+                                temp_soup = BeautifulSoup(temp_response.content, 'html.parser')
+                                name_tag = temp_soup.select_one('h1.text-capitalize')
+                                if name_tag:
+                                    temp_name = name_tag.get_text(strip=True).rstrip('.')
+                                    if temp_name == product['name']:
+                                        product_url = temp_url
+                                        break
+                        
+                        if product_url:
+                            break
+                            
+                    except Exception as e:
+                        print(f"  - Error searching for product: {e}")
+                        continue
+                
+                if not product_url:
+                    print(f"  - Product URL not found for: {product['name']}")
+                    continue
+                
+                # Get current price from the product page
+                try:
+                    response = session.get(product_url, headers=HEADERS, timeout=20)
+                    response.raise_for_status()
+                    soup = BeautifulSoup(response.content, 'html.parser')
+                    
+                    product_container = soup.select_one('div.row.sh_page.bg-white')
+                    if not product_container:
+                        print(f"  - Could not find product container")
+                        continue
+                    
+                    price_tag = product_container.select_one('span.sp_price')
+                    current_price_str = price_tag.get_text(strip=True) if price_tag else "Price not found"
+                    
+                    lower_price, higher_price = parse_price(current_price_str)
+                    
+                    # Compare with stored prices
+                    if (lower_price != product['lower_price'] or higher_price != product['higher_price']):
+                        print(f"  - Price changed!")
+                        print(f"    Old: {product['lower_price']} - {product['higher_price']}")
+                        print(f"    New: {lower_price} - {higher_price}")
+                        
+                        # Update the product data
+                        product['lower_price'] = lower_price
+                        product['higher_price'] = higher_price
+                        updated_products.append(product.copy())
+                    else:
+                        print(f"  - Price unchanged: {lower_price} - {higher_price}")
+                        
+                except Exception as e:
+                    print(f"  - Error checking price: {e}")
+                    continue
+                
+                # Add small delay to avoid overwhelming the server
+                time.sleep(1)
+    
+    if updated_products:
+        print(f"\nFound {len(updated_products)} products with price changes")
+        
+        # Update the JSON file
+        with open(products_data_path, 'w', encoding='utf-8') as f:
+            json.dump(products_by_brand, f, indent=2)
+        print(f"Updated products data: {products_data_path}")
+        
+        # Update the JavaScript file
+        update_prices_in_js_file(js_path, updated_products)
+        
+        print("\nUpdated products:")
+        for product in updated_products:
+            print(f"- {product['name']}: {product['lower_price']} - {product['higher_price']}")
+    else:
+        print("\nNo price changes found")
+    
+    print("\nPrice update check completed!")
+
 # --- Core Scraping Functions ---
 
 def scrape_product_details(product_url, session, output_dir, script_name, brands_list, current_product_number, total_products_found, retry_count=0):
@@ -162,6 +360,7 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
 
         name_tag = product_container.select_one('h1.text-capitalize')
         product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
+        product_name = product_name.rstrip('.')
         sanitized_name = sanitize_filename(product_name)
         if not sanitized_name:
             print(f"  - WARNING: Invalid product name '{product_name}'.")
@@ -175,18 +374,6 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
 
         price_tag = product_container.select_one('span.sp_price')
         product_price = price_tag.get_text(strip=True) if price_tag else "Price not found"
-
-        product_details = ""
-        details_card = product_container.select_one('div.sp_collapse_block div.card')
-        if details_card:
-            details_clone = BeautifulSoup(str(details_card), 'html.parser')
-            if details_clone.select_one('div.card-header'):
-                details_clone.select_one('div.card-header').decompose()
-            if details_clone.select_one('div.card-body'):
-                details_clone.select_one('div.card-body').decompose()
-            product_details = details_clone.get_text(separator='\n', strip=True)
-        if not product_details:
-            product_details = "No details found."
 
         brand_folder = os.path.join(output_dir, brand)  # Use brand name directly
         os.makedirs(brand_folder, exist_ok=True)
@@ -213,6 +400,42 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
                 print(f"    - ERROR: Image download failed {image_url}. Reason: {e}")
         else:
             print("    - WARNING: No product image found.")
+
+        product_details = ""
+        details_card = product_container.select_one('div.sp_collapse_block div.card')
+        if not details_card:
+            details_card = product_container.select_one('div.card')
+
+        if details_card:
+            details_clone = BeautifulSoup(str(details_card), 'html.parser')
+
+            # Download additional images from details
+            additional_image_tags = details_clone.select('img')
+            for i, img in enumerate(additional_image_tags):
+                if img.get('src'):
+                    add_img_url = urljoin(BASE_URL, img['src'])
+                    base_name, ext = os.path.splitext(image_filename)
+                    add_img_filename = f"{base_name}.img_{i+1}{ext}" if ext else f"{base_name}.img_{i+1}"
+                    add_img_path = os.path.join(image_folder, add_img_filename)
+                    try:
+                        img_response = session.get(add_img_url, stream=True, headers=HEADERS, timeout=20)
+                        img_response.raise_for_status()
+                        if process_and_save_image(img_response.content, add_img_path):
+                            print(f"    - Additional image saved to: {os.path.basename(add_img_path)}")
+                        else:
+                            print(f"    - FAILED to process additional image for {product_name}")
+                    except requests.RequestException as e:
+                        print(f"    - ERROR: Additional image download failed {add_img_url}. Reason: {e}")
+                img.decompose()
+
+            if details_clone.select_one('div.card-header'):
+                details_clone.select_one('div.card-header').decompose()
+
+            product_details = details_clone.get_text(separator='\n', strip=True)
+
+        if not product_details:
+            product_details = "No details found."
+
 
         md_filename = f"{sanitized_name}.md"
         md_path = os.path.join(product_folder, md_filename)
@@ -248,12 +471,33 @@ def scrape_product_details(product_url, session, output_dir, script_name, brands
         return None, retry_count + 1
 
 def main():
+    # Check for command line arguments
+    if len(sys.argv) > 1 and sys.argv[1] == "update_prices":
+        check_and_update_prices()
+        return
+    
     root_folder_name = get_script_name()
     script_dir = os.path.dirname(os.path.abspath(__file__))
     output_dir = os.path.join(script_dir, root_folder_name)
     os.makedirs(output_dir, exist_ok=True)
     md_path = os.path.join(output_dir, f"{root_folder_name}.md")
     products_data_path = os.path.join(output_dir, 'products_data.json')
+
+    # Check if user wants to update prices instead of scraping
+    js_path = os.path.join(output_dir, f"{root_folder_name}.js")
+    if os.path.exists(js_path):
+        print(f"\nExisting data found for {root_folder_name}")
+        print("Choose an option:")
+        print("1. Run full scraper (discover new products)")
+        print("2. Update prices only (check existing products for price changes)")
+        choice = input("Enter your choice (1 or 2): ").strip()
+        
+        if choice == "2":
+            check_and_update_prices()
+            return
+        elif choice != "1":
+            print("Invalid choice. Exiting.")
+            return
 
     # Load previously scraped products
     previous_products = load_previous_products(md_path)
@@ -316,6 +560,7 @@ def main():
                         temp_soup = BeautifulSoup(temp_response.content, 'html.parser')
                         name_tag = temp_soup.select_one('h1.text-capitalize')
                         product_name = name_tag.get_text(strip=True) if name_tag else "Unknown Product"
+                        product_name = product_name.rstrip('.')
                         if product_name not in previous_products:
                             product_urls.append(product_url)
                         else:
@@ -370,7 +615,8 @@ def main():
         f.write(f"// Total products: {total_products_overall}, New products scraped: {new_products_scraped}, Date: {current_time}\n")
         f.write(f"export const {root_folder_name}Products = {{\n")
         for brand_key in sorted(products_by_brand.keys()):
-            f.write(f"  {brand_key}: [\n")
+            js_brand_key = brand_key.replace(' ', '_')
+            f.write(f"  {js_brand_key}: [\n")
             for product in products_by_brand[brand_key]:
                 lower_price = 'null' if product['lower_price'] is None else product['lower_price']
                 higher_price = 'null' if product['higher_price'] is None else product['higher_price']
