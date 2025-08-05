@@ -1,4 +1,4 @@
-// Total products scraped: 35
+// Total products: 35, New products scraped: 0, Date: 2025-06-23 23:12:57
 export const upgradingKitProducts = {
   allwin: [
   ],
@@ -193,7 +193,7 @@ export const upgradingKitProducts = {
     {
       id: 'Kit-i3200-for-Upgrading-Chinese-Inkjet-Printer-with-4-i3200-printheads-roll-to-roll-style',
       name: 'Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads (roll to roll style)',
-      image: 'products/upgradingKit/Roll To Roll Style/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads.jpg',
+      image: 'products/upgradingKit/Roll To Roll Style/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads (roll to roll style)/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 4 i3200 printheads (roll to roll style).jpg',
       lower_price: 695000,
       higher_price: 750000
     },
@@ -221,7 +221,7 @@ export const upgradingKitProducts = {
     {
       id: 'Kit-xp600-for-Upgrading-Chinese-Inkjet-Printer-with-4-xp600-printheads-roll-to-roll-style',
       name: 'Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style)',
-      image: 'products/upgradingKit/Roll To Roll Style/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style)/image/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads.png',
+      image: 'products/upgradingKit/Roll To Roll Style/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style)/image/Kit xp600 for Upgrading Chinese Inkjet Printer with 4 xp600 printheads (roll to roll style).jpg',
       lower_price: 360000,
       higher_price: 400000
     },
@@ -243,13 +243,13 @@ export const upgradingKitProducts = {
       id: 'Kit-i1600-for-Upgrading-Chinese-Inkjet-Printer-with-1-piece-i1600-printheads-roll-to-roll-style',
       name: 'Kit i1600 for Upgrading Chinese Inkjet Printer with 1 piece i1600 printheads (roll to roll style)',
       image: 'products/upgradingKit/Roll To Roll Style/Kit i1600 for Upgrading Chinese Inkjet Printer with 1 piece i1600 printheads (roll to roll style)/image/Kit i1600 for Upgrading Chinese Inkjet Printer with 1 piece i1600 printheads (roll to roll style).jpg',
-      lower_price: 230000,
+      lower_price: 250000,
       higher_price: 250000
     },
     {
       id: 'Kit-i3200-for-Upgrading-Chinese-Inkjet-Printer-with-8-i3200-printheads-roll-to-roll-style',
       name: 'Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style)',
-      image: 'products/upgradingKit/Roll To Roll Style/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style)/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads.png',
+      image: 'products/upgradingKit/Roll To Roll Style/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style)/image/Kit i3200 for Upgrading Chinese Inkjet Printer with 8 i3200 printheads (roll to roll style).jpg',
       lower_price: 1280000,
       higher_price: 1400000
     },
@@ -314,7 +314,7 @@ export const upgradingKitProducts = {
     {
       id: 'YXP-xp600-boards-kit-without-cable-work-for-1-piece-xp600-printhead-brushless-motor-version',
       name: 'YXP xp600 boards kit without cable work for 1 piece xp600 printhead(brushless motor version)',
-      image: 'products/upgradingKit/Without Cable Work/YXP xp600 boards kit without cable work for 1 piece xp600 printhead/image/YXP xp600 boards kit without cable work for 1 piece xp600 printhead.jpg',
+      image: 'products/upgradingKit/Without Cable Work/YXP xp600 boards kit without cable work for 1 piece xp600 printhead(brushless motor version)/image/YXP xp600 boards kit without cable work for 1 piece xp600 printhead(brushless motor version).jpg',
       lower_price: 120000,
       higher_price: 120000
     },

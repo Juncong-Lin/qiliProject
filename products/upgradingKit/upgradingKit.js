@@ -243,7 +243,7 @@ export const upgradingKitProducts = {
       id: 'Kit-i1600-for-Upgrading-Chinese-Inkjet-Printer-with-1-piece-i1600-printheads-roll-to-roll-style',
       name: 'Kit i1600 for Upgrading Chinese Inkjet Printer with 1 piece i1600 printheads (roll to roll style)',
       image: 'products/upgradingKit/Roll To Roll Style/Kit i1600 for Upgrading Chinese Inkjet Printer with 1 piece i1600 printheads (roll to roll style)/image/Kit i1600 for Upgrading Chinese Inkjet Printer with 1 piece i1600 printheads (roll to roll style).jpg',
-      lower_price: 230000,
+      lower_price: 250000,
       higher_price: 250000
     },
     {

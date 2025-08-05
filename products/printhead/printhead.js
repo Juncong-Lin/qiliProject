@@ -628,8 +628,8 @@ export const printheadProducts = {
       id: 'DX7-Original-Printhead-for-Mimaki-JV300-130-CJV300-150-Part-Number-M015372',
       name: 'DX7 Original Printhead for Mimaki JV300-130   CJV300-150  Part Number M015372',
       image: 'products/printhead/Mimaki/DX7 Original Printhead for Mimaki JV300-130 CJV300-150 Part Number M015372/image/DX7 Original Printhead for Mimaki JV300-130 CJV300-150 Part Number M015372.jpg',
-      lower_price: 223000,
-      higher_price: 230000
+      lower_price: 226000,
+      higher_price: 226000
     },
     {
       id: 'Mimaki-JFX500-2131-GEN5-UV-Printhead-Part-Number-M022626',
@@ -649,7 +649,7 @@ export const printheadProducts = {
       id: 'DX7-Original-Printhead-for-MIMAKI-JV34-TS34-Part-Number-M010792',
       name: 'DX7 Original Printhead for MIMAKI JV34  TS34 Part Number  M010792',
       image: 'products/printhead/Mimaki/DX7 Original Printhead for MIMAKI JV34 TS34 Part Number M010792/image/DX7 Original Printhead for MIMAKI JV34 TS34 Part Number M010792.jpg',
-      lower_price: 167000,
+      lower_price: 179000,
       higher_price: 179000
     },
     {
@@ -670,8 +670,8 @@ export const printheadProducts = {
       id: 'MIMAKI-UJF-3042-UV-and-3042-FX-Printead-Part-Number-MP-M010010',
       name: 'MIMAKI UJF-3042 UV and  3042 FX Printead Part Number MP-M010010',
       image: 'products/printhead/Mimaki/MIMAKI UJF-3042 UV and 3042 FX Printead Part Number MP-M010010/image/MIMAKI UJF-3042 UV and 3042 FX Printead Part Number MP-M010010.jpg',
-      lower_price: null,
-      higher_price: null
+      lower_price: 174000,
+      higher_price: 174000
     },
     {
       id: 'Mimaki-JFX200-2513-Printhead-Part-Number-M022625',
@@ -814,22 +814,22 @@ export const printheadProducts = {
       id: 'Ricoh-Gen5i-Printhead-TH5241-Four-colors-3PL-J381-0038',
       name: 'Ricoh Gen5i Printhead TH5241 Four colors 3PL - J381-0038',
       image: 'products/printhead/Ricoh/Ricoh Gen5i Printhead TH5241 Four colors 3PL - J381-0038/image/Ricoh Gen5i Printhead TH5241 Four colors 3PL - J381-0038.jpg',
-      lower_price: 201000,
-      higher_price: 201000
+      lower_price: 196600,
+      higher_price: 196600
     },
     {
       id: 'Ricoh-Gen6-Printhead-MH5320-Two-Colors-5PL-J376-03',
       name: 'Ricoh Gen6 Printhead MH5320 Two Colors 5PL- J376-03',
       image: 'products/printhead/Ricoh/Ricoh Gen6 Printhead MH5320 Two Colors 5PL- J376-03/image/Ricoh Gen6 Printhead MH5320 Two Colors 5PL- J376-03.jpg',
-      lower_price: 201000,
-      higher_price: 201000
+      lower_price: 177000,
+      higher_price: 177000
     },
     {
       id: 'Ricoh-Gen6-Printhead-MH5340-Four-Colores-5PL',
       name: 'Ricoh Gen6 Printhead MH5340  Four Colores 5PL',
       image: 'products/printhead/Ricoh/Ricoh Gen6 Printhead MH5340 Four Colores 5PL/image/Ricoh Gen6 Printhead MH5340 Four Colores 5PL.jpg',
-      lower_price: 201000,
-      higher_price: 201000
+      lower_price: 222000,
+      higher_price: 222000
     },
     {
       id: 'Ricoh-GH2220-Printhead',
